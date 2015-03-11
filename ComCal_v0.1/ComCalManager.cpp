@@ -1,4 +1,5 @@
 #include "ComCalManager.h"
+#include <fstream>
 #include <msclr\marshal_cppstd.h>
 #include <msclr\marshal.h>
 
@@ -98,12 +99,47 @@ bool ComCalManager::isIndexValid(std::string) {
 	return true;
 }
 
-std::vector<std::string> ComCalManager::readTextFileIntoVec(std::string) { //the argument passed should be the name of the text file
-	std::vector<std::string> tasks;
-	return tasks;
+void ComCalManager::saveTasks(std::string fileName) {
+	std::ofstream outputFile(fileName);
+	int size = _tasks->size();
+	
+	if (outputFile.is_open()) {
+		outputFile << size << std::endl;
+		for (int i = 0; i < size; i++) {
+			outputFile << (*_tasks)[i]->toString() << std::endl;
+		}
+		outputFile.close();
+	}
 }
 
-void ComCalManager::readVecIntoTextFile(std::vector<std::string>, std::string) { //the 2nd argument passed is name of textFile
+void ComCalManager::loadTasks(std::string fileName) {
+	std::string numberOfTasks;
+	std::string task[10];
+
+	_tasks->clear();
+
+	std::ifstream inputFile(fileName);
+	if (inputFile.is_open()) {
+		getline(inputFile, numberOfTasks);
+		int n = stringToInt(numberOfTasks);
+
+		for (int x = 0; x < n; x++) {
+			for (int i = 0; i < 10; i++) {
+				getline(inputFile, task[i]);
+			}
+			_tasks->push_back(new Task(task[0],
+									   task[1],
+									   stringToInt(task[2]),
+									   stringToInt(task[3]),
+									   stringToInt(task[4]),
+									   stringToInt(task[5]),
+									   stringToInt(task[6]),
+									   stringToInt(task[7]),
+									   stringToInt(task[8]),
+									   stringToInt(task[9])));
+		}
+		inputFile.close();
+	}
 }
 
 std::string ComCalManager::addMainCom(std::string argument) {
