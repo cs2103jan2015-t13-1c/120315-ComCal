@@ -75,4 +75,3 @@ private:
 	//sub-functions for redoMainCom
 
 };
-
