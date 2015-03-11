@@ -27,3 +27,8 @@ Task::~Task() {
 std::string Task::getDescription() {
 	return _description;
 }
+
+// Converts the Task object into a String to save into text file
+std::string Task::toString() {
+	return (_description + "\n" + _location + "\n" + _startDate->toString() + "\n" + _endDate->toString());
+}

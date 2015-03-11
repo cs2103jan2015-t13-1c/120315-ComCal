@@ -16,6 +16,8 @@ public:
 	Date(std::string date, int time);
 	Date(std::string);
 	~Date();
+	
+	std::string toString();
 
 	void setDate(std::string);
 };

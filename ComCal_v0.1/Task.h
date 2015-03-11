@@ -18,4 +18,5 @@ public:
 	~Task();
 
 	std::string getDescription();
+	std::string toString();
 };

@@ -34,8 +34,8 @@ private:
 	bool isClashing(std::string);
 	bool isIndexValid(std::string);
 
-	std::vector<std::string> readTextFileIntoVec(std::string); //the argument passed should be the name of the text file
-	void readVecIntoTextFile(std::vector<std::string>, std::string); //the 2nd argument passed is name of textFile
+	void saveTasks(std::string fileName);
+	void loadTasks(std::string fileName);
 
 
 	//------------------------------------Main Functions------------------------------------------------

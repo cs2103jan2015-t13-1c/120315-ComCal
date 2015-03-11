@@ -9,6 +9,12 @@ int stringToInt(std::string str) {
 	return result;
 }
 
+std::string intToString(int i) {
+	std::stringstream ss;
+	ss << i;
+	return ss.str();
+}
+
 std::string toLowerCase(std::string str) {
 	std::transform(str.begin(), str.end(), str.begin(), ::tolower);
 	return str;

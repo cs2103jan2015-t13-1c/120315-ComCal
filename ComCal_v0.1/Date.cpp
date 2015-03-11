@@ -24,6 +24,10 @@ Date::Date(std::string date) {
 Date::~Date() {
 }
 
+std::string Date::toString() {
+	return (intToString(_day) + "\n" + intToString(_month) + "\n" + intToString(_year) + "\n" + intToString(_time));
+}
+
 // TODO Assuming date format is "DD/MM/YY HHMM" for now
 void Date::setDate(std::string ddmmyy) {
 	int slash1 = ddmmyy.find("/");
