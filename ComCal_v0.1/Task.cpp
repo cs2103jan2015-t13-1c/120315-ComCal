@@ -1,13 +1,15 @@
 #include "Task.h"
 
-Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
+Task::Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
+	_index = index;
 	_description = description;
 	_location = location;
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 }
 
-Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
+Task::Task(int index, std::string description, std::string location, Date* startDate, Date* endDate) {
+	_index = index;
 	_description = description;
 	_location = location;
 	_startDate = startDate;
@@ -22,6 +24,10 @@ Task::~Task() {
 	if (_endDate != NULL) {
 		delete _endDate;
 	}
+}
+
+int Task::getIndex(){
+	return _index;
 }
 
 std::string Task::getDescription() {
