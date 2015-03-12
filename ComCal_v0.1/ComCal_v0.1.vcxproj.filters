@@ -13,25 +13,61 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ComCalComponents">
+      <UniqueIdentifier>{44740fb6-0db1-4a45-bc95-e6d98fbf1157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalComponents\ComCalComponentsCPP">
+      <UniqueIdentifier>{fe28bc71-4cab-4824-915a-c6e0f8b13442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalComponents\ComCalComponentsHeader">
+      <UniqueIdentifier>{b1dbf4cf-263b-4046-9b88-c5a49be37f01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalTypes">
+      <UniqueIdentifier>{7e67f23c-d0ad-463a-b01d-6dc99a8532c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalTypes\ComCalTypesCPP">
+      <UniqueIdentifier>{7f4f92bf-6d2d-4f75-a73c-3ed9cde2f535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalTypes\ComCalTypesHeader">
+      <UniqueIdentifier>{7cf5549a-4861-4042-8749-cd75797f8660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalHelper">
+      <UniqueIdentifier>{3dadb9e6-3adf-43b9-81b4-f1f54d0f8a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalHelper\ComCalHelperHeader">
+      <UniqueIdentifier>{475e3486-553e-4a2f-a881-a77dc57763db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalHelper\ComCalHelperCPP">
+      <UniqueIdentifier>{9cb04f0e-948b-46e1-a403-54b31fa7dd46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonthForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ComCalManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ComCalManager.cpp">
+      <Filter>ComCalComponents\ComCalComponentsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="TextStorage.cpp">
+      <Filter>ComCalComponents\ComCalComponentsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="comAndTask.cpp">
+      <Filter>ComCalTypes\ComCalTypesCPP</Filter>
+    </ClCompile>
     <ClCompile Include="Task.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ComCalTypes\ComCalTypesCPP</Filter>
     </ClCompile>
     <ClCompile Include="Date.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>ComCalTypes\ComCalTypesCPP</Filter>
     </ClCompile>
-    <ClCompile Include="Functions.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="timeDateInfo.cpp">
+      <Filter>ComCalHelper\ComCalHelperCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="typeConversions.cpp">
+      <Filter>ComCalHelper\ComCalHelperCPP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,16 +75,28 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ComCalManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>ComCalComponents\ComCalComponentsHeader</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TextStorage.h">
+      <Filter>ComCalComponents\ComCalComponentsHeader</Filter>
     </ClInclude>
     <ClInclude Include="Date.h">
-      <Filter>Header Files</Filter>
+      <Filter>ComCalTypes\ComCalTypesHeader</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="comAndTask.h">
+      <Filter>ComCalTypes\ComCalTypesHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>ComCalTypes\ComCalTypesHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="keywords.h">
+      <Filter>ComCalHelper\ComCalHelperHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="timeDateInfo.h">
+      <Filter>ComCalHelper\ComCalHelperHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="typeConversions.h">
+      <Filter>ComCalHelper\ComCalHelperHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,25 +3,13 @@
 #include <msclr\marshal_cppstd.h>
 #include <msclr\marshal.h>
 
-#include "Functions.h"
+#include "keywords.h"
+#include "typeConversions.h"
 
-//Default file names constant string declarations:
-const std::string FILENAME_TODODEFAULT = "ComCal_todo.txt";
-const std::string FILENAME_DONEDEFAULT = "ComCal_done.txt";
-
-//Default log file name constant string declarations:
-const std::string FILENAME_LOGDEFAULT = "ActivityLog.txt";
-
-//Number of file name arguments constant int declarations:
-const int NOFILENAMEENTERED = 0;
-const int TODOFILENAMEENTERED = 1;
-
+//Have not initialised TextStorage
 ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
-	_tasks = new std::vector<Task*>();
-
-	std::string todoFileName;
-	std::string doneFileName;
-
+	_todoTasks = new std::vector<Task*>();
+	_doneTasks = new std::vector<Task*>();
 
 	if (numOfFiles == NOFILENAMEENTERED) {
 		_todoFileName = FILENAME_TODODEFAULT;
@@ -38,105 +26,66 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 }
 
 ComCalManager::~ComCalManager() {
-	delete _tasks;
+	delete _todoTasks;
+	delete _doneTasks;
 }
 
 System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	System::String^ feedBackMessage;
 
-	std::string userInput = convertStrTostr(userInputString);
+	std::string userInput = typeConversions::convertStrTostr(userInputString);
 
 	int space = userInput.find(" ");
-	std::string function = toLowerCase(userInput.substr(0, space));
+	std::string function = typeConversions::toLowerCase(userInput.substr(0, space));
 	std::string argument = userInput.substr(space + 1, userInput.length() - space - 1);
 
 	if (function.compare("add") == 0) {
-		feedBackMessage = convertstrToStr(addMainCom(argument));
+		feedBackMessage = typeConversions::convertstrToStr(addMainCom(argument));
 	}
 
 	return feedBackMessage;
 }
 
-// Converts System::String^ into std::string
-std::string ComCalManager::convertStrTostr(System::String^ userInput) {
-	std::string strInput;
-
-	strInput = msclr::interop::marshal_as<std::string>(userInput);
-
-	return strInput;
-}
-
-// Converts std::string into System::String^
-System::String^ ComCalManager::convertstrToStr(std::string userInput) {
-	System::String^ strInput;
-
-	strInput = msclr::interop::marshal_as<System::String^>(userInput);
-
-	return strInput;
-}
-
-// ----------------------------------------------------------------
-// NONE OF THE FUNCTION BELOWS ARE IMPLEMENTED YET!!!
-// ----------------------------------------------------------------
-
-bool ComCalManager::isDateValid(std::string) {
-	return true;
-}
-
-bool ComCalManager::isTimeValid(std::string) {
-	return true;
-}
-
-bool ComCalManager::isDayValid(std::string) {
-	return true;
-}
-
-bool ComCalManager::isClashing(std::string) {
-	return true;
-}
-
-bool ComCalManager::isIndexValid(std::string) {
-	return true;
-}
-
+//I have a feeling this will be taken out
 void ComCalManager::saveTasks(std::string fileName) {
 	std::ofstream outputFile(fileName);
-	int size = _tasks->size();
+	int size = _todoTasks->size();
 	
 	if (outputFile.is_open()) {
 		outputFile << size << std::endl;
 		for (int i = 0; i < size; i++) {
-			outputFile << (*_tasks)[i]->toString() << std::endl;
+			outputFile << (*_todoTasks)[i]->toString() << std::endl;
 		}
 		outputFile.close();
 	}
 }
 
+//Should be taken out as well
 void ComCalManager::loadTasks(std::string fileName) {
 	std::string numberOfTasks;
 	std::string task[10];
 
-	_tasks->clear();
+	_todoTasks->clear();
 
 	std::ifstream inputFile(fileName);
 	if (inputFile.is_open()) {
 		getline(inputFile, numberOfTasks);
-		int n = stringToInt(numberOfTasks);
+		int n = typeConversions::stringToInt(numberOfTasks);
 
 		for (int x = 0; x < n; x++) {
 			for (int i = 0; i < 10; i++) {
 				getline(inputFile, task[i]);
 			}
-			_tasks->push_back(new Task(task[0],
+			_todoTasks->push_back(new Task(task[0],
 									   task[1],
-									   stringToInt(task[2]),
-									   stringToInt(task[3]),
-									   stringToInt(task[4]),
-									   stringToInt(task[5]),
-									   stringToInt(task[6]),
-									   stringToInt(task[7]),
-									   stringToInt(task[8]),
-									   stringToInt(task[9])));
+									   typeConversions::stringToInt(task[2]),
+									   typeConversions::stringToInt(task[3]),
+									   typeConversions::stringToInt(task[4]),
+									   typeConversions::stringToInt(task[5]),
+									   typeConversions::stringToInt(task[6]),
+									   typeConversions::stringToInt(task[7]),
+									   typeConversions::stringToInt(task[8]),
+									   typeConversions::stringToInt(task[9])));
 		}
 		inputFile.close();
 	}
@@ -157,9 +106,9 @@ std::string ComCalManager::addMainCom(std::string argument) {
 	std::string location = argument.substr(l + 3, argument.length() - l - 3);
 
 	Task* newTask = new Task(description, location, new Date(startDate), new Date(endDate));
-	_tasks->push_back(newTask);
+	_todoTasks->push_back(newTask);
 
-	return ("Added " + (*_tasks)[_tasks->size() - 1]->getDescription());
+	return ("Added " + (*_todoTasks)[_todoTasks->size() - 1]->getDescription());
 }
 
 std::string ComCalManager::showMainCom(std::string) {

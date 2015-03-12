@@ -2,7 +2,12 @@
 
 #include <string>
 #include <vector>
+#include <stack>
+#include "comAndTask.h"
 #include "Task.h"
+#include "typeConversions.h"
+#include "keywords.h"
+#include "TextStorage.h"
 
 class ComCalManager
 {
@@ -16,23 +21,29 @@ public:
 	System::String^ deduceCommand(System::String^); 
 
 private:
-	std::vector<Task*>* _tasks;
+	TextStorage* textEditor;
+	//Whenever add, delete or edit function is successfully implemented, the opposite command and Task is stored here
+	//comAndTask are only pushed into undo when a successful add/delete/edit is called
+	//comAndTask are only pushed into redo when an undo is done
+	std::vector<comAndTask*>* _undoHistory;
+	std::vector<comAndTask*>* _redoHistory;
+
+
+	// These are 2 most important vectors in the application, at the start of the application, it will initialise the
+	// 2 vectors with what is in the text file from TextStorage::getTextFileInfo. All add, delete, edit, undo, redo 
+	// will affect these vectors. Right after add,delete,edit is executed, these vectors will pass its information 
+	// to TextStorage for storing
+	std::vector<Task*>* _todoTasks;
+	std::vector<Task*>* _doneTasks;
 
 	int _numOfFiles;
 	std::string _todoFileName;
 	std::string _doneFileName;
 
-	std::string convertStrTostr(System::String^); // Converts System::String^ into std::string
-	System::String^ convertstrToStr(std::string); // Converts std::string into System::String^
-
 	//------------------------------------Standalone Functions------------------------------------------
 	//1) Standalone functions that might be useful to other mainComs
 	//   probably some bool function to check some stuff
-	bool isDateValid(std::string);
-	bool isTimeValid(std::string);
-	bool isDayValid(std::string);
-	bool isClashing(std::string);
-	bool isIndexValid(std::string);
+
 
 	void saveTasks(std::string fileName);
 	void loadTasks(std::string fileName);
@@ -47,7 +58,11 @@ private:
 
 	std::string addMainCom(std::string);
 	std::string showMainCom(std::string);
-	std::string deleteMainCom(std::string);
+	
+	//remark: default delete will only delete indexes from the todo file unless specifed
+	//eg:"delete done 2" or "delete done 3,5,6,14,20"(deletes a number of taks) 
+	//   or "delete done"(deletes all done tasks)
+	std::string deleteMainCom(std::string); 
 	std::string editMainCom(std::string);
 	std::string undoMainCom(std::string);
 	std::string redoMainCom(std::string);
