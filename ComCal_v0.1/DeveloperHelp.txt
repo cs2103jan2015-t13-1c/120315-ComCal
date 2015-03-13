@@ -59,4 +59,4 @@ _manager(numOfUserSpecifiedFiles, fileNames) intialises below{
  ComCalManger::addMainCom(userInput)
  |
  |-userInput broken down into a Task and stored in _todoTask in ComCalManager.h
- V
+ 
