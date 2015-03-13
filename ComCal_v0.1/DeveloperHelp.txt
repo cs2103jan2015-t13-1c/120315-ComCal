@@ -1,0 +1,62 @@
+This document is to help developers better understand the components of
+ComCal.
+
+-There are 3 main components within this project:
+	MonthForm - responsible for reading the input from the user and
+				displaying results such as show tasks and feedback.
+
+	ComCalManager - executing basic commands(add,delete,edit, show,undo,redo,search)
+
+	TextStorage - responsible for taking in initial info from text file
+				  turning them into Tasks, sorting, update(only for todo file)
+				  and transferring the vector of Tasks to ComCalManager
+
+					
+-Critical class types within ComCalManager and TextStorage(ComCalTypes):
+	Task - formats a string into various components of index, description
+		   start date and time, end date and time, location
+
+	Date - formats a string into components of day,month,year and time(hhmm)
+
+
+-ComCalHelper contains classes and headers that contains functions that aid in varios components:
+	keywords - contains default keywords essential throughout ComCalComponents
+
+	timeDateInfo - contains functions that will aid in checking the validity of
+				   dates, time and clashes within Task
+
+	typeConversions - functions to aid in conversions between types
+
+
+Sequence of initialising application:
+
+Main:
+MonthForm form(numOfUserSpecifiedFiles, fileNames)
+ |
+ | - This form() initialises ComCalManager variable _manager(numOfUserSpecifiedFiles, fileNames)
+ V
+ComCalManger:
+_manager(numOfUserSpecifiedFiles, fileNames) intialises below{
+ |
+ |TextStorage:
+ | - Initialises  TextStorage _textEditor(todoFile, doneFile){
+ |		- calls storeUpdateSortTasksInVec(todoFile) to store tasks in _todoVec in TextStorage.h
+ |		- calls storeUpdateSortTasksInVec(doneFile) to store tasks in _doneVec in TextStorage.h
+ |} 
+ | - _textEditor->getSortedVec(todoFile) to initialise _todoTask vector in ComCalManger.h 
+ | - _textEditor->getSortedVec(doneFile) to initialise _doneTask vector in ComCalManger.h
+ |
+ V
+ ComCalManager initialised and program is ready for user input
+ |
+ |MonthForm::userEnter
+ |- user inputs "add .d CS Tutorial .s 12/3/2015 1300 .e 12/3/2015 1400 .l NUS COM1 B1-03"
+ V
+ ComCalManager::deduceCommand(userInput, feedBack)
+ |		^
+ |		|returns feedBackMessage
+ V		|
+ ComCalManger::addMainCom(userInput)
+ |
+ |-userInput broken down into a Task and stored in _todoTask in ComCalManager.h
+ V
