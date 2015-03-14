@@ -19,7 +19,7 @@ namespace ComCal_v01 {
 	{
 	public:
 		MonthForm(int, array<String^>^);
-		void setCalendarDate_MonthForm(void);
+		void setCalendarDate_MonthForm(struct tm*);
 
 	private:
 		ComCalManager* _manager;
@@ -33,7 +33,7 @@ namespace ComCal_v01 {
 		void storeDateTextBlockInList();
 		void storeTasksTextBlockInList();
 		System::String^ incrementStringDate(System::String^, int);
-		System::String^ setMonthPageTitle(tm*);
+		System::String^ setMonthPageTitle(struct tm*);
 
 	private: System::Windows::Forms::TextBox^  dateBox11;
 

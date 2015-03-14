@@ -31,7 +31,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 }
 
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
-	setCalendarDate_MonthForm();
+	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 }
 
 
@@ -51,7 +51,7 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 
 	if (e->KeyCode == Keys::D){
 		if (_ctrlHeld == true){
-			setCalendarDate_MonthForm();
+			setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 
 			_ctrlHeld = false;
 		}
@@ -67,16 +67,18 @@ System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms
 	}
 }
 
-void ComCal_v01::MonthForm::setCalendarDate_MonthForm(void){
-	struct tm * newtime = new tm();
-	__time32_t * long_time = new __time32_t();
+void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
+//	struct tm * newtime = new tm();
+//	__time32_t * long_time = new __time32_t();
 
 	String^ dateNum = "1";
 	std::string monthTitleStr;
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-	_time32(long_time);
-	_localtime32_s(newtime, long_time);
+//	_time32(long_time);
+//	_localtime32_s(newtime, long_time);
+
+	
 
 	newtime->tm_mday = 1;;
 	mktime(newtime);
@@ -112,7 +114,7 @@ String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize){
 	return dateNum;
 }
 
-System::String^ ComCal_v01::MonthForm::setMonthPageTitle(tm * newtime){
+System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm * newtime){
 	int currentYear = newtime->tm_year + 1900;
 	std::string yearStr;
 	std::string title;
