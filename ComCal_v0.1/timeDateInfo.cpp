@@ -55,7 +55,18 @@ std::string timeDateInfo::getMonthStr(int iter){
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "January", "February", "March", "April", "May",
 		"June", "July", "August", "September", "October", "November", "December" };
 
-	return MONTHS[iter];
+	try{
+		if (iter >= 0 && iter < 12){
+			return MONTHS[iter];
+		}
+
+		throw GET_MONTH_STR_ERROR;
+	}
+	catch(const std::string message){
+		ErrorLog::inputErrorLog(message);
+	}
+
+	return NULL;
 }
 
 struct tm* timeDateInfo::setStructTm(int year, int month){
