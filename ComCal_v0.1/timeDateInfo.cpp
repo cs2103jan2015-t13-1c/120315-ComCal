@@ -1,14 +1,21 @@
 #include "timeDateInfo.h"
 #include "keywords.h"
+#include "ErrorLog.h"
 
+//To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
+//key in all error messages inside keywords.h as const std::strings
+
+//prasoon
 bool timeDateInfo::isDateValid(std::string) {
 	return true;
 }
 
+//weiliang
 bool timeDateInfo::isTimeValid(int) {
 	return 1;
 }
 
+//huangqin
 bool timeDateInfo::isDayValid(std::string) {
 	return true;
 }
@@ -41,6 +48,7 @@ bool timeDateInfo::isLeapYear(int year)
 	return isLeap;
 }
 
+//Hamzah
 //returns the month in string form
 //Argument: an int corresponding to the month, eg. 0=January, 1=February,..,11=December
 std::string timeDateInfo::getMonthStr(int iter){

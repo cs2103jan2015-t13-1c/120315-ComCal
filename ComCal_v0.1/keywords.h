@@ -26,3 +26,5 @@ const static int MAX_ASCTIME_S = 26;
 const static int DAYS_IN_WEEK = 7;
 const static int MONTHS_IN_YEAR = 12;
 const static int MAX_DAYS_IN_MONTH = 31;
+
+//Input error messages here

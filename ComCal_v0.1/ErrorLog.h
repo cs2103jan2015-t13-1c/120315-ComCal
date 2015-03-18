@@ -6,5 +6,7 @@
 namespace ErrorLog{
 
 	void inputErrorLog(const std::string);
+
+	//
 };
 
