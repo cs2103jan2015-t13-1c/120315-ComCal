@@ -1,5 +1,6 @@
 // Task.h
 // Contains the class that stores information about tasks
+//
 
 #pragma once
 
@@ -14,6 +15,7 @@ private:
 	Date* _startDate;
 	Date* _endDate;
 public:
+	Task();
 	Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime);
 	Task(int index, std::string description, std::string location, Date* startDate, Date* endDate);
 	~Task();

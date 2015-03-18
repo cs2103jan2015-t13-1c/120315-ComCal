@@ -2,6 +2,7 @@
 
 #include <string>
 #include "ComCalManager.h"
+#include "TextStorage.h"
 
 namespace ComCal_v01 {
 
@@ -23,18 +24,20 @@ namespace ComCal_v01 {
 
 	private:
 		ComCalManager* _manager;
+
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> dateList;
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> taskList;
-	private: System::Windows::Forms::Button^  resetButton;
 
 		bool _ctrlHeld;
 
 	private: 
 		void storeDateTextBlockInList();
 		void storeTasksTextBlockInList();
+		
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
 
+	private: System::Windows::Forms::Button^  resetButton;
 	private: System::Windows::Forms::TextBox^  dateBox11;
 
 	private: System::Windows::Forms::TextBox^  taskBox11;
@@ -406,13 +409,13 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkSat = (gcnew System::Windows::Forms::TextBox());
 			this->dayTxtBlkFri = (gcnew System::Windows::Forms::TextBox());
 			this->dayTxtBlkThur = (gcnew System::Windows::Forms::TextBox());
-			this->dayTxtBlkWed = (gcnew System::Windows::Forms::TextBox());
 			this->dayTxtBlkTue = (gcnew System::Windows::Forms::TextBox());
 			this->dayTxtBlkSun = (gcnew System::Windows::Forms::TextBox());
 			this->dayTxtBlkMon = (gcnew System::Windows::Forms::TextBox());
 			this->table11 = (gcnew System::Windows::Forms::TableLayoutPanel());
 			this->taskBox11 = (gcnew System::Windows::Forms::TextBox());
 			this->dateBox11 = (gcnew System::Windows::Forms::TextBox());
+			this->dayTxtBlkWed = (gcnew System::Windows::Forms::TextBox());
 			this->userInputBox = (gcnew System::Windows::Forms::TextBox());
 			this->monthFormTitle = (gcnew System::Windows::Forms::TextBox());
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
@@ -1541,7 +1544,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox22->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox22->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox22->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox22->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7));
 			this->taskBox22->Location = System::Drawing::Point(3, 22);
 			this->taskBox22->Multiline = true;
 			this->taskBox22->Name = L"taskBox22";
@@ -1865,19 +1868,6 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkThur->Text = L"Thu";
 			this->dayTxtBlkThur->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
-			// dayTxtBlkWed
-			// 
-			this->dayTxtBlkWed->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->dayTxtBlkWed->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->dayTxtBlkWed->Location = System::Drawing::Point(324, 4);
-			this->dayTxtBlkWed->Name = L"dayTxtBlkWed";
-			this->dayTxtBlkWed->ReadOnly = true;
-			this->dayTxtBlkWed->Size = System::Drawing::Size(76, 19);
-			this->dayTxtBlkWed->TabIndex = 3;
-			this->dayTxtBlkWed->Text = L"Wed";
-			this->dayTxtBlkWed->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			// 
 			// dayTxtBlkTue
 			// 
 			this->dayTxtBlkTue->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
@@ -1956,6 +1946,19 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dateBox11->Name = L"dateBox11";
 			this->dateBox11->Size = System::Drawing::Size(27, 14);
 			this->dateBox11->TabIndex = 0;
+			// 
+			// dayTxtBlkWed
+			// 
+			this->dayTxtBlkWed->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dayTxtBlkWed->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkWed->Location = System::Drawing::Point(324, 4);
+			this->dayTxtBlkWed->Name = L"dayTxtBlkWed";
+			this->dayTxtBlkWed->ReadOnly = true;
+			this->dayTxtBlkWed->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkWed->TabIndex = 3;
+			this->dayTxtBlkWed->Text = L"Wed";
+			this->dayTxtBlkWed->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// userInputBox
 			// 

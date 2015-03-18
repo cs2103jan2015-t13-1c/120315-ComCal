@@ -1,8 +1,17 @@
+//Prasoon handles this whole part of the code
+
 #pragma once
 #include <string>
 #include <vector>
 #include "Task.h"
+#include "keywords.h"
 
+using namespace System;
+using namespace System::ComponentModel;
+using namespace System::Collections;
+using namespace System::Windows::Forms;
+using namespace System::Data;
+using namespace System::Drawing;
 
 //store, sort and updates the textfile
 class TextStorage
@@ -11,8 +20,8 @@ private:
 	std::string _todoFileName;
 	std::string _doneFileName;
 
-	std::vector<Task>* _todoVec;
-	std::vector<Task>* _doneVec;
+	std::vector<Task*>* _todoVec;
+	std::vector<Task*>* _doneVec;
 
 
 	//used to store tasks that pass deadline during sortAndUpdate() then Tasks in the vector will be stored into

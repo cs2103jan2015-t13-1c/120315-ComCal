@@ -41,3 +41,15 @@ std::string typeConversions::toLowerCase(std::string str) {
 	return str;
 }
 
+void typeConversions::convertArrStrToConststrArr(array<System::String^>^ fileNames, const char** strFilesNames, int numOfSpecifiedFiles){
+
+	msclr::interop::marshal_context^ context = gcnew msclr::interop::marshal_context();
+	strFilesNames = new const char*[numOfSpecifiedFiles];
+	for (int i = 0; i < numOfSpecifiedFiles; i++){
+		strFilesNames[i] = context->marshal_as<const char*>(fileNames[i]);
+
+		context = nullptr;
+	}
+
+}
+

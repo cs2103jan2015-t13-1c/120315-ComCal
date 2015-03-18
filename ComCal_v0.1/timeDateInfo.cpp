@@ -5,8 +5,8 @@ bool timeDateInfo::isDateValid(std::string) {
 	return true;
 }
 
-bool timeDateInfo::isTimeValid(std::string) {
-	return true;
+bool timeDateInfo::isTimeValid(int) {
+	return 1;
 }
 
 bool timeDateInfo::isDayValid(std::string) {
@@ -48,6 +48,18 @@ std::string timeDateInfo::getMonthStr(int iter){
 		"June", "July", "August", "September", "October", "November", "December" };
 
 	return MONTHS[iter];
+}
+
+struct tm* timeDateInfo::setStructTm(int year, int month){
+	time_t * rawtime = new time_t();
+	struct tm * timeinfo = new struct tm();
+
+	time(rawtime);
+	timeinfo = localtime(rawtime);
+	timeinfo->tm_mon = month;
+	timeinfo->tm_year = year - 1900;
+
+	return timeinfo;
 }
 
 struct tm* timeDateInfo::setStructTm(int month){

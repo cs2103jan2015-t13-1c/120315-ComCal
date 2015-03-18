@@ -30,6 +30,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	defaultView(nullptr, nullptr);
 }
 
+
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 }
@@ -77,8 +78,6 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
 
 //	_time32(long_time);
 //	_localtime32_s(newtime, long_time);
-
-	
 
 	newtime->tm_mday = 1;;
 	mktime(newtime);

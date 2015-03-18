@@ -1,5 +1,9 @@
 #include "Task.h"
 
+Task::Task(){
+
+}
+
 Task::Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
 	_index = index;
 	_description = description;

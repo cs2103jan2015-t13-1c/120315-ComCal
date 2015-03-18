@@ -19,4 +19,6 @@ namespace typeConversions{
 	std::string intToString(int i);
 
 	std::string toLowerCase(std::string str);
+
+	void convertArrStrToConststrArr(array<System::String^>^, const char**, int);
 }

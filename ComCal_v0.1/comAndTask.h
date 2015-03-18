@@ -8,6 +8,11 @@ class comAndTask
 public:
 	//Arguments: 1st - command string, 2nd - Task
 	comAndTask(std::string, Task);
+	~comAndTask();
+
+	Task getTask();
+	std::string getCommand();
+
 private:
 	Task _task;
 	std::string _command;
