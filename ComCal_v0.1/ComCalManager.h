@@ -47,6 +47,11 @@ private:
 	std::vector<Task*>* _todoTasks;
 	std::vector<Task*>* _doneTasks;
 
+	//side bar viewer vector: This vector is used for search and show functions
+	//To use this vector, delete the content in the vector then add in the searh/show info into this vector
+	//The display will be done in the MonthForm.cpp by first getting this vector then displaying it on GUI
+	std::vector<std::string>* _sideBarView;
+
 	int _numOfFiles;
 	std::string _todoFileName;
 	std::string _doneFileName;

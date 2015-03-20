@@ -15,6 +15,8 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 	_undoHistory = new std::vector<comAndTask*>();
 	_redoHistory = new std::vector<comAndTask*>();
 
+	_sideBarView = new std::vector<std::string>();
+
 	if (numOfFiles == NOFILENAMEENTERED) {
 		_todoFileName = FILENAME_TODODEFAULT;
 		_doneFileName = FILENAME_DONEDEFAULT;
@@ -38,6 +40,11 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 ComCalManager::~ComCalManager() {
 	delete _todoTasks;
 	delete _doneTasks;
+
+	delete _undoHistory;
+	delete _redoHistory;
+
+	delete _sideBarView;
 }
 
 System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
