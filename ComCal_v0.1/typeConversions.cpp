@@ -2,6 +2,12 @@
 #include <sstream>
 #include <algorithm>
 
+std::string typeConversions::convertTaskToStr(Task*){
+	std::string strTask;
+
+	return strTask;
+}
+
 // Converts System::String^ into std::string
 std::string typeConversions::convertStrTostr(System::String^ userInput) {
 	std::string strInput;

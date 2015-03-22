@@ -37,12 +37,19 @@ namespace ComCal_v01 {
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
 
+		bool isShowSearchFlagged();
+		void updateSideBar();
+		void updateCalendar();
+		void guiUpdate();
+		void loadCalendarTodoTasks();
+
 	private: System::Windows::Forms::Button^  resetButton;
 	private: System::Windows::Forms::TextBox^  dateBox11;
 
 	private: System::Windows::Forms::TextBox^  taskBox11;
+	private: System::Windows::Forms::TextBox^  sideBar;
 
-	private: System::Windows::Forms::TextBox^  textBox5;
+
 	private: System::Windows::Forms::TextBox^  showBox;
 
 
@@ -121,6 +128,7 @@ namespace ComCal_v01 {
 	private: System::Windows::Forms::TextBox^  dateBox42;
 
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel22;
+
 	private: System::Windows::Forms::TextBox^  taskBox41;
 
 
@@ -243,11 +251,17 @@ private: System::Windows::Forms::TextBox^  taskBox13;
 private: System::Windows::Forms::TextBox^  dateBox13;
 
 private: System::Windows::Forms::TableLayoutPanel^  table12;
+
 private: System::Windows::Forms::TextBox^  taskBox12;
+
 private: System::Windows::Forms::TextBox^  dateBox12;
+
 private: System::Windows::Forms::TableLayoutPanel^  table51;
+
 private: System::Windows::Forms::TextBox^  taskBox51;
+
 private: System::Windows::Forms::TextBox^  dateBox51;
+
 private: System::Windows::Forms::TextBox^  textBox1;
 
 	protected:
@@ -418,7 +432,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkWed = (gcnew System::Windows::Forms::TextBox());
 			this->userInputBox = (gcnew System::Windows::Forms::TextBox());
 			this->monthFormTitle = (gcnew System::Windows::Forms::TextBox());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->sideBar = (gcnew System::Windows::Forms::TextBox());
 			this->showBox = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->resetButton = (gcnew System::Windows::Forms::Button());
@@ -1991,17 +2005,17 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->monthFormTitle->TabIndex = 2;
 			this->monthFormTitle->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
-			// textBox5
+			// sideBar
 			// 
-			this->textBox5->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+			this->sideBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->textBox5->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox5->Enabled = false;
-			this->textBox5->Location = System::Drawing::Point(12, 37);
-			this->textBox5->Multiline = true;
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(273, 516);
-			this->textBox5->TabIndex = 3;
+			this->sideBar->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->sideBar->Enabled = false;
+			this->sideBar->Location = System::Drawing::Point(12, 37);
+			this->sideBar->Multiline = true;
+			this->sideBar->Name = L"sideBar";
+			this->sideBar->Size = System::Drawing::Size(273, 516);
+			this->sideBar->TabIndex = 3;
 			// 
 			// showBox
 			// 
@@ -2052,7 +2066,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->Controls->Add(this->resetButton);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->showBox);
-			this->Controls->Add(this->textBox5);
+			this->Controls->Add(this->sideBar);
 			this->Controls->Add(this->monthFormTitle);
 			this->Controls->Add(this->userInputBox);
 			this->Controls->Add(this->monthPanel);

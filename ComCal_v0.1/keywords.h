@@ -27,5 +27,9 @@ const static int DAYS_IN_WEEK = 7;
 const static int MONTHS_IN_YEAR = 12;
 const static int MAX_DAYS_IN_MONTH = 31;
 
+//keyboard shortcuts
+const static std::string NEWLINE = "\n";
+
 //Input error messages here
 const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11";
+const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged"

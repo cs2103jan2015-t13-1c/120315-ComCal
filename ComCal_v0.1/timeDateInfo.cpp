@@ -6,7 +6,7 @@
 //key in all error messages inside keywords.h as const std::strings
 
 //prasoon
-bool timeDateInfo::isDateValid(std::string) {
+; bool timeDateInfo::isDateValid(std::string) {
 	return true;
 }
 
@@ -59,8 +59,9 @@ std::string timeDateInfo::getMonthStr(int iter){
 		if (iter >= 0 && iter < 12){
 			return MONTHS[iter];
 		}
-
-		throw GET_MONTH_STR_ERROR;
+		else{
+			throw GET_MONTH_STR_ERROR;
+		}
 	}
 	catch(const std::string message){
 		ErrorLog::inputErrorLog(message);
