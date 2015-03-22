@@ -1,6 +1,6 @@
 // Task.h
 // Contains the class that stores information about tasks
-//
+//@author A0119754X
 
 #pragma once
 

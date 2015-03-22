@@ -1,3 +1,7 @@
+// Task.cpp
+// Implementation of functions in the Task class
+//@author A0119754X
+
 #include "Task.h"
 
 Task::Task(){

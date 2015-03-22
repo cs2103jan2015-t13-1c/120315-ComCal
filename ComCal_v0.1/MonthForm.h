@@ -2,7 +2,6 @@
 
 #include <string>
 #include "ComCalManager.h"
-#include "TextStorage.h"
 
 namespace ComCal_v01 {
 

@@ -31,38 +31,10 @@ public:
 	System::String^ deduceCommand(System::String^); 
 
 private:
-	TextStorage* _textEditor;
-
-	//Whenever add, delete or edit function is successfully implemented, the opposite command and Task is stored here
-	//comAndTask are only pushed into undo when a successful add/delete/edit is called
-	//comAndTask are only pushed into redo when an undo is done
-	std::vector<comAndTask*>* _undoHistory;
-	std::vector<comAndTask*>* _redoHistory;
-
-
-	// These are 2 most important vectors in the application, at the start of the application, it will initialise the
-	// 2 vectors with what is in the text file from TextStorage::getTextFileInfo. All add, delete, edit, undo, redo 
-	// will affect these vectors. Right after add,delete,edit is executed, these vectors will pass its information 
-	// to TextStorage for storing
-	std::vector<Task*>* _todoTasks;
-	std::vector<Task*>* _doneTasks;
-
 	//side bar viewer vector: This vector is used for search and show functions
 	//To use this vector, delete the content in the vector then add in the searh/show info into this vector
 	//The display will be done in the MonthForm.cpp by first getting this vector then displaying it on GUI
 	std::vector<std::string>* _sideBarView;
-
-	int _numOfFiles;
-	std::string _todoFileName;
-	std::string _doneFileName;
-
-	//------------------------------------Standalone Functions------------------------------------------
-	//1) Standalone functions that might be useful to other mainComs
-	//   probably some bool function to check some stuff
-
-	void saveTasks(std::string fileName);
-	void loadTasks(std::string fileName);
-
 
 	//------------------------------------Main Functions------------------------------------------------
 	//1) All the main functions with string should return to the UI a message for the feedback history
@@ -73,7 +45,6 @@ private:
 	//4) We should make classes for each mainCom i guess, to adhere to SE principles but it should still pass
 	//	 back a string as feedback for the UI
 
-	std::string addMainCom(std::string); //weiliang
 	std::string showMainCom(std::string); //Hamzah
 	
 	//remark: default delete will only delete indexes from the todo file unless specifed
@@ -84,26 +55,4 @@ private:
 	std::string undoMainCom(std::string); //huangqin
 	std::string redoMainCom(std::string); //huangqin
 	std::string searchMainCom(std::string); //weiliang
-
-
-	//---------------------------------Main Sub-Functions-----------------------------------------------
-	//1) Below will be all the sub-functions that will be used by the MainCom functions
-	//2) Add whatever function you want but it should only deal with that specific mainCom you want to handle
-
-	//sub-functions for addMainCom
-	bool isAddFormatValid(std::string);
-
-	//sub-functions for showMainCom
-	bool isShowFormatValid(std::string);
-
-	//sub-functions for deleteMainCom
-	bool isDeleteFormatValid(std::string);
-
-	//sub-functions for editMainCom
-	bool isEditFormatValid(std::string);
-
-	//sub-functions for undoMainCom
-
-	//sub-functions for redoMainCom
-
 };
