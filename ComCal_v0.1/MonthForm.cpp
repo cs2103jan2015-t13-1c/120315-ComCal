@@ -1,5 +1,6 @@
 #include "MonthForm.h"
 #include "keywords.h"
+#include "typeConversions.h"
 #include "timeDateInfo.h"
 #include <wchar.h>
 #include <time.h>
@@ -26,6 +27,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	}
 
 	_manager = new ComCalManager(argc, charFileNames);
+	_ctrlHeld = false;
 
 	defaultView(nullptr, nullptr);
 }
@@ -35,6 +37,35 @@ System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^ 
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 }
 
+bool MonthForm::isShowSearchFlagged(){
+	bool flagged = false;
+
+	if (_manager->isShowDayTaskSearch || _manager->isShowMonth){
+		flagged = true;
+	}
+
+	return flagged;
+}
+
+void MonthForm::guiUpdate(){
+
+	try{
+		if (_manager->isShowDayTaskSearch){
+			updateSideBar();
+		}
+		else{
+			if (_manager->isShowMonth){
+
+			}
+			else{
+				throw GUI_UPDATE_ERROR;
+			}
+		}	
+	}
+	catch (std::string errorMsg){
+		ErrorLog::inputErrorLog(errorMsg);
+	}
+}
 
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	String^ feedBack;
@@ -46,6 +77,10 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		else{
 			feedBack = _manager->deduceCommand(userInputBox->Text);
 
+			if (isShowSearchFlagged()){
+				guiUpdate();
+			}
+			
 			userInputBox->Text = nullptr;
 		}
 	}
@@ -69,15 +104,9 @@ System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms
 }
 
 void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
-//	struct tm * newtime = new tm();
-//	__time32_t * long_time = new __time32_t();
-
 	String^ dateNum = "1";
 	std::string monthTitleStr;
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-//	_time32(long_time);
-//	_localtime32_s(newtime, long_time);
 
 	newtime->tm_mday = 1;;
 	mktime(newtime);
@@ -113,7 +142,7 @@ String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize){
 	return dateNum;
 }
 
-System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm * newtime){
+System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime){
 	int currentYear = newtime->tm_year + 1900;
 	std::string yearStr;
 	std::string title;
@@ -129,6 +158,31 @@ System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm * newtime){
 	System::String^ titleStr = gcnew System::String(title.c_str());
 
 	return titleStr;
+}
+
+void ComCal_v01::MonthForm::updateCalendar(){
+
+}
+
+void ComCal_v01::MonthForm::loadCalendarTodoTasks(){
+
+}
+
+void ComCal_v01::MonthForm::updateSideBar(){
+	int numOfLines = _manager->getSideVec()->size();
+	std::string sideBarStr;
+	std::vector<Task*>* sideVec = new std::vector<Task*>();
+
+	sideBar->Text = nullptr;
+	sideVec = _manager->getSideVec();
+
+	for (int i = 0; i < numOfLines; i++){
+		sideBarStr += typeConversions::convertTaskToStr(sideVec->at(i)) + NEWLINE;
+	}
+
+	delete sideVec;
+
+	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
 }
 
 

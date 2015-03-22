@@ -4,7 +4,7 @@
 
 #include <fstream>
 
-void ErrorLog::inputErrorLog(const std::string error){
+; void ErrorLog::inputErrorLog(const std::string error){
 
 	std::ofstream outputFile;
 

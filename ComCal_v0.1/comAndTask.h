@@ -1,10 +1,12 @@
 #pragma once
 #include "Task.h"
+#include <string>
 #include "keywords.h"
 
 //This class is used mainly for undo and redo
-class comAndTask
-{
+;
+class comAndTask{
+
 public:
 	//Arguments: 1st - command string, 2nd - Task
 	comAndTask(std::string, Task);

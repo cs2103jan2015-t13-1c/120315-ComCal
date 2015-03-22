@@ -8,8 +8,8 @@
 //This namespace is cater to any type conversions that might occur
 namespace typeConversions{
 
-	std::string convertTaskToStr(Task);
-	Task convertStrToTask(std::string);
+	std::string convertTaskToStr(Task*);
+	Task* convertStrToTask(std::string);
 
 	//StrH refers to String^
 	std::string convertStrTostr(System::String^); // Converts System::String^ into std::string
