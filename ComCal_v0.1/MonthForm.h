@@ -262,8 +262,9 @@ private: System::Windows::Forms::TableLayoutPanel^  table51;
 private: System::Windows::Forms::TextBox^  taskBox51;
 
 private: System::Windows::Forms::TextBox^  dateBox51;
+private: System::Windows::Forms::TextBox^  feedBackBox;
 
-private: System::Windows::Forms::TextBox^  textBox1;
+
 
 	protected:
 		/// <summary>
@@ -435,7 +436,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->monthFormTitle = (gcnew System::Windows::Forms::TextBox());
 			this->sideBar = (gcnew System::Windows::Forms::TextBox());
 			this->showBox = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->feedBackBox = (gcnew System::Windows::Forms::TextBox());
 			this->resetButton = (gcnew System::Windows::Forms::Button());
 			this->monthPanel->SuspendLayout();
 			this->table51->SuspendLayout();
@@ -2033,17 +2034,18 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->showBox->Text = L"Todo Tasks";
 			this->showBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
-			// textBox1
+			// feedBackBox
 			// 
-			this->textBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+			this->feedBackBox->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->textBox1->Enabled = false;
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->textBox1->Location = System::Drawing::Point(304, 502);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(749, 16);
-			this->textBox1->TabIndex = 5;
+			this->feedBackBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->feedBackBox->Enabled = false;
+			this->feedBackBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->feedBackBox->Location = System::Drawing::Point(304, 502);
+			this->feedBackBox->Name = L"feedBackBox";
+			this->feedBackBox->ReadOnly = true;
+			this->feedBackBox->Size = System::Drawing::Size(749, 16);
+			this->feedBackBox->TabIndex = 5;
 			// 
 			// resetButton
 			// 
@@ -2065,7 +2067,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->ClientSize = System::Drawing::Size(1057, 565);
 			this->Controls->Add(this->resetButton);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->feedBackBox);
 			this->Controls->Add(this->showBox);
 			this->Controls->Add(this->sideBar);
 			this->Controls->Add(this->monthFormTitle);

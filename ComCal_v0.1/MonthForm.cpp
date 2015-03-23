@@ -57,7 +57,7 @@ void MonthForm::guiUpdate(){
 		}
 		else{
 			if (_manager->isShowMonth){
-
+				updateCalendar();
 			}
 			else{
 				throw GUI_UPDATE_ERROR;
@@ -72,6 +72,8 @@ void MonthForm::guiUpdate(){
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	String^ feedBack;
 
+	feedBackBox->Text = nullptr;
+
 	if (e->KeyCode == Keys::Enter){
 		if (userInputBox->Text == "exit" || userInputBox->Text == "close"){
 			Application::Exit();
@@ -82,6 +84,8 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			if (isShowSearchFlagged()){
 				guiUpdate();
 			}
+
+			feedBackBox->Text = feedBack;
 
 			userInputBox->Text = nullptr;
 		}
@@ -122,6 +126,7 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
 		dateNum = incrementStringDate(dateNum, 1);
 	}
 
+	loadCalendarTodoTasks(newtime);
 }
 
 String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize){
@@ -157,12 +162,18 @@ System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime){
 }
 
 void ComCal_v01::MonthForm::updateCalendar(){
-
+	setCalendarDate_MonthForm(_manager->getMonthDetails());
 }
 
 int MonthForm::searchTaskMonth(struct tm* newtime){
 	int iter = 0;
+	int desiredMnth = newtime->tm_mon + 1;
+	int desiredYr = newtime->tm_year + 1900;
 
+	while ((TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() != desiredMnth) && (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() != desiredYr)){
+
+		iter++;
+	}
 	
 
 	return iter;
