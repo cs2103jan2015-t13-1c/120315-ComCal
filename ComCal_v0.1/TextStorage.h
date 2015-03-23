@@ -35,4 +35,7 @@ public:
 	static TextStorage* getInstance();
 
 	void initialize(std::string todoFileName, std::string doneFileName);
+
+	std::vector<Task*>* getTodoTask();
+	std::vector<Task*>* getDoneTask();
 };

@@ -29,10 +29,10 @@ namespace ComCal_v01 {
 
 		bool _ctrlHeld;
 
-	private: 
+	private:
 		void storeDateTextBlockInList();
 		void storeTasksTextBlockInList();
-		
+
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
 
@@ -40,7 +40,9 @@ namespace ComCal_v01 {
 		void updateSideBar();
 		void updateCalendar();
 		void guiUpdate();
-		void loadCalendarTodoTasks();
+		void loadCalendarTodoTasks(struct tm*);
+
+		int searchTaskMonth(struct tm*);
 
 	private: System::Windows::Forms::Button^  resetButton;
 	private: System::Windows::Forms::TextBox^  dateBox11;

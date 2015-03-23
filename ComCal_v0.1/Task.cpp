@@ -38,6 +38,10 @@ int Task::getIndex(){
 	return _index;
 }
 
+Date* Task::getStartDate(){
+	return _startDate;
+}
+
 std::string Task::getDescription() {
 	return _description;
 }

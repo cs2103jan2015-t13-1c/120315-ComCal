@@ -22,5 +22,6 @@ public:
 
 	int getIndex();
 	std::string getDescription();
+	Date* getStartDate();
 	std::string toString();
 };

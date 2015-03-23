@@ -21,4 +21,8 @@ public:
 	std::string toString();
 
 	void setDate(std::string);
+
+	int getDay();
+	int getMonth();
+	int getYear();
 };

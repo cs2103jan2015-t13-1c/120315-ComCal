@@ -12,6 +12,9 @@
 ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 	_sideBarView = new std::vector<std::string>();
 
+	isShowMonth = false;
+	isShowDayTaskSearch = false;
+
 	std::string todoFileName;
 	std::string doneFileName;
 	if (numOfFiles == NOFILENAMEENTERED) {
@@ -27,11 +30,20 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 		doneFileName = fileNames[1];
 	}
 
+	
 	TextStorage::getInstance()->initialize(todoFileName, doneFileName);
 }
 
 ComCalManager::~ComCalManager() {
 	delete _sideBarView;
+}
+
+std::vector<std::string>* ComCalManager::getSideVec(){
+	return _sideBarView;
+}
+
+struct tm* ComCalManager::getMonthDetails(){
+	return monthDetails;
 }
 
 System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {

@@ -70,6 +70,16 @@ std::string timeDateInfo::getMonthStr(int iter){
 	return NULL;
 }
 
+int timeDateInfo::getDaysInMonth(int iter, int year){
+	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+	if ((iter == 1) && timeDateInfo::isLeapYear(year + 1900)){
+		daysInMonth[1] = 29;
+	}
+
+	return daysInMonth[iter];
+}
+
 struct tm* timeDateInfo::setStructTm(int year, int month){
 	time_t * rawtime = new time_t();
 	struct tm * timeinfo = new struct tm();

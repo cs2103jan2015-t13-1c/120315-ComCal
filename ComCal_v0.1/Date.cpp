@@ -40,3 +40,13 @@ void Date::setDate(std::string ddmmyy) {
 	_month = typeConversions::stringToInt(ddmmyy.substr(slash1 + 1, slash2 - slash1 - 1));
 	_year = typeConversions::stringToInt(ddmmyy.substr(slash2 + 1, ddmmyy.length() - slash2 - 1));
 }
+
+int Date::getDay(){
+	return _day;
+}
+int Date::getMonth(){
+	return _month;
+}
+int Date::getYear(){
+	return _year;
+}

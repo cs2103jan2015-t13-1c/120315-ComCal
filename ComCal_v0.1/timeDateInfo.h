@@ -19,6 +19,10 @@ namespace timeDateInfo{
 	bool isLeapYear(int);
 	std::string getMonthStr(int);
 
+	//Arguments: 1) iter of the corresponding month, 0-Jan,..,11-Dec 2)year of the month
+	//Returns: Number of days in the month
+	int getDaysInMonth(int, int);
+
 	//3 overloaded functions setStructTm
 	//Arguments: 1=year, 2=month
 	struct tm* setStructTm(int, int);

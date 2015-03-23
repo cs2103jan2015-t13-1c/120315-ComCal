@@ -28,9 +28,28 @@ public:
 	//2) The String^ here will be converted to a std::string the passed to the mainCom functions
 	//3) Argument: String^ user input
 	//3) Returns: a String^ message for the UI feedback
-	System::String^ deduceCommand(System::String^); 
+	System::String^ deduceCommand(System::String^);
+
+	//Update flags:
+	//To flag to MonthForm that search/show was successfully implemented hence needing update on GUI
+	//When a search/show is successfully implemented->Change the appropriate flag to true->MonthForm 
+	//will change it back to false when it successfully updates the GUI
+	bool isShowMonth; //is flagged whenever user asks to show a specific month
+	bool isShowDayTaskSearch; //is flagged whenever user asks to show a specific day or search function is called
+
+	//returns _sideBarVec*
+	std::vector<std::string>* getSideVec();
+
+	//gets monthDetails
+	struct tm* getMonthDetails();
+
+protected:
+	//monthDetails will be initially set to the current time
+	//Changes when the show command is called, MonthForm will call for this when an update is flagged
+	struct tm* monthDetails;
 
 private:
+
 	//side bar viewer vector: This vector is used for search and show functions
 	//To use this vector, delete the content in the vector then add in the searh/show info into this vector
 	//The display will be done in the MonthForm.cpp by first getting this vector then displaying it on GUI
