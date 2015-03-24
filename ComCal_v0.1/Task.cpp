@@ -14,6 +14,7 @@ Task::Task(int index, std::string description, std::string location, int startDa
 	_location = location;
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
+	_isDone = false;
 }
 
 Task::Task(int index, std::string description, std::string location, Date* startDate, Date* endDate) {
@@ -22,6 +23,7 @@ Task::Task(int index, std::string description, std::string location, Date* start
 	_location = location;
 	_startDate = startDate;
 	_endDate = endDate;
+	_isDone = false;
 }
 
 Task::~Task() {
@@ -44,6 +46,10 @@ Date* Task::getStartDate(){
 
 std::string Task::getDescription() {
 	return _description;
+}
+
+bool Task::isDone(){
+	return _isDone;
 }
 
 // Converts the Task object into a String to save into text file

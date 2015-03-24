@@ -14,6 +14,7 @@ private:
 	std::string _location;
 	Date* _startDate;
 	Date* _endDate;
+	bool _isDone;
 public:
 	Task();
 	Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime);
@@ -23,5 +24,7 @@ public:
 	int getIndex();
 	std::string getDescription();
 	Date* getStartDate();
+	bool isDone();
+
 	std::string toString();
 };
