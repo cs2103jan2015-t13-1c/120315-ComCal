@@ -42,14 +42,6 @@ ComCalManager::~ComCalManager() {
 	delete _sideBarView;
 }
 
-std::vector<std::string>* ComCalManager::getSideVec(){
-	return _sideBarView;
-}
-
-struct tm* ComCalManager::getMonthDetails(){
-	return monthDetails;
-}
-
 System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	System::String^ feedBackMessage;
 
@@ -67,4 +59,20 @@ System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	}
 
 	return feedBackMessage;
+}
+
+std::vector<std::string>* ComCalManager::getSideVec() {
+	return _sideBarView;
+}
+
+struct tm* ComCalManager::getMonthDetails() {
+	return monthDetails;
+}
+
+bool ComCalManager::getIsShowMonth() {
+	return isShowMonth;
+}
+
+bool ComCalManager::getIsShowDayTaskSearch() {
+	return isShowDayTaskSearch;
 }

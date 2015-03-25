@@ -42,7 +42,7 @@ System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^ 
 bool MonthForm::isShowSearchFlagged(){
 	bool flagged = false;
 
-	if (_manager->isShowDayTaskSearch || _manager->isShowMonth){
+	if (_manager->getIsShowDayTaskSearch() || _manager->getIsShowMonth()) {
 		flagged = true;
 	}
 
@@ -52,11 +52,11 @@ bool MonthForm::isShowSearchFlagged(){
 void MonthForm::guiUpdate(){
 
 	try{
-		if (_manager->isShowDayTaskSearch){
+		if (_manager->getIsShowDayTaskSearch()) {
 			updateSideBar();
 		}
 		else{
-			if (_manager->isShowMonth){
+			if (_manager->getIsShowMonth()) {
 				updateCalendar();
 			}
 			else{

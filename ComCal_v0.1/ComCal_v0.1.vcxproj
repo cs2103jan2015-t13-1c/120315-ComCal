@@ -78,21 +78,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add.cpp" />
     <ClCompile Include="comAndTask.cpp" />
     <ClCompile Include="ComCalManager.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Delete.cpp" />
+    <ClCompile Include="Edit.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MonthForm.cpp" />
+    <ClCompile Include="Redo.cpp" />
+    <ClCompile Include="Search.cpp" />
+    <ClCompile Include="Show.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="TextStorage.cpp" />
     <ClCompile Include="timeDateInfo.cpp" />
     <ClCompile Include="typeConversions.cpp" />
+    <ClCompile Include="Undo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Add.h" />
     <ClInclude Include="comAndTask.h" />
     <ClInclude Include="ComCalManager.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Delete.h" />
+    <ClInclude Include="Edit.h" />
     <ClInclude Include="keywords.h" />
+    <ClInclude Include="Redo.h" />
+    <ClInclude Include="Search.h" />
+    <ClInclude Include="Show.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="MonthForm.h">
       <FileType>CppForm</FileType>
@@ -100,6 +114,7 @@
     <ClInclude Include="TextStorage.h" />
     <ClInclude Include="timeDateInfo.h" />
     <ClInclude Include="typeConversions.h" />
+    <ClInclude Include="Undo.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonthForm.resx">

@@ -5,7 +5,10 @@
 
 namespace ErrorLog{
 
-	void inputErrorLog(const std::string);
+	void inputErrorLog(const std::string)
+	{
+		// TODO log the string
+	}
 
 	//
 };

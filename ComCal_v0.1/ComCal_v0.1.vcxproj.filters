@@ -40,6 +40,15 @@
     <Filter Include="ComCalHelper\ComCalHelperCPP">
       <UniqueIdentifier>{9cb04f0e-948b-46e1-a403-54b31fa7dd46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ComCalCommands">
+      <UniqueIdentifier>{b6c65cfd-5249-42a8-99c4-a72de5f4782e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalCommands\ComCalCommandsCPP">
+      <UniqueIdentifier>{57378182-4156-4d60-a873-f1d3b669dd9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComCalCommands\ComCalCommandsHeader">
+      <UniqueIdentifier>{7a07ee8e-6ee6-47f7-bf33-234ef566669d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonthForm.cpp">
@@ -69,6 +78,27 @@
     <ClCompile Include="typeConversions.cpp">
       <Filter>ComCalHelper\ComCalHelperCPP</Filter>
     </ClCompile>
+    <ClCompile Include="Add.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Delete.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Edit.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Redo.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Search.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Show.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Undo.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -97,6 +127,30 @@
     </ClInclude>
     <ClInclude Include="typeConversions.h">
       <Filter>ComCalHelper\ComCalHelperHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Add.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Delete.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Redo.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Search.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Show.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Undo.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
