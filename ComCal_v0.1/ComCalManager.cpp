@@ -89,6 +89,18 @@ System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	return feedBackMessage;
 }
 
+void ComCalManager::setDefaultSideBar() {
+
+	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+
+	for (int i = 0; i < todoSize; i++) {
+		_sideBarView->push_back(typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(i)->getIndex())
+			+ INDEX_DESCRIPTION_SEPARATOR
+			+ TextStorage::getInstance()->getTodoTask()->at(i)->getDescription()
+			+ NEWLINE);
+	}
+}
+
 std::vector<std::string>* ComCalManager::getSideVec() {
 	return _sideBarView;
 }

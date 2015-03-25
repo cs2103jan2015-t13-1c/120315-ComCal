@@ -81,8 +81,8 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			if (isShowSearchFlagged()) {
 				guiUpdate();
 			}
-			updateSideBar();
-			updateCalendar();
+			updateSideBar(); //this should be removed once the proper flags in ComCalManager is set
+			updateCalendar(); //this should be removed once the proper flags in ComCalManager is set
 
 			feedBackBox->Text = feedBack;
 
@@ -187,7 +187,6 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 //	int startJIter = MonthForm::searchTaskMonth(newtime);
 	int monthRef = newtime->tm_mon + 1;
 	std::string taskStr[35];
-	System::String^ taskBoxStr;
 
 	if (todoSize > 0) {
 
@@ -200,7 +199,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
 					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())) {
 
-					taskStr[i] += TextStorage::getInstance()->getTodoTask()->at(j)->getDescription() + NEWLINE;
+					taskStr[i] += typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(j)->getIndex()) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription() + NEWLINE;
 				}
 			}
 
@@ -216,6 +215,8 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 }
 
 void ComCal_v01::MonthForm::updateSideBar() {
+//	setDefaultSideBar(); //should be removed by tmr, only be used for 260315 tut
+	_manager->setDefaultSideBar();
 	int numOfLines = _manager->getSideVec()->size();
 	std::string sideBarStr;
 	std::vector<std::string>* sideVec = _manager->getSideVec();
@@ -227,8 +228,6 @@ void ComCal_v01::MonthForm::updateSideBar() {
 
 	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
 }
-
-
 
 void ComCal_v01::MonthForm::storeDateTextBlockInList() {
 	int i = 0;
