@@ -4,6 +4,7 @@
 
 #include "Add.h"
 #include "Task.h"
+#include "TextStorage.h"
 
 std::string Add::execute(std::string argument) {
 	int d = argument.find(".d");
@@ -20,8 +21,12 @@ std::string Add::execute(std::string argument) {
 	std::string location = argument.substr(l + 3, argument.length() - l - 3);
 
 	Task* newTask = new Task(index, description, location, new Date(startDate), new Date(endDate));
+	TextStorage::getInstance()->getTodoTask()->push_back(newTask);
 	// _todoTasks->push_back(newTask);
 	// TODO Add newly created task into one of the vectors in TextStorage
 	//return ("Added " + (*_todoTasks)[_todoTasks->size() - 1]->getDescription());
-	return "";
+
+	std::string feedBackMessage = "Added " + TextStorage::getInstance()->getTodoTask()->at(TextStorage::getInstance()->getTodoTask()->size() - 1)->getDescription();
+
+	return feedBackMessage;
 }

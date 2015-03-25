@@ -38,4 +38,6 @@ public:
 
 	std::vector<Task*>* getTodoTask();
 	std::vector<Task*>* getDoneTask();
+
+	
 };

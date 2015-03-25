@@ -84,6 +84,8 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			if (isShowSearchFlagged()){
 				guiUpdate();
 			}
+			updateSideBar();
+			updateCalendar();
 
 			feedBackBox->Text = feedBack;
 
@@ -166,38 +168,49 @@ void ComCal_v01::MonthForm::updateCalendar(){
 }
 
 int MonthForm::searchTaskMonth(struct tm* newtime){
-	int iter = 0;
+	int iter = -1;
 	int desiredMnth = newtime->tm_mon + 1;
 	int desiredYr = newtime->tm_year + 1900;
 
-	while ((TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() != desiredMnth) && (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() != desiredYr)){
-
-		iter++;
+	while (iter++){
+		if (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() == desiredMnth && TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() == desiredYr){
+			break;
+		}
+		if (iter + 1 == TextStorage::getInstance()->getTodoTask()->size()){
+			break;
+		}
 	}
-	
 
 	return iter;
 }
 
 void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 
-	int todoSize = 0;
-	int startJIter = MonthForm::searchTaskMonth(newtime);
+	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+//	int startJIter = MonthForm::searchTaskMonth(newtime);
 	int monthRef = newtime->tm_mon + 1;
 	System::String^ taskBoxStr;
 
-	//to loop through taskList and dateList
-	for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i){
+	if (todoSize > 0){
 
-		//to loop through todoVec
-		for (int j = startJIter; j < todoSize; j++){
+		//to loop through taskList and dateList
+		for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i){
 
-			if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) && (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())){
-				taskBoxStr = typeConversions::convertstrToStr(TextStorage::getInstance()->getTodoTask()->at(j)->getDescription());
-				taskList[i]->Text->Concat(taskBoxStr, "\n");
+			//to loop through todoVec
+			for (int j = 0; j < todoSize; j++){
+
+				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
+					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())){
+
+					taskBoxStr = typeConversions::convertstrToStr(TextStorage::getInstance()->getTodoTask()->at(j)->getDescription());
+					taskList[i]->Text->Concat(taskBoxStr, "\n");
+				}
 			}
-		}
 
+		}
+	}
+	else{
+		ErrorLog::inputErrorLog(NO_TASKS_IN_VECTOR);
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "typeConversions.h"
 #include "TextStorage.h"
 #include "Add.h"
+#include "timeDateInfo.h"
 
 //Have not initialised TextStorage
 ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
@@ -14,6 +15,9 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 
 	isShowMonth = false;
 	isShowDayTaskSearch = false;
+
+	monthDetails = new struct tm();
+	monthDetails = timeDateInfo::setStructTm();
 
 	std::string todoFileName;
 	std::string doneFileName;
