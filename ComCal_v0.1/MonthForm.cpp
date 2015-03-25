@@ -189,6 +189,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
 //	int startJIter = MonthForm::searchTaskMonth(newtime);
 	int monthRef = newtime->tm_mon + 1;
+	std::vector<std::string>* taskVec = new std::vector<std::string>(35);
 	System::String^ taskBoxStr;
 
 	if (todoSize > 0){
@@ -202,8 +203,10 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
 					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())){
 
-					taskBoxStr = typeConversions::convertstrToStr(TextStorage::getInstance()->getTodoTask()->at(j)->getDescription());
-					taskList[i]->Text->Concat(taskBoxStr, "\n");
+					taskVec->at(j) += TextStorage::getInstance()->getTodoTask()->at(j)->getDescription() + NEWLINE;
+
+//					taskBoxStr = typeConversions::convertstrToStr(TextStorage::getInstance()->getTodoTask()->at(j)->getDescription());
+//					taskList[i]->Text->Concat(taskBoxStr, "\n");
 				}
 			}
 
@@ -211,6 +214,10 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 	}
 	else{
 		ErrorLog::inputErrorLog(NO_TASKS_IN_VECTOR);
+	}
+
+	for (int k = 0; k < taskVec->size(); k++){
+		taskList[k]->Text = typeConversions::convertstrToStr(taskVec->at(k));
 	}
 }
 
