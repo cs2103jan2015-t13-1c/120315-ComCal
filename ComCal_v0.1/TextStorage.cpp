@@ -31,6 +31,25 @@ std::vector<Task*>* TextStorage::getDoneTask() {
 	return _doneTasks;
 }
 
+bool TextStorage::deleteTask(int index) {
+	bool hasDeleted = false;
+	for (unsigned int i = 0; i < _todoTasks->size(); i++) {
+		if ((*_todoTasks)[i]->getIndex() == index) {
+			_todoTasks->erase(_todoTasks->begin() + i);
+			i--;
+			hasDeleted = true;
+		}
+	}
+	for (unsigned int i = 0; i < _doneTasks->size(); i++) {
+		if ((*_doneTasks)[i]->getIndex() == index) {
+			_doneTasks->erase(_doneTasks->begin() + i);
+			i--;
+			hasDeleted = true;
+		}
+	}
+	return hasDeleted;
+}
+
 //I have a feeling this will be taken out
 //void TextStorage::saveTasks(std::string fileName) {
 //	std::ofstream outputFile(fileName);

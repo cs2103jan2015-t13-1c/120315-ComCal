@@ -39,5 +39,5 @@ public:
 	std::vector<Task*>* getTodoTask();
 	std::vector<Task*>* getDoneTask();
 
-	
+	bool deleteTask(int index);
 };

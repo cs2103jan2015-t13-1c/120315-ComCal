@@ -40,7 +40,7 @@ const static int MONTHS_IN_YEAR = 12;
 const static int MAX_DAYS_IN_MONTH = 31;
 
 //keyboard shortcuts
-const static std::string NEWLINE = "\n";
+const static std::string NEWLINE = " \n";
 const static std::string INDEX_DESCRIPTION_SEPARATOR = ". ";
 
 //Input error messages here

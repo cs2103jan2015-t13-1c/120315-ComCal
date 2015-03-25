@@ -93,6 +93,7 @@ void ComCalManager::setDefaultSideBar() {
 
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
 
+	_sideBarView->clear();
 	for (int i = 0; i < todoSize; i++) {
 		_sideBarView->push_back(typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(i)->getIndex())
 			+ INDEX_DESCRIPTION_SEPARATOR
