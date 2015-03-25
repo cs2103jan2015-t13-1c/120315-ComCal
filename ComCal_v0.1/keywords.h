@@ -10,6 +10,18 @@ static const std::string COMMAND_REDO = "redo";
 static const std::string COMMAND_SEARCH = "search";
 static const std::string COMMAND_SHOW = "show";
 
+// Strings for date input
+static const std::string DATE_YESTERDAY = "yesterday";
+static const std::string DATE_TODAY = "today";
+static const std::string DATE_TOMORROW = "tomorrow";
+static const std::string DATE_MONDAY = "Monday";
+static const std::string DATE_TUESDAY = "Tuesday";
+static const std::string DATE_WEDNESDAY = "Wednesday";
+static const std::string DATE_THURSDAY = "Thursday";
+static const std::string DATE_FRIDAY = "Friday";
+static const std::string DATE_SATURDAY = "Saturday";
+static const std::string DATE_SUNDAY = "Sunday";
+
 //Default file names constant string declarations:
 const std::string FILENAME_TODODEFAULT = "ComCal_todo.txt";
 const std::string FILENAME_DONEDEFAULT = "ComCal_done.txt";
@@ -34,3 +46,4 @@ const static std::string NEWLINE = "\n";
 const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
 const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
 const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
+const std::string INVALID_COMMAND = "This is not a valid command\n";

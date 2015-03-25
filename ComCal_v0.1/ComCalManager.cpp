@@ -3,6 +3,12 @@
 #include <msclr\marshal.h>
 #include "ComCalManager.h"
 #include "Add.h"
+#include "Delete.h"
+#include "Edit.h"
+#include "Redo.h"
+#include "Search.h"
+#include "Show.h"
+#include "Undo.h"
 #include "timeDateInfo.h"
 #include "keywords.h"
 #include "TextStorage.h"
@@ -15,7 +21,6 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 	isShowMonth = false;
 	isShowDayTaskSearch = false;
 
-	monthDetails = new struct tm();
 	monthDetails = timeDateInfo::setStructTm();
 
 	std::string todoFileName;
@@ -50,11 +55,35 @@ System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	std::string function = typeConversions::toLowerCase(userInput.substr(0, space));
 	std::string argument = userInput.substr(space + 1, userInput.length() - space - 1);
 
-	Command* command;
-	if (function.compare("add") == 0) {
+	Command* command = NULL;
+	if (function.compare(COMMAND_ADD) == 0) {
 		command = new Add();
+	}
+	else if (function.compare(COMMAND_DELETE) == 0) {
+		command = new Delete();
+	}
+	else if (function.compare(COMMAND_EDIT) == 0) {
+		command = new Edit();
+	}
+	else if (function.compare(COMMAND_UNDO) == 0) {
+		command = new Undo();
+	}
+	else if (function.compare(COMMAND_REDO) == 0) {
+		command = new Redo();
+	}
+	else if (function.compare(COMMAND_SEARCH) == 0) {
+		command = new Search();
+	}
+	else if (function.compare(COMMAND_SHOW) == 0) {
+		command = new Show();
+	}
+
+	if (command != NULL) {
 		feedBackMessage = typeConversions::convertstrToStr(command->execute(argument));
 		delete command; // TODO Instead of deleting it, do something to it for future function implementations (eg undo/redo)
+	}
+	else {
+		feedBackMessage = typeConversions::convertstrToStr(INVALID_COMMAND);
 	}
 
 	return feedBackMessage;

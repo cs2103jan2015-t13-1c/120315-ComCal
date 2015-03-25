@@ -24,7 +24,7 @@ namespace timeDateInfo {
 
 	//3 overloaded functions setStructTm
 	//Arguments: 1=year, 2=month
-	struct tm* setStructTm(int, int);
+	tm* setStructTm(int, int);
 	//Arguments: month
 	struct tm* setStructTm(int);
 	//Default time at the moment of using the application

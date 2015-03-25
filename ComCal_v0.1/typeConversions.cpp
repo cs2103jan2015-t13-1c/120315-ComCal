@@ -1,12 +1,9 @@
 #include "typeConversions.h"
+#include <fstream>
 #include <sstream>
 #include <algorithm>
-
-std::string typeConversions::convertTaskToStr(Task*) {
-	std::string strTask;
-
-	return strTask;
-}
+#include <msclr\marshal_cppstd.h>
+#include <msclr\marshal.h>
 
 // Converts System::String^ into std::string
 std::string typeConversions::convertStrTostr(System::String^ userInput) {
@@ -39,6 +36,11 @@ std::string typeConversions::intToString(int i) {
 	std::stringstream ss;
 	ss << i;
 	return ss.str();
+}
+
+// Check if a string can be converted into an integer
+bool typeConversions::isNumber(std::string str) {
+	return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
 }
 
 // Converts std::string into lower case

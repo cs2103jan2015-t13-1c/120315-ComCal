@@ -14,13 +14,13 @@ private:
 	int _time; // In hhmm 24h time notation
 public:
 	Date(int day, int month, int year, int time);
-	Date(std::string date, int time);
-	Date(std::string);
+	Date(); // For this constructor, use setDate() after creating object,
+			// which returns boolean whether format is valid or invalid
 	~Date();
 	
 	std::string toString();
 
-	void setDate(std::string);
+	bool setDate(std::string date);
 
 	int getDay();
 	int getMonth();

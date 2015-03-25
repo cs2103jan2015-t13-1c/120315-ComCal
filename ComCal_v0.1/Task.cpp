@@ -4,12 +4,15 @@
 
 #include "Task.h"
 
+int Task::_nextIndex = 1;
+
 Task::Task() {
 
 }
 
-Task::Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
-	_index = index;
+Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
+	_index = _nextIndex;
+	_nextIndex++;
 	_description = description;
 	_location = location;
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
@@ -17,8 +20,9 @@ Task::Task(int index, std::string description, std::string location, int startDa
 	_isDone = false;
 }
 
-Task::Task(int index, std::string description, std::string location, Date* startDate, Date* endDate) {
-	_index = index;
+Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
+	_index = _nextIndex;
+	_nextIndex++;
 	_description = description;
 	_location = location;
 	_startDate = startDate;
@@ -48,11 +52,26 @@ std::string Task::getDescription() {
 	return _description;
 }
 
-bool Task::isDone() {
+bool Task::getIsDone() {
 	return _isDone;
+}
+
+bool Task::hasStartDate() {
+	return !(_startDate == NULL);
+}
+
+bool Task::hasEndDate() {
+	return !(_endDate == NULL);
 }
 
 // Converts the Task object into a String to save into text file
 std::string Task::toString() {
-	return (_description + "\n" + _location + "\n" + _startDate->toString() + "\n" + _endDate->toString());
+	std::string returnString = _description + " " + _location + " ";
+	if (hasStartDate()) {
+		returnString += _startDate->toString() + " ";
+	}
+	if (hasEndDate()) {
+		returnString += _endDate->toString();
+	}
+	return returnString;
 }

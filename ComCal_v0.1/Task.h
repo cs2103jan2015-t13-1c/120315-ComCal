@@ -9,22 +9,27 @@
 
 class Task {
 private:
+	static int _nextIndex;
+
 	int _index;
 	std::string _description;
 	std::string _location;
-	Date* _startDate;
-	Date* _endDate;
+	Date* _startDate;			// Could be null, as some tasks do not have a start date and time
+	Date* _endDate;				// Could be null, as some tasks do not have a end date and time
 	bool _isDone;
 public:
 	Task();
-	Task(int index, std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime);
-	Task(int index, std::string description, std::string location, Date* startDate, Date* endDate);
+	Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime);
+	Task(std::string description, std::string location, Date* startDate, Date* endDate);
 	~Task();
 
+	// Getter methods
 	int getIndex();
 	std::string getDescription();
 	Date* getStartDate();
-	bool isDone();
+	bool getIsDone();
+	bool hasStartDate();
+	bool hasEndDate();
 
 	std::string toString();
 };
