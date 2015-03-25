@@ -3,13 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace ErrorLog{
-
-	void inputErrorLog(const std::string)
-	{
-		// TODO log the string
-	}
-
-	//
+namespace ErrorLog {
+	void inputErrorLog(const std::string);
 };
 

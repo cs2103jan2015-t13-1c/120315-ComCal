@@ -4,7 +4,7 @@
 
 #include "Task.h"
 
-Task::Task(){
+Task::Task() {
 
 }
 
@@ -36,11 +36,11 @@ Task::~Task() {
 	}
 }
 
-int Task::getIndex(){
+int Task::getIndex() {
 	return _index;
 }
 
-Date* Task::getStartDate(){
+Date* Task::getStartDate() {
 	return _startDate;
 }
 
@@ -48,7 +48,7 @@ std::string Task::getDescription() {
 	return _description;
 }
 
-bool Task::isDone(){
+bool Task::isDone() {
 	return _isDone;
 }
 

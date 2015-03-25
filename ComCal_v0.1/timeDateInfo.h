@@ -1,12 +1,11 @@
 //Hamzah will handle this whole part
 
 #pragma once
+
 #include <string>
 #include <time.h>
 
-#include "ErrorLog.h"
-
-namespace timeDateInfo{
+namespace timeDateInfo {
 
 	//checks if the date is valid
 	//Argument: string in format DDMMYY

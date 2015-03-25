@@ -28,15 +28,15 @@ bool timeDateInfo::isLeapYear(int year)
 {
 	bool isLeap = false;
 
-	if (year % 4 != 0){
+	if (year % 4 != 0) {
 		isLeap = false;
 	}
 	else{
-		if (year % 100 != 0){
+		if (year % 100 != 0) {
 			isLeap = true;
 		}
 		else{
-			if (year % 400 != 0){
+			if (year % 400 != 0) {
 				isLeap = false;
 			}
 			else{
@@ -51,36 +51,36 @@ bool timeDateInfo::isLeapYear(int year)
 //Hamzah
 //returns the month in string form
 //Argument: an int corresponding to the month, eg. 0=January, 1=February,..,11=December
-std::string timeDateInfo::getMonthStr(int iter){
+std::string timeDateInfo::getMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "January", "February", "March", "April", "May",
 		"June", "July", "August", "September", "October", "November", "December" };
 
 	try{
-		if (iter >= 0 && iter < 12){
+		if (iter >= 0 && iter < 12) {
 			return MONTHS[iter];
 		}
 		else{
 			throw GET_MONTH_STR_ERROR;
 		}
 	}
-	catch(const std::string message){
+	catch(const std::string message) {
 		ErrorLog::inputErrorLog(message);
 	}
 
 	return NULL;
 }
 
-int timeDateInfo::getDaysInMonth(int iter, int year){
+int timeDateInfo::getDaysInMonth(int iter, int year) {
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-	if ((iter == 1) && timeDateInfo::isLeapYear(year + 1900)){
+	if ((iter == 1) && timeDateInfo::isLeapYear(year + 1900)) {
 		daysInMonth[1] = 29;
 	}
 
 	return daysInMonth[iter];
 }
 
-struct tm* timeDateInfo::setStructTm(int year, int month){
+struct tm* timeDateInfo::setStructTm(int year, int month) {
 	time_t * rawtime = new time_t();
 	struct tm * timeinfo = new struct tm();
 
@@ -92,7 +92,7 @@ struct tm* timeDateInfo::setStructTm(int year, int month){
 	return timeinfo;
 }
 
-struct tm* timeDateInfo::setStructTm(int month){
+struct tm* timeDateInfo::setStructTm(int month) {
 	time_t * rawtime = new time_t();
     struct tm * timeinfo = new struct tm();
 
@@ -103,7 +103,7 @@ struct tm* timeDateInfo::setStructTm(int month){
 	return timeinfo;
 }
 
-struct tm* timeDateInfo::setStructTm(){
+struct tm* timeDateInfo::setStructTm() {
 	time_t * rawtime = new time_t();
 	struct tm * timeinfo = new struct tm();
 

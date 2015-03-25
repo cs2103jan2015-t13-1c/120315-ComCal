@@ -99,6 +99,9 @@
     <ClCompile Include="Undo.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
+    <ClCompile Include="ErrorLog.cpp">
+      <Filter>ComCalComponents\ComCalComponentsCPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Undo.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLog.h">
+      <Filter>ComCalComponents\ComCalComponentsHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

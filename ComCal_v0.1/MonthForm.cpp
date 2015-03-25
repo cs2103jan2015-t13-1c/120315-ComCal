@@ -1,18 +1,15 @@
-#include "MonthForm.h"
-#include "keywords.h"
-#include "typeConversions.h"
-#include "TextStorage.h"
-
-#include "timeDateInfo.h"
 #include <wchar.h>
 #include <time.h>
 #include <fstream>
 #include <sstream>
 #include <msclr\marshal_cppstd.h>
 #include <msclr\marshal.h>
-
+#include "MonthForm.h"
+#include "timeDateInfo.h"
+#include "typeConversions.h"
+#include "TextStorage.h"
+#include "ErrorLog.h"
 using namespace ComCal_v01;
-using namespace System;
 using namespace System::Windows::Forms;
 
 MonthForm::MonthForm(int argc, array<String^>^ argv)
@@ -24,7 +21,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 
 	const char** charFileNames = new const char*[argc];
 
-	if (argc > 0){
+	if (argc > 0) {
 		typeConversions::convertArrStrToConststrArr(argv, charFileNames, argc);
 	}
 
@@ -39,7 +36,7 @@ System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^ 
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 }
 
-bool MonthForm::isShowSearchFlagged(){
+bool MonthForm::isShowSearchFlagged() {
 	bool flagged = false;
 
 	if (_manager->getIsShowDayTaskSearch() || _manager->getIsShowMonth()) {
@@ -49,7 +46,7 @@ bool MonthForm::isShowSearchFlagged(){
 	return flagged;
 }
 
-void MonthForm::guiUpdate(){
+void MonthForm::guiUpdate() {
 
 	try{
 		if (_manager->getIsShowDayTaskSearch()) {
@@ -64,7 +61,7 @@ void MonthForm::guiUpdate(){
 			}
 		}
 	}
-	catch (std::string errorMsg){
+	catch (std::string errorMsg) {
 		ErrorLog::inputErrorLog(errorMsg);
 	}
 }
@@ -74,14 +71,14 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 
 	feedBackBox->Text = nullptr;
 
-	if (e->KeyCode == Keys::Enter){
-		if (userInputBox->Text == "exit" || userInputBox->Text == "close"){
+	if (e->KeyCode == Keys::Enter) {
+		if (userInputBox->Text == "exit" || userInputBox->Text == "close") {
 			Application::Exit();
 		}
 		else{
 			feedBack = _manager->deduceCommand(userInputBox->Text);
 
-			if (isShowSearchFlagged()){
+			if (isShowSearchFlagged()) {
 				guiUpdate();
 			}
 			updateSideBar();
@@ -93,8 +90,8 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		}
 	}
 
-	if (e->KeyCode == Keys::D){
-		if (_ctrlHeld == true){
+	if (e->KeyCode == Keys::D) {
+		if (_ctrlHeld == true) {
 			setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 
 			_ctrlHeld = false;
@@ -106,12 +103,12 @@ System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms
 
 	_ctrlHeld = false;
 
-	if (e->KeyCode == Keys::Control){
+	if (e->KeyCode == Keys::Control) {
 		_ctrlHeld = true;
 	}
 }
 
-void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
+void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime) {
 	String^ dateNum = "1";
 	std::string monthTitleStr;
 
@@ -122,7 +119,7 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
 	monthFormTitle->Text = setMonthPageTitle(newtime);
 
 	//sets remaining dates on the month grid
-	for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i){
+	for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i) {
 		dateList[i]->Text = dateNum;
 
 		dateNum = incrementStringDate(dateNum, 1);
@@ -131,7 +128,7 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime){
 	loadCalendarTodoTasks(newtime);
 }
 
-String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize){
+String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize) {
 	std::string dateNumStr = typeConversions::convertStrTostr(dateNum);
 	std::stringstream convert;
 	int dateNumInt;
@@ -145,7 +142,7 @@ String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize){
 	return dateNum;
 }
 
-System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime){
+System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime) {
 	int currentYear = newtime->tm_year + 1900;
 	std::string yearStr;
 	std::string title;
@@ -163,20 +160,20 @@ System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime){
 	return titleStr;
 }
 
-void ComCal_v01::MonthForm::updateCalendar(){
+void ComCal_v01::MonthForm::updateCalendar() {
 	setCalendarDate_MonthForm(_manager->getMonthDetails());
 }
 
-int MonthForm::searchTaskMonth(struct tm* newtime){
+int MonthForm::searchTaskMonth(struct tm* newtime) {
 	int iter = -1;
 	int desiredMnth = newtime->tm_mon + 1;
 	int desiredYr = newtime->tm_year + 1900;
 
-	while (iter++){
-		if (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() == desiredMnth && TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() == desiredYr){
+	while (iter++) {
+		if (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() == desiredMnth && TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() == desiredYr) {
 			break;
 		}
-		if (iter + 1 == TextStorage::getInstance()->getTodoTask()->size()){
+		if (iter + 1 == TextStorage::getInstance()->getTodoTask()->size()) {
 			break;
 		}
 	}
@@ -184,7 +181,7 @@ int MonthForm::searchTaskMonth(struct tm* newtime){
 	return iter;
 }
 
-void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
+void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
 //	int startJIter = MonthForm::searchTaskMonth(newtime);
@@ -192,16 +189,16 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 	std::string taskStr[35];
 	System::String^ taskBoxStr;
 
-	if (todoSize > 0){
+	if (todoSize > 0) {
 
 		//to loop through taskList and dateList
-		for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i){
+		for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i) {
 
 			//to loop through todoVec
-			for (int j = 0; j < todoSize; j++){
+			for (int j = 0; j < todoSize; j++) {
 
 				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
-					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())){
+					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())) {
 
 					taskStr[i] += TextStorage::getInstance()->getTodoTask()->at(j)->getDescription() + NEWLINE;
 				}
@@ -213,12 +210,12 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime){
 		ErrorLog::inputErrorLog(NO_TASKS_IN_VECTOR);
 	}
 
-	for (int k = 0; k < 35; k++){
+	for (int k = 0; k < 35; k++) {
 		taskList[k]->Text = typeConversions::convertstrToStr(taskStr[k]);
 	}
 }
 
-void ComCal_v01::MonthForm::updateSideBar(){
+void ComCal_v01::MonthForm::updateSideBar() {
 	int numOfLines = _manager->getSideVec()->size();
 	std::string sideBarStr;
 	std::vector<std::string>* sideVec = new std::vector<std::string>();
@@ -226,7 +223,7 @@ void ComCal_v01::MonthForm::updateSideBar(){
 	sideBar->Text = nullptr;
 	sideVec = _manager->getSideVec();
 
-	for (int i = 0; i < numOfLines; i++){
+	for (int i = 0; i < numOfLines; i++) {
 		sideBarStr += sideVec->at(i) + NEWLINE;
 	}
 
@@ -237,7 +234,7 @@ void ComCal_v01::MonthForm::updateSideBar(){
 
 
 
-void ComCal_v01::MonthForm::storeDateTextBlockInList(){
+void ComCal_v01::MonthForm::storeDateTextBlockInList() {
 	int i = 0;
 
 	dateList.Insert(i, dateBox11);
@@ -281,7 +278,7 @@ void ComCal_v01::MonthForm::storeDateTextBlockInList(){
 	dateList.Insert(++i, dateBox57);
 }
 
-void ComCal_v01::MonthForm::storeTasksTextBlockInList(){
+void ComCal_v01::MonthForm::storeTasksTextBlockInList() {
 	int i = 0;
 
 	taskList.Insert(i, taskBox11);

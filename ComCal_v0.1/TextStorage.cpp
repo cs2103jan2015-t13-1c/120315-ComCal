@@ -24,10 +24,10 @@ void TextStorage::initialize(std::string todoFileName, std::string doneFileName)
 	_doneFileName = doneFileName;
 }
 
-std::vector<Task*>* TextStorage::getTodoTask(){
+std::vector<Task*>* TextStorage::getTodoTask() {
 	return _todoTasks;
 }
-std::vector<Task*>* TextStorage::getDoneTask(){
+std::vector<Task*>* TextStorage::getDoneTask() {
 	return _doneTasks;
 }
 

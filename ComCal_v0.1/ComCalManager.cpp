@@ -1,13 +1,12 @@
-#include "ComCalManager.h"
 #include <fstream>
 #include <msclr\marshal_cppstd.h>
 #include <msclr\marshal.h>
-
-#include "keywords.h"
-#include "typeConversions.h"
-#include "TextStorage.h"
+#include "ComCalManager.h"
 #include "Add.h"
 #include "timeDateInfo.h"
+#include "keywords.h"
+#include "TextStorage.h"
+#include "typeConversions.h"
 
 //Have not initialised TextStorage
 ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {

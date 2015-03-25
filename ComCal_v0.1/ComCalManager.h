@@ -4,20 +4,6 @@
 #include <vector>
 #include <stack>
 
-#include "comAndTask.h"
-#include "Task.h"
-#include "typeConversions.h"
-#include "keywords.h"
-#include "TextStorage.h"
-#include "ErrorLog.h"
-
-using namespace System;
-using namespace System::ComponentModel;
-using namespace System::Collections;
-using namespace System::Windows::Forms;
-using namespace System::Data;
-using namespace System::Drawing;
-
 class ComCalManager
 {
 private:
