@@ -218,16 +218,12 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 void ComCal_v01::MonthForm::updateSideBar() {
 	int numOfLines = _manager->getSideVec()->size();
 	std::string sideBarStr;
-	std::vector<std::string>* sideVec = new std::vector<std::string>();
-
+	std::vector<std::string>* sideVec = _manager->getSideVec();
 	sideBar->Text = nullptr;
-	sideVec = _manager->getSideVec();
 
 	for (int i = 0; i < numOfLines; i++) {
 		sideBarStr += sideVec->at(i) + NEWLINE;
 	}
-
-	delete sideVec;
 
 	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
 }
