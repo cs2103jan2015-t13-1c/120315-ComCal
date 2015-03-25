@@ -37,4 +37,6 @@ public:
 	struct tm* getMonthDetails();
 	bool getIsShowMonth();
 	bool getIsShowDayTaskSearch();
+
+	void setDefaultSideBar();
 };
