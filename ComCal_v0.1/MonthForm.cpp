@@ -282,7 +282,7 @@ void ComCal_v01::MonthForm::storeTasksTextBlockInList() {
 	taskList.Insert(++i, taskBox14);
 	taskList.Insert(++i, taskBox15);
 	taskList.Insert(++i, taskBox16);
-	taskList.Insert(++i, dateBox17);
+	taskList.Insert(++i, taskBox17);
 
 	taskList.Insert(++i, taskBox21);
 	taskList.Insert(++i, taskBox22);
