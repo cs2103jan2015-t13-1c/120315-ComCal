@@ -22,6 +22,7 @@ private:
 	//will change it back to false when it successfully updates the GUI
 	bool isShowMonth; //is flagged whenever user asks to show a specific month
 	bool isShowDayTaskSearch; //is flagged whenever user asks to show a specific day or search function is called
+
 public:
 	ComCalManager(int, const char**);
 	~ComCalManager();
@@ -38,5 +39,6 @@ public:
 	bool getIsShowMonth();
 	bool getIsShowDayTaskSearch();
 
-	void setDefaultSideBar();
+	//Setter methods 
+	void setDefaultSideBar(); //Set sideBar to its default of TodoTasks of the current day
 };

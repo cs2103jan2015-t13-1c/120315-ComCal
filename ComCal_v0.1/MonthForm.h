@@ -44,6 +44,8 @@ namespace ComCal_v01 {
 
 		int searchTaskMonth(struct tm*);
 
+		void testTodoBar();
+
 	private: System::Windows::Forms::Button^  resetButton;
 	private: System::Windows::Forms::TextBox^  dateBox11;
 
@@ -567,7 +569,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox51->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox51->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox51->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox51->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox51->Location = System::Drawing::Point(3, 23);
 			this->taskBox51->Multiline = true;
 			this->taskBox51->Name = L"taskBox51";
@@ -605,7 +607,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox57->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox57->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox57->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox57->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox57->Location = System::Drawing::Point(3, 23);
 			this->taskBox57->Multiline = true;
 			this->taskBox57->Name = L"taskBox57";
@@ -644,7 +646,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox56->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox56->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox56->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox56->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox56->Location = System::Drawing::Point(3, 23);
 			this->taskBox56->Multiline = true;
 			this->taskBox56->Name = L"taskBox56";
@@ -682,7 +684,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox55->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox55->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox55->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox55->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox55->Location = System::Drawing::Point(3, 23);
 			this->taskBox55->Multiline = true;
 			this->taskBox55->Name = L"taskBox55";
@@ -720,7 +722,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox54->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox54->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox54->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox54->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox54->Location = System::Drawing::Point(3, 23);
 			this->taskBox54->Multiline = true;
 			this->taskBox54->Name = L"taskBox54";
@@ -758,7 +760,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox53->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox53->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox53->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox53->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox53->Location = System::Drawing::Point(3, 23);
 			this->taskBox53->Multiline = true;
 			this->taskBox53->Name = L"taskBox53";
@@ -796,7 +798,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox52->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox52->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox52->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox52->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox52->Location = System::Drawing::Point(3, 23);
 			this->taskBox52->Multiline = true;
 			this->taskBox52->Name = L"taskBox52";
@@ -834,7 +836,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox47->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox47->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox47->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox47->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox47->Location = System::Drawing::Point(3, 22);
 			this->taskBox47->Multiline = true;
 			this->taskBox47->Name = L"taskBox47";
@@ -872,7 +874,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox46->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox46->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox46->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox46->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox46->Location = System::Drawing::Point(3, 22);
 			this->taskBox46->Multiline = true;
 			this->taskBox46->Name = L"taskBox46";
@@ -912,7 +914,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox45->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox45->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox45->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox45->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox45->Location = System::Drawing::Point(3, 22);
 			this->taskBox45->Multiline = true;
 			this->taskBox45->Name = L"taskBox45";
@@ -950,7 +952,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox44->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox44->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox44->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox44->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox44->Location = System::Drawing::Point(3, 22);
 			this->taskBox44->Multiline = true;
 			this->taskBox44->Name = L"taskBox44";
@@ -988,7 +990,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox43->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox43->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox43->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox43->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox43->Location = System::Drawing::Point(3, 22);
 			this->taskBox43->Multiline = true;
 			this->taskBox43->Name = L"taskBox43";
@@ -1026,7 +1028,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox42->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox42->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox42->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox42->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox42->Location = System::Drawing::Point(3, 22);
 			this->taskBox42->Multiline = true;
 			this->taskBox42->Name = L"taskBox42";
@@ -1066,7 +1068,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox41->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox41->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox41->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox41->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox41->Location = System::Drawing::Point(3, 22);
 			this->taskBox41->Multiline = true;
 			this->taskBox41->Name = L"taskBox41";
@@ -1104,7 +1106,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox37->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox37->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox37->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox37->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox37->Location = System::Drawing::Point(3, 22);
 			this->taskBox37->Multiline = true;
 			this->taskBox37->Name = L"taskBox37";
@@ -1142,7 +1144,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox36->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox36->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox36->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox36->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox36->Location = System::Drawing::Point(3, 22);
 			this->taskBox36->Multiline = true;
 			this->taskBox36->Name = L"taskBox36";
@@ -1180,7 +1182,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox35->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox35->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox35->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox35->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox35->Location = System::Drawing::Point(3, 22);
 			this->taskBox35->Multiline = true;
 			this->taskBox35->Name = L"taskBox35";
@@ -1218,7 +1220,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox34->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox34->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox34->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox34->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox34->Location = System::Drawing::Point(3, 22);
 			this->taskBox34->Multiline = true;
 			this->taskBox34->Name = L"taskBox34";
@@ -1256,7 +1258,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox33->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox33->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox33->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox33->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox33->Location = System::Drawing::Point(3, 22);
 			this->taskBox33->Multiline = true;
 			this->taskBox33->Name = L"taskBox33";
@@ -1294,7 +1296,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox32->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox32->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox32->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox32->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox32->Location = System::Drawing::Point(3, 22);
 			this->taskBox32->Multiline = true;
 			this->taskBox32->Name = L"taskBox32";
@@ -1332,7 +1334,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox31->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox31->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox31->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox31->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox31->Location = System::Drawing::Point(3, 22);
 			this->taskBox31->Multiline = true;
 			this->taskBox31->Name = L"taskBox31";
@@ -1370,7 +1372,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox27->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox27->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox27->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox27->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox27->Location = System::Drawing::Point(3, 22);
 			this->taskBox27->Multiline = true;
 			this->taskBox27->Name = L"taskBox27";
@@ -1408,7 +1410,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox26->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox26->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox26->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox26->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox26->Location = System::Drawing::Point(3, 22);
 			this->taskBox26->Multiline = true;
 			this->taskBox26->Name = L"taskBox26";
@@ -1446,7 +1448,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox25->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox25->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox25->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox25->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox25->Location = System::Drawing::Point(3, 22);
 			this->taskBox25->Multiline = true;
 			this->taskBox25->Name = L"taskBox25";
@@ -1484,7 +1486,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox24->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox24->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox24->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox24->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox24->Location = System::Drawing::Point(3, 22);
 			this->taskBox24->Multiline = true;
 			this->taskBox24->Name = L"taskBox24";
@@ -1522,7 +1524,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox23->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox23->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox23->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox23->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox23->Location = System::Drawing::Point(3, 22);
 			this->taskBox23->Multiline = true;
 			this->taskBox23->Name = L"taskBox23";
@@ -1560,7 +1562,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox22->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox22->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox22->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7));
+			this->taskBox22->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox22->Location = System::Drawing::Point(3, 22);
 			this->taskBox22->Multiline = true;
 			this->taskBox22->Name = L"taskBox22";
@@ -1598,7 +1600,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox21->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox21->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox21->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox21->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox21->Location = System::Drawing::Point(3, 22);
 			this->taskBox21->Multiline = true;
 			this->taskBox21->Name = L"taskBox21";
@@ -1636,7 +1638,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox17->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox17->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox17->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox17->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox17->Location = System::Drawing::Point(3, 20);
 			this->taskBox17->Multiline = true;
 			this->taskBox17->Name = L"taskBox17";
@@ -1674,7 +1676,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox16->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox16->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox16->Location = System::Drawing::Point(3, 22);
 			this->taskBox16->Multiline = true;
 			this->taskBox16->Name = L"taskBox16";
@@ -1712,7 +1714,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox15->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox15->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox15->Location = System::Drawing::Point(3, 22);
 			this->taskBox15->Multiline = true;
 			this->taskBox15->Name = L"taskBox15";
@@ -1750,7 +1752,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox14->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox14->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox14->Location = System::Drawing::Point(3, 22);
 			this->taskBox14->Multiline = true;
 			this->taskBox14->Name = L"taskBox14";
@@ -1788,7 +1790,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox13->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox13->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox13->Location = System::Drawing::Point(3, 22);
 			this->taskBox13->Multiline = true;
 			this->taskBox13->Name = L"taskBox13";
@@ -1826,7 +1828,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox12->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox12->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox12->Location = System::Drawing::Point(3, 22);
 			this->taskBox12->Multiline = true;
 			this->taskBox12->Name = L"taskBox12";
@@ -1945,7 +1947,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox11->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox11->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->taskBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->taskBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
 			this->taskBox11->Location = System::Drawing::Point(3, 22);
 			this->taskBox11->Multiline = true;
 			this->taskBox11->Name = L"taskBox11";

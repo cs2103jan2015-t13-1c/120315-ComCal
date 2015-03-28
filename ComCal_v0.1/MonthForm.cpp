@@ -31,6 +31,11 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	defaultView(nullptr, nullptr);
 }
 
+void MonthForm::testTodoBar(){
+	sideBar->Text = "balls face";
+	sideBar->Text = String::Concat(sideBar->Text, Environment::NewLine);
+	sideBar->Text = String::Concat(sideBar->Text, "more balls");
+}
 
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
@@ -187,6 +192,11 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 //	int startJIter = MonthForm::searchTaskMonth(newtime);
 	int monthRef = newtime->tm_mon + 1;
 	std::string taskStr[35];
+	System::Collections::Generic::List<System::String^> taskStrList;
+
+	for (int k = 0; k < 35; k++){
+		taskStrList.Insert(k, nullptr);
+	}
 
 	if (todoSize > 0) {
 
@@ -199,7 +209,10 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
 					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())) {
 
-					taskStr[i] += typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(j)->getIndex()) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription() + NEWLINE;
+//					taskStr[i] += typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(j)->getIndex()) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription();
+
+						taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(j)->getIndex()) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription()), Environment::NewLine);
+					
 				}
 			}
 
@@ -210,7 +223,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 	}
 
 	for (int k = 0; k < 35; k++) {
-		taskList[k]->Text = typeConversions::convertstrToStr(taskStr[k]);
+		taskList[k]->Text = taskStrList[k];
 	}
 }
 
@@ -223,10 +236,10 @@ void ComCal_v01::MonthForm::updateSideBar() {
 	sideBar->Text = nullptr;
 
 	for (int i = 0; i < numOfLines; i++) {
-		sideBarStr += sideVec->at(i) + NEWLINE;
+		sideBar->Text = String::Concat(sideBar->Text, typeConversions::convertstrToStr(sideVec->at(i)), Environment::NewLine);
 	}
 
-	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
+//	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
 }
 
 void ComCal_v01::MonthForm::storeDateTextBlockInList() {
