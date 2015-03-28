@@ -54,8 +54,6 @@ namespace ComCal_v01 {
 
 	private: System::Windows::Forms::TextBox^  showBox;
 
-
-
 	private: System::Windows::Forms::TableLayoutPanel^  table57;
 
 	private: System::Windows::Forms::TextBox^  taskBox57;
@@ -2016,6 +2014,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->sideBar->Location = System::Drawing::Point(12, 37);
 			this->sideBar->Multiline = true;
 			this->sideBar->Name = L"sideBar";
+			this->sideBar->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->sideBar->Size = System::Drawing::Size(273, 516);
 			this->sideBar->TabIndex = 3;
 			// 
