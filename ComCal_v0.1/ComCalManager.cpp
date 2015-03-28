@@ -14,14 +14,20 @@
 #include "TextStorage.h"
 #include "typeConversions.h"
 
-//Have not initialised TextStorage
-ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
+// Global static pointer used to ensure a single instance of the class
+ComCalManager* ComCalManager::_instance = NULL;
+
+ComCalManager::ComCalManager(){
 	_sideBarView = new std::vector<std::string>();
 
 	isShowMonth = false;
 	isShowDayTaskSearch = false;
 
 	monthDetails = timeDateInfo::setStructTm();
+}
+
+//Have not initialised TextStorage
+void ComCalManager::initialise(int numOfFiles, const char** fileNames) {
 
 	std::string todoFileName;
 	std::string doneFileName;
@@ -44,6 +50,12 @@ ComCalManager::ComCalManager(int numOfFiles, const char** fileNames) {
 
 ComCalManager::~ComCalManager() {
 	delete _sideBarView;
+}
+
+ComCalManager* ComCalManager::getInstance() {
+	if (_instance == NULL)
+		_instance = new ComCalManager();
+	return _instance;
 }
 
 System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {

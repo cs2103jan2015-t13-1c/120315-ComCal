@@ -22,7 +22,6 @@ namespace ComCal_v01 {
 		void setCalendarDate_MonthForm(struct tm*);
 
 	private:
-		ComCalManager* _manager;
 
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> dateList;
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> taskList;
@@ -279,7 +278,6 @@ private: System::Windows::Forms::TextBox^  feedBackBox;
 				delete components;
 			}
 
-			delete _manager;
 		}
 		//Function to set the calendar----------------------------------------------------------------
 
@@ -2162,11 +2160,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 	private: System::Void userInputBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {}
 	private: System::Void monthPanel_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {}
 
-	private: System::Void userEnter(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
 
-	
-private: System::Void ctrlHold(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
-private: System::Void defaultView(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void userEnter(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
+	private: System::Void ctrlHold(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e);
+	private: System::Void defaultView(System::Object^  sender, System::EventArgs^  e);
 
 }; //end MonthForm class
 } //end of ComCal_v01 namespace
