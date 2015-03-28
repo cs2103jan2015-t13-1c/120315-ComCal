@@ -43,8 +43,6 @@ namespace ComCal_v01 {
 
 		int searchTaskMonth(struct tm*);
 
-		void testTodoBar();
-
 	private: System::Windows::Forms::Button^  resetButton;
 	private: System::Windows::Forms::TextBox^  dateBox11;
 

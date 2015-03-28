@@ -20,8 +20,8 @@ ComCalManager* ComCalManager::_instance = NULL;
 ComCalManager::ComCalManager(){
 	_sideBarView = new std::vector<std::string>();
 
-	isShowMonth = false;
-	isShowDayTaskSearch = false;
+	_isShowMonth = false;
+	_isShowDayTaskSearch = false;
 
 	monthDetails = timeDateInfo::setStructTm();
 }
@@ -52,16 +52,8 @@ ComCalManager::~ComCalManager() {
 	delete _sideBarView;
 }
 
-ComCalManager* ComCalManager::getInstance() {
-	if (_instance == NULL)
-		_instance = new ComCalManager();
-	return _instance;
-}
-
-System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
-	System::String^ feedBackMessage;
-
-	std::string userInput = typeConversions::convertStrTostr(userInputString);
+std::string ComCalManager::deduceCommand(std::string userInput) {
+	std::string feedBackMessage;
 
 	int space = userInput.find(" ");
 	std::string function = typeConversions::toLowerCase(userInput.substr(0, space));
@@ -91,15 +83,41 @@ System::String^ ComCalManager::deduceCommand(System::String^ userInputString) {
 	}
 
 	if (command != NULL) {
-		feedBackMessage = typeConversions::convertstrToStr(command->execute(argument));
+		feedBackMessage = command->execute(argument);
 		delete command; // TODO Instead of deleting it, do something to it for future function implementations (eg undo/redo)
 	}
 	else {
-		feedBackMessage = typeConversions::convertstrToStr(INVALID_COMMAND);
+		feedBackMessage = INVALID_COMMAND;
 	}
 
 	return feedBackMessage;
 }
+
+//Getter methods
+
+ComCalManager* ComCalManager::getInstance() {
+	if (_instance == NULL)
+		_instance = new ComCalManager();
+	return _instance;
+}
+
+std::vector<std::string>* ComCalManager::getSideVec() {
+	return _sideBarView;
+}
+
+struct tm* ComCalManager::getMonthDetails() {
+	return monthDetails;
+}
+
+bool ComCalManager::getIsShowMonth() {
+	return _isShowMonth;
+}
+
+bool ComCalManager::getIsShowDayTaskSearch() {
+	return _isShowDayTaskSearch;
+}
+
+//Setter methods
 
 void ComCalManager::setDefaultSideBar() {
 
@@ -114,18 +132,10 @@ void ComCalManager::setDefaultSideBar() {
 	}
 }
 
-std::vector<std::string>* ComCalManager::getSideVec() {
-	return _sideBarView;
+void ComCalManager::setIsShowMonth(bool isShowMonth) {
+	_isShowMonth = isShowMonth;
 }
 
-struct tm* ComCalManager::getMonthDetails() {
-	return monthDetails;
-}
-
-bool ComCalManager::getIsShowMonth() {
-	return isShowMonth;
-}
-
-bool ComCalManager::getIsShowDayTaskSearch() {
-	return isShowDayTaskSearch;
+void ComCalManager::setIsShowDayTaskSearch(bool isShowDayTaskSearch) {
+	_isShowDayTaskSearch = isShowDayTaskSearch;
 }

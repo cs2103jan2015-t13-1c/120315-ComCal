@@ -22,8 +22,8 @@ private:
 	//To flag to MonthForm that search/show was successfully implemented hence needing update on GUI
 	//When a search/show is successfully implemented->Change the appropriate flag to true->MonthForm 
 	//will change it back to false when it successfully updates the GUI
-	bool isShowMonth; //is flagged whenever user asks to show a specific month
-	bool isShowDayTaskSearch; //is flagged whenever user asks to show a specific day or search function is called
+	bool _isShowMonth; //is flagged whenever user asks to show a specific month
+	bool _isShowDayTaskSearch; //is flagged whenever user asks to show a specific day or search function is called
 
 public:
 	ComCalManager();
@@ -37,7 +37,7 @@ public:
 	//2) The String^ here will be converted to a std::string the passed to the mainCom functions
 	//3) Argument: String^ user input
 	//3) Returns: a String^ message for the UI feedback
-	System::String^ deduceCommand(System::String^);
+	std::string deduceCommand(std::string);
 
 	// Getter methods
 	std::vector<std::string>* getSideVec();
@@ -47,4 +47,6 @@ public:
 
 	//Setter methods 
 	void setDefaultSideBar(); //Set sideBar to its default of TodoTasks of the current day
+	void setIsShowMonth(bool);
+	void setIsShowDayTaskSearch(bool);
 };

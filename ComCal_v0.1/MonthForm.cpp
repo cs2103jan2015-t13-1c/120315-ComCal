@@ -33,14 +33,10 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	defaultView(nullptr, nullptr);
 }
 
-void MonthForm::testTodoBar(){
-	sideBar->Text = "balls face";
-	sideBar->Text = String::Concat(sideBar->Text, Environment::NewLine);
-	sideBar->Text = String::Concat(sideBar->Text, "more balls");
-}
-
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
+	ComCalManager::getInstance()->setDefaultSideBar();
+	updateSideBar();
 }
 
 bool MonthForm::isShowSearchFlagged() {
@@ -83,7 +79,7 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			Application::Exit();
 		}
 		else{
-			feedBack = ComCalManager::getInstance()->deduceCommand(userInputBox->Text);
+			feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::convertStrTostr(userInputBox->Text)));
 
 			if (isShowSearchFlagged()) {
 				guiUpdate();
@@ -191,7 +187,6 @@ int MonthForm::searchTaskMonth(struct tm* newtime) {
 void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
-//	int startJIter = MonthForm::searchTaskMonth(newtime);
 	int monthRef = newtime->tm_mon + 1;
 	std::string taskStr[35];
 	System::Collections::Generic::List<System::String^> taskStrList;
