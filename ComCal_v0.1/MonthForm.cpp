@@ -121,6 +121,11 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime) {
 	//set the title
 	monthFormTitle->Text = setMonthPageTitle(newtime);
 
+	//set the calendar texts to nullptr
+	for (int j = 0; j < NUM_BLOCKS_IN_CALENDAR; j++) {
+		dateList[j]->Text = nullptr;
+	}
+
 	//sets remaining dates on the month grid
 	for (int i = newtime->tm_wday; i < (newtime->tm_wday + timeDateInfo::getDaysInMonth(newtime->tm_mon, newtime->tm_year)); ++i) {
 		dateList[i]->Text = dateNum;
@@ -180,7 +185,7 @@ int MonthForm::searchTaskMonth(struct tm* newtime) {
 			break;
 		}
 	}
-
+	
 	return iter;
 }
 
@@ -188,10 +193,10 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
 	int monthRef = newtime->tm_mon + 1;
-	std::string taskStr[35];
+	std::string taskStr[NUM_BLOCKS_IN_CALENDAR];
 	System::Collections::Generic::List<System::String^> taskStrList;
 
-	for (int k = 0; k < 35; k++){
+	for (int k = 0; k < NUM_BLOCKS_IN_CALENDAR; k++){
 		taskStrList.Insert(k, nullptr);
 	}
 
@@ -217,7 +222,13 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 		ErrorLog::inputErrorLog(NO_TASKS_IN_VECTOR);
 	}
 
-	for (int k = 0; k < 35; k++) {
+	//removes any text from the taskList for initialising
+	for (int m = 0; m < NUM_BLOCKS_IN_CALENDAR; m++){
+		taskList[m]->Text = nullptr;
+	}
+
+	//adds the tasks to the task lists in the calendar for viewing
+	for (int k = 0; k < NUM_BLOCKS_IN_CALENDAR; k++) {
 		taskList[k]->Text = taskStrList[k];
 	}
 }
@@ -279,6 +290,14 @@ void ComCal_v01::MonthForm::storeDateTextBlockInList() {
 	dateList.Insert(++i, dateBox55);
 	dateList.Insert(++i, dateBox56);
 	dateList.Insert(++i, dateBox57);
+
+	dateList.Insert(++i, dateBox61);
+	dateList.Insert(++i, dateBox62);
+	dateList.Insert(++i, dateBox63);
+	dateList.Insert(++i, dateBox64);
+	dateList.Insert(++i, dateBox65);
+	dateList.Insert(++i, dateBox66);
+	dateList.Insert(++i, dateBox67);
 }
 
 void ComCal_v01::MonthForm::storeTasksTextBlockInList() {
@@ -323,4 +342,12 @@ void ComCal_v01::MonthForm::storeTasksTextBlockInList() {
 	taskList.Insert(++i, taskBox55);
 	taskList.Insert(++i, taskBox56);
 	taskList.Insert(++i, taskBox57);
+
+	taskList.Insert(++i, taskBox61);
+	taskList.Insert(++i, taskBox62);
+	taskList.Insert(++i, taskBox63);
+	taskList.Insert(++i, taskBox64);
+	taskList.Insert(++i, taskBox65);
+	taskList.Insert(++i, taskBox66);
+	taskList.Insert(++i, taskBox67);
 }

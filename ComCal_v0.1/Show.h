@@ -7,6 +7,11 @@
 #include "Command.h"
 
 class Show : public Command {
+	
+private:
+	int getMonthInput(std::string argument);
+	int numOfWS(std::string argument);
+
 public:
 	std::string execute(std::string argument);
 };

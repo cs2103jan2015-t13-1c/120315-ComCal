@@ -23,7 +23,7 @@ ComCalManager::ComCalManager(){
 	_isShowMonth = false;
 	_isShowDayTaskSearch = false;
 
-	monthDetails = timeDateInfo::setStructTm();
+	_monthDetails = timeDateInfo::setStructTm();
 }
 
 //Have not initialised TextStorage
@@ -106,7 +106,7 @@ std::vector<std::string>* ComCalManager::getSideVec() {
 }
 
 struct tm* ComCalManager::getMonthDetails() {
-	return monthDetails;
+	return _monthDetails;
 }
 
 bool ComCalManager::getIsShowMonth() {
@@ -138,4 +138,8 @@ void ComCalManager::setIsShowMonth(bool isShowMonth) {
 
 void ComCalManager::setIsShowDayTaskSearch(bool isShowDayTaskSearch) {
 	_isShowDayTaskSearch = isShowDayTaskSearch;
+}
+
+void ComCalManager::setMonthDetails(struct tm* monthDetails){
+	_monthDetails = monthDetails;
 }

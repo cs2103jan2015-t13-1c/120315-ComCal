@@ -70,6 +70,27 @@ std::string timeDateInfo::getMonthStr(int iter) {
 	return NULL;
 }
 
+std::string timeDateInfo::getLowerMonthStr(int iter) {
+	const static std::string MONTHS[MONTHS_IN_YEAR] = { "january", "february", "march", "april", "may",
+		"june", "july", "august", "september", "october", "november", "december" };
+
+	return MONTHS[iter];
+}
+
+std::string timeDateInfo::getShortMonthStr(int iter) {
+	const static std::string MONTHS[MONTHS_IN_YEAR] = { "Jan", "Feb", "Mar", "Apr", "May",
+		"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+	return MONTHS[iter];
+}
+
+std::string timeDateInfo::getShortLowerMonthStr(int iter) {
+	const static std::string MONTHS[MONTHS_IN_YEAR] = { "jan", "feb", "mar", "apr", "may",
+		"jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+
+	return MONTHS[iter];
+}
+
 int timeDateInfo::getDaysInMonth(int iter, int year) {
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 

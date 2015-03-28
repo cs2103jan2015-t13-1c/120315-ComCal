@@ -38,7 +38,7 @@ const static int MAX_ASCTIME_S = 26;
 const static int DAYS_IN_WEEK = 7;
 const static int MONTHS_IN_YEAR = 12;
 const static int MAX_DAYS_IN_MONTH = 31;
-const static int NUM_BLOCKS_IN_CALENDAR = 35;
+const static int NUM_BLOCKS_IN_CALENDAR = 42;
 
 //keyboard shortcuts
 const static std::string NEWLINE = " \n";
@@ -49,3 +49,5 @@ const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries o
 const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
 const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
 const std::string INVALID_COMMAND = "This is not a valid command\n";
+const std::string INVALID_MONTH_INPUT = "Invalid show month input";
+const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";

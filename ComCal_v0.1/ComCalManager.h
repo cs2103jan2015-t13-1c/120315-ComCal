@@ -16,7 +16,7 @@ private:
 
 	//monthDetails will be initially set to the current time
 	//Changes when the show command is called, MonthForm will call for this when an update is flagged
-	struct tm* monthDetails;
+	struct tm* _monthDetails;
 
 	//Update flags:
 	//To flag to MonthForm that search/show was successfully implemented hence needing update on GUI
@@ -49,4 +49,5 @@ public:
 	void setDefaultSideBar(); //Set sideBar to its default of TodoTasks of the current day
 	void setIsShowMonth(bool);
 	void setIsShowDayTaskSearch(bool);
+	void setMonthDetails(struct tm*);
 };

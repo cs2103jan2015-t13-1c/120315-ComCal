@@ -17,6 +17,9 @@ namespace timeDateInfo {
 	bool isClashing(std::string);
 	bool isLeapYear(int);
 	std::string getMonthStr(int);
+	std::string getLowerMonthStr(int);
+	std::string getShortMonthStr(int);
+	std::string getShortLowerMonthStr(int);
 
 	//Arguments: 1) iter of the corresponding month, 0-Jan,..,11-Dec 2)year of the month
 	//Returns: Number of days in the month

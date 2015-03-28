@@ -25,6 +25,27 @@ namespace ComCal_v01 {
 
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> dateList;
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> taskList;
+	private: System::Windows::Forms::TableLayoutPanel^  table63;
+	private: System::Windows::Forms::TextBox^  taskBox63;
+	private: System::Windows::Forms::TextBox^  dateBox63;
+	private: System::Windows::Forms::TableLayoutPanel^  table62;
+	private: System::Windows::Forms::TextBox^  taskBox62;
+	private: System::Windows::Forms::TextBox^  dateBox62;
+	private: System::Windows::Forms::TableLayoutPanel^  table61;
+	private: System::Windows::Forms::TextBox^  taskBox61;
+	private: System::Windows::Forms::TextBox^  dateBox61;
+	private: System::Windows::Forms::TableLayoutPanel^  table64;
+	private: System::Windows::Forms::TextBox^  taskBox64;
+	private: System::Windows::Forms::TextBox^  dateBox64;
+	private: System::Windows::Forms::TableLayoutPanel^  table67;
+	private: System::Windows::Forms::TextBox^  taskBox67;
+	private: System::Windows::Forms::TextBox^  dateBox67;
+	private: System::Windows::Forms::TableLayoutPanel^  table66;
+	private: System::Windows::Forms::TextBox^  taskBox66;
+	private: System::Windows::Forms::TextBox^  dateBox66;
+	private: System::Windows::Forms::TableLayoutPanel^  table65;
+	private: System::Windows::Forms::TextBox^  taskBox65;
+	private: System::Windows::Forms::TextBox^  dateBox65;
 
 		bool _ctrlHeld;
 
@@ -434,6 +455,27 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->showBox = (gcnew System::Windows::Forms::TextBox());
 			this->feedBackBox = (gcnew System::Windows::Forms::TextBox());
 			this->resetButton = (gcnew System::Windows::Forms::Button());
+			this->table65 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox65 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox65 = (gcnew System::Windows::Forms::TextBox());
+			this->table66 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox66 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox66 = (gcnew System::Windows::Forms::TextBox());
+			this->table67 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox67 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox67 = (gcnew System::Windows::Forms::TextBox());
+			this->table64 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox64 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox64 = (gcnew System::Windows::Forms::TextBox());
+			this->table61 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox61 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox61 = (gcnew System::Windows::Forms::TextBox());
+			this->table62 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox62 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox62 = (gcnew System::Windows::Forms::TextBox());
+			this->table63 = (gcnew System::Windows::Forms::TableLayoutPanel());
+			this->taskBox63 = (gcnew System::Windows::Forms::TextBox());
+			this->dateBox63 = (gcnew System::Windows::Forms::TextBox());
 			this->monthPanel->SuspendLayout();
 			this->table51->SuspendLayout();
 			this->table57->SuspendLayout();
@@ -470,6 +512,13 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table13->SuspendLayout();
 			this->table12->SuspendLayout();
 			this->table11->SuspendLayout();
+			this->table65->SuspendLayout();
+			this->table66->SuspendLayout();
+			this->table67->SuspendLayout();
+			this->table64->SuspendLayout();
+			this->table61->SuspendLayout();
+			this->table62->SuspendLayout();
+			this->table63->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// monthPanel
@@ -485,6 +534,13 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->monthPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 14.28572F)));
 			this->monthPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 14.28572F)));
 			this->monthPanel->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 14.28572F)));
+			this->monthPanel->Controls->Add(this->table63, 0, 6);
+			this->monthPanel->Controls->Add(this->table62, 0, 6);
+			this->monthPanel->Controls->Add(this->table61, 0, 6);
+			this->monthPanel->Controls->Add(this->table64, 0, 6);
+			this->monthPanel->Controls->Add(this->table67, 0, 6);
+			this->monthPanel->Controls->Add(this->table66, 0, 6);
+			this->monthPanel->Controls->Add(this->table65, 0, 6);
 			this->monthPanel->Controls->Add(this->table51, 0, 5);
 			this->monthPanel->Controls->Add(this->table57, 6, 5);
 			this->monthPanel->Controls->Add(this->table56, 5, 5);
@@ -529,17 +585,17 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->monthPanel->Controls->Add(this->dayTxtBlkWed, 3, 0);
 			this->monthPanel->Enabled = false;
 			this->monthPanel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->monthPanel->Location = System::Drawing::Point(304, 37);
+			this->monthPanel->Location = System::Drawing::Point(304, 31);
 			this->monthPanel->Name = L"monthPanel";
-			this->monthPanel->RowCount = 6;
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 9.538284F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 18.09234F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 18.09234F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 18.09234F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 18.09234F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 18.09234F)));
-			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-			this->monthPanel->Size = System::Drawing::Size(750, 454);
+			this->monthPanel->RowCount = 7;
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 4.273247F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 16.02568F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 17.09406F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 15.59833F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 15.59833F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 15.87611F)));
+			this->monthPanel->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 15.53423F)));
+			this->monthPanel->Size = System::Drawing::Size(750, 471);
 			this->monthPanel->TabIndex = 0;
 			this->monthPanel->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MonthForm::monthPanel_Paint);
 			// 
@@ -550,12 +606,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table51->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table51->Controls->Add(this->taskBox51, 0, 1);
 			this->table51->Controls->Add(this->dateBox51, 0, 0);
-			this->table51->Location = System::Drawing::Point(4, 371);
+			this->table51->Location = System::Drawing::Point(4, 325);
 			this->table51->Name = L"table51";
 			this->table51->RowCount = 2;
 			this->table51->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table51->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table51->Size = System::Drawing::Size(99, 79);
+			this->table51->Size = System::Drawing::Size(99, 67);
 			this->table51->TabIndex = 42;
 			// 
 			// taskBox51
@@ -564,10 +620,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox51->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox51->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox51->Location = System::Drawing::Point(3, 23);
+			this->taskBox51->Location = System::Drawing::Point(3, 20);
 			this->taskBox51->Multiline = true;
 			this->taskBox51->Name = L"taskBox51";
-			this->taskBox51->Size = System::Drawing::Size(93, 53);
+			this->taskBox51->Size = System::Drawing::Size(93, 44);
 			this->taskBox51->TabIndex = 1;
 			// 
 			// dateBox51
@@ -588,12 +644,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table57->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table57->Controls->Add(this->taskBox57, 0, 1);
 			this->table57->Controls->Add(this->dateBox57, 0, 0);
-			this->table57->Location = System::Drawing::Point(645, 371);
+			this->table57->Location = System::Drawing::Point(645, 325);
 			this->table57->Name = L"table57";
 			this->table57->RowCount = 2;
 			this->table57->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table57->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table57->Size = System::Drawing::Size(99, 79);
+			this->table57->Size = System::Drawing::Size(99, 67);
 			this->table57->TabIndex = 41;
 			// 
 			// taskBox57
@@ -602,10 +658,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox57->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox57->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox57->Location = System::Drawing::Point(3, 23);
+			this->taskBox57->Location = System::Drawing::Point(3, 20);
 			this->taskBox57->Multiline = true;
 			this->taskBox57->Name = L"taskBox57";
-			this->taskBox57->Size = System::Drawing::Size(93, 53);
+			this->taskBox57->Size = System::Drawing::Size(93, 44);
 			this->taskBox57->TabIndex = 1;
 			// 
 			// dateBox57
@@ -626,13 +682,13 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table56->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table56->Controls->Add(this->taskBox56, 0, 1);
 			this->table56->Controls->Add(this->dateBox56, 0, 0);
-			this->table56->Location = System::Drawing::Point(538, 371);
+			this->table56->Location = System::Drawing::Point(538, 325);
 			this->table56->Name = L"table56";
 			this->table56->RowCount = 2;
 			this->table56->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table56->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
 			this->table56->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-			this->table56->Size = System::Drawing::Size(99, 79);
+			this->table56->Size = System::Drawing::Size(99, 67);
 			this->table56->TabIndex = 40;
 			// 
 			// taskBox56
@@ -641,10 +697,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox56->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox56->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox56->Location = System::Drawing::Point(3, 23);
+			this->taskBox56->Location = System::Drawing::Point(3, 20);
 			this->taskBox56->Multiline = true;
 			this->taskBox56->Name = L"taskBox56";
-			this->taskBox56->Size = System::Drawing::Size(93, 53);
+			this->taskBox56->Size = System::Drawing::Size(93, 44);
 			this->taskBox56->TabIndex = 1;
 			// 
 			// dateBox56
@@ -665,12 +721,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table55->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table55->Controls->Add(this->taskBox55, 0, 1);
 			this->table55->Controls->Add(this->dateBox55, 0, 0);
-			this->table55->Location = System::Drawing::Point(431, 371);
+			this->table55->Location = System::Drawing::Point(431, 325);
 			this->table55->Name = L"table55";
 			this->table55->RowCount = 2;
 			this->table55->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table55->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table55->Size = System::Drawing::Size(99, 79);
+			this->table55->Size = System::Drawing::Size(99, 67);
 			this->table55->TabIndex = 39;
 			// 
 			// taskBox55
@@ -679,10 +735,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox55->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox55->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox55->Location = System::Drawing::Point(3, 23);
+			this->taskBox55->Location = System::Drawing::Point(3, 20);
 			this->taskBox55->Multiline = true;
 			this->taskBox55->Name = L"taskBox55";
-			this->taskBox55->Size = System::Drawing::Size(93, 53);
+			this->taskBox55->Size = System::Drawing::Size(93, 44);
 			this->taskBox55->TabIndex = 1;
 			// 
 			// dateBox55
@@ -703,12 +759,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table54->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table54->Controls->Add(this->taskBox54, 0, 1);
 			this->table54->Controls->Add(this->dateBox54, 0, 0);
-			this->table54->Location = System::Drawing::Point(324, 371);
+			this->table54->Location = System::Drawing::Point(324, 325);
 			this->table54->Name = L"table54";
 			this->table54->RowCount = 2;
 			this->table54->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table54->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table54->Size = System::Drawing::Size(99, 79);
+			this->table54->Size = System::Drawing::Size(99, 67);
 			this->table54->TabIndex = 38;
 			// 
 			// taskBox54
@@ -717,10 +773,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox54->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox54->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox54->Location = System::Drawing::Point(3, 23);
+			this->taskBox54->Location = System::Drawing::Point(3, 20);
 			this->taskBox54->Multiline = true;
 			this->taskBox54->Name = L"taskBox54";
-			this->taskBox54->Size = System::Drawing::Size(93, 53);
+			this->taskBox54->Size = System::Drawing::Size(93, 44);
 			this->taskBox54->TabIndex = 1;
 			// 
 			// dateBox54
@@ -741,12 +797,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table53->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table53->Controls->Add(this->taskBox53, 0, 1);
 			this->table53->Controls->Add(this->dateBox53, 0, 0);
-			this->table53->Location = System::Drawing::Point(217, 371);
+			this->table53->Location = System::Drawing::Point(217, 325);
 			this->table53->Name = L"table53";
 			this->table53->RowCount = 2;
 			this->table53->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table53->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table53->Size = System::Drawing::Size(99, 79);
+			this->table53->Size = System::Drawing::Size(99, 67);
 			this->table53->TabIndex = 37;
 			// 
 			// taskBox53
@@ -755,10 +811,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox53->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox53->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox53->Location = System::Drawing::Point(3, 23);
+			this->taskBox53->Location = System::Drawing::Point(3, 20);
 			this->taskBox53->Multiline = true;
 			this->taskBox53->Name = L"taskBox53";
-			this->taskBox53->Size = System::Drawing::Size(93, 53);
+			this->taskBox53->Size = System::Drawing::Size(93, 28);
 			this->taskBox53->TabIndex = 1;
 			// 
 			// dateBox53
@@ -779,12 +835,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table52->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table52->Controls->Add(this->taskBox52, 0, 1);
 			this->table52->Controls->Add(this->dateBox52, 0, 0);
-			this->table52->Location = System::Drawing::Point(110, 371);
+			this->table52->Location = System::Drawing::Point(110, 325);
 			this->table52->Name = L"table52";
 			this->table52->RowCount = 2;
 			this->table52->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table52->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table52->Size = System::Drawing::Size(99, 79);
+			this->table52->Size = System::Drawing::Size(99, 67);
 			this->table52->TabIndex = 36;
 			// 
 			// taskBox52
@@ -793,10 +849,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox52->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox52->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox52->Location = System::Drawing::Point(3, 23);
+			this->taskBox52->Location = System::Drawing::Point(3, 20);
 			this->taskBox52->Multiline = true;
 			this->taskBox52->Name = L"taskBox52";
-			this->taskBox52->Size = System::Drawing::Size(93, 53);
+			this->taskBox52->Size = System::Drawing::Size(93, 44);
 			this->taskBox52->TabIndex = 1;
 			// 
 			// dateBox52
@@ -817,12 +873,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table47->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table47->Controls->Add(this->taskBox47, 0, 1);
 			this->table47->Controls->Add(this->dateBox47, 0, 0);
-			this->table47->Location = System::Drawing::Point(645, 290);
+			this->table47->Location = System::Drawing::Point(645, 252);
 			this->table47->Name = L"table47";
 			this->table47->RowCount = 2;
 			this->table47->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table47->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table47->Size = System::Drawing::Size(99, 73);
+			this->table47->Size = System::Drawing::Size(99, 66);
 			this->table47->TabIndex = 35;
 			// 
 			// taskBox47
@@ -831,10 +887,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox47->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox47->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox47->Location = System::Drawing::Point(3, 22);
+			this->taskBox47->Location = System::Drawing::Point(3, 20);
 			this->taskBox47->Multiline = true;
 			this->taskBox47->Name = L"taskBox47";
-			this->taskBox47->Size = System::Drawing::Size(93, 48);
+			this->taskBox47->Size = System::Drawing::Size(93, 43);
 			this->taskBox47->TabIndex = 1;
 			// 
 			// dateBox47
@@ -855,12 +911,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table46->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table46->Controls->Add(this->taskBox46, 0, 1);
 			this->table46->Controls->Add(this->dateBox46, 0, 0);
-			this->table46->Location = System::Drawing::Point(538, 290);
+			this->table46->Location = System::Drawing::Point(538, 252);
 			this->table46->Name = L"table46";
 			this->table46->RowCount = 2;
 			this->table46->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table46->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table46->Size = System::Drawing::Size(99, 73);
+			this->table46->Size = System::Drawing::Size(99, 66);
 			this->table46->TabIndex = 34;
 			// 
 			// taskBox46
@@ -869,10 +925,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox46->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox46->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox46->Location = System::Drawing::Point(3, 22);
+			this->taskBox46->Location = System::Drawing::Point(3, 20);
 			this->taskBox46->Multiline = true;
 			this->taskBox46->Name = L"taskBox46";
-			this->taskBox46->Size = System::Drawing::Size(93, 48);
+			this->taskBox46->Size = System::Drawing::Size(93, 43);
 			this->taskBox46->TabIndex = 1;
 			// 
 			// dateBox46
@@ -895,12 +951,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				64.47369F)));
 			this->tableLayoutPanel26->Controls->Add(this->taskBox45, 0, 1);
 			this->tableLayoutPanel26->Controls->Add(this->dateBox45, 0, 0);
-			this->tableLayoutPanel26->Location = System::Drawing::Point(431, 290);
+			this->tableLayoutPanel26->Location = System::Drawing::Point(431, 252);
 			this->tableLayoutPanel26->Name = L"tableLayoutPanel26";
 			this->tableLayoutPanel26->RowCount = 2;
 			this->tableLayoutPanel26->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->tableLayoutPanel26->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->tableLayoutPanel26->Size = System::Drawing::Size(99, 73);
+			this->tableLayoutPanel26->Size = System::Drawing::Size(99, 66);
 			this->tableLayoutPanel26->TabIndex = 33;
 			// 
 			// taskBox45
@@ -909,10 +965,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox45->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox45->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox45->Location = System::Drawing::Point(3, 22);
+			this->taskBox45->Location = System::Drawing::Point(3, 20);
 			this->taskBox45->Multiline = true;
 			this->taskBox45->Name = L"taskBox45";
-			this->taskBox45->Size = System::Drawing::Size(93, 48);
+			this->taskBox45->Size = System::Drawing::Size(93, 43);
 			this->taskBox45->TabIndex = 1;
 			// 
 			// dateBox45
@@ -933,12 +989,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table44->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table44->Controls->Add(this->taskBox44, 0, 1);
 			this->table44->Controls->Add(this->dateBox44, 0, 0);
-			this->table44->Location = System::Drawing::Point(324, 290);
+			this->table44->Location = System::Drawing::Point(324, 252);
 			this->table44->Name = L"table44";
 			this->table44->RowCount = 2;
 			this->table44->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table44->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table44->Size = System::Drawing::Size(99, 73);
+			this->table44->Size = System::Drawing::Size(99, 66);
 			this->table44->TabIndex = 32;
 			// 
 			// taskBox44
@@ -947,10 +1003,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox44->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox44->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox44->Location = System::Drawing::Point(3, 22);
+			this->taskBox44->Location = System::Drawing::Point(3, 20);
 			this->taskBox44->Multiline = true;
 			this->taskBox44->Name = L"taskBox44";
-			this->taskBox44->Size = System::Drawing::Size(93, 48);
+			this->taskBox44->Size = System::Drawing::Size(93, 43);
 			this->taskBox44->TabIndex = 1;
 			// 
 			// dateBox44
@@ -971,12 +1027,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table43->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table43->Controls->Add(this->taskBox43, 0, 1);
 			this->table43->Controls->Add(this->dateBox43, 0, 0);
-			this->table43->Location = System::Drawing::Point(217, 290);
+			this->table43->Location = System::Drawing::Point(217, 252);
 			this->table43->Name = L"table43";
 			this->table43->RowCount = 2;
 			this->table43->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table43->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table43->Size = System::Drawing::Size(99, 73);
+			this->table43->Size = System::Drawing::Size(99, 66);
 			this->table43->TabIndex = 31;
 			// 
 			// taskBox43
@@ -985,10 +1041,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox43->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox43->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox43->Location = System::Drawing::Point(3, 22);
+			this->taskBox43->Location = System::Drawing::Point(3, 20);
 			this->taskBox43->Multiline = true;
 			this->taskBox43->Name = L"taskBox43";
-			this->taskBox43->Size = System::Drawing::Size(93, 48);
+			this->taskBox43->Size = System::Drawing::Size(93, 43);
 			this->taskBox43->TabIndex = 1;
 			// 
 			// dateBox43
@@ -1009,12 +1065,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table42->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table42->Controls->Add(this->taskBox42, 0, 1);
 			this->table42->Controls->Add(this->dateBox42, 0, 0);
-			this->table42->Location = System::Drawing::Point(110, 290);
+			this->table42->Location = System::Drawing::Point(110, 252);
 			this->table42->Name = L"table42";
 			this->table42->RowCount = 2;
 			this->table42->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table42->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table42->Size = System::Drawing::Size(99, 73);
+			this->table42->Size = System::Drawing::Size(99, 66);
 			this->table42->TabIndex = 30;
 			// 
 			// taskBox42
@@ -1023,10 +1079,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox42->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox42->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox42->Location = System::Drawing::Point(3, 22);
+			this->taskBox42->Location = System::Drawing::Point(3, 20);
 			this->taskBox42->Multiline = true;
 			this->taskBox42->Name = L"taskBox42";
-			this->taskBox42->Size = System::Drawing::Size(93, 48);
+			this->taskBox42->Size = System::Drawing::Size(93, 43);
 			this->taskBox42->TabIndex = 1;
 			// 
 			// dateBox42
@@ -1049,12 +1105,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				64.47369F)));
 			this->tableLayoutPanel22->Controls->Add(this->taskBox41, 0, 1);
 			this->tableLayoutPanel22->Controls->Add(this->dateBox41, 0, 0);
-			this->tableLayoutPanel22->Location = System::Drawing::Point(4, 290);
+			this->tableLayoutPanel22->Location = System::Drawing::Point(4, 252);
 			this->tableLayoutPanel22->Name = L"tableLayoutPanel22";
 			this->tableLayoutPanel22->RowCount = 2;
 			this->tableLayoutPanel22->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->tableLayoutPanel22->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->tableLayoutPanel22->Size = System::Drawing::Size(99, 73);
+			this->tableLayoutPanel22->Size = System::Drawing::Size(99, 66);
 			this->tableLayoutPanel22->TabIndex = 29;
 			// 
 			// taskBox41
@@ -1063,10 +1119,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox41->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox41->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox41->Location = System::Drawing::Point(3, 22);
+			this->taskBox41->Location = System::Drawing::Point(3, 20);
 			this->taskBox41->Multiline = true;
 			this->taskBox41->Name = L"taskBox41";
-			this->taskBox41->Size = System::Drawing::Size(93, 48);
+			this->taskBox41->Size = System::Drawing::Size(93, 43);
 			this->taskBox41->TabIndex = 1;
 			// 
 			// dateBox41
@@ -1087,12 +1143,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table37->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table37->Controls->Add(this->taskBox37, 0, 1);
 			this->table37->Controls->Add(this->dateBox37, 0, 0);
-			this->table37->Location = System::Drawing::Point(645, 209);
+			this->table37->Location = System::Drawing::Point(645, 179);
 			this->table37->Name = L"table37";
 			this->table37->RowCount = 2;
 			this->table37->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table37->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table37->Size = System::Drawing::Size(99, 73);
+			this->table37->Size = System::Drawing::Size(99, 66);
 			this->table37->TabIndex = 28;
 			// 
 			// taskBox37
@@ -1101,10 +1157,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox37->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox37->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox37->Location = System::Drawing::Point(3, 22);
+			this->taskBox37->Location = System::Drawing::Point(3, 20);
 			this->taskBox37->Multiline = true;
 			this->taskBox37->Name = L"taskBox37";
-			this->taskBox37->Size = System::Drawing::Size(93, 48);
+			this->taskBox37->Size = System::Drawing::Size(93, 43);
 			this->taskBox37->TabIndex = 1;
 			// 
 			// dateBox37
@@ -1125,12 +1181,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table36->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table36->Controls->Add(this->taskBox36, 0, 1);
 			this->table36->Controls->Add(this->dateBox36, 0, 0);
-			this->table36->Location = System::Drawing::Point(538, 209);
+			this->table36->Location = System::Drawing::Point(538, 179);
 			this->table36->Name = L"table36";
 			this->table36->RowCount = 2;
 			this->table36->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table36->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table36->Size = System::Drawing::Size(99, 73);
+			this->table36->Size = System::Drawing::Size(99, 66);
 			this->table36->TabIndex = 27;
 			// 
 			// taskBox36
@@ -1139,10 +1195,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox36->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox36->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox36->Location = System::Drawing::Point(3, 22);
+			this->taskBox36->Location = System::Drawing::Point(3, 20);
 			this->taskBox36->Multiline = true;
 			this->taskBox36->Name = L"taskBox36";
-			this->taskBox36->Size = System::Drawing::Size(93, 48);
+			this->taskBox36->Size = System::Drawing::Size(93, 43);
 			this->taskBox36->TabIndex = 1;
 			// 
 			// dateBox36
@@ -1163,12 +1219,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table35->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table35->Controls->Add(this->taskBox35, 0, 1);
 			this->table35->Controls->Add(this->dateBox35, 0, 0);
-			this->table35->Location = System::Drawing::Point(431, 209);
+			this->table35->Location = System::Drawing::Point(431, 179);
 			this->table35->Name = L"table35";
 			this->table35->RowCount = 2;
 			this->table35->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table35->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table35->Size = System::Drawing::Size(99, 73);
+			this->table35->Size = System::Drawing::Size(99, 66);
 			this->table35->TabIndex = 26;
 			// 
 			// taskBox35
@@ -1177,10 +1233,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox35->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox35->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox35->Location = System::Drawing::Point(3, 22);
+			this->taskBox35->Location = System::Drawing::Point(3, 20);
 			this->taskBox35->Multiline = true;
 			this->taskBox35->Name = L"taskBox35";
-			this->taskBox35->Size = System::Drawing::Size(93, 48);
+			this->taskBox35->Size = System::Drawing::Size(93, 43);
 			this->taskBox35->TabIndex = 1;
 			// 
 			// dateBox35
@@ -1201,12 +1257,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table34->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table34->Controls->Add(this->taskBox34, 0, 1);
 			this->table34->Controls->Add(this->dateBox34, 0, 0);
-			this->table34->Location = System::Drawing::Point(324, 209);
+			this->table34->Location = System::Drawing::Point(324, 179);
 			this->table34->Name = L"table34";
 			this->table34->RowCount = 2;
 			this->table34->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table34->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table34->Size = System::Drawing::Size(99, 73);
+			this->table34->Size = System::Drawing::Size(99, 66);
 			this->table34->TabIndex = 25;
 			// 
 			// taskBox34
@@ -1215,10 +1271,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox34->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox34->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox34->Location = System::Drawing::Point(3, 22);
+			this->taskBox34->Location = System::Drawing::Point(3, 20);
 			this->taskBox34->Multiline = true;
 			this->taskBox34->Name = L"taskBox34";
-			this->taskBox34->Size = System::Drawing::Size(93, 48);
+			this->taskBox34->Size = System::Drawing::Size(93, 43);
 			this->taskBox34->TabIndex = 1;
 			// 
 			// dateBox34
@@ -1239,12 +1295,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table33->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table33->Controls->Add(this->taskBox33, 0, 1);
 			this->table33->Controls->Add(this->dateBox33, 0, 0);
-			this->table33->Location = System::Drawing::Point(217, 209);
+			this->table33->Location = System::Drawing::Point(217, 179);
 			this->table33->Name = L"table33";
 			this->table33->RowCount = 2;
 			this->table33->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table33->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table33->Size = System::Drawing::Size(99, 73);
+			this->table33->Size = System::Drawing::Size(99, 66);
 			this->table33->TabIndex = 24;
 			// 
 			// taskBox33
@@ -1253,10 +1309,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox33->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox33->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox33->Location = System::Drawing::Point(3, 22);
+			this->taskBox33->Location = System::Drawing::Point(3, 20);
 			this->taskBox33->Multiline = true;
 			this->taskBox33->Name = L"taskBox33";
-			this->taskBox33->Size = System::Drawing::Size(93, 48);
+			this->taskBox33->Size = System::Drawing::Size(93, 43);
 			this->taskBox33->TabIndex = 1;
 			// 
 			// dateBox33
@@ -1277,12 +1333,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table32->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table32->Controls->Add(this->taskBox32, 0, 1);
 			this->table32->Controls->Add(this->dateBox32, 0, 0);
-			this->table32->Location = System::Drawing::Point(110, 209);
+			this->table32->Location = System::Drawing::Point(110, 179);
 			this->table32->Name = L"table32";
 			this->table32->RowCount = 2;
 			this->table32->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table32->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table32->Size = System::Drawing::Size(99, 73);
+			this->table32->Size = System::Drawing::Size(99, 66);
 			this->table32->TabIndex = 23;
 			// 
 			// taskBox32
@@ -1291,10 +1347,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox32->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox32->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox32->Location = System::Drawing::Point(3, 22);
+			this->taskBox32->Location = System::Drawing::Point(3, 20);
 			this->taskBox32->Multiline = true;
 			this->taskBox32->Name = L"taskBox32";
-			this->taskBox32->Size = System::Drawing::Size(93, 48);
+			this->taskBox32->Size = System::Drawing::Size(93, 43);
 			this->taskBox32->TabIndex = 1;
 			// 
 			// dateBox32
@@ -1315,12 +1371,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table31->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table31->Controls->Add(this->taskBox31, 0, 1);
 			this->table31->Controls->Add(this->dateBox31, 0, 0);
-			this->table31->Location = System::Drawing::Point(4, 209);
+			this->table31->Location = System::Drawing::Point(4, 179);
 			this->table31->Name = L"table31";
 			this->table31->RowCount = 2;
 			this->table31->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table31->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table31->Size = System::Drawing::Size(99, 73);
+			this->table31->Size = System::Drawing::Size(99, 66);
 			this->table31->TabIndex = 22;
 			// 
 			// taskBox31
@@ -1329,10 +1385,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox31->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox31->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox31->Location = System::Drawing::Point(3, 22);
+			this->taskBox31->Location = System::Drawing::Point(3, 20);
 			this->taskBox31->Multiline = true;
 			this->taskBox31->Name = L"taskBox31";
-			this->taskBox31->Size = System::Drawing::Size(93, 48);
+			this->taskBox31->Size = System::Drawing::Size(93, 43);
 			this->taskBox31->TabIndex = 1;
 			// 
 			// dateBox31
@@ -1353,7 +1409,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table27->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table27->Controls->Add(this->taskBox27, 0, 1);
 			this->table27->Controls->Add(this->dateBox27, 0, 0);
-			this->table27->Location = System::Drawing::Point(645, 128);
+			this->table27->Location = System::Drawing::Point(645, 99);
 			this->table27->Name = L"table27";
 			this->table27->RowCount = 2;
 			this->table27->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1370,7 +1426,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox27->Location = System::Drawing::Point(3, 22);
 			this->taskBox27->Multiline = true;
 			this->taskBox27->Name = L"taskBox27";
-			this->taskBox27->Size = System::Drawing::Size(93, 48);
+			this->taskBox27->Size = System::Drawing::Size(93, 43);
 			this->taskBox27->TabIndex = 1;
 			// 
 			// dateBox27
@@ -1391,7 +1447,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table26->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table26->Controls->Add(this->taskBox26, 0, 1);
 			this->table26->Controls->Add(this->dateBox26, 0, 0);
-			this->table26->Location = System::Drawing::Point(538, 128);
+			this->table26->Location = System::Drawing::Point(538, 99);
 			this->table26->Name = L"table26";
 			this->table26->RowCount = 2;
 			this->table26->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1408,7 +1464,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox26->Location = System::Drawing::Point(3, 22);
 			this->taskBox26->Multiline = true;
 			this->taskBox26->Name = L"taskBox26";
-			this->taskBox26->Size = System::Drawing::Size(93, 48);
+			this->taskBox26->Size = System::Drawing::Size(93, 43);
 			this->taskBox26->TabIndex = 1;
 			// 
 			// dateBox26
@@ -1429,7 +1485,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table25->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table25->Controls->Add(this->taskBox25, 0, 1);
 			this->table25->Controls->Add(this->dateBox25, 0, 0);
-			this->table25->Location = System::Drawing::Point(431, 128);
+			this->table25->Location = System::Drawing::Point(431, 99);
 			this->table25->Name = L"table25";
 			this->table25->RowCount = 2;
 			this->table25->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1446,7 +1502,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox25->Location = System::Drawing::Point(3, 22);
 			this->taskBox25->Multiline = true;
 			this->taskBox25->Name = L"taskBox25";
-			this->taskBox25->Size = System::Drawing::Size(93, 48);
+			this->taskBox25->Size = System::Drawing::Size(93, 43);
 			this->taskBox25->TabIndex = 1;
 			// 
 			// dateBox25
@@ -1467,7 +1523,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table24->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table24->Controls->Add(this->taskBox24, 0, 1);
 			this->table24->Controls->Add(this->dateBox24, 0, 0);
-			this->table24->Location = System::Drawing::Point(324, 128);
+			this->table24->Location = System::Drawing::Point(324, 99);
 			this->table24->Name = L"table24";
 			this->table24->RowCount = 2;
 			this->table24->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1484,7 +1540,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox24->Location = System::Drawing::Point(3, 22);
 			this->taskBox24->Multiline = true;
 			this->taskBox24->Name = L"taskBox24";
-			this->taskBox24->Size = System::Drawing::Size(93, 48);
+			this->taskBox24->Size = System::Drawing::Size(93, 43);
 			this->taskBox24->TabIndex = 1;
 			// 
 			// dateBox24
@@ -1505,7 +1561,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table23->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table23->Controls->Add(this->taskBox23, 0, 1);
 			this->table23->Controls->Add(this->dateBox23, 0, 0);
-			this->table23->Location = System::Drawing::Point(217, 128);
+			this->table23->Location = System::Drawing::Point(217, 99);
 			this->table23->Name = L"table23";
 			this->table23->RowCount = 2;
 			this->table23->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1522,7 +1578,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox23->Location = System::Drawing::Point(3, 22);
 			this->taskBox23->Multiline = true;
 			this->taskBox23->Name = L"taskBox23";
-			this->taskBox23->Size = System::Drawing::Size(93, 48);
+			this->taskBox23->Size = System::Drawing::Size(93, 43);
 			this->taskBox23->TabIndex = 1;
 			// 
 			// dateBox23
@@ -1543,7 +1599,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table22->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table22->Controls->Add(this->taskBox22, 0, 1);
 			this->table22->Controls->Add(this->dateBox22, 0, 0);
-			this->table22->Location = System::Drawing::Point(110, 128);
+			this->table22->Location = System::Drawing::Point(110, 99);
 			this->table22->Name = L"table22";
 			this->table22->RowCount = 2;
 			this->table22->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1560,7 +1616,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox22->Location = System::Drawing::Point(3, 22);
 			this->taskBox22->Multiline = true;
 			this->taskBox22->Name = L"taskBox22";
-			this->taskBox22->Size = System::Drawing::Size(93, 48);
+			this->taskBox22->Size = System::Drawing::Size(93, 43);
 			this->taskBox22->TabIndex = 1;
 			// 
 			// dateBox22
@@ -1581,7 +1637,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table21->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table21->Controls->Add(this->taskBox21, 0, 1);
 			this->table21->Controls->Add(this->dateBox21, 0, 0);
-			this->table21->Location = System::Drawing::Point(4, 128);
+			this->table21->Location = System::Drawing::Point(4, 99);
 			this->table21->Name = L"table21";
 			this->table21->RowCount = 2;
 			this->table21->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
@@ -1598,7 +1654,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox21->Location = System::Drawing::Point(3, 22);
 			this->taskBox21->Multiline = true;
 			this->taskBox21->Name = L"taskBox21";
-			this->taskBox21->Size = System::Drawing::Size(93, 48);
+			this->taskBox21->Size = System::Drawing::Size(93, 43);
 			this->taskBox21->TabIndex = 1;
 			// 
 			// dateBox21
@@ -1619,12 +1675,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table17->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table17->Controls->Add(this->taskBox17, 0, 1);
 			this->table17->Controls->Add(this->dateBox17, 0, 0);
-			this->table17->Location = System::Drawing::Point(645, 47);
+			this->table17->Location = System::Drawing::Point(645, 24);
 			this->table17->Name = L"table17";
 			this->table17->RowCount = 2;
-			this->table17->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 24.65753F)));
-			this->table17->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 75.34247F)));
-			this->table17->Size = System::Drawing::Size(99, 73);
+			this->table17->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 25)));
+			this->table17->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 75)));
+			this->table17->Size = System::Drawing::Size(99, 68);
 			this->table17->TabIndex = 14;
 			// 
 			// taskBox17
@@ -1636,7 +1692,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->taskBox17->Location = System::Drawing::Point(3, 20);
 			this->taskBox17->Multiline = true;
 			this->taskBox17->Name = L"taskBox17";
-			this->taskBox17->Size = System::Drawing::Size(93, 50);
+			this->taskBox17->Size = System::Drawing::Size(93, 45);
 			this->taskBox17->TabIndex = 1;
 			// 
 			// dateBox17
@@ -1657,12 +1713,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table16->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table16->Controls->Add(this->taskBox16, 0, 1);
 			this->table16->Controls->Add(this->dateBox16, 0, 0);
-			this->table16->Location = System::Drawing::Point(538, 47);
+			this->table16->Location = System::Drawing::Point(538, 24);
 			this->table16->Name = L"table16";
 			this->table16->RowCount = 2;
 			this->table16->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table16->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table16->Size = System::Drawing::Size(99, 73);
+			this->table16->Size = System::Drawing::Size(99, 68);
 			this->table16->TabIndex = 13;
 			// 
 			// taskBox16
@@ -1671,10 +1727,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox16->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox16->Location = System::Drawing::Point(3, 22);
+			this->taskBox16->Location = System::Drawing::Point(3, 20);
 			this->taskBox16->Multiline = true;
 			this->taskBox16->Name = L"taskBox16";
-			this->taskBox16->Size = System::Drawing::Size(93, 48);
+			this->taskBox16->Size = System::Drawing::Size(93, 45);
 			this->taskBox16->TabIndex = 1;
 			// 
 			// dateBox16
@@ -1695,12 +1751,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table15->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table15->Controls->Add(this->taskBox15, 0, 1);
 			this->table15->Controls->Add(this->dateBox15, 0, 0);
-			this->table15->Location = System::Drawing::Point(431, 47);
+			this->table15->Location = System::Drawing::Point(431, 24);
 			this->table15->Name = L"table15";
 			this->table15->RowCount = 2;
 			this->table15->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table15->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table15->Size = System::Drawing::Size(99, 73);
+			this->table15->Size = System::Drawing::Size(99, 68);
 			this->table15->TabIndex = 12;
 			// 
 			// taskBox15
@@ -1709,10 +1765,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox15->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox15->Location = System::Drawing::Point(3, 22);
+			this->taskBox15->Location = System::Drawing::Point(3, 20);
 			this->taskBox15->Multiline = true;
 			this->taskBox15->Name = L"taskBox15";
-			this->taskBox15->Size = System::Drawing::Size(93, 48);
+			this->taskBox15->Size = System::Drawing::Size(93, 45);
 			this->taskBox15->TabIndex = 1;
 			// 
 			// dateBox15
@@ -1733,12 +1789,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table14->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table14->Controls->Add(this->taskBox14, 0, 1);
 			this->table14->Controls->Add(this->dateBox14, 0, 0);
-			this->table14->Location = System::Drawing::Point(324, 47);
+			this->table14->Location = System::Drawing::Point(324, 24);
 			this->table14->Name = L"table14";
 			this->table14->RowCount = 2;
 			this->table14->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table14->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table14->Size = System::Drawing::Size(99, 73);
+			this->table14->Size = System::Drawing::Size(99, 68);
 			this->table14->TabIndex = 11;
 			// 
 			// taskBox14
@@ -1747,10 +1803,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox14->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox14->Location = System::Drawing::Point(3, 22);
+			this->taskBox14->Location = System::Drawing::Point(3, 20);
 			this->taskBox14->Multiline = true;
 			this->taskBox14->Name = L"taskBox14";
-			this->taskBox14->Size = System::Drawing::Size(93, 48);
+			this->taskBox14->Size = System::Drawing::Size(93, 45);
 			this->taskBox14->TabIndex = 1;
 			// 
 			// dateBox14
@@ -1771,12 +1827,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table13->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table13->Controls->Add(this->taskBox13, 0, 1);
 			this->table13->Controls->Add(this->dateBox13, 0, 0);
-			this->table13->Location = System::Drawing::Point(217, 47);
+			this->table13->Location = System::Drawing::Point(217, 24);
 			this->table13->Name = L"table13";
 			this->table13->RowCount = 2;
 			this->table13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table13->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table13->Size = System::Drawing::Size(99, 73);
+			this->table13->Size = System::Drawing::Size(99, 68);
 			this->table13->TabIndex = 10;
 			// 
 			// taskBox13
@@ -1785,10 +1841,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox13->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox13->Location = System::Drawing::Point(3, 22);
+			this->taskBox13->Location = System::Drawing::Point(3, 20);
 			this->taskBox13->Multiline = true;
 			this->taskBox13->Name = L"taskBox13";
-			this->taskBox13->Size = System::Drawing::Size(93, 48);
+			this->taskBox13->Size = System::Drawing::Size(93, 45);
 			this->taskBox13->TabIndex = 1;
 			// 
 			// dateBox13
@@ -1809,12 +1865,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table12->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table12->Controls->Add(this->taskBox12, 0, 1);
 			this->table12->Controls->Add(this->dateBox12, 0, 0);
-			this->table12->Location = System::Drawing::Point(110, 47);
+			this->table12->Location = System::Drawing::Point(110, 24);
 			this->table12->Name = L"table12";
 			this->table12->RowCount = 2;
 			this->table12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table12->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
-			this->table12->Size = System::Drawing::Size(99, 73);
+			this->table12->Size = System::Drawing::Size(99, 68);
 			this->table12->TabIndex = 9;
 			// 
 			// taskBox12
@@ -1823,10 +1879,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox12->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox12->Location = System::Drawing::Point(3, 22);
+			this->taskBox12->Location = System::Drawing::Point(3, 20);
 			this->taskBox12->Multiline = true;
 			this->taskBox12->Name = L"taskBox12";
-			this->taskBox12->Size = System::Drawing::Size(93, 48);
+			this->taskBox12->Size = System::Drawing::Size(93, 45);
 			this->taskBox12->TabIndex = 1;
 			// 
 			// dateBox12
@@ -1845,10 +1901,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkSat->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkSat->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkSat->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkSat->Location = System::Drawing::Point(645, 4);
 			this->dayTxtBlkSat->Name = L"dayTxtBlkSat";
 			this->dayTxtBlkSat->ReadOnly = true;
-			this->dayTxtBlkSat->Size = System::Drawing::Size(80, 19);
+			this->dayTxtBlkSat->Size = System::Drawing::Size(80, 16);
 			this->dayTxtBlkSat->TabIndex = 6;
 			this->dayTxtBlkSat->Text = L"Sat";
 			this->dayTxtBlkSat->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1858,10 +1915,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkFri->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkFri->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkFri->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkFri->Location = System::Drawing::Point(538, 4);
 			this->dayTxtBlkFri->Name = L"dayTxtBlkFri";
 			this->dayTxtBlkFri->ReadOnly = true;
-			this->dayTxtBlkFri->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkFri->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkFri->TabIndex = 5;
 			this->dayTxtBlkFri->Text = L"Fri";
 			this->dayTxtBlkFri->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1872,10 +1930,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkThur->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkThur->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkThur->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkThur->Location = System::Drawing::Point(431, 4);
 			this->dayTxtBlkThur->Name = L"dayTxtBlkThur";
 			this->dayTxtBlkThur->ReadOnly = true;
-			this->dayTxtBlkThur->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkThur->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkThur->TabIndex = 4;
 			this->dayTxtBlkThur->Text = L"Thu";
 			this->dayTxtBlkThur->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1885,10 +1944,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkTue->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkTue->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkTue->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkTue->Location = System::Drawing::Point(217, 4);
 			this->dayTxtBlkTue->Name = L"dayTxtBlkTue";
 			this->dayTxtBlkTue->ReadOnly = true;
-			this->dayTxtBlkTue->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkTue->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkTue->TabIndex = 2;
 			this->dayTxtBlkTue->Text = L"Tue";
 			this->dayTxtBlkTue->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1898,10 +1958,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkSun->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkSun->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkSun->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkSun->Location = System::Drawing::Point(4, 4);
 			this->dayTxtBlkSun->Name = L"dayTxtBlkSun";
 			this->dayTxtBlkSun->ReadOnly = true;
-			this->dayTxtBlkSun->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkSun->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkSun->TabIndex = 0;
 			this->dayTxtBlkSun->Text = L"Sun";
 			this->dayTxtBlkSun->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1912,10 +1973,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkMon->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkMon->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkMon->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkMon->Location = System::Drawing::Point(110, 4);
 			this->dayTxtBlkMon->Name = L"dayTxtBlkMon";
 			this->dayTxtBlkMon->ReadOnly = true;
-			this->dayTxtBlkMon->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkMon->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkMon->TabIndex = 1;
 			this->dayTxtBlkMon->Text = L"Mon";
 			this->dayTxtBlkMon->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1927,13 +1989,13 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table11->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
 			this->table11->Controls->Add(this->taskBox11, 0, 1);
 			this->table11->Controls->Add(this->dateBox11, 0, 0);
-			this->table11->Location = System::Drawing::Point(4, 47);
+			this->table11->Location = System::Drawing::Point(4, 24);
 			this->table11->Name = L"table11";
 			this->table11->RowCount = 2;
 			this->table11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
 			this->table11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
 			this->table11->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-			this->table11->Size = System::Drawing::Size(99, 73);
+			this->table11->Size = System::Drawing::Size(99, 68);
 			this->table11->TabIndex = 8;
 			// 
 			// taskBox11
@@ -1942,10 +2004,10 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->taskBox11->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->taskBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
-			this->taskBox11->Location = System::Drawing::Point(3, 22);
+			this->taskBox11->Location = System::Drawing::Point(3, 20);
 			this->taskBox11->Multiline = true;
 			this->taskBox11->Name = L"taskBox11";
-			this->taskBox11->Size = System::Drawing::Size(93, 48);
+			this->taskBox11->Size = System::Drawing::Size(93, 45);
 			this->taskBox11->TabIndex = 1;
 			// 
 			// dateBox11
@@ -1956,7 +2018,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dateBox11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
 			this->dateBox11->Location = System::Drawing::Point(3, 3);
 			this->dateBox11->Name = L"dateBox11";
-			this->dateBox11->Size = System::Drawing::Size(27, 14);
+			this->dateBox11->Size = System::Drawing::Size(93, 14);
 			this->dateBox11->TabIndex = 0;
 			// 
 			// dayTxtBlkWed
@@ -1964,10 +2026,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->dayTxtBlkWed->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->dayTxtBlkWed->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dayTxtBlkWed->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
 			this->dayTxtBlkWed->Location = System::Drawing::Point(324, 4);
 			this->dayTxtBlkWed->Name = L"dayTxtBlkWed";
 			this->dayTxtBlkWed->ReadOnly = true;
-			this->dayTxtBlkWed->Size = System::Drawing::Size(76, 19);
+			this->dayTxtBlkWed->Size = System::Drawing::Size(76, 16);
 			this->dayTxtBlkWed->TabIndex = 3;
 			this->dayTxtBlkWed->Text = L"Wed";
 			this->dayTxtBlkWed->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -1980,11 +2043,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			});
 			this->userInputBox->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::Append;
 			this->userInputBox->BackColor = System::Drawing::Color::White;
-			this->userInputBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->userInputBox->Location = System::Drawing::Point(304, 524);
+			this->userInputBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->userInputBox->Location = System::Drawing::Point(304, 527);
 			this->userInputBox->Name = L"userInputBox";
 			this->userInputBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->userInputBox->Size = System::Drawing::Size(750, 29);
+			this->userInputBox->Size = System::Drawing::Size(750, 26);
 			this->userInputBox->TabIndex = 1;
 			this->userInputBox->TextChanged += gcnew System::EventHandler(this, &MonthForm::userInputBox_TextChanged);
 			this->userInputBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MonthForm::ctrlHold);
@@ -1995,11 +2058,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->monthFormTitle->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->monthFormTitle->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->monthFormTitle->Enabled = false;
-			this->monthFormTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->monthFormTitle->Location = System::Drawing::Point(556, 6);
+			this->monthFormTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
+			this->monthFormTitle->Location = System::Drawing::Point(556, 3);
 			this->monthFormTitle->Name = L"monthFormTitle";
 			this->monthFormTitle->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-			this->monthFormTitle->Size = System::Drawing::Size(255, 25);
+			this->monthFormTitle->Size = System::Drawing::Size(255, 22);
 			this->monthFormTitle->TabIndex = 2;
 			this->monthFormTitle->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
@@ -2009,11 +2072,11 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->sideBar->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->sideBar->Enabled = false;
-			this->sideBar->Location = System::Drawing::Point(12, 37);
+			this->sideBar->Location = System::Drawing::Point(12, 31);
 			this->sideBar->Multiline = true;
 			this->sideBar->Name = L"sideBar";
 			this->sideBar->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->sideBar->Size = System::Drawing::Size(273, 516);
+			this->sideBar->Size = System::Drawing::Size(273, 522);
 			this->sideBar->TabIndex = 3;
 			// 
 			// showBox
@@ -2021,12 +2084,12 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->showBox->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->showBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->showBox->Enabled = false;
-			this->showBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
+			this->showBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->showBox->ForeColor = System::Drawing::Color::Black;
 			this->showBox->Location = System::Drawing::Point(12, 3);
 			this->showBox->Name = L"showBox";
 			this->showBox->ReadOnly = true;
-			this->showBox->Size = System::Drawing::Size(273, 25);
+			this->showBox->Size = System::Drawing::Size(273, 22);
 			this->showBox->TabIndex = 4;
 			this->showBox->Text = L"Todo Tasks";
 			this->showBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -2038,7 +2101,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->feedBackBox->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->feedBackBox->Enabled = false;
 			this->feedBackBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->feedBackBox->Location = System::Drawing::Point(304, 502);
+			this->feedBackBox->Location = System::Drawing::Point(304, 508);
 			this->feedBackBox->Name = L"feedBackBox";
 			this->feedBackBox->ReadOnly = true;
 			this->feedBackBox->Size = System::Drawing::Size(749, 19);
@@ -2055,6 +2118,279 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->resetButton->Text = L"DV";
 			this->resetButton->UseVisualStyleBackColor = false;
 			this->resetButton->Click += gcnew System::EventHandler(this, &MonthForm::defaultView);
+			// 
+			// table65
+			// 
+			this->table65->ColumnCount = 1;
+			this->table65->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table65->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table65->Controls->Add(this->taskBox65, 0, 1);
+			this->table65->Controls->Add(this->dateBox65, 0, 0);
+			this->table65->Location = System::Drawing::Point(431, 399);
+			this->table65->Name = L"table65";
+			this->table65->RowCount = 2;
+			this->table65->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table65->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table65->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table65->Size = System::Drawing::Size(99, 68);
+			this->table65->TabIndex = 43;
+			// 
+			// taskBox65
+			// 
+			this->taskBox65->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox65->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox65->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox65->Location = System::Drawing::Point(3, 20);
+			this->taskBox65->Multiline = true;
+			this->taskBox65->Name = L"taskBox65";
+			this->taskBox65->Size = System::Drawing::Size(93, 45);
+			this->taskBox65->TabIndex = 1;
+			// 
+			// dateBox65
+			// 
+			this->dateBox65->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox65->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox65->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox65->Location = System::Drawing::Point(3, 3);
+			this->dateBox65->Name = L"dateBox65";
+			this->dateBox65->Size = System::Drawing::Size(93, 14);
+			this->dateBox65->TabIndex = 0;
+			// 
+			// table66
+			// 
+			this->table66->ColumnCount = 1;
+			this->table66->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table66->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table66->Controls->Add(this->taskBox66, 0, 1);
+			this->table66->Controls->Add(this->dateBox66, 0, 0);
+			this->table66->Location = System::Drawing::Point(538, 399);
+			this->table66->Name = L"table66";
+			this->table66->RowCount = 2;
+			this->table66->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table66->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table66->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table66->Size = System::Drawing::Size(99, 68);
+			this->table66->TabIndex = 44;
+			// 
+			// taskBox66
+			// 
+			this->taskBox66->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox66->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox66->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox66->Location = System::Drawing::Point(3, 20);
+			this->taskBox66->Multiline = true;
+			this->taskBox66->Name = L"taskBox66";
+			this->taskBox66->Size = System::Drawing::Size(93, 45);
+			this->taskBox66->TabIndex = 1;
+			// 
+			// dateBox66
+			// 
+			this->dateBox66->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox66->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox66->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox66->Location = System::Drawing::Point(3, 3);
+			this->dateBox66->Name = L"dateBox66";
+			this->dateBox66->Size = System::Drawing::Size(93, 14);
+			this->dateBox66->TabIndex = 0;
+			// 
+			// table67
+			// 
+			this->table67->ColumnCount = 1;
+			this->table67->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table67->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table67->Controls->Add(this->taskBox67, 0, 1);
+			this->table67->Controls->Add(this->dateBox67, 0, 0);
+			this->table67->Location = System::Drawing::Point(645, 399);
+			this->table67->Name = L"table67";
+			this->table67->RowCount = 2;
+			this->table67->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table67->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table67->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table67->Size = System::Drawing::Size(99, 68);
+			this->table67->TabIndex = 45;
+			// 
+			// taskBox67
+			// 
+			this->taskBox67->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox67->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox67->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox67->Location = System::Drawing::Point(3, 20);
+			this->taskBox67->Multiline = true;
+			this->taskBox67->Name = L"taskBox67";
+			this->taskBox67->Size = System::Drawing::Size(93, 45);
+			this->taskBox67->TabIndex = 1;
+			// 
+			// dateBox67
+			// 
+			this->dateBox67->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox67->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox67->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox67->Location = System::Drawing::Point(3, 3);
+			this->dateBox67->Name = L"dateBox67";
+			this->dateBox67->Size = System::Drawing::Size(93, 14);
+			this->dateBox67->TabIndex = 0;
+			// 
+			// table64
+			// 
+			this->table64->ColumnCount = 1;
+			this->table64->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table64->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table64->Controls->Add(this->taskBox64, 0, 1);
+			this->table64->Controls->Add(this->dateBox64, 0, 0);
+			this->table64->Location = System::Drawing::Point(324, 399);
+			this->table64->Name = L"table64";
+			this->table64->RowCount = 2;
+			this->table64->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table64->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table64->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table64->Size = System::Drawing::Size(99, 68);
+			this->table64->TabIndex = 46;
+			// 
+			// taskBox64
+			// 
+			this->taskBox64->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox64->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox64->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox64->Location = System::Drawing::Point(3, 20);
+			this->taskBox64->Multiline = true;
+			this->taskBox64->Name = L"taskBox64";
+			this->taskBox64->Size = System::Drawing::Size(93, 45);
+			this->taskBox64->TabIndex = 1;
+			// 
+			// dateBox64
+			// 
+			this->dateBox64->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox64->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox64->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox64->Location = System::Drawing::Point(3, 3);
+			this->dateBox64->Name = L"dateBox64";
+			this->dateBox64->Size = System::Drawing::Size(93, 14);
+			this->dateBox64->TabIndex = 0;
+			// 
+			// table61
+			// 
+			this->table61->ColumnCount = 1;
+			this->table61->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table61->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table61->Controls->Add(this->taskBox61, 0, 1);
+			this->table61->Controls->Add(this->dateBox61, 0, 0);
+			this->table61->Location = System::Drawing::Point(4, 399);
+			this->table61->Name = L"table61";
+			this->table61->RowCount = 2;
+			this->table61->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table61->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table61->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table61->Size = System::Drawing::Size(99, 68);
+			this->table61->TabIndex = 47;
+			// 
+			// taskBox61
+			// 
+			this->taskBox61->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox61->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox61->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox61->Location = System::Drawing::Point(3, 20);
+			this->taskBox61->Multiline = true;
+			this->taskBox61->Name = L"taskBox61";
+			this->taskBox61->Size = System::Drawing::Size(93, 45);
+			this->taskBox61->TabIndex = 1;
+			// 
+			// dateBox61
+			// 
+			this->dateBox61->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox61->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox61->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox61->Location = System::Drawing::Point(3, 3);
+			this->dateBox61->Name = L"dateBox61";
+			this->dateBox61->Size = System::Drawing::Size(93, 14);
+			this->dateBox61->TabIndex = 0;
+			// 
+			// table62
+			// 
+			this->table62->ColumnCount = 1;
+			this->table62->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table62->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table62->Controls->Add(this->taskBox62, 0, 1);
+			this->table62->Controls->Add(this->dateBox62, 0, 0);
+			this->table62->Location = System::Drawing::Point(110, 399);
+			this->table62->Name = L"table62";
+			this->table62->RowCount = 2;
+			this->table62->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table62->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table62->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table62->Size = System::Drawing::Size(99, 68);
+			this->table62->TabIndex = 48;
+			// 
+			// taskBox62
+			// 
+			this->taskBox62->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox62->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox62->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox62->Location = System::Drawing::Point(3, 20);
+			this->taskBox62->Multiline = true;
+			this->taskBox62->Name = L"taskBox62";
+			this->taskBox62->Size = System::Drawing::Size(93, 45);
+			this->taskBox62->TabIndex = 1;
+			// 
+			// dateBox62
+			// 
+			this->dateBox62->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox62->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox62->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox62->Location = System::Drawing::Point(3, 3);
+			this->dateBox62->Name = L"dateBox62";
+			this->dateBox62->Size = System::Drawing::Size(93, 14);
+			this->dateBox62->TabIndex = 0;
+			// 
+			// table63
+			// 
+			this->table63->ColumnCount = 1;
+			this->table63->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 35.52632F)));
+			this->table63->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 64.47369F)));
+			this->table63->Controls->Add(this->taskBox63, 0, 1);
+			this->table63->Controls->Add(this->dateBox63, 0, 0);
+			this->table63->Location = System::Drawing::Point(217, 399);
+			this->table63->Name = L"table63";
+			this->table63->RowCount = 2;
+			this->table63->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 26.0274F)));
+			this->table63->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 73.9726F)));
+			this->table63->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
+			this->table63->Size = System::Drawing::Size(99, 68);
+			this->table63->TabIndex = 49;
+			// 
+			// taskBox63
+			// 
+			this->taskBox63->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->taskBox63->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->taskBox63->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F));
+			this->taskBox63->Location = System::Drawing::Point(3, 20);
+			this->taskBox63->Multiline = true;
+			this->taskBox63->Name = L"taskBox63";
+			this->taskBox63->Size = System::Drawing::Size(93, 45);
+			this->taskBox63->TabIndex = 1;
+			// 
+			// dateBox63
+			// 
+			this->dateBox63->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->dateBox63->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dateBox63->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9));
+			this->dateBox63->Location = System::Drawing::Point(3, 3);
+			this->dateBox63->Name = L"dateBox63";
+			this->dateBox63->Size = System::Drawing::Size(93, 14);
+			this->dateBox63->TabIndex = 0;
 			// 
 			// MonthForm
 			// 
@@ -2146,6 +2482,20 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->table12->PerformLayout();
 			this->table11->ResumeLayout(false);
 			this->table11->PerformLayout();
+			this->table65->ResumeLayout(false);
+			this->table65->PerformLayout();
+			this->table66->ResumeLayout(false);
+			this->table66->PerformLayout();
+			this->table67->ResumeLayout(false);
+			this->table67->PerformLayout();
+			this->table64->ResumeLayout(false);
+			this->table64->PerformLayout();
+			this->table61->ResumeLayout(false);
+			this->table61->PerformLayout();
+			this->table62->ResumeLayout(false);
+			this->table62->PerformLayout();
+			this->table63->ResumeLayout(false);
+			this->table63->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
