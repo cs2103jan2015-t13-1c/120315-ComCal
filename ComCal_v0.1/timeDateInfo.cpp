@@ -48,6 +48,30 @@ bool timeDateInfo::isLeapYear(int year)
 	return isLeap;
 }
 
+std::string timeDateInfo::getDayStr(int iter) {
+	const static std::string DAYS[28] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+	return DAYS[iter];
+}
+
+std::string timeDateInfo::getLowerDayStr(int iter) {
+	const static std::string DAYS[28] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
+
+	return DAYS[iter];
+}
+
+std::string timeDateInfo::getShortDayStr(int iter) {
+	const static std::string DAYS[28] = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
+
+	return DAYS[iter];
+}
+
+std::string timeDateInfo::getShortLowerDayStr(int iter) {
+	const static std::string DAYS[28] = { "sun", "mon", "tue", "wed", "thurs", "fri", "sat" };
+
+	return DAYS[iter];
+}
+
 //Hamzah
 //returns the month in string form
 //Argument: an int corresponding to the month, eg. 0=January, 1=February,..,11=December
@@ -55,19 +79,7 @@ std::string timeDateInfo::getMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "January", "February", "March", "April", "May",
 		"June", "July", "August", "September", "October", "November", "December" };
 
-	try{
-		if (iter >= 0 && iter < 12) {
-			return MONTHS[iter];
-		}
-		else{
-			throw GET_MONTH_STR_ERROR;
-		}
-	}
-	catch(const std::string message) {
-		ErrorLog::inputErrorLog(message);
-	}
-
-	return NULL;
+	return MONTHS[iter];
 }
 
 std::string timeDateInfo::getLowerMonthStr(int iter) {
@@ -117,5 +129,11 @@ struct tm* timeDateInfo::setStructTm() {
 	time_t rawtime;
 	time(&rawtime);
 	struct tm* timeinfo = localtime(&rawtime);
+	return timeinfo;
+}
+
+struct tm* timeDateInfo::setDayStructTm(int day) {
+	struct tm* timeinfo = setStructTm();
+	timeinfo->tm_wday = day;
 	return timeinfo;
 }

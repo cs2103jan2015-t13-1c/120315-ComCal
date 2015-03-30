@@ -7,41 +7,93 @@
 #include "ComCalManager.h"
 #include "timeDateInfo.h"
 #include "keywords.h"
+#include "typeConversions.h"
+#include "Date.h"
 
 #include <ctype.h>
 
-//int getMonthInput(std::string argument);
-//int numOfWS(std::string argument);
-
 std::string Show::execute(std::string argument) {
 	std::string feedBack;
+	Date* showDate = new Date();
+	//TODO: add a function here to remove any white spaces from the left and right of 'argument'
 	int numOfWhiteSpace = numOfWS(argument);
 
-	if (numOfWhiteSpace == 0) {
-		
-		//1st case: user specifies "show 'month'" without specifying the year
-		if (getMonthInput(argument) != -1) {
-			ComCalManager::getInstance()->setMonthDetails(timeDateInfo::setStructTm(getMonthInput(argument)));
+	if (argument.size() != 0){
+		if (numOfWhiteSpace == 0) {
 
-			feedBack = timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown";
+			//1st case: user specifies "show 'month'" without specifying the year
+			if (getMonthInput(argument) != -1) {
+				ComCalManager::getInstance()->setMonthDetails(timeDateInfo::setStructTm(getMonthInput(argument)));
 
-			return  feedBack;
+				feedBack = timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown";
+
+				return  feedBack;
+			}
+			
+			if (argument == INPUT_TODO || argument == INPUT_CAPT_TODO) {
+				ComCalManager::getInstance()->setDefaultSideBar();
+
+				feedBack = ALL_TODO_FEEDBACK;
+				return feedBack;
+			}
+				
+			if (argument == INPUT_DONE || argument == INPUT_CAPT_DONE) {
+				setDoneSideBar();
+
+				feedBack = ALL_DONE_FEEDBACK;
+				return feedBack;
+			}
+
+			if (showDate->setDate(argument)){
+				setShowDaySideBar(showDate);
+
+				feedBack = showDate->toGUIString() + " shown";
+				return feedBack;
+			}
 		}
-		else {
-			feedBack = INVALID_MONTH_INPUT;
+		else{
+			if (numOfWhiteSpace == 1) {
 
-			return feedBack;
+			}
 		}
-
 	}
 	else{
-		if (numOfWhiteSpace == 1) {
-
-		}
+		
 	}
+
+	delete showDate;
 
 	feedBack = INVALID_SHOW_INPUT;
 	return feedBack;
+}
+
+void Show::setDoneSideBar() {
+	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+
+	ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_TITLE);
+
+	ComCalManager::getInstance()->getSideVec()->clear();
+	for (int i = 0; i < todoSize; i++) {
+		if (TextStorage::getInstance()->getTodoTask()->at(i)->getIsDone()) {
+			ComCalManager::getInstance()->getSideVec()->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		}
+	}
+}
+
+void Show::setShowDaySideBar(Date* showDate){
+	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+
+	ComCalManager::getInstance()->setSideBarTitle(showDate->toGUIString() + " All Tasks");
+	ComCalManager::getInstance()->getSideVec()->clear();
+
+	for (int i = 0; i < todoSize; i++) {
+		if (TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getDay() == showDate->getDay()
+			&& TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getMonth() == showDate->getMonth()
+			&& TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getYear() == showDate->getYear()) {
+
+			ComCalManager::getInstance()->getSideVec()->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		}
+	}
 }
 
 int Show::getMonthInput(std::string argument) {
@@ -51,18 +103,22 @@ int Show::getMonthInput(std::string argument) {
 
 		if (argument == timeDateInfo::getMonthStr(i)) {
 			monthIndex = i;
+			break;
 		}
 
 		if (argument == timeDateInfo::getLowerMonthStr(i)) {
 			monthIndex = i;
+			break;
 		}
 
 		if (argument == timeDateInfo::getShortMonthStr(i)) {
 			monthIndex = i;
+			break;
 		}
 
 		if (argument == timeDateInfo::getShortLowerMonthStr(i)) {
 			monthIndex = i;
+			break;
 		}
 	}
 

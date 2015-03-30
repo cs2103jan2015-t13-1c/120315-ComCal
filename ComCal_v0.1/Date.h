@@ -19,6 +19,7 @@ public:
 	~Date();
 	
 	std::string toString();
+	std::string toGUIString();
 
 	bool setDate(std::string date);
 

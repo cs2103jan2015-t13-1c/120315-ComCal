@@ -22,6 +22,12 @@ static const std::string DATE_FRIDAY = "Friday";
 static const std::string DATE_SATURDAY = "Saturday";
 static const std::string DATE_SUNDAY = "Sunday";
 
+// Strings for possible user inputs
+static const std::string INPUT_TODO = "todo";
+static const std::string INPUT_CAPT_TODO = "Todo";
+static const std::string INPUT_DONE = "done";
+static const std::string INPUT_CAPT_DONE = "Done";
+
 //Default file names constant string declarations:
 const std::string FILENAME_TODODEFAULT = "ComCal_todo.txt";
 const std::string FILENAME_DONEDEFAULT = "ComCal_done.txt";
@@ -44,10 +50,21 @@ const static int NUM_BLOCKS_IN_CALENDAR = 42;
 const static std::string NEWLINE = " \n";
 const static std::string INDEX_DESCRIPTION_SEPARATOR = ". ";
 
+//SideBar titles
+static const std::string ALL_TODO_TITLE = "All Todo Tasks";
+static const std::string ALL_DONE_TITLE = "All Done Tasks";
+static const std::string SEARCH_RESULTS_TITLE = "Search Results";
+static const std::string TODAY_TASKS_TITLE = "Today's tasks";
+
+//Feedbacks
+static const std::string ALL_TODO_FEEDBACK = "All todo tasks shown in sideBar";
+static const std::string ALL_DONE_FEEDBACK = "All done tasks shown in sideBar";
+static const std::string SHOW_TODAY_FEEDBACK = "All tasks today shown in sideBar";
+
 //Input error messages here
-const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
-const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
-const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
-const std::string INVALID_COMMAND = "This is not a valid command\n";
-const std::string INVALID_MONTH_INPUT = "Invalid show month input";
-const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";
+static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
+static const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
+static const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
+static const std::string INVALID_COMMAND = "This is not a valid command\n";
+static const std::string INVALID_MONTH_INPUT = "Invalid show month input";
+static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";

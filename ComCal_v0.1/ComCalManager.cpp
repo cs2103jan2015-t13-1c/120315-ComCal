@@ -20,6 +20,7 @@ ComCalManager* ComCalManager::_instance = NULL;
 ComCalManager::ComCalManager(){
 	_sideBarView = new std::vector<std::string>();
 
+	_isAllTodo = true;
 	_isShowMonth = false;
 	_isShowDayTaskSearch = false;
 
@@ -46,6 +47,8 @@ void ComCalManager::initialise(int numOfFiles, const char** fileNames) {
 
 	
 	TextStorage::getInstance()->initialize(todoFileName, doneFileName);
+
+	setDefaultSideBar();
 }
 
 ComCalManager::~ComCalManager() {
@@ -117,18 +120,30 @@ bool ComCalManager::getIsShowDayTaskSearch() {
 	return _isShowDayTaskSearch;
 }
 
+bool ComCalManager::getIsAllTodo(){
+	return _isAllTodo;
+}
+
+std::string ComCalManager::getSideBarTitle(){
+	return _sideBarTitle;
+}
+
+
+
 //Setter methods
 
 void ComCalManager::setDefaultSideBar() {
+
+	_sideBarTitle = ALL_TODO_TITLE;
 
 	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
 
 	_sideBarView->clear();
 	for (int i = 0; i < todoSize; i++) {
-		_sideBarView->push_back(typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(i)->getIndex())
-			+ INDEX_DESCRIPTION_SEPARATOR
-			+ TextStorage::getInstance()->getTodoTask()->at(i)->getDescription()
-			+ NEWLINE);
+		if (!TextStorage::getInstance()->getTodoTask()->at(i)->getIsDone()) {
+
+			_sideBarView->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		}
 	}
 }
 
@@ -140,6 +155,14 @@ void ComCalManager::setIsShowDayTaskSearch(bool isShowDayTaskSearch) {
 	_isShowDayTaskSearch = isShowDayTaskSearch;
 }
 
+void ComCalManager::setIsAllTodo(bool isAllTodo){
+	_isAllTodo = isAllTodo;
+}
+
 void ComCalManager::setMonthDetails(struct tm* monthDetails){
 	_monthDetails = monthDetails;
+}
+
+void ComCalManager::setSideBarTitle(std::string sideBarTitle){
+	_sideBarTitle = sideBarTitle;
 }

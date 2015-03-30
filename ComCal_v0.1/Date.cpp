@@ -24,6 +24,10 @@ std::string Date::toString() {
 	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year) + " " + typeConversions::intToString(_time));
 }
 
+std::string Date::toGUIString(){
+	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year));
+}
+
 bool Date::setDate(std::string date) {
 	// Possible inputs for dates:
 	// 1. DD/MM/YY

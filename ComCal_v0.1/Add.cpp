@@ -8,6 +8,7 @@
 #include "Task.h"
 #include "TextStorage.h"
 #include "typeConversions.h"
+#include "ComCalManager.h"
 
 std::string Add::execute(std::string argument) {
 	// Delimiters used in the Add command:
@@ -159,6 +160,11 @@ std::string Add::execute(std::string argument) {
 	}
 	Task* newTask = new Task(description, location, objStartDate, objEndDate);
 	TextStorage::getInstance()->getTodoTask()->push_back(newTask);
+
+	//Flag to indicate an update to MonthForm that another task is to be added to the sideBar
+	if (ComCalManager::getInstance()->getIsAllTodo()){
+		ComCalManager::getInstance()->getSideVec()->push_back(newTask->toString());
+	}
 
 	return ("Added " + newTask->toString());
 }

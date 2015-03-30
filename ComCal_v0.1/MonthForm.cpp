@@ -25,7 +25,6 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 		typeConversions::convertArrStrToConststrArr(argv, charFileNames, argc);
 	}
 
-//	_manager = new ComCalManager(argc, charFileNames);
 	ComCalManager::getInstance()->initialise(argc, charFileNames);
 	
 	_ctrlHeld = false;
@@ -222,20 +221,18 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 		ErrorLog::inputErrorLog(NO_TASKS_IN_VECTOR);
 	}
 
-	//removes any text from the taskList for initialising
-	for (int m = 0; m < NUM_BLOCKS_IN_CALENDAR; m++){
-		taskList[m]->Text = nullptr;
-	}
-
 	//adds the tasks to the task lists in the calendar for viewing
 	for (int k = 0; k < NUM_BLOCKS_IN_CALENDAR; k++) {
+		taskList[k]->Text = nullptr;
 		taskList[k]->Text = taskStrList[k];
 	}
 }
 
 void ComCal_v01::MonthForm::updateSideBar() {
-//	setDefaultSideBar(); //should be removed by tmr, only be used for 260315 tut
-	ComCalManager::getInstance()->setDefaultSideBar();
+
+	sideBarTitle->Text = nullptr;
+	sideBarTitle->Text = typeConversions::convertstrToStr(ComCalManager::getInstance()->getSideBarTitle());
+
 	int numOfLines = ComCalManager::getInstance()->getSideVec()->size();
 	std::string sideBarStr;
 	std::vector<std::string>* sideVec = ComCalManager::getInstance()->getSideVec();
@@ -244,8 +241,6 @@ void ComCal_v01::MonthForm::updateSideBar() {
 	for (int i = 0; i < numOfLines; i++) {
 		sideBar->Text = String::Concat(sideBar->Text, typeConversions::convertstrToStr(sideVec->at(i)), Environment::NewLine);
 	}
-
-//	sideBar->Text = typeConversions::convertstrToStr(sideBarStr);
 }
 
 void ComCal_v01::MonthForm::storeDateTextBlockInList() {

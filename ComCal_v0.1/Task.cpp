@@ -3,6 +3,8 @@
 //@author A0119754X
 
 #include "Task.h"
+#include "keywords.h"
+#include "typeConversions.h"
 
 int Task::_nextIndex = 1;
 
@@ -66,7 +68,19 @@ bool Task::hasEndDate() {
 
 // Converts the Task object into a String to save into text file
 std::string Task::toString() {
-	std::string returnString = _description + " " + _location + " ";
+	std::string returnString =  _description + " " + _location + " ";
+	if (hasStartDate()) {
+		returnString += _startDate->toString() + " ";
+	}
+	if (hasEndDate()) {
+		returnString += _endDate->toString();
+	}
+	return returnString;
+}
+
+// Converts Task object into a string for GUI
+std::string Task::toGUIString() {
+	std::string returnString = typeConversions::intToString(_index) + INDEX_DESCRIPTION_SEPARATOR +  _description + " " + _location + " ";
 	if (hasStartDate()) {
 		returnString += _startDate->toString() + " ";
 	}

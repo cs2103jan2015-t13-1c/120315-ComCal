@@ -32,4 +32,5 @@ public:
 	bool hasEndDate();
 
 	std::string toString();
+	std::string toGUIString();
 };
