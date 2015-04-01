@@ -6,6 +6,35 @@
 #include "typeConversions.h"
 #include "TextStorage.h"
 
+// TODO Implement input formats 3
+
+void Delete::deleteMultipleTasks(std::string argument) {
+	if (argument.size() <= 0) {
+		return;
+	}
+
+	int space = argument.find(" ");
+	std::string firstNumber = argument;
+	std::string otherNumbers = "";
+
+	if ((space != std::string::npos) && (space != -1)) {
+		firstNumber = firstNumber.substr(0, space);
+	}
+	if ((space != std::string::npos) && (space != -1)) {
+		otherNumbers = argument.substr(space + 1, argument.length() - space - 1);
+	}
+
+	if (typeConversions::isNumber(firstNumber)) {
+		int number = typeConversions::stringToInt(firstNumber);
+		if (TextStorage::getInstance()->deleteTask(number - deletedCount)) {
+			deletedTasks->push_back(number);
+			deletedCount++;
+		}
+	}
+
+	deleteMultipleTasks(otherNumbers);
+}
+
 std::string Delete::execute(std::string argument) {
 	// Formats:
 	// 1. Delete single task
@@ -16,12 +45,22 @@ std::string Delete::execute(std::string argument) {
 	//    - delete before 22/12/14
 	//    - delete .b 22/12/14
 
-	if (!typeConversions::isNumber(argument))
-		return "Invalid delete command: Argument should be an index";
+	deletedTasks = new std::vector<int>();
+	deletedCount = 0;
 
-	// TODO Implement input formats 2 and 3
-	if (TextStorage::getInstance()->deleteTask(typeConversions::stringToInt(argument))) {
-		return "Task " + argument + " deleted";
+	deleteMultipleTasks(argument);
+	std::string returnString = "";
+	unsigned int size = deletedTasks->size();
+
+	if (size <= 0) {
+		delete deletedTasks;
+		return "Invalid delete command: No tasks deleted";
 	}
-	return "Task " + argument + " not found; nothing deleted";
+
+	for (unsigned int i = 0; i < size; i++) {
+		returnString += typeConversions::intToString(deletedTasks->at(i)) + " ";
+	}
+	delete deletedTasks;
+
+	return ("Tasks " + returnString + "deleted.");
 }

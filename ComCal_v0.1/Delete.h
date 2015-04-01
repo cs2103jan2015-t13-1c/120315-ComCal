@@ -5,8 +5,14 @@
 #pragma once
 
 #include "Command.h"
+#include <vector>
 
 class Delete : public Command {
+private:
+	std::vector<int>* deletedTasks;
+	int deletedCount;
+	
+	void deleteMultipleTasks(std::string argument);
 public:
 	std::string execute(std::string argument);
 };
