@@ -5,11 +5,12 @@
 static const std::string COMMAND_ADD = "add";
 static const std::string COMMAND_DELETE = "delete";
 static const std::string COMMAND_EDIT = "edit";
-static const std::string COMMAND_UNDO = "undo";
+static const std::string COMMAND_LOAD = "load";
 static const std::string COMMAND_REDO = "redo";
 static const std::string COMMAND_SAVE = "save";
 static const std::string COMMAND_SEARCH = "search";
 static const std::string COMMAND_SHOW = "show";
+static const std::string COMMAND_UNDO = "undo";
 
 // Strings for date input
 static const std::string DATE_YESTERDAY = "yesterday";

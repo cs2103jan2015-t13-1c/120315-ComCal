@@ -105,6 +105,9 @@
     <ClCompile Include="Save.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
+    <ClCompile Include="Load.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Save.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Load.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
   </ItemGroup>

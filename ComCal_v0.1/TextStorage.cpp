@@ -28,6 +28,7 @@ TextStorage* TextStorage::getInstance() {
 
 void TextStorage::initialize(std::string todoFileName) {
 	_todoFileName = todoFileName;
+	loadTasks(_todoFileName);
 }
 
 unsigned int TextStorage::getNumberOfTasks() {
@@ -36,6 +37,10 @@ unsigned int TextStorage::getNumberOfTasks() {
 
 Task* TextStorage::getTask(int index) {
 	return _todoTasks->at(index);
+}
+
+std::string TextStorage::getTodoFileName() {
+	return _todoFileName;
 }
 
 void TextStorage::addTask(Task* newTask) {
@@ -130,6 +135,7 @@ bool TextStorage::saveTasks(std::string fileName)
 	xml_node<>* taskNode;
 	xml_node<>* detailsNode;
 	xml_node<>* dateNode;
+
 	for (unsigned int i = 0; i < _todoTasks->size(); i++) {
 		tempTask = _todoTasks->at(i);
 		taskNode = xmlDocument.allocate_node(node_element, "task");
@@ -187,8 +193,9 @@ bool TextStorage::saveTasks(std::string fileName)
 
 bool TextStorage::loadTasks(std::string fileName)
 {
+	_todoTasks->clear();
+
 	xml_document<> xmlDocument;
-	xml_node<>* rootNode;
 
 	std::ifstream loadFile(fileName);
 	std::vector<char> buffer((std::istreambuf_iterator<char>(loadFile)), std::istreambuf_iterator<char>());
@@ -196,7 +203,45 @@ bool TextStorage::loadTasks(std::string fileName)
 
 	xmlDocument.parse<0>(&buffer[0]);
 
-	return false; // TODO remove this when finished writing code
+	std::string description;
+	std::string location;
+	Date* startDate;
+	Date* endDate;
+	int day;
+	int month;
+	int year;
+	int time;
+	xml_node<>* dateNode;
+
+	for (xml_node<>* taskNode = xmlDocument.first_node("task"); taskNode != NULL; taskNode = taskNode->next_sibling()) {
+		description = taskNode->first_node("description")->value();
+		location = taskNode->first_node("location")->value();
+
+		startDate = NULL;
+		endDate = NULL;
+		for (int i = 0; i < 2; i++) {
+			if (i == 0) {
+				dateNode = taskNode->first_node("startDate");
+			}
+			else {
+				dateNode = taskNode->first_node("endDate");
+			}
+			if (dateNode != NULL) {
+				day = typeConversions::stringToInt(dateNode->first_node("day")->value());
+				month = typeConversions::stringToInt(dateNode->first_node("month")->value());
+				year = typeConversions::stringToInt(dateNode->first_node("year")->value());
+				time = typeConversions::stringToInt(dateNode->first_node("time")->value());
+				if (i == 0) {
+					startDate = new Date(day, month, year, time);
+				}
+				else {
+					endDate = new Date(day, month, year, time);
+				}
+			}
+		}
+
+		_todoTasks->push_back(new Task(description, location, startDate, endDate));
+	}
 
 	return true;
 }

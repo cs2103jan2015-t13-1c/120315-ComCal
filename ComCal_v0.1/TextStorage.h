@@ -36,6 +36,7 @@ public:
 
 	unsigned int getNumberOfTasks();
 	Task* getTask(int index);
+	std::string getTodoFileName();
 
 	void addTask(Task* newTask);
 	bool deleteTask(int index);

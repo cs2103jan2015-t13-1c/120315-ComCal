@@ -85,6 +85,7 @@
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="ErrorLog.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MonthForm.cpp" />
     <ClCompile Include="Redo.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Edit.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="keywords.h" />
+    <ClInclude Include="Load.h" />
     <ClInclude Include="rapidxml.hpp" />
     <ClInclude Include="rapidxml_iterators.hpp" />
     <ClInclude Include="rapidxml_print.hpp" />

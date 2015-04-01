@@ -5,6 +5,7 @@
 #include "Add.h"
 #include "Delete.h"
 #include "Edit.h"
+#include "Load.h"
 #include "Redo.h"
 #include "Save.h"
 #include "Search.h"
@@ -36,7 +37,6 @@ void ComCalManager::initialise(int numOfFiles, const char** fileNames) {
 		todoFileName = fileNames[0];
 	}
 
-	
 	TextStorage::getInstance()->initialize(todoFileName);
 }
 
@@ -68,8 +68,8 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	else if (function.compare(COMMAND_EDIT) == 0) {
 		command = new Edit();
 	}
-	else if (function.compare(COMMAND_UNDO) == 0) {
-		command = new Undo();
+	else if (function.compare(COMMAND_LOAD) == 0) {
+		command = new Load();
 	}
 	else if (function.compare(COMMAND_REDO) == 0) {
 		command = new Redo();
@@ -82,6 +82,9 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	}
 	else if (function.compare(COMMAND_SHOW) == 0) {
 		command = new Show();
+	}
+	else if (function.compare(COMMAND_UNDO) == 0) {
+		command = new Undo();
 	}
 
 	if (command != NULL) {

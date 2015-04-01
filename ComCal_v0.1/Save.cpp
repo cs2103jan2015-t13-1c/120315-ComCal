@@ -4,11 +4,10 @@
 
 #include "Save.h"
 #include "TextStorage.h"
-#include "keywords.h"
 
 std::string Save::execute(std::string argument) {
 	if (argument.compare("") == 0) {
-		argument = FILENAME_TODODEFAULT;
+		argument = TextStorage::getInstance()->getTodoFileName();
 	}
 	TextStorage::getInstance()->saveTasks(argument);
 	return ("Tasks saved to " + argument + " successfully.");
