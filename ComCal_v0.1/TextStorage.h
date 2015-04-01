@@ -23,7 +23,6 @@ private:
 	TextStorage& operator=(TextStorage const&);
 
 	std::string _todoFileName;
-	std::string _doneFileName;
 
 	// These are 2 most important vectors in the application, at the start of the application, it will initialise the
 	// 2 vectors with what is in the text file from TextStorage::getTextFileInfo. All add, delete, edit, undo, redo 
@@ -33,9 +32,12 @@ private:
 public:
 	static TextStorage* getInstance();
 
-	void initialize(std::string todoFileName, std::string doneFileName);
+	void initialize(std::string todoFileName);
 
 	std::vector<Task*>* getTodoTask();
 
 	bool deleteTask(int index);
+
+	bool saveTasks(std::string fileName);
+	bool loadTasks(std::string fileName);
 };

@@ -32,6 +32,14 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	defaultView(nullptr, nullptr);
 }
 
+MonthForm::~MonthForm()
+{
+	TextStorage::getInstance()->saveTasks("hi.xml");
+	if (components)	{
+		delete components;
+	}
+}
+
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 	ComCalManager::getInstance()->setDefaultSideBar();

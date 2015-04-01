@@ -31,22 +31,18 @@ ComCalManager::ComCalManager(){
 void ComCalManager::initialise(int numOfFiles, const char** fileNames) {
 
 	std::string todoFileName;
-	std::string doneFileName;
 	if (numOfFiles == NOFILENAMEENTERED) {
 		todoFileName = FILENAME_TODODEFAULT;
-		doneFileName = FILENAME_DONEDEFAULT;
 	}
 	else if (numOfFiles == TODOFILENAMEENTERED) {
 		todoFileName = fileNames[0];
-		doneFileName = FILENAME_DONEDEFAULT;
 	}
 	else {
 		todoFileName = fileNames[0];
-		doneFileName = fileNames[1];
 	}
 
 	
-	TextStorage::getInstance()->initialize(todoFileName, doneFileName);
+	TextStorage::getInstance()->initialize(todoFileName);
 
 	setDefaultSideBar();
 }

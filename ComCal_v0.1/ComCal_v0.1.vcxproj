@@ -106,6 +106,10 @@
     <ClInclude Include="Edit.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="keywords.h" />
+    <ClInclude Include="rapidxml.hpp" />
+    <ClInclude Include="rapidxml_iterators.hpp" />
+    <ClInclude Include="rapidxml_print.hpp" />
+    <ClInclude Include="rapidxml_utils.hpp" />
     <ClInclude Include="Redo.h" />
     <ClInclude Include="Search.h" />
     <ClInclude Include="Show.h" />

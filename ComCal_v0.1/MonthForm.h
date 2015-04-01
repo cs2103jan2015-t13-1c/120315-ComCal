@@ -289,14 +289,7 @@ private: System::Windows::Forms::TextBox^  feedBackBox;
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~MonthForm()
-		{
-			if (components)
-			{
-				delete components;
-			}
-
-		}
+		~MonthForm();
 		//Function to set the calendar----------------------------------------------------------------
 
 

@@ -1,4 +1,12 @@
 #include "TextStorage.h"
+#include <fstream>
+#include <vector>
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
+using namespace rapidxml;
+
+template<class Ch> 
+inline std::basic_ostream<Ch> &print(std::basic_ostream<Ch> &out, const xml_node<Ch> &node, int flags = 0);
 
 // Global static pointer used to ensure a single instance of the class
 TextStorage* TextStorage::_instance = NULL;
@@ -17,9 +25,8 @@ TextStorage* TextStorage::getInstance() {
 	return _instance;
 }
 
-void TextStorage::initialize(std::string todoFileName, std::string doneFileName) {
+void TextStorage::initialize(std::string todoFileName) {
 	_todoFileName = todoFileName;
-	_doneFileName = doneFileName;
 }
 
 std::vector<Task*>* TextStorage::getTodoTask() {
@@ -36,6 +43,52 @@ bool TextStorage::deleteTask(int index) {
 		}
 	}
 	return hasDeleted;
+}
+
+bool TextStorage::saveTasks(std::string fileName)
+{
+	xml_document<> xmlDocument;
+	std::ofstream saveFile(fileName);
+
+	xml_node<>* xmlDeclarationNode = xmlDocument.allocate_node(node_declaration);
+	xmlDeclarationNode->append_attribute(xmlDocument.allocate_attribute("version", "1.0"));
+	xmlDeclarationNode->append_attribute(xmlDocument.allocate_attribute("encoding", "utf-8"));
+	xmlDocument.append_node(xmlDeclarationNode);
+ 
+	xml_node<>* rootNode = xmlDocument.allocate_node(node_element, "root");
+	xmlDocument.append_node(rootNode);
+ 
+	xml_node<>* node1 = xmlDocument.allocate_node(node_element, "node1");
+	node1->value("Contents of node1");
+	rootNode->append_node(node1);
+ 
+	rapidxml::xml_node<>* root2 = xmlDocument.allocate_node(node_element, "root2");
+	root2->value("Contents of root2");
+	xmlDocument.append_node(root2);
+ 
+	std::string sXml;
+	print(back_inserter(sXml), xmlDocument);
+ 
+	saveFile << sXml;
+	saveFile.close();
+
+	return true;
+}
+
+bool TextStorage::loadTasks(std::string fileName)
+{
+	xml_document<> xmlDocument;
+	xml_node<>* rootNode;
+
+	std::ifstream loadFile(fileName);
+	std::vector<char> buffer((std::istreambuf_iterator<char>(loadFile)), std::istreambuf_iterator<char>());
+	buffer.push_back('\0');
+
+	xmlDocument.parse<0>(&buffer[0]);
+
+	return false; // TODO remove this when finished writing code
+
+	return true;
 }
 
 //I have a feeling this will be taken out
