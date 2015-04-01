@@ -88,6 +88,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MonthForm.cpp" />
     <ClCompile Include="Redo.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Search.cpp" />
     <ClCompile Include="Show.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="rapidxml_print.hpp" />
     <ClInclude Include="rapidxml_utils.hpp" />
     <ClInclude Include="Redo.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Search.h" />
     <ClInclude Include="Show.h" />
     <ClInclude Include="Task.h" />

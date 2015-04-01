@@ -7,6 +7,7 @@ static const std::string COMMAND_DELETE = "delete";
 static const std::string COMMAND_EDIT = "edit";
 static const std::string COMMAND_UNDO = "undo";
 static const std::string COMMAND_REDO = "redo";
+static const std::string COMMAND_SAVE = "save";
 static const std::string COMMAND_SEARCH = "search";
 static const std::string COMMAND_SHOW = "show";
 
@@ -29,7 +30,7 @@ static const std::string INPUT_DONE = "done";
 static const std::string INPUT_CAPT_DONE = "Done";
 
 //Default file names constant string declarations:
-const std::string FILENAME_TODODEFAULT = "ComCal_todo.txt";
+const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
 
 //Default log file name constant string declarations:
 const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";

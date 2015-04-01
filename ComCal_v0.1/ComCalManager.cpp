@@ -6,6 +6,7 @@
 #include "Delete.h"
 #include "Edit.h"
 #include "Redo.h"
+#include "Save.h"
 #include "Search.h"
 #include "Show.h"
 #include "Undo.h"
@@ -55,8 +56,15 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	std::string feedBackMessage;
 
 	int space = userInput.find(" ");
-	std::string function = typeConversions::toLowerCase(userInput.substr(0, space));
-	std::string argument = userInput.substr(space + 1, userInput.length() - space - 1);
+	std::string function = typeConversions::toLowerCase(userInput);
+	std::string argument = "";
+
+	if ((space != std::string::npos) && (space != -1)) {
+		function = function.substr(0, space);
+	}
+	if ((space != std::string::npos) && (space != -1)) {
+		argument = userInput.substr(space + 1, userInput.length() - space - 1);
+	}
 
 	Command* command = NULL;
 	if (function.compare(COMMAND_ADD) == 0) {
@@ -73,6 +81,9 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	}
 	else if (function.compare(COMMAND_REDO) == 0) {
 		command = new Redo();
+	}
+	else if (function.compare(COMMAND_SAVE) == 0) {
+		command = new Save();
 	}
 	else if (function.compare(COMMAND_SEARCH) == 0) {
 		command = new Search();

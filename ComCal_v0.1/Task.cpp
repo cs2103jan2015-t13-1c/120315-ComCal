@@ -35,12 +35,21 @@ Task::~Task() {
 		delete _endDate;
 	}
 }
+
 Date* Task::getStartDate() {
 	return _startDate;
 }
 
+Date* Task::getEndDate() {
+	return _endDate;
+}
+
 std::string Task::getDescription() {
 	return _description;
+}
+
+std::string Task::getLocation() {
+	return _location;
 }
 
 bool Task::getIsDone() {

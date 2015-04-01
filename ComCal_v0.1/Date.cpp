@@ -40,6 +40,10 @@ int Date::getYear() {
 	return _year;
 }
 
+int Date::getTime() {
+	return _time;
+}
+
 bool Date::operator==(const Date &date) {
 	if (_day != date._day)
 		return false;

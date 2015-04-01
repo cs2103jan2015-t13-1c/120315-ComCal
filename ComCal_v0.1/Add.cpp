@@ -4,6 +4,7 @@
 
 // TODO Have Date handle strings like "Tuesday", "Friday", "next Wednesday", "last Saturday", etc.
 // TODO Implement "no end date, only end time" so that end date = start date
+// TODO Make sure that end date > start date
 
 #include "Add.h"
 #include "Task.h"
@@ -35,7 +36,7 @@ std::string Add::checkIfValid() {
 	if (_d > _l) {
 		return "Invalid add command: Description should be given before location";
 	}
-	if ((_hasStartDate) && (_s > _e)) {
+	if ((_hasStartDate) && (_hasEndDate) && (_s > _e)) {
 		return "Invalid add command: Start date/time should be given before end date/time";
 	}
 	if ((_hasStartDate) && (_s > _l)) {

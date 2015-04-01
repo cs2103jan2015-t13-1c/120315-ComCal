@@ -25,6 +25,7 @@ public:
 	int getDay();
 	int getMonth();
 	int getYear();
+	int getTime();
 
 	bool operator==(const Date &date); // Only makes sure same date; does not check time
 

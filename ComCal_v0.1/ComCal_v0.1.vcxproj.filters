@@ -102,6 +102,9 @@
     <ClCompile Include="ErrorLog.cpp">
       <Filter>ComCalComponents\ComCalComponentsCPP</Filter>
     </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="rapidxml_utils.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

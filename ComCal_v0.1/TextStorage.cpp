@@ -1,4 +1,5 @@
 #include "TextStorage.h"
+#include "typeConversions.h"
 #include <fstream>
 #include <vector>
 #include "rapidxml.hpp"
@@ -59,18 +60,58 @@ bool TextStorage::saveTasks(std::string fileName)
 	xmlDeclarationNode->append_attribute(xmlDocument.allocate_attribute("version", "1.0"));
 	xmlDeclarationNode->append_attribute(xmlDocument.allocate_attribute("encoding", "utf-8"));
 	xmlDocument.append_node(xmlDeclarationNode);
- 
-	xml_node<>* rootNode = xmlDocument.allocate_node(node_element, "root");
-	xmlDocument.append_node(rootNode);
- 
-	xml_node<>* node1 = xmlDocument.allocate_node(node_element, "node1");
-	node1->value("Contents of node1");
-	rootNode->append_node(node1);
- 
-	rapidxml::xml_node<>* root2 = xmlDocument.allocate_node(node_element, "root2");
-	root2->value("Contents of root2");
-	xmlDocument.append_node(root2);
- 
+
+	Task* tempTask;
+	Date* tempDate;
+	xml_node<>* taskNode;
+	xml_node<>* detailsNode;
+	xml_node<>* dateNode;
+	for (unsigned int i = 0; i < _todoTasks->size(); i++) {
+		tempTask = _todoTasks->at(i);
+		taskNode = xmlDocument.allocate_node(node_element, "task");
+		xmlDocument.append_node(taskNode);
+
+		detailsNode = xmlDocument.allocate_node(node_element, "description");
+		detailsNode->value(xmlDocument.allocate_string(tempTask->getDescription().c_str()));
+		taskNode->append_node(detailsNode);
+
+		detailsNode = xmlDocument.allocate_node(node_element, "location");
+		detailsNode->value(xmlDocument.allocate_string(tempTask->getLocation().c_str()));
+		taskNode->append_node(detailsNode);
+
+		for (int i = 0; i < 2; i++)
+		{
+			if (((i == 0) && tempTask->hasStartDate()) || ((i == 1) && tempTask->hasEndDate()))
+			{
+				tempDate = (i == 0) ? tempTask->getStartDate() : tempTask->getEndDate();
+
+				detailsNode = xmlDocument.allocate_node(node_element, (i == 0) ? "startDate" : "endDate");
+				detailsNode->value(tempTask->getLocation().c_str());
+				taskNode->append_node(detailsNode);
+
+				dateNode = xmlDocument.allocate_node(node_element, "day");
+				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getDay()).c_str()));
+				detailsNode->append_node(dateNode);
+
+				dateNode = xmlDocument.allocate_node(node_element, "month");
+				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getMonth()).c_str()));
+				detailsNode->append_node(dateNode);
+
+				dateNode = xmlDocument.allocate_node(node_element, "year");
+				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getYear()).c_str()));
+				detailsNode->append_node(dateNode);
+
+				dateNode = xmlDocument.allocate_node(node_element, "time");
+				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getTime()).c_str()));
+				detailsNode->append_node(dateNode);
+			}
+		}
+
+		detailsNode = xmlDocument.allocate_node(node_element, "isDone");
+		detailsNode->value(tempTask->getIsDone() ? "true" : "false");
+		taskNode->append_node(detailsNode);
+	}
+
 	std::string sXml;
 	print(back_inserter(sXml), xmlDocument);
  

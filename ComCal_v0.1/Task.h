@@ -22,7 +22,9 @@ public:
 
 	// Getter methods
 	std::string getDescription();
+	std::string getLocation();
 	Date* getStartDate();
+	Date* getEndDate();
 	bool getIsDone();
 	bool hasStartDate();
 	bool hasEndDate();
