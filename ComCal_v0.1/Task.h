@@ -32,6 +32,8 @@ public:
 	bool isHidden();
 
 	// Setter methods
+	void setDescription(std::string description);
+	void setLocation(std::string location);
 	void hide();
 	void display();
 

@@ -36,6 +36,9 @@ unsigned int TextStorage::getNumberOfTasks() {
 }
 
 Task* TextStorage::getTask(int index) {
+	if ((index >= _todoTasks->size()) || (index < 0)) {
+		return NULL;
+	}
 	return _todoTasks->at(index);
 }
 

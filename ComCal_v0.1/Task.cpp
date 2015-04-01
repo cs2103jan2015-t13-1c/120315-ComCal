@@ -75,6 +75,14 @@ bool Task::isHidden() {
 	return _isHidden;
 }
 
+void Task::setDescription(std::string description) {
+	_description = description;
+}
+
+void Task::setLocation(std::string location) {
+	_location = location;
+}
+
 void Task::hide() {
 	_isHidden = true;
 }

@@ -7,6 +7,8 @@
 #include "Command.h"
 
 class Edit : public Command {
+private:
+	bool canFind(int index);
 public:
 	std::string execute(std::string argument);
 };
