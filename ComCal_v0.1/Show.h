@@ -10,7 +10,6 @@
 class Show : public Command {
 	
 private:
-	struct tm* _timeinfo;
 	int numOfWS(std::string argument);
 
 	//Getter methods

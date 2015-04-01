@@ -29,8 +29,16 @@ void TextStorage::initialize(std::string todoFileName) {
 	_todoFileName = todoFileName;
 }
 
-std::vector<Task*>* TextStorage::getTodoTask() {
-	return _todoTasks;
+unsigned int TextStorage::getNumberOfTasks() {
+	return _todoTasks->size();
+}
+
+Task* TextStorage::getTask(int index) {
+	return _todoTasks->at(index);
+}
+
+void TextStorage::addTask(Task* newTask) {
+	_todoTasks->push_back(newTask);
 }
 
 bool TextStorage::deleteTask(int index) {

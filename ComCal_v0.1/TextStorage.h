@@ -34,8 +34,10 @@ public:
 
 	void initialize(std::string todoFileName);
 
-	std::vector<Task*>* getTodoTask();
+	unsigned int getNumberOfTasks();
+	Task* getTask(int index);
 
+	void addTask(Task* newTask);
 	bool deleteTask(int index);
 
 	bool saveTasks(std::string fileName);

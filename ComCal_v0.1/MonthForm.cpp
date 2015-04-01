@@ -34,7 +34,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 
 MonthForm::~MonthForm()
 {
-	TextStorage::getInstance()->saveTasks("hi.xml");
+	TextStorage::getInstance()->saveTasks(FILENAME_TODODEFAULT);
 	if (components)	{
 		delete components;
 	}
@@ -184,11 +184,13 @@ int MonthForm::searchTaskMonth(struct tm* newtime) {
 	int desiredMnth = newtime->tm_mon + 1;
 	int desiredYr = newtime->tm_year + 1900;
 
+	Task* tempTask;
 	while (iter++) {
-		if (TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getMonth() == desiredMnth && TextStorage::getInstance()->getTodoTask()->at(iter)->getStartDate()->getYear() == desiredYr) {
+		tempTask = TextStorage::getInstance()->getTask(iter);
+		if (tempTask->getStartDate()->getMonth() == desiredMnth && tempTask->getStartDate()->getYear() == desiredYr) {
 			break;
 		}
-		if (iter + 1 == TextStorage::getInstance()->getTodoTask()->size()) {
+		if (iter + 1 == TextStorage::getInstance()->getNumberOfTasks()) {
 			break;
 		}
 	}
@@ -198,7 +200,7 @@ int MonthForm::searchTaskMonth(struct tm* newtime) {
 
 void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
-	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 	int monthRef = newtime->tm_mon + 1;
 	std::string taskStr[NUM_BLOCKS_IN_CALENDAR];
 	System::Collections::Generic::List<System::String^> taskStrList;
@@ -214,9 +216,9 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 			//to loop through todoVec
 			for (int j = 0; j < todoSize; j++) {
-				Task* tempTask = TextStorage::getInstance()->getTodoTask()->at(j);
+				Task* tempTask = TextStorage::getInstance()->getTask(j);
 				if ((tempTask->hasStartDate()) && (System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth())) {
-					taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription()), Environment::NewLine);
+					taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
 				}
 			}
 

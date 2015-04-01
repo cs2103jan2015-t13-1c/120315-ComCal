@@ -30,7 +30,6 @@ static const std::string INPUT_CAPT_DONE = "Done";
 
 //Default file names constant string declarations:
 const std::string FILENAME_TODODEFAULT = "ComCal_todo.txt";
-//const std::string FILENAME_DONEDEFAULT = "ComCal_done.txt";
 
 //Default log file name constant string declarations:
 const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";

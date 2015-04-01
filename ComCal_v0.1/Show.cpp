@@ -57,41 +57,38 @@ std::string Show::execute(std::string argument) {
 			}
 		}
 	}
-	else{
-		
-	}
 
 	delete showDate;
-
 	feedBack = INVALID_SHOW_INPUT;
+
 	return feedBack;
 }
 
 void Show::setDoneSideBar() {
-	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 
 	ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_TITLE);
 
 	ComCalManager::getInstance()->getSideVec()->clear();
 	for (int i = 0; i < todoSize; i++) {
-		if (TextStorage::getInstance()->getTodoTask()->at(i)->getIsDone()) {
-			ComCalManager::getInstance()->getSideVec()->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		Task* tempTask = TextStorage::getInstance()->getTask(i);
+		if (tempTask->getIsDone()) {
+			ComCalManager::getInstance()->getSideVec()->push_back(tempTask->toGUIString());
 		}
 	}
 }
 
 void Show::setShowDaySideBar(Date* showDate){
-	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 
 	ComCalManager::getInstance()->setSideBarTitle(showDate->toGUIString() + " All Tasks");
 	ComCalManager::getInstance()->getSideVec()->clear();
 
+	Task* tempTask;
 	for (int i = 0; i < todoSize; i++) {
-		if (TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getDay() == showDate->getDay()
-			&& TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getMonth() == showDate->getMonth()
-			&& TextStorage::getInstance()->getTodoTask()->at(i)->getStartDate()->getYear() == showDate->getYear()) {
-
-			ComCalManager::getInstance()->getSideVec()->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		tempTask = TextStorage::getInstance()->getTask(i);
+		if (tempTask->getStartDate() == showDate) {
+			ComCalManager::getInstance()->getSideVec()->push_back(tempTask->toGUIString());
 		}
 	}
 }

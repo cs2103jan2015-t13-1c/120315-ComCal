@@ -132,13 +132,14 @@ void ComCalManager::setDefaultSideBar() {
 
 	_sideBarTitle = ALL_TODO_TITLE;
 
-	int todoSize = TextStorage::getInstance()->getTodoTask()->size();
+	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 
 	_sideBarView->clear();
+	Task* tempTask;
 	for (int i = 0; i < todoSize; i++) {
-		if (!TextStorage::getInstance()->getTodoTask()->at(i)->getIsDone()) {
-
-			_sideBarView->push_back(TextStorage::getInstance()->getTodoTask()->at(i)->toGUIString());
+		tempTask = TextStorage::getInstance()->getTask(i);
+		if (!tempTask->getIsDone()) {
+			_sideBarView->push_back(typeConversions::intToString(i) + tempTask->toGUIString());
 		}
 	}
 }

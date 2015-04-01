@@ -21,9 +21,13 @@ public:
 	std::string toString();
 	std::string toGUIString();
 
-	bool setDate(std::string date);
-
+	// Getter methods
 	int getDay();
 	int getMonth();
 	int getYear();
+
+	bool operator==(const Date &date); // Only makes sure same date; does not check time
+
+	// Setter methods
+	bool setDate(std::string date);
 };

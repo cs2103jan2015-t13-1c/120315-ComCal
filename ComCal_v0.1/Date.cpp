@@ -28,6 +28,28 @@ std::string Date::toGUIString(){
 	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year));
 }
 
+int Date::getDay() {
+	return _day;
+}
+
+int Date::getMonth() {
+	return _month;
+}
+
+int Date::getYear() {
+	return _year;
+}
+
+bool Date::operator==(const Date &date) {
+	if (_day != date._day)
+		return false;
+	if (_month != date._month)
+		return false;
+	if (_year != date._year)
+		return false;
+	return true;
+}
+
 bool Date::setDate(std::string date) {
 	// Possible inputs for dates:
 	// 1. DD/MM/YY
@@ -130,16 +152,4 @@ bool Date::setDate(std::string date) {
 	}
 
 	return true;
-}
-
-int Date::getDay() {
-	return _day;
-}
-
-int Date::getMonth() {
-	return _month;
-}
-
-int Date::getYear() {
-	return _year;
 }

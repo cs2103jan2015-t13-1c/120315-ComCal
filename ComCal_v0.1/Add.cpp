@@ -223,7 +223,7 @@ std::string Add::execute(std::string argument) {
 		}
 	}
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
-	TextStorage::getInstance()->getTodoTask()->push_back(newTask);
+	TextStorage::getInstance()->addTask(newTask);
 
 	//Flag to indicate an update to MonthForm that another task is to be added to the sideBar
 	if (ComCalManager::getInstance()->getIsAllTodo()){

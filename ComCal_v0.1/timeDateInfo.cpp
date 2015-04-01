@@ -49,19 +49,19 @@ bool timeDateInfo::isLeapYear(int year)
 }
 
 std::string timeDateInfo::getDayStr(int iter) {
-	const static std::string DAYS[28] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	const static std::string DAYS[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 	return DAYS[iter];
 }
 
 std::string timeDateInfo::getLowerDayStr(int iter) {
-	const static std::string DAYS[28] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
+	const static std::string DAYS[] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
 
 	return DAYS[iter];
 }
 
 std::string timeDateInfo::getShortDayStr(int iter) {
-	const static std::string DAYS[28] = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
+	const static std::string DAYS[] = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
 
 	return DAYS[iter];
 }
