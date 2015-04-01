@@ -6,15 +6,11 @@
 #include "keywords.h"
 #include "typeConversions.h"
 
-int Task::_nextIndex = 1;
-
 Task::Task() {
 
 }
 
 Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
-	_index = _nextIndex;
-	_nextIndex++;
 	_description = description;
 	_location = location;
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
@@ -23,8 +19,6 @@ Task::Task(std::string description, std::string location, int startDay, int star
 }
 
 Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
-	_index = _nextIndex;
-	_nextIndex++;
 	_description = description;
 	_location = location;
 	_startDate = startDate;
@@ -41,11 +35,6 @@ Task::~Task() {
 		delete _endDate;
 	}
 }
-
-int Task::getIndex() {
-	return _index;
-}
-
 Date* Task::getStartDate() {
 	return _startDate;
 }
@@ -80,7 +69,7 @@ std::string Task::toString() {
 
 // Converts Task object into a string for GUI
 std::string Task::toGUIString() {
-	std::string returnString = typeConversions::intToString(_index) + INDEX_DESCRIPTION_SEPARATOR +  _description + " " + _location + " ";
+	std::string returnString = _description + " " + _location + " ";
 	if (hasStartDate()) {
 		returnString += _startDate->toString() + " ";
 	}

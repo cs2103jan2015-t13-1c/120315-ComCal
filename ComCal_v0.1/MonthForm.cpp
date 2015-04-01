@@ -214,12 +214,9 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 			//to loop through todoVec
 			for (int j = 0; j < todoSize; j++) {
-
-				if ((System::Int32::Parse(dateList[i]->Text) == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getDay()) 
-					&& (monthRef == TextStorage::getInstance()->getTodoTask()->at(j)->getStartDate()->getMonth())) {
-
-						taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(TextStorage::getInstance()->getTodoTask()->at(j)->getIndex()) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription()), Environment::NewLine);
-					
+				Task* tempTask = TextStorage::getInstance()->getTodoTask()->at(j);
+				if ((tempTask->hasStartDate()) && (System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth())) {
+					taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + TextStorage::getInstance()->getTodoTask()->at(j)->getDescription()), Environment::NewLine);
 				}
 			}
 

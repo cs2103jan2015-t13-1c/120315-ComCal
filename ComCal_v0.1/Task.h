@@ -9,9 +9,6 @@
 
 class Task {
 private:
-	static int _nextIndex;
-
-	int _index;
 	std::string _description;
 	std::string _location;
 	Date* _startDate;			// Could be null, as some tasks do not have a start date and time
@@ -24,7 +21,6 @@ public:
 	~Task();
 
 	// Getter methods
-	int getIndex();
 	std::string getDescription();
 	Date* getStartDate();
 	bool getIsDone();

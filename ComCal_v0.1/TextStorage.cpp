@@ -34,15 +34,12 @@ std::vector<Task*>* TextStorage::getTodoTask() {
 }
 
 bool TextStorage::deleteTask(int index) {
-	bool hasDeleted = false;
-	for (unsigned int i = 0; i < _todoTasks->size(); i++) {
-		if ((*_todoTasks)[i]->getIndex() == index) {
-			_todoTasks->erase(_todoTasks->begin() + i);
-			i--;
-			hasDeleted = true;
-		}
-	}
-	return hasDeleted;
+	if (index > _todoTasks->size())
+		return false;
+	if (index <= 0)
+		return false;
+	_todoTasks->erase(_todoTasks->begin() + index - 1);
+	return true;
 }
 
 bool TextStorage::saveTasks(std::string fileName)
