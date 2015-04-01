@@ -5,12 +5,10 @@ TextStorage* TextStorage::_instance = NULL;
 
 TextStorage::TextStorage() {
 	_todoTasks = new std::vector<Task*>();
-	_doneTasks = new std::vector<Task*>();
 }
 
 TextStorage::~TextStorage() {
 	delete _todoTasks;
-	delete _doneTasks;
 }
 
 TextStorage* TextStorage::getInstance() {
@@ -27,22 +25,12 @@ void TextStorage::initialize(std::string todoFileName, std::string doneFileName)
 std::vector<Task*>* TextStorage::getTodoTask() {
 	return _todoTasks;
 }
-std::vector<Task*>* TextStorage::getDoneTask() {
-	return _doneTasks;
-}
 
 bool TextStorage::deleteTask(int index) {
 	bool hasDeleted = false;
 	for (unsigned int i = 0; i < _todoTasks->size(); i++) {
 		if ((*_todoTasks)[i]->getIndex() == index) {
 			_todoTasks->erase(_todoTasks->begin() + i);
-			i--;
-			hasDeleted = true;
-		}
-	}
-	for (unsigned int i = 0; i < _doneTasks->size(); i++) {
-		if ((*_doneTasks)[i]->getIndex() == index) {
-			_doneTasks->erase(_doneTasks->begin() + i);
 			i--;
 			hasDeleted = true;
 		}
