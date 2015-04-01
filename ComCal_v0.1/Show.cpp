@@ -14,123 +14,62 @@
 
 std::string Show::execute(std::string argument) {
 	std::string feedBack;
+
+	if (argument.size() <= 0) { // Display all tasks
+		TextStorage::getInstance()->displayAllTasks();
+		return ALL_TASKS_FEEDBACK;
+	}
+
+	argument = typeConversions::toLowerCase(argument);
+
+	if (argument == INPUT_TODO) { // Display all tasks that are not done
+		TextStorage::getInstance()->displayToDoTasks();
+		return ALL_TODO_FEEDBACK;
+	}
+	
+	if (argument == INPUT_DONE) { // Display all tasks that are done
+		TextStorage::getInstance()->displayDoneTasks();
+		return ALL_DONE_FEEDBACK;
+	}
+
+	// User specifies "show 'month'" without specifying the year
+	int month = getMonthInput(argument);
+	if (month != -1) {
+		TextStorage::getInstance()->displayMonthTasks(month + 1);
+		return (timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown");
+	}
+
 	Date* showDate = new Date();
-	//TODO: add a function here to remove any white spaces from the left and right of 'argument'
-	int numOfWhiteSpace = numOfWS(argument);
-
-	if (argument.size() != 0){
-		if (numOfWhiteSpace == 0) {
-
-			//1st case: user specifies "show 'month'" without specifying the year
-			if (getMonthInput(argument) != -1) {
-				ComCalManager::getInstance()->setMonthDetails(timeDateInfo::setStructTm(getMonthInput(argument)));
-
-				feedBack = timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown";
-
-				return  feedBack;
-			}
-			
-			if (argument == INPUT_TODO || argument == INPUT_CAPT_TODO) {
-				ComCalManager::getInstance()->setDefaultSideBar();
-
-				feedBack = ALL_TODO_FEEDBACK;
-				return feedBack;
-			}
-				
-			if (argument == INPUT_DONE || argument == INPUT_CAPT_DONE) {
-				setDoneSideBar();
-
-				feedBack = ALL_DONE_FEEDBACK;
-				return feedBack;
-			}
-
-			if (showDate->setDate(argument)){
-				setShowDaySideBar(showDate);
-
-				feedBack = showDate->toGUIString() + " shown";
-				return feedBack;
-			}
-		}
-		else{
-			if (numOfWhiteSpace == 1) {
-
-			}
-		}
+	if (showDate->setDate(argument)) {
+		TextStorage::getInstance()->displayDatedTasks(*showDate);
+		std::string strDate = showDate->toGUIString();
+		delete showDate;
+		return (strDate + " shown");
 	}
-
+	
 	delete showDate;
-	feedBack = INVALID_SHOW_INPUT;
-
-	return feedBack;
-}
-
-void Show::setDoneSideBar() {
-	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
-
-	ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_TITLE);
-
-	ComCalManager::getInstance()->getSideVec()->clear();
-	for (int i = 0; i < todoSize; i++) {
-		Task* tempTask = TextStorage::getInstance()->getTask(i);
-		if (tempTask->getIsDone()) {
-			ComCalManager::getInstance()->getSideVec()->push_back(tempTask->toGUIString());
-		}
-	}
-}
-
-void Show::setShowDaySideBar(Date* showDate){
-	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
-
-	ComCalManager::getInstance()->setSideBarTitle(showDate->toGUIString() + " All Tasks");
-	ComCalManager::getInstance()->getSideVec()->clear();
-
-	Task* tempTask;
-	for (int i = 0; i < todoSize; i++) {
-		tempTask = TextStorage::getInstance()->getTask(i);
-		if (tempTask->getStartDate() == showDate) {
-			ComCalManager::getInstance()->getSideVec()->push_back(tempTask->toGUIString());
-		}
-	}
+	return INVALID_SHOW_INPUT;
 }
 
 int Show::getMonthInput(std::string argument) {
-	int monthIndex = -1;
-
 	for (int i = 0; i < MONTHS_IN_YEAR; i++) {
-
 		if (argument == timeDateInfo::getMonthStr(i)) {
-			monthIndex = i;
-			break;
+			return i;
 		}
 
 		if (argument == timeDateInfo::getLowerMonthStr(i)) {
-			monthIndex = i;
-			break;
+			return i;
 		}
 
 		if (argument == timeDateInfo::getShortMonthStr(i)) {
-			monthIndex = i;
-			break;
+			return i;
 		}
 
 		if (argument == timeDateInfo::getShortLowerMonthStr(i)) {
-			monthIndex = i;
-			break;
+			return i;
 		}
 	}
 
-	return monthIndex;
-}
-
-int Show::numOfWS(std::string argument) {
-	int numOfWhiteSpace = 0;
-
-	for (int i = 0; i < argument.size(); i++) {
-		if (isspace(argument[i])){
-			numOfWhiteSpace++;
-		}
-	}
-
-	return numOfWhiteSpace;
+	return -1;
 }
 

@@ -20,12 +20,6 @@ ComCalManager* ComCalManager::_instance = NULL;
 
 ComCalManager::ComCalManager(){
 	_sideBarView = new std::vector<std::string>();
-
-	_isAllTodo = true;
-	_isShowMonth = false;
-	_isShowDayTaskSearch = false;
-
-	_monthDetails = timeDateInfo::setStructTm();
 }
 
 //Have not initialised TextStorage
@@ -44,8 +38,6 @@ void ComCalManager::initialise(int numOfFiles, const char** fileNames) {
 
 	
 	TextStorage::getInstance()->initialize(todoFileName);
-
-	setDefaultSideBar();
 }
 
 ComCalManager::~ComCalManager() {
@@ -95,6 +87,7 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	if (command != NULL) {
 		feedBackMessage = command->execute(argument);
 		delete command; // TODO Instead of deleting it, do something to it for future function implementations (eg undo/redo)
+		populateSideBar();
 	}
 	else {
 		feedBackMessage = INVALID_COMMAND;
@@ -114,32 +107,11 @@ ComCalManager* ComCalManager::getInstance() {
 std::vector<std::string>* ComCalManager::getSideVec() {
 	return _sideBarView;
 }
-
-struct tm* ComCalManager::getMonthDetails() {
-	return _monthDetails;
-}
-
-bool ComCalManager::getIsShowMonth() {
-	return _isShowMonth;
-}
-
-bool ComCalManager::getIsShowDayTaskSearch() {
-	return _isShowDayTaskSearch;
-}
-
-bool ComCalManager::getIsAllTodo(){
-	return _isAllTodo;
-}
-
 std::string ComCalManager::getSideBarTitle(){
 	return _sideBarTitle;
 }
 
-
-
-//Setter methods
-
-void ComCalManager::setDefaultSideBar() {
+void ComCalManager::populateSideBar() {
 
 	_sideBarTitle = ALL_TODO_TITLE;
 
@@ -149,26 +121,10 @@ void ComCalManager::setDefaultSideBar() {
 	Task* tempTask;
 	for (int i = 0; i < todoSize; i++) {
 		tempTask = TextStorage::getInstance()->getTask(i);
-		if (!tempTask->getIsDone()) {
-			_sideBarView->push_back(typeConversions::intToString(i) + tempTask->toGUIString());
+		if (!tempTask->isHidden()) {
+			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toGUIString());
 		}
 	}
-}
-
-void ComCalManager::setIsShowMonth(bool isShowMonth) {
-	_isShowMonth = isShowMonth;
-}
-
-void ComCalManager::setIsShowDayTaskSearch(bool isShowDayTaskSearch) {
-	_isShowDayTaskSearch = isShowDayTaskSearch;
-}
-
-void ComCalManager::setIsAllTodo(bool isAllTodo){
-	_isAllTodo = isAllTodo;
-}
-
-void ComCalManager::setMonthDetails(struct tm* monthDetails){
-	_monthDetails = monthDetails;
 }
 
 void ComCalManager::setSideBarTitle(std::string sideBarTitle){

@@ -39,6 +39,11 @@ public:
 
 	void addTask(Task* newTask);
 	bool deleteTask(int index);
+	void displayAllTasks();
+	void displayToDoTasks();
+	void displayDoneTasks();
+	void displayMonthTasks(int month); //1 = January, 2 = February, etc.
+	void displayDatedTasks(const Date &date);
 
 	bool saveTasks(std::string fileName);
 	bool loadTasks(std::string fileName);

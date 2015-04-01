@@ -56,7 +56,7 @@ namespace ComCal_v01 {
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
 
-		bool isShowSearchFlagged();
+		//bool isShowSearchFlagged();
 		void updateSideBar();
 		void updateCalendar();
 		void guiUpdate();

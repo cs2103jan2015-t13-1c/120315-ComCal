@@ -51,6 +51,70 @@ bool TextStorage::deleteTask(int index) {
 	return true;
 }
 
+void TextStorage::displayAllTasks() {
+	unsigned int size = _todoTasks->size();
+	for (unsigned int i = 0; i < size; i++) {
+		_todoTasks->at(i)->display();
+	}
+}
+
+void TextStorage::displayToDoTasks() {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+		if (!tempTask->getIsDone()) {
+			tempTask->display();
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+}
+
+void TextStorage::displayDoneTasks() {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+		if (tempTask->getIsDone()) {
+			tempTask->display();
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+}
+
+//1 = January, 2 = February, etc.
+void TextStorage::displayMonthTasks(int month) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->getMonth() == month)) {
+			tempTask->display();
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+}
+
+void TextStorage::displayDatedTasks(const Date &date) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
+			tempTask->display();
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+}
+
 bool TextStorage::saveTasks(std::string fileName)
 {
 	xml_document<> xmlDocument;

@@ -25,9 +25,7 @@ static const std::string DATE_SUNDAY = "Sunday";
 
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
-static const std::string INPUT_CAPT_TODO = "Todo";
 static const std::string INPUT_DONE = "done";
-static const std::string INPUT_CAPT_DONE = "Done";
 
 //Default file names constant string declarations:
 const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
@@ -57,6 +55,7 @@ static const std::string SEARCH_RESULTS_TITLE = "Search Results";
 static const std::string TODAY_TASKS_TITLE = "Today's tasks";
 
 //Feedbacks
+static const std::string ALL_TASKS_FEEDBACK = "All tasks shown in sideBar";
 static const std::string ALL_TODO_FEEDBACK = "All todo tasks shown in sideBar";
 static const std::string ALL_DONE_FEEDBACK = "All done tasks shown in sideBar";
 static const std::string SHOW_TODAY_FEEDBACK = "All tasks today shown in sideBar";

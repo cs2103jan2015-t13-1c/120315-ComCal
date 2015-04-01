@@ -14,26 +14,6 @@ private:
 	//The display will be done in the MonthForm.cpp by first getting this vector then displaying it on GUI
 	std::vector<std::string>* _sideBarView;
 	std::string _sideBarTitle;
-
-	//monthDetails will be initially set to the current time
-	//Changes when the show command is called, MonthForm will call for this when an update is flagged
-	struct tm* _monthDetails;
-
-	//Update flags:
-	//To flag to MonthForm that add/delete/search/edit/redo/undo was successfully implemented hence needing update on GUI
-	//When a search/show is successfully implemented->Change the appropriate flag to true->MonthForm 
-	//will change it back to false when it successfully updates the GUI
-
-	//Month Flags: Only 1 flag allowed to be true at one time
-	//These flags will update only the calendar
-	bool _isShowMonth; //is flagged whenever user asks to show a specific month
-
-	//Sidebar Flags: Only 1 flag is allowed to be true at one time
-	//These flags will cause changes to the _sideBarView vector and hence to the sideBar in GUI
-	bool _isAllTodo;
-	bool _isShowDayTaskSearch; //is flagged whenever user asks to show a specific day
-	bool _isSearchResults; //is flagged whenever user commands a search result
-
 public:
 	ComCalManager();
 	~ComCalManager();
@@ -50,21 +30,10 @@ public:
 
 	// Getter methods
 	std::vector<std::string>* getSideVec();
-	struct tm* getMonthDetails();
-
-	bool getIsShowMonth();
-	bool getIsShowDayTaskSearch();
-	bool getIsAllTodo();
 
 	std::string getSideBarTitle();
 
-	//Setter methods 
-	void setDefaultSideBar(); //Set sideBar to its default of TodoTasks of the current day
+	void populateSideBar();
 
-	void setIsShowMonth(bool);
-	void setIsShowDayTaskSearch(bool);
-	void setIsAllTodo(bool);
-
-	void setMonthDetails(struct tm*);
 	void setSideBarTitle(std::string);
 };

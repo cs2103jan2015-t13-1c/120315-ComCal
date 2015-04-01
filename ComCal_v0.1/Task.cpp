@@ -7,7 +7,12 @@
 #include "typeConversions.h"
 
 Task::Task() {
-
+	_description = "";
+	_location = "";
+	_startDate = NULL;
+	_endDate = NULL;
+	_isDone = false;
+	_isHidden = false;
 }
 
 Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
@@ -16,6 +21,7 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
+	_isHidden = false;
 }
 
 Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
@@ -24,6 +30,7 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_startDate = startDate;
 	_endDate = endDate;
 	_isDone = false;
+	_isHidden = false;
 }
 
 Task::~Task() {
@@ -62,6 +69,18 @@ bool Task::hasStartDate() {
 
 bool Task::hasEndDate() {
 	return !(_endDate == NULL);
+}
+
+bool Task::isHidden() {
+	return _isHidden;
+}
+
+void Task::hide() {
+	_isHidden = true;
+}
+
+void Task::display() {
+	_isHidden = false;
 }
 
 // Converts the Task object into a String to save into text file

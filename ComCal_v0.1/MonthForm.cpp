@@ -42,38 +42,13 @@ MonthForm::~MonthForm()
 
 System::Void MonthForm::defaultView(System::Object^  sender, System::EventArgs^  e) {
 	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
-	ComCalManager::getInstance()->setDefaultSideBar();
+	ComCalManager::getInstance()->populateSideBar();
 	updateSideBar();
 }
 
-bool MonthForm::isShowSearchFlagged() {
-	bool flagged = false;
-
-	if (ComCalManager::getInstance()->getIsShowDayTaskSearch() || ComCalManager::getInstance()->getIsShowMonth()) {
-		flagged = true;
-	}
-
-	return flagged;
-}
-
 void MonthForm::guiUpdate() {
-
-	try{
-		if (ComCalManager::getInstance()->getIsShowDayTaskSearch()) {
-			updateSideBar();
-		}
-		else{
-			if (ComCalManager::getInstance()->getIsShowMonth()) {
-				updateCalendar();
-			}
-			else{
-				throw GUI_UPDATE_ERROR;
-			}
-		}
-	}
-	catch (std::string errorMsg) {
-		ErrorLog::inputErrorLog(errorMsg);
-	}
+	updateSideBar();
+	updateCalendar();
 }
 
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
@@ -88,11 +63,7 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		else{
 			feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::convertStrTostr(userInputBox->Text)));
 
-			if (isShowSearchFlagged()) {
-				guiUpdate();
-			}
-			updateSideBar(); //this should be removed once the proper flags in ComCalManager is set
-			updateCalendar(); //this should be removed once the proper flags in ComCalManager is set
+			guiUpdate();
 
 			feedBackBox->Text = feedBack;
 
@@ -176,7 +147,7 @@ System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime) {
 }
 
 void ComCal_v01::MonthForm::updateCalendar() {
-	setCalendarDate_MonthForm(ComCalManager::getInstance()->getMonthDetails());
+	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 }
 
 int MonthForm::searchTaskMonth(struct tm* newtime) {
@@ -236,7 +207,6 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 }
 
 void ComCal_v01::MonthForm::updateSideBar() {
-
 	sideBarTitle->Text = nullptr;
 	sideBarTitle->Text = typeConversions::convertstrToStr(ComCalManager::getInstance()->getSideBarTitle());
 
