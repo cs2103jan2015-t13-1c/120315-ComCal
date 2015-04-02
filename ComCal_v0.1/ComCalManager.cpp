@@ -21,6 +21,7 @@ ComCalManager* ComCalManager::_instance = NULL;
 
 ComCalManager::ComCalManager(){
 	_sideBarView = new std::vector<std::string>();
+	_timeDetails = timeDateInfo::setStructTm();
 }
 
 //Have not initialised TextStorage
@@ -114,6 +115,10 @@ std::string ComCalManager::getSideBarTitle(){
 	return _sideBarTitle;
 }
 
+struct tm* ComCalManager::getTimeDetails(){
+	return _timeDetails;
+}
+
 void ComCalManager::populateSideBar() {
 
 	_sideBarTitle = ALL_TODO_TITLE;
@@ -132,4 +137,8 @@ void ComCalManager::populateSideBar() {
 
 void ComCalManager::setSideBarTitle(std::string sideBarTitle){
 	_sideBarTitle = sideBarTitle;
+}
+
+void ComCalManager::setTimeDetails(struct tm* timeDetails){
+	_timeDetails = timeDetails;
 }

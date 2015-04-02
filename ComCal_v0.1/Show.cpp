@@ -36,6 +36,8 @@ std::string Show::execute(std::string argument) {
 	int month = getMonthInput(argument);
 	if (month != -1) {
 		TextStorage::getInstance()->displayMonthTasks(month + 1);
+		struct tm* date = timeDateInfo::setStructTm(month);
+		ComCalManager::getInstance()->setTimeDetails(date);
 		return (timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown");
 	}
 

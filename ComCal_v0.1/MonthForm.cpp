@@ -147,7 +147,7 @@ System::String^ ComCal_v01::MonthForm::setMonthPageTitle(struct tm* newtime) {
 }
 
 void ComCal_v01::MonthForm::updateCalendar() {
-	setCalendarDate_MonthForm(timeDateInfo::setStructTm());
+	setCalendarDate_MonthForm(ComCalManager::getInstance()->getTimeDetails());
 }
 
 int MonthForm::searchTaskMonth(struct tm* newtime) {

@@ -14,6 +14,7 @@ private:
 	//The display will be done in the MonthForm.cpp by first getting this vector then displaying it on GUI
 	std::vector<std::string>* _sideBarView;
 	std::string _sideBarTitle;
+	struct tm* _timeDetails;
 public:
 	ComCalManager();
 	~ComCalManager();
@@ -30,10 +31,11 @@ public:
 
 	// Getter methods
 	std::vector<std::string>* getSideVec();
-
+	struct tm* getTimeDetails();
 	std::string getSideBarTitle();
 
+	//Setter methods
 	void populateSideBar();
-
+	void setTimeDetails(struct tm*);
 	void setSideBarTitle(std::string);
 };
