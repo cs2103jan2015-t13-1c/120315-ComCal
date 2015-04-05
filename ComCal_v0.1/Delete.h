@@ -9,10 +9,15 @@
 
 class Delete : public Command {
 private:
-	std::vector<int>* deletedTasks;
+	std::vector<int> deletedTaskIndexes;
+	std::vector<Task*> _deletedTasks;
 	int deletedCount;
 	
 	void deleteMultipleTasks(std::string argument);
 public:
+	Delete();
+	~Delete();
 	std::string execute(std::string argument);
+	std::string undo();
+	std::string redo();
 };

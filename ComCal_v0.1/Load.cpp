@@ -5,6 +5,12 @@
 #include "Load.h"
 #include "TextStorage.h"
 
+Load::Load() : Command() {
+}
+
+Load::~Load() {
+}
+
 std::string Load::execute(std::string argument) {
 	if (argument.compare("") == 0) {
 		argument = TextStorage::getInstance()->getTodoFileName();

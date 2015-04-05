@@ -1,11 +1,17 @@
 //Prasoon handles this whole part of the code
 
 #pragma once
+
 #include <string>
 #include <vector>
 #include "Task.h"
 #include "keywords.h"
-;
+#include "typeConversions.h"
+#include <fstream>
+#include <vector>
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -39,6 +45,7 @@ public:
 	std::string getTodoFileName();
 
 	void addTask(Task* newTask);
+	void addTaskAtSpecificPosition(Task* newTask, int position);
 	bool deleteTask(int index);
 	void displayAllTasks();
 	void displayToDoTasks();

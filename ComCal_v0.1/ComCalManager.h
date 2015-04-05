@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Command.h"
+
 #include <string>
 #include <vector>
 #include <stack>
@@ -15,6 +17,9 @@ private:
 	std::vector<std::string>* _sideBarView;
 	std::string _sideBarTitle;
 	struct tm* _timeDetails;
+
+	std::stack<Command*> _commandHistory;
+	std::stack<Command*> _undoHistory;
 public:
 	ComCalManager();
 	~ComCalManager();

@@ -1,165 +1,376 @@
 // Edit.cpp
 // Implementation of functions in the Edit class
-//@author A0119754X
+//@author A0085731A
 
 #include <string>
 #include <vector>
 #include "Edit.h"
-#include "TextStorage.h"
-#include "typeConversions.h"
 
-enum DSEL {
-	DSEL_DESCRIPTION,
-	DSEL_START_DATE,
-	DSEL_END_DATE,
-	DSEL_LOCATION
-};
-
-struct dselStruct {
-	DSEL name;
-	unsigned int find;
-};
-
-bool Edit::canFind(int index) {
-	return ((index != std::string::npos) && (index != -1));
+Edit::Edit() : Command() {
+	_attributeKeywords.assign(ATTRIBUTEKEYWORDSARRAY, ATTRIBUTEKEYWORDSARRAY + ATTRIBUTEKEYWORDSARRAYSIZE);
 }
 
-std::string Edit::execute(std::string argument) {
-	dselStruct dsel[4];
-	dsel[0].name = DSEL_DESCRIPTION;
-	dsel[0].find = argument.find(".d");
-	dsel[1].name = DSEL_START_DATE;
-	dsel[1].find = argument.find(".s");
-	dsel[2].name = DSEL_END_DATE;
-	dsel[2].find = argument.find(".e");
-	dsel[3].name = DSEL_LOCATION;
-	dsel[3].find = argument.find(".l");
+Edit::~Edit() {
+}
 
-	for (int i = 0; i < 4; i++) {
-		if (dsel[i].find == -1) {
-			dsel[i].find = std::string::npos;
-		}
-	}
+std::string Edit::execute(std::string userInput) {
+	std::string feedbackString;
 
-	// Sorts according to where they are found in the argument
-	int minimum;
-	dselStruct toSwap;
-	for (int x = 0; x < 3; x++) {
-		minimum = x;
-		for (int y = x + 1; y < 4; y++) {
-			if (dsel[y].find < dsel[minimum].find) {
-				minimum = y;
+	process(userInput);
+
+	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
+		if (_attributesToBeEdited[i] == DESCRIPTION) {
+			if (_attributesToBeEdited[i] == "") {
+				throw exceptionInputInvalidEditRemoveDescription;
 			}
+			_editedTask->setDescription(_contentsToBeEdited[i]);
 		}
-		if (minimum != x) {
-			toSwap = dsel[minimum];
-			dsel[minimum] = dsel[x];
-			dsel[x] = toSwap;
+		else if (_attributesToBeEdited[i] == STARTDATETIME) {
+			Date* editTaskStartDateTime = new Date();
+			if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			if (_editedTask->getEndDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+					throw exceptionInputStartLaterThanEndTime;
+				}
+			}
+			_editedTask->setStartDate(editTaskStartDateTime);
 		}
-	}
-
-	if (!canFind(dsel[0].find)) {
-		return "Invalid Edit command: No arguments entered";
-	}
-
-	std::string strEditEntryIndex = argument.substr(0, dsel[0].find - 1);
-	if (!typeConversions::isNumber(strEditEntryIndex)) {
-		return "Invalid Edit command: Index of entry to be edited is not an integer";
-	}
-
-	int nEditEntryIndex = typeConversions::stringToInt(strEditEntryIndex);
-	Task* editEntryTask = TextStorage::getInstance()->getTask(nEditEntryIndex - 1);
-	if (editEntryTask == NULL) {
-		return "Invalid Edit command: No entry with index " + strEditEntryIndex + " found";
-	}
-	
-	int startPosition;
-	int length;
-	std::vector<DSEL> whatHasBeenEdited;
-	bool hasStartDateError = false;
-	bool hasEndDateError = false;
-
-	for (int i = 0; i < 4; i++) {
-		if (!canFind(dsel[i].find)) {
-			i = 4;
+		else if (_attributesToBeEdited[i] == STARTDATE) {
+			Date* editTaskStartDateTime = new Date();
+			if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDate;
+			}
+			if (_editedTask->getStartDate() != NULL) {
+				int existingTime = _editedTask->getStartDate()->getTime();
+				editTaskStartDateTime->setTime(existingTime);
+			}
+			if (editTaskStartDateTime->getTime() == NULL){
+				editTaskStartDateTime->setTime(0);
+			}
+			if (_editedTask->getEndDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+					throw exceptionInputStartLaterThanEndTime;
+				}
+			}
+			_editedTask->setStartDate(editTaskStartDateTime);
 		}
-		else {
-			startPosition = dsel[i].find + 3;
-			if ((i == 4) || (!canFind(dsel[i + 1].find))) {
-				length = argument.length() - startPosition;
+		else if (_attributesToBeEdited[i] == STARTTIME) {
+			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
+				Date* editTaskStartDateTime = new Date();
+				if (_editedTask->getStartDate() != NULL) {
+					*editTaskStartDateTime = *_editedTask->getStartDate();
+				}
+				else {
+					*editTaskStartDateTime = *_editedTask->getEndDate();
+				}
+				if (!editTaskStartDateTime->setTime(editTime)) {
+					throw exceptionInputInvalidTime;
+				}
+				if (_editedTask->getEndDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setStartDate(editTaskStartDateTime);
 			}
 			else {
-				length = dsel[i + 1].find - startPosition - 1;
-			}
-			switch (dsel[i].name) {
-			case DSEL_DESCRIPTION:
-				whatHasBeenEdited.push_back(DSEL_DESCRIPTION);
-				editEntryTask->setDescription(argument.substr(startPosition, length));
-				break;
-			case DSEL_START_DATE:
-				whatHasBeenEdited.push_back(DSEL_START_DATE);
-				if (!editEntryTask->getStartDate()->setDate(argument.substr(startPosition, length))) {
-					hasStartDateError = true;
-				}
-				break;
-			case DSEL_END_DATE:
-				whatHasBeenEdited.push_back(DSEL_END_DATE);
-				if (!editEntryTask->getEndDate()->setDate(argument.substr(startPosition, length))) {
-					hasEndDateError = true;
-				}
-				break;
-			case DSEL_LOCATION:
-				whatHasBeenEdited.push_back(DSEL_LOCATION);
-				editEntryTask->setLocation(argument.substr(startPosition, length));
-				break;
+				throw exceptionInputNoExistingDate;
 			}
 		}
-	}
-
-	std::string strWhatHasBeenEdited = "";
-	unsigned int size = whatHasBeenEdited.size();
-	for (unsigned int i = 0; i < size; i++) {
-		switch (whatHasBeenEdited[i]) {
-			case DSEL_DESCRIPTION:
-				strWhatHasBeenEdited += "description";
-				break;
-			case DSEL_START_DATE:
-				if (!hasStartDateError) {
-					strWhatHasBeenEdited += "start date";
+		else if (_attributesToBeEdited[i] == ENDDATETIME) {
+			Date* editTaskEndDateTime = new Date();
+			if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			if (_editedTask->getStartDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+					throw exceptionInputStartLaterThanEndTime;
 				}
-				break;
-			case DSEL_END_DATE:
-				if (!hasEndDateError) {
-					strWhatHasBeenEdited += "end date";
+			}
+			_editedTask->setEndDate(editTaskEndDateTime);
+		}
+		else if (_attributesToBeEdited[i] == ENDDATE) {
+			Date* editTaskEndDateTime = new Date();
+			if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDate;
+			}
+			if (_editedTask->getEndDate() != NULL) {
+				int existingTime = _editedTask->getEndDate()->getTime();
+				editTaskEndDateTime->setTime(existingTime);
+			}
+			if (editTaskEndDateTime->getTime() == NULL){
+				editTaskEndDateTime->setTime(2359);
+			}
+			if (_editedTask->getStartDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+					throw exceptionInputStartLaterThanEndTime;
 				}
-				break;
-			case DSEL_LOCATION:
-				strWhatHasBeenEdited += "location";
-				break;
+			}
+			_editedTask->setEndDate(editTaskEndDateTime);
 		}
-		if (i < size - 1) {
-			strWhatHasBeenEdited += ", ";
-		}
-	}
-
-	std::string errorMessage = "";
-	if (hasStartDateError) {
-	}
-
-	if ((hasStartDateError) || (hasEndDateError)) {
-		errorMessage += " (error with setting ";
-		if (hasStartDateError) {
-			errorMessage += "start date";
-			if (hasEndDateError) {
-				errorMessage += " and ";
+		else if (_attributesToBeEdited[i] == ENDTIME) {
+			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
+				Date* editTaskEndDateTime = new Date();
+				if (_editedTask->getEndDate() != NULL) {
+					*editTaskEndDateTime = *_editedTask->getEndDate();
+				}
+				else {
+					*editTaskEndDateTime = *_editedTask->getStartDate();
+				}
+				if (!editTaskEndDateTime->setTime(editTime)) {
+					throw exceptionInputInvalidTime;
+				}
+				if (_editedTask->getStartDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setEndDate(editTaskEndDateTime);
+			}
+			else {
+				throw exceptionInputNoExistingDate;
 			}
 		}
-		if (hasEndDateError) {
-			errorMessage += "end date";
+		else {
+			_editedTask->setLocation(_contentsToBeEdited[i]);
 		}
-		errorMessage += ")";
 	}
 
+	feedbackString = prepareFeedback();
 
-	return ("Task " + strEditEntryIndex + "\'s attributes (" + strWhatHasBeenEdited + ") edited" + errorMessage);
+	return feedbackString;
+}
+
+void Edit::process(std::string userInput) {
+	furnishTaskToBeEdited(userInput);
+
+	std::vector<std::vector<std::string>> keywordsAndParams;
+
+	furnishEditContents(userInput);
+}
+
+void Edit::furnishTaskToBeEdited(std::string &userInput) {
+	if (userInput == "") {
+		throw exceptionInputMissingEditTaskIndexAndParams;
+	}
+
+	int taskIndexToBeEdited = extractTaskIndex(userInput);
+
+	Task* originalTask = TextStorage::getInstance()->getTask(taskIndexToBeEdited-1);
+
+	if(originalTask == NULL) {
+		throw exceptionInputInvalidTaskIndex;
+	}
+
+	_taskIndexToBeEdited = taskIndexToBeEdited;
+
+	_originalTask = new Task();
+	_originalTask->setDescription(originalTask->getDescription());
+	if (originalTask->getStartDate() != NULL) {
+		Date* originalStartDate = new Date(originalTask->getStartDate()->getDay(), originalTask->getStartDate()->getMonth(), originalTask->getStartDate()->getYear(), originalTask->getStartDate()->getTime());
+		_originalTask->setStartDate(originalStartDate);
+	}	
+	if (originalTask->getEndDate() != NULL) {
+		Date* originalEndDate = new Date(originalTask->getEndDate()->getDay(), originalTask->getEndDate()->getMonth(), originalTask->getEndDate()->getYear(), originalTask->getEndDate()->getTime());
+		_originalTask->setEndDate(originalEndDate);
+	}
+	_originalTask->setLocation(originalTask->getLocation());
+
+	_editedTask = originalTask;
+
+	return;
+}
+
+int Edit::extractTaskIndex(std::string &userInput){
+	int spacePosition = userInput.find(" ");
+
+	if (spacePosition == std::string::npos) {
+		throw exceptionInputMissingEditParams;
+	}
+
+	if (!(userInput.substr(0,spacePosition).find_first_not_of(INTS) == std::string::npos)) {
+		throw exceptionInputInvalidTaskIndex;
+	}
+
+	std::string taskIndexToBeEditedString = userInput.substr(0, spacePosition);
+
+	userInput = userInput.substr(spacePosition);
+
+	int taskIndexToBeEdited = typeConversions::stringToInt(taskIndexToBeEditedString);
+
+	return taskIndexToBeEdited;
+}
+
+void Edit::furnishEditContents(std::string &userInput) {
+	if (userInput == "") {
+		throw exceptionInputMissingEditParams;
+	}
+
+	std::vector<std::vector<std::string>> keywordsAndParams = support::extractParamsForKeywords(userInput, _attributeKeywords);
+
+	for (unsigned int i = 0; i < keywordsAndParams.size(); i++) {
+		if (!keywordsAndParams[i].empty()) {
+			if (keywordsAndParams[i].size() > 1) {
+				throw exceptionInputRepeatAttributeKeywords;
+			}
+
+			if (keywordsAndParams[i][0] == "") {
+				throw exceptionInputMissingAttributeParam;
+			}
+
+			switch (i) {
+			case INDEX_DESCRIPTION:
+				_attributesToBeEdited.push_back(DESCRIPTION);
+				break;
+			case INDEX_STARTDATETIME:
+				if (checkDateTimeInputIsTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(STARTTIME);
+				}
+				else if (checkDateTimeInputIsDateTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(STARTDATETIME);
+				}
+				else {
+					_attributesToBeEdited.push_back(STARTDATE);
+				}
+				break;
+			case INDEX_ENDDATETIME:
+				if (checkDateTimeInputIsTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(ENDTIME);
+				}
+				else if (checkDateTimeInputIsDateTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(ENDDATETIME);
+				}
+				else {
+					_attributesToBeEdited.push_back(ENDDATE);
+				}
+				break;
+			case INDEX_LOCATION:
+				_attributesToBeEdited.push_back(LOCATION);
+				break;
+			}
+
+			if (keywordsAndParams[i][0] == "-") {
+				keywordsAndParams[i][0] = "";
+			}
+			_contentsToBeEdited.push_back(keywordsAndParams[i][0]);
+		}
+	}
+
+	if (_attributesToBeEdited.empty()) {
+		throw exceptionInputInvalidAttributeKeyword;
+	}
+
+	if (userInput != "") {
+		throw exceptionInputMissingAttributeKeyword;
+	}
+
+	return;
+}
+
+bool Edit::checkDateTimeInputIsTime(std::string input) {
+	if (input.size() == LENGTH_TIMEINPUT) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Edit::checkDateTimeInputIsDateTime(std::string input) {
+	if (input.size()>LENGTH_TIMEINPUT && input.substr(input.size() - LENGTH_TIMEINPUT).find_first_not_of(INTS) == std::string::npos) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+std::string Edit::prepareFeedback(){
+	std::string feedback = "Edited ";
+	std::string taskDisplay;
+	
+	std::string originalType;
+	originalType = support::getTaskType(_originalTask->getTaskTypeCode());
+
+	std::string editedType;
+	editedType = support::getTaskType(_editedTask->getTaskTypeCode());
+
+	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
+		if (editedType == TASKTYPE_DEADLINE) {
+			if (_attributesToBeEdited[i] == ENDDATE) {
+				_attributesToBeEdited[i] = DEADLINEDATE;
+			}
+			else if (_attributesToBeEdited[i] == ENDDATETIME) {
+				_attributesToBeEdited[i] = DEADLINE;
+			}
+			else if (_attributesToBeEdited[i] == ENDTIME) {
+				_attributesToBeEdited[i] = DEADLINETIME;
+			}
+		}
+
+		feedback += _attributesToBeEdited[i];
+
+		if (i == _attributesToBeEdited.size() - 2) {
+			feedback += " and ";
+		}
+		else if (i == _attributesToBeEdited.size() - 1) {
+			feedback += " ";
+		}
+		else {
+			feedback += ", ";
+		}
+	}
+
+	if (editedType == originalType) {
+		feedback += "of " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):\n";
+	}
+	else {
+		feedback += "of " + originalType + " to " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):\n";
+	}
+
+	taskDisplay = support::prepareTaskDisplayAttributeBreakdown(_editedTask);
+
+	feedback += taskDisplay;
+
+	return feedback;
+}
+
+int Edit::getEditedTaskIndex() {
+	return _taskIndexToBeEdited;
+}
+
+std::string Edit::undo() {
+	std::string feedback;
+
+	Task* temp = new Task();
+	
+	*temp = *_editedTask;
+
+	*_editedTask = *_originalTask;
+
+	*_originalTask = *temp;
+
+	feedback = prepareFeedback();
+
+	return feedback;
+}
+
+std::string Edit::redo() {
+	std::string feedback;
+
+	Task* temp = new Task();
+
+	*temp = *_editedTask;
+
+	*_editedTask = *_originalTask;
+
+	*_originalTask = *temp;
+
+	feedback = prepareFeedback();
+
+	return feedback;
 }

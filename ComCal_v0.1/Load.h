@@ -8,5 +8,7 @@
 
 class Load : public Command {
 public:
+	Load();
+	~Load();
 	std::string execute(std::string argument);
 };

@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include "Exceptions.h"
+#include "ErrorLog.h"
+
 #include <string>
 
 class Date {
@@ -31,4 +34,5 @@ public:
 
 	// Setter methods
 	bool setDate(std::string date);
+	bool setTime(int);
 };

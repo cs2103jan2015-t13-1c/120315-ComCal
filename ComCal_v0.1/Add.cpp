@@ -12,6 +12,12 @@
 #include "typeConversions.h"
 #include "ComCalManager.h"
 
+Add::Add() : Command() {
+}
+
+Add::~Add() {
+}
+
 bool Add::canFind(int index) {
 	return ((index != std::string::npos) && (index != -1));
 }
@@ -224,6 +230,31 @@ std::string Add::execute(std::string argument) {
 		}
 	}
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
+	TextStorage::getInstance()->addTask(newTask);
+	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
+
+	return ("Added " + newTask->toString());
+}
+
+//@author A0085731A
+std::string Add::undo() {
+	std::string feedback;
+
+	TextStorage::getInstance()->deleteTask(_taskIndex);
+
+	feedback = "Task (" + typeConversions::intToString(_taskIndex) + ") deleted.";
+
+	return feedback;
+}
+
+std::string Add::redo() {
+	Date* startDate = new Date;
+	startDate->setDate(_startDate);
+	Date* endDate = new Date;
+	endDate->setDate(_endDate);
+
+	Task* newTask = new Task(_description, _location, startDate, endDate);
+
 	TextStorage::getInstance()->addTask(newTask);
 
 	return ("Added " + newTask->toString());

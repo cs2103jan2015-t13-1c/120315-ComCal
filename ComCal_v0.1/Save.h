@@ -8,5 +8,7 @@
 
 class Save : public Command {
 public:
+	Save();
+	~Save();
 	std::string execute(std::string argument);
 };

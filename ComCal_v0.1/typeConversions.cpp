@@ -1,9 +1,4 @@
 #include "typeConversions.h"
-#include <fstream>
-#include <sstream>
-#include <algorithm>
-#include <msclr\marshal_cppstd.h>
-#include <msclr\marshal.h>
 
 // Converts System::String^ into std::string
 std::string typeConversions::convertStrTostr(System::String^ userInput) {

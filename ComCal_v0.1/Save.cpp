@@ -5,6 +5,12 @@
 #include "Save.h"
 #include "TextStorage.h"
 
+Save::Save() : Command() {
+}
+
+Save::~Save() {
+}
+
 std::string Save::execute(std::string argument) {
 	if (argument.compare("") == 0) {
 		argument = TextStorage::getInstance()->getTodoFileName();

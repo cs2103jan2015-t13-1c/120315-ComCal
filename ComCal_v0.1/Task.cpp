@@ -13,6 +13,7 @@ Task::Task() {
 	_endDate = NULL;
 	_isDone = false;
 	_isHidden = false;
+	_taskTypeCode = TASKTYPECODE_FLOATING;
 }
 
 Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
@@ -22,6 +23,19 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
 	_isHidden = false;
+
+	if (_startDate == NULL&&_endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_FLOATING;
+	}
+	else if (_startDate == NULL && _endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
+	else if (_startDate != NULL && _endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
+	}
+	else{
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
 }
 
 Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
@@ -31,6 +45,19 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_endDate = endDate;
 	_isDone = false;
 	_isHidden = false;
+
+	if (_startDate == NULL&&_endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_FLOATING;
+	}
+	else if (_startDate == NULL && _endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
+	else if (_startDate != NULL && _endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
+	}
+	else{
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
 }
 
 Task::~Task() {
@@ -83,12 +110,24 @@ void Task::setLocation(std::string location) {
 	_location = location;
 }
 
+void Task::setStartDate(Date* startDate) {
+	_startDate = startDate;
+}
+
+void Task::setEndDate(Date* endDate) {
+	_endDate = endDate;
+}
+
 void Task::hide() {
 	_isHidden = true;
 }
 
 void Task::display() {
 	_isHidden = false;
+}
+
+int Task::getTaskTypeCode() {
+	return _taskTypeCode;
 }
 
 // Converts the Task object into a String to save into text file

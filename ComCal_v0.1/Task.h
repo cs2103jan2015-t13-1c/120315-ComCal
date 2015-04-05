@@ -15,6 +15,8 @@ private:
 	Date* _endDate;				// Could be null, as some tasks do not have a end date and time
 	bool _isDone;
 	bool _isHidden;				// If true, won't display in sidebar. To be manipulated with Show and Search
+	int _taskTypeCode;
+
 public:
 	Task();
 	Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime);
@@ -30,10 +32,13 @@ public:
 	bool hasStartDate();
 	bool hasEndDate();
 	bool isHidden();
+	int getTaskTypeCode();
 
 	// Setter methods
 	void setDescription(std::string description);
 	void setLocation(std::string location);
+	void setStartDate(Date*);
+	void setEndDate(Date*);
 	void hide();
 	void display();
 

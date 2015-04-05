@@ -12,5 +12,7 @@ class Show : public Command {
 private:
 	int getMonthInput(std::string argument);
 public:
+	Show();
+	~Show();
 	std::string execute(std::string argument);
 };

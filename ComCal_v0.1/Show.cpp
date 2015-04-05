@@ -12,6 +12,12 @@
 
 #include <ctype.h>
 
+Show::Show() : Command() {
+}
+
+Show::~Show() {
+}
+
 std::string Show::execute(std::string argument) {
 	std::string feedBack;
 

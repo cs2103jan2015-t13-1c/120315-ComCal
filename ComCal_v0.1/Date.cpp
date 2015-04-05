@@ -15,13 +15,31 @@ Date::Date(int day, int month, int year, int time) {
 }
 
 Date::Date() {
+	_time = NULL;
 }
 
 Date::~Date() {
 }
 
 std::string Date::toString() {
-	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year) + " " + typeConversions::intToString(_time));
+	std::string dateString = "";
+
+	dateString += typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year) + " ";
+	
+	if (_time < 10) {
+		dateString += "000" + typeConversions::intToString(_time);
+	}
+	else if (_time < 100) {
+		dateString += "00" + typeConversions::intToString(_time);
+	}
+	else if (_time < 1000) {
+		dateString += "0" + typeConversions::intToString(_time);
+	}
+	else {
+		dateString += typeConversions::intToString(_time);
+	}
+
+	return dateString;
 }
 
 std::string Date::toGUIString(){
@@ -114,8 +132,28 @@ bool Date::setDate(std::string date) {
 				}
 			}
 			else {
-				// TODO Implement "Monday", "Tuesday", etc.
-				return false;
+				//@author A0085731A
+				int dayIndex;
+				date = typeConversions::toLowerCase(date);
+
+				if (timeDateInfo::isDayValid(date, dayIndex)) {
+					dayIndex = ((dayIndex + 2) / 2)-1;
+					int daysDifference = dayIndex - currentTime->tm_wday;
+					time_t desiredDayOfWeekTimeT = mktime(currentTime) + (daysDifference*SECONDS_IN_DAY);
+
+					if (daysDifference < 0) {
+						desiredDayOfWeekTimeT += SECONDS_IN_WEEK;
+					}
+
+					struct tm* desiredDate = localtime(&desiredDayOfWeekTimeT);
+
+					_day = desiredDate->tm_mday;
+					_month = desiredDate->tm_mon + 1;
+					_year = desiredDate->tm_year % 100;
+				}
+				else {
+					return false;
+				}
 			}
 		}
 		else { // Input format number 1
@@ -139,8 +177,48 @@ bool Date::setDate(std::string date) {
 				_time = typeConversions::stringToInt(time);
 			}
 			else { // 3 with no time
-				// TODO Implement "last Wednesday", "next Friday", etc.
-				return false;
+				//@author A0085731A
+				if (!setDate(date.substr(space1 + 1))) {
+					return false;
+				}
+
+				if (typeConversions::toLowerCase(date.substr(0, space1)) == DATE_LAST) {
+					_day -= 7;
+					if (_day < 1) {
+						_month -= 1;
+						if (_month < 1) {
+							_month = 12;
+							_year -= 1;
+							if (_year < 0) {
+								_year = 99;
+							}
+						}
+
+						int numDaysInMonth = timeDateInfo::getDaysInMonth(_month - 1, _year + 100);
+						_day = numDaysInMonth + (_day - 7);
+					}
+				}
+				else if (typeConversions::toLowerCase(date.substr(0, space1)) == DATE_NEXT) {
+					_day += 7;
+
+					int numDaysInMonth = timeDateInfo::getDaysInMonth(_month - 1, _year + 100);
+
+					if (_day > numDaysInMonth) {
+						_month += 1;
+						if (_month > 12) {
+							_month = 1;
+							_year += 1;
+							if (_year > 99) {
+								_year = 0;
+							}
+						}
+
+						_day = _day - numDaysInMonth;
+					}
+				}
+				else {
+					return false;
+				}
 			}
 		}
 		else { // 3 with time
@@ -151,9 +229,22 @@ bool Date::setDate(std::string date) {
 			if (!typeConversions::isNumber(time)) {
 				return false;
 			}
+			if (!timeDateInfo::isTimeValid(typeConversions::stringToInt(time))){
+				return false;
+			}
 			_time = typeConversions::stringToInt(time);
 		}
 	}
 
 	return true;
+}
+
+//@author A0085731A
+bool Date::setTime(int time) {
+	if (timeDateInfo::isTimeValid(time)) {
+		_time = time;
+		return true;
+	} else {
+		return false;
+	}
 }

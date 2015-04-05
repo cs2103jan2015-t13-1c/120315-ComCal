@@ -5,6 +5,23 @@
 #include <string>
 #include <time.h>
 
+//DD, MM, YY length constant int declarations:
+const int LENGTH_MDAYINPUT = 2;
+const int LENGTH_MONTHINPUT = 2;
+const int LENGTH_YEARINPUT = 2;
+
+//Length of time input constant int declarations:
+const int LENGTH_TIMEINPUT = 4;
+const int LENGTH_HOURINPUT = 2;
+const int LENGTH_MININPUT = 2;
+
+//Leading 0 for date/time formatting constant string declaration:
+const std::string leadingZero = "0";
+
+//DD/MM/YY date input seperator constant string and index int declarations:
+const int SIZE_SEPARATORSARRAY = 1;
+const char SEPARATORS[SIZE_SEPARATORSARRAY] = { '/' };
+
 namespace timeDateInfo {
 
 	//checks if the date is valid
@@ -13,7 +30,7 @@ namespace timeDateInfo {
 
 	//used to check whether time is within 0000 - 2359
 	bool isTimeValid(int);
-	bool isDayValid(std::string);
+	bool isDayValid(std::string, int&);
 	bool isClashing(std::string);
 	bool isLeapYear(int);
 

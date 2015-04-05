@@ -15,6 +15,7 @@ private:
 	int _s;
 	int _e;
 	int _l;
+	int _taskIndex;
 
 	bool _isValid;
 	bool _usesFrom;
@@ -35,5 +36,9 @@ private:
 	void findDSEL();
 	void getFourParameters();
 public:
+	Add();
+	~Add();
 	std::string execute(std::string argument);
+	std::string undo();
+	std::string redo();
 };

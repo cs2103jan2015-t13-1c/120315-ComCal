@@ -23,31 +23,70 @@ static const std::string DATE_THURSDAY = "Thursday";
 static const std::string DATE_FRIDAY = "Friday";
 static const std::string DATE_SATURDAY = "Saturday";
 static const std::string DATE_SUNDAY = "Sunday";
+static const std::string DATE_LAST = "last";
+static const std::string DATE_NEXT = "next";
 
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
 static const std::string INPUT_DONE = "done";
 
+//Attribute keywords constant string and index int declarations:
+static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;
+static const std::string ATTRIBUTEKEYWORDSARRAY[ATTRIBUTEKEYWORDSARRAYSIZE] = { " .d ", " .s ", " .e ", " .l " };
+static const int INDEX_DESCRIPTION = 0;
+static const int INDEX_STARTDATETIME = 1;
+static const int INDEX_ENDDATETIME = 2;
+static const int INDEX_LOCATION = 3;
+
+//Integer string:
+static const std::string INTS = "0123456789";
+
+//Attribute constant string declarations:
+static const std::string DESCRIPTION = "Description";
+static const std::string STARTDATETIME = "Start date-time";
+static const std::string STARTDATE = "Start date";
+static const std::string STARTTIME = "Start time";
+static const std::string ENDDATETIME = "End date-time";
+static const std::string ENDDATE = "End date";
+static const std::string ENDTIME = "End time";
+static const std::string DEADLINE = "Deadline";
+static const std::string DEADLINEDATE = "Deadline date";
+static const std::string DEADLINETIME = "Deadline time";
+static const std::string LOCATION = "Location";
+
+//Task type constant int code declarations:
+static const int TASKTYPECODE_FLOATING = 1;
+static const int TASKTYPECODE_DEADLINE = 2;
+static const int TASKTYPECODE_PARTIALTIMED = 3;
+static const int TASKTYPECODE_TIMED = 4;
+
+//Task type constant string declarations:
+static const std::string TASKTYPE_EVENT = "EVENT";
+static const std::string TASKTYPE_DEADLINE = "DEADLINE";
+static const std::string TASKTYPE_TODO = "TO-DO";
+
 //Default file names constant string declarations:
-const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
+static const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
 
 //Default log file name constant string declarations:
-const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";
+static const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";
 
 //Number of file name arguments constant int declarations:
-const int NOFILENAMEENTERED = 0;
-const int TODOFILENAMEENTERED = 1;
+static const int NOFILENAMEENTERED = 0;
+static const int TODOFILENAMEENTERED = 1;
 
 //Time and date info
-const static int MAX_ASCTIME_S = 26;
-const static int DAYS_IN_WEEK = 7;
-const static int MONTHS_IN_YEAR = 12;
-const static int MAX_DAYS_IN_MONTH = 31;
-const static int NUM_BLOCKS_IN_CALENDAR = 42;
+static const int MAX_ASCTIME_S = 26;
+static const int DAYS_IN_WEEK = 7;
+static const int MONTHS_IN_YEAR = 12;
+static const int MAX_DAYS_IN_MONTH = 31;
+static const int NUM_BLOCKS_IN_CALENDAR = 42;
+static const int SECONDS_IN_DAY = 24 * 60 * 60;
+static const int SECONDS_IN_WEEK = 7 * SECONDS_IN_DAY;
 
 //keyboard shortcuts
-const static std::string NEWLINE = " \n";
-const static std::string INDEX_DESCRIPTION_SEPARATOR = ". ";
+static const std::string NEWLINE = " \n";
+static const std::string INDEX_DESCRIPTION_SEPARATOR = ". ";
 
 //SideBar titles
 static const std::string ALL_TODO_TITLE = "All Todo Tasks";

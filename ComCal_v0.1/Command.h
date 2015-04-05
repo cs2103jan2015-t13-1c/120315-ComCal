@@ -4,9 +4,14 @@
 
 #pragma once
 
+#include "Task.h"
 #include <string>
 
 class Command {
 public:
-	virtual std::string execute(std::string argument) = 0;
+	Command();
+	~Command();
+	virtual std::string execute(std::string argument);
+	virtual std::string undo();
+	virtual std::string redo();
 };

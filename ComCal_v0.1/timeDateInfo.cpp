@@ -1,22 +1,55 @@
 #include "timeDateInfo.h"
 #include "keywords.h"
 #include "ErrorLog.h"
+#include "typeConversions.h"
 
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
 
-//prasoon
-; bool timeDateInfo::isDateValid(std::string) {
+//@author A0085731A
+; bool timeDateInfo::isDateValid(std::string dateInput) {
+	if (dateInput.size() != 6) {
+		return false;
+	}
+
+	int month = typeConversions::stringToInt(dateInput.substr(2, 2));
+	int year = typeConversions::stringToInt(dateInput.substr(4, 2));
+
+	if ((month < 1 || month>12) || (year < 0 || year > 99)) {
+		return false;
+	}
+
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(month - 1, year + 100);
+
+	if (typeConversions::stringToInt(dateInput.substr(0, 2)) > numDaysInMonth) {
+		return false;
+	}
+
 	return true;
 }
 
-//weiliang
-bool timeDateInfo::isTimeValid(int) {
-	return 1;
+//@author A0085731A
+bool timeDateInfo::isTimeValid(int timeInput) {
+	if (timeInput < 0 || timeInput > 2359) {
+		return false;
+	}
+
+	return true;
 }
 
-//huangqin
-bool timeDateInfo::isDayValid(std::string) {
+//@author A0085731A
+bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
+	bool isFound = false;
+
+	const static std::string DAYSINPUT[14] = { "sunday", "sun", "monday", "mon", "tuesday", "tues", "wednesday", "wed", "thursday", "thurs", "friday", "fri", "saturday", "sat" };
+
+	for (int i = 0; i < 14; i++) {
+		if (dayInput == DAYSINPUT[i]) {
+			index = i;
+			isFound = true;
+		}
+	}
+
 	return true;
 }
 

@@ -87,16 +87,10 @@
     <ClCompile Include="Edit.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
-    <ClCompile Include="Redo.cpp">
-      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
-    </ClCompile>
     <ClCompile Include="Search.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
     <ClCompile Include="Show.cpp">
-      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
-    </ClCompile>
-    <ClCompile Include="Undo.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
     <ClCompile Include="ErrorLog.cpp">
@@ -106,6 +100,12 @@
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
     <ClCompile Include="Load.cpp">
+      <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="support.cpp">
+      <Filter>ComCalHelper\ComCalHelperCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,16 +149,10 @@
     <ClInclude Include="Edit.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
-    <ClInclude Include="Redo.h">
-      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
-    </ClInclude>
     <ClInclude Include="Search.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
     <ClInclude Include="Show.h">
-      <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="Undo.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
     </ClInclude>
     <ClInclude Include="ErrorLog.h">
@@ -181,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="Load.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="support.h">
+      <Filter>ComCalHelper\ComCalHelperHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>ComCalComponents\ComCalComponentsHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,5 +8,7 @@
 
 class Search : public Command {
 public:
+	Search();
+	~Search();
 	std::string execute(std::string argument);
 };

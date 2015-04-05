@@ -1,5 +1,11 @@
 #pragma once
+
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <msclr\marshal_cppstd.h>
+#include <msclr\marshal.h>
 
 //This namespace is cater to any type conversions that might occur
 namespace typeConversions{

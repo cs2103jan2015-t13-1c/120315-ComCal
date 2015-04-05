@@ -1,9 +1,5 @@
 #include "TextStorage.h"
-#include "typeConversions.h"
-#include <fstream>
-#include <vector>
-#include "rapidxml.hpp"
-#include "rapidxml_print.hpp"
+
 using namespace rapidxml;
 
 template<class Ch> 
@@ -48,6 +44,11 @@ std::string TextStorage::getTodoFileName() {
 
 void TextStorage::addTask(Task* newTask) {
 	_todoTasks->push_back(newTask);
+}
+
+//@author A0085731A
+void TextStorage::addTaskAtSpecificPosition(Task* newTask, int position) {
+	_todoTasks->insert(_todoTasks->begin() + position - 1, newTask);
 }
 
 bool TextStorage::deleteTask(int index) {

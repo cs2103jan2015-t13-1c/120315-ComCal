@@ -8,6 +8,12 @@
 
 // TODO Implement input formats 3
 
+Delete::Delete() : Command() {
+}
+
+Delete::~Delete() {
+}
+
 void Delete::deleteMultipleTasks(std::string argument) {
 	if (argument.size() <= 0) {
 		return;
@@ -26,8 +32,11 @@ void Delete::deleteMultipleTasks(std::string argument) {
 
 	if (typeConversions::isNumber(firstNumber)) {
 		int number = typeConversions::stringToInt(firstNumber);
+		if (TextStorage::getInstance()->getTask(number - deletedCount - 1) != NULL) {
+			_deletedTasks.push_back(TextStorage::getInstance()->getTask(number - deletedCount - 1));
+		}
 		if (TextStorage::getInstance()->deleteTask(number - deletedCount)) {
-			deletedTasks->push_back(number);
+			deletedTaskIndexes.push_back(number);
 			deletedCount++;
 		}
 	}
@@ -45,22 +54,53 @@ std::string Delete::execute(std::string argument) {
 	//    - delete before 22/12/14
 	//    - delete .b 22/12/14
 
-	deletedTasks = new std::vector<int>();
 	deletedCount = 0;
 
 	deleteMultipleTasks(argument);
 	std::string returnString = "";
-	unsigned int size = deletedTasks->size();
+	unsigned int size = deletedTaskIndexes.size();
 
 	if (size <= 0) {
-		delete deletedTasks;
 		return "Invalid delete command: No tasks deleted";
 	}
 
 	for (unsigned int i = 0; i < size; i++) {
-		returnString += typeConversions::intToString(deletedTasks->at(i)) + " ";
+		returnString += typeConversions::intToString(deletedTaskIndexes[i]) + " ";
 	}
-	delete deletedTasks;
 
-	return ("Tasks " + returnString + "deleted.");
+	return ("Task(s) " + returnString + "deleted.");
+}
+
+//@author A0085731A
+std::string Delete::undo() {
+	deletedCount = 0;
+	
+	std::string feedback = "Added task(s) ";
+
+	for (unsigned int i = 0; i < _deletedTasks.size(); i++) {
+		TextStorage::getInstance()->addTaskAtSpecificPosition(_deletedTasks[i], deletedTaskIndexes[i]);
+		feedback += "(" + typeConversions::intToString(deletedTaskIndexes[i]) + ")";
+		if (i < _deletedTasks.size() - 1) {
+			feedback += ", ";
+		}
+	}
+
+	return feedback;
+}
+
+std::string Delete::redo() {
+	std::string feedback = "Task(s) ";
+	
+	for (unsigned int i = 0; i < deletedTaskIndexes.size(); i++) {
+		TextStorage::getInstance()->deleteTask(deletedTaskIndexes[i] - deletedCount);
+		deletedCount++;
+		feedback += "(" + typeConversions::intToString(deletedTaskIndexes[i]) + ")";
+		if (i < deletedTaskIndexes.size() - 1) {
+			feedback += ", ";
+		}
+	}
+
+	feedback += " deleted.";
+
+	return feedback;
 }

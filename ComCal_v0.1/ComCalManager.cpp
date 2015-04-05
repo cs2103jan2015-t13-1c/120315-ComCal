@@ -6,11 +6,9 @@
 #include "Delete.h"
 #include "Edit.h"
 #include "Load.h"
-#include "Redo.h"
 #include "Save.h"
 #include "Search.h"
 #include "Show.h"
-#include "Undo.h"
 #include "timeDateInfo.h"
 #include "keywords.h"
 #include "TextStorage.h"
@@ -56,42 +54,114 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		function = function.substr(0, space);
 	}
 	if ((space != std::string::npos) && (space != -1)) {
-		argument = userInput.substr(space + 1, userInput.length() - space - 1);
+		argument = userInput.substr(space + 1);
 	}
 
-	Command* command = NULL;
+	Command* command;
+
 	if (function.compare(COMMAND_ADD) == 0) {
 		command = new Add();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		if (feedBackMessage.substr(0, 5) == "Added") {
+			_commandHistory.push(command);
+			populateSideBar();
+		}
 	}
 	else if (function.compare(COMMAND_DELETE) == 0) {
 		command = new Delete();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		if (feedBackMessage.substr(0, 5) == "Tasks") {
+			_commandHistory.push(command);
+			while (!_undoHistory.empty()) {
+				_undoHistory.pop();
+			}
+			populateSideBar();
+		}
 	}
 	else if (function.compare(COMMAND_EDIT) == 0) {
 		command = new Edit();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		_commandHistory.push(command);
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_LOAD) == 0) {
 		command = new Load();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_REDO) == 0) {
-		command = new Redo();
+		if (!_undoHistory.empty()) {
+			command = _undoHistory.top();
+			_commandHistory.push(command);
+			_undoHistory.pop();
+			feedBackMessage = command->redo();
+			populateSideBar();
+		}
+		else {
+			feedBackMessage = "Error: No previous undo actions to redo.";
+		}
 	}
 	else if (function.compare(COMMAND_SAVE) == 0) {
 		command = new Save();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_SEARCH) == 0) {
 		command = new Search();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_SHOW) == 0) {
 		command = new Show();
+		try {
+			feedBackMessage = command->execute(argument);
+		}
+		catch (std::exception& exception) {
+			feedBackMessage = exception.what();
+		}
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_UNDO) == 0) {
-		command = new Undo();
-	}
-
-	if (command != NULL) {
-		feedBackMessage = command->execute(argument);
-		delete command; // TODO Instead of deleting it, do something to it for future function implementations (eg undo/redo)
-		populateSideBar();
+		if (!_commandHistory.empty()) {
+			command = _commandHistory.top();
+			_undoHistory.push(command);
+			_commandHistory.pop();
+			feedBackMessage = command->undo();
+			populateSideBar();
+		}
+		else {
+			feedBackMessage = "Error: No previous actions to undo.";
+		}
 	}
 	else {
 		feedBackMessage = INVALID_COMMAND;
