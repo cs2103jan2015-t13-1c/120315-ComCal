@@ -61,12 +61,7 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 
 	if (function.compare(COMMAND_ADD) == 0) {
 		command = new Add();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		if (feedBackMessage.substr(0, 5) == "Added") {
 			_commandHistory.push(command);
 			populateSideBar();
@@ -74,13 +69,8 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	}
 	else if (function.compare(COMMAND_DELETE) == 0) {
 		command = new Delete();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
-		if (feedBackMessage.substr(0, 5) == "Tasks") {
+		feedBackMessage = command->execute(argument);
+		if (feedBackMessage.substr(0, 7) == "Task(s)") {
 			_commandHistory.push(command);
 			while (!_undoHistory.empty()) {
 				_undoHistory.pop();
@@ -90,23 +80,13 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	}
 	else if (function.compare(COMMAND_EDIT) == 0) {
 		command = new Edit();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		_commandHistory.push(command);
 		populateSideBar();
 	}
 	else if (function.compare(COMMAND_LOAD) == 0) {
 		command = new Load();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		populateSideBar();
 	}
 	else if (function.compare(COMMAND_REDO) == 0) {
@@ -123,32 +103,17 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	}
 	else if (function.compare(COMMAND_SAVE) == 0) {
 		command = new Save();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		populateSideBar();
 	}
 	else if (function.compare(COMMAND_SEARCH) == 0) {
 		command = new Search();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		populateSideBar();
 	}
 	else if (function.compare(COMMAND_SHOW) == 0) {
 		command = new Show();
-		try {
-			feedBackMessage = command->execute(argument);
-		}
-		catch (std::exception& exception) {
-			feedBackMessage = exception.what();
-		}
+		feedBackMessage = command->execute(argument);
 		populateSideBar();
 	}
 	else if (function.compare(COMMAND_UNDO) == 0) {

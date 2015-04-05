@@ -255,7 +255,12 @@ std::string Add::redo() {
 
 	Task* newTask = new Task(_description, _location, startDate, endDate);
 
-	TextStorage::getInstance()->addTask(newTask);
+	if (_taskIndex >= TextStorage::getInstance()->getNumberOfTasks()) {
+		TextStorage::getInstance()->addTask(newTask);
+	}
+	else {
+		TextStorage::getInstance()->addTaskAtSpecificPosition(newTask, _taskIndex);
+	}
 
 	return ("Added " + newTask->toString());
 }

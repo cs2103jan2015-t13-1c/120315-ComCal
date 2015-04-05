@@ -9,6 +9,8 @@
 #include "typeConversions.h"
 #include "TextStorage.h"
 #include "ErrorLog.h"
+#include "Exceptions.h"
+
 using namespace ComCal_v01;
 using namespace System::Windows::Forms;
 
@@ -61,7 +63,12 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			Application::Exit();
 		}
 		else{
-			feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::convertStrTostr(userInputBox->Text)));
+			try {
+				feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::convertStrTostr(userInputBox->Text)));
+			}
+			catch (std::exception& exception) {
+				feedBack = typeConversions::convertstrToStr(exception.what());
+			}
 
 			guiUpdate();
 
