@@ -1,10 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComCal_v0.1", "ComCal_v0.1\ComCal_v0.1.vcxproj", "{A0796DC2-D6D9-497F-BB55-BF33DB873ED4}"
 EndProject
+<<<<<<< HEAD
+=======
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComCalTest", "ComCalTest\ComCalTest.vcxproj", "{F11DFFB0-EFAD-4F09-BE07-1306FA3694A5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "systemTestOutput_ComCal", "systemTestOutput_ComCal\systemTestOutput_ComCal.vcxproj", "{E29974C2-3FD4-4133-857D-1FA67DC71ED3}"
+EndProject
+>>>>>>> f1b56743d6b0a1534a082fa6b386b419b5adc763
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +22,17 @@ Global
 		{A0796DC2-D6D9-497F-BB55-BF33DB873ED4}.Debug|Win32.Build.0 = Debug|Win32
 		{A0796DC2-D6D9-497F-BB55-BF33DB873ED4}.Release|Win32.ActiveCfg = Release|Win32
 		{A0796DC2-D6D9-497F-BB55-BF33DB873ED4}.Release|Win32.Build.0 = Release|Win32
+<<<<<<< HEAD
+=======
+		{F11DFFB0-EFAD-4F09-BE07-1306FA3694A5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F11DFFB0-EFAD-4F09-BE07-1306FA3694A5}.Debug|Win32.Build.0 = Debug|Win32
+		{F11DFFB0-EFAD-4F09-BE07-1306FA3694A5}.Release|Win32.ActiveCfg = Release|Win32
+		{F11DFFB0-EFAD-4F09-BE07-1306FA3694A5}.Release|Win32.Build.0 = Release|Win32
+		{E29974C2-3FD4-4133-857D-1FA67DC71ED3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E29974C2-3FD4-4133-857D-1FA67DC71ED3}.Debug|Win32.Build.0 = Debug|Win32
+		{E29974C2-3FD4-4133-857D-1FA67DC71ED3}.Release|Win32.ActiveCfg = Release|Win32
+		{E29974C2-3FD4-4133-857D-1FA67DC71ED3}.Release|Win32.Build.0 = Release|Win32
+>>>>>>> f1b56743d6b0a1534a082fa6b386b419b5adc763
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
