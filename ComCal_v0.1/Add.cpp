@@ -2,10 +2,6 @@
 // Implementation of functions in the Add class
 //@author A0119754X
 
-// TODO Have Date handle strings like "Tuesday", "Friday", "next Wednesday", "last Saturday", etc.
-// TODO Implement "no end date, only end time" so that end date = start date
-// TODO Make sure that end date > start date
-
 #include "Add.h"
 
 Add::Add() : Command() {
@@ -221,9 +217,16 @@ std::string Add::execute(std::string argument) {
 	}
 	if (_hasEndDate) {
 		objEndDate = new Date();
-		if (!objEndDate->setDate(_endDate)) {
+		if (!objEndDate->setDate(_endDate, objStartDate)) {
 			delete objEndDate;
 			return "Invalid add command: Invalid end date and time format";
+		}
+	}
+	if ((_hasStartDate) && (_hasEndDate)) {
+		if (*objStartDate > *objEndDate) {
+			delete objStartDate;
+			delete objEndDate;
+			return "Invalid add command: End date must be later than time date";
 		}
 	}
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
