@@ -102,14 +102,20 @@ std::string Delete::execute(std::string argument) {
 	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
 		Task* deletedTask = TextStorage::getInstance()->getTask(_deletedTasksIndexes[i] - _deletedCount);
 		_deletedTasks.push_back(deletedTask);
-		TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount);
-		_deletedCount++;
-		feedback += typeConversions::intToString(_deletedTasksIndexes[i]);
-		if (i < _deletedTasksIndexes.size() - 1) {
-			feedback += ", ";
+		bool isSuccessful = TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount);
+		if (isSuccessful) {
+			_deletedCount++;
+			feedback += typeConversions::intToString(_deletedTasksIndexes[i]);
+			if (i < _deletedTasksIndexes.size() - 1) {
+				feedback += ", ";
+			}
+			else {
+				feedback += ".";
+			}
 		}
 		else {
-			feedback += ".";
+			ErrorLog::inputErrorLog("Unsuccessful delete, please check delete class.");
+			assert(isSuccessful == true);
 		}
 	}
 

@@ -59,13 +59,8 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	else if (function.compare(COMMAND_DELETE) == 0) {
 		command = new Delete();
 		feedBackMessage = command->execute(argument);
-		if (feedBackMessage.substr(0, 7) == "Task(s)") {
-			_commandHistory.push(command);
-			while (!_undoHistory.empty()) {
-				_undoHistory.pop();
-			}
-			populateSideBar();
-		}
+		_commandHistory.push(command);
+		populateSideBar();
 	}
 	else if (function.compare(COMMAND_EDIT) == 0) {
 		command = new Edit();

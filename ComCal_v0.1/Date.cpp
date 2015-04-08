@@ -227,9 +227,7 @@ bool Date::setDate(std::string date) {
 		int space2 = date.find(" ", space1 + 1);
 		if (space2 == std::string::npos) { // Either 3 or 4 with no time, or 1 or 2 with time
 			std::string time = date.substr(space1 + 1);
-			ErrorLog::inputErrorLog("testing if last 4 digits is time" + time);
 			if (timeDateInfo::isTimeValid(time)) { // 1 or 2 with time
-				ErrorLog::inputErrorLog("Entered time loop");
 				if (!setDate(date.substr(0, space1))) {
 					return false;
 				}
