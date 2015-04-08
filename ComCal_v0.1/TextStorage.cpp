@@ -82,8 +82,36 @@ void TextStorage::displayTodoTasks() {
 	}
 }
 
-void TextStorage::displayTodoTasks(Date* date) {
+void TextStorage::displayTodoTasks(const Date &date) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
 
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+
+		if (tempTask->hasStartDate() && !tempTask->getIsDone()) {
+			if (tempTask->getStartDate()->operator==(date)){
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+		else {
+			if (tempTask->hasEndDate() && !tempTask->getIsDone()){
+				if (tempTask->getEndDate()->operator==(date)) {
+					tempTask->display();
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+			else{
+				tempTask->hide();
+			}
+
+		}
+	}
 }
 
 void TextStorage::displayDoneTasks() {
@@ -97,6 +125,38 @@ void TextStorage::displayDoneTasks() {
 		}
 		else {
 			tempTask->hide();
+		}
+	}
+}
+
+void TextStorage::displayDoneTasks(const Date &date) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+
+		if (tempTask->hasStartDate() && tempTask->getIsDone()) {
+			if (tempTask->getStartDate()->operator==(date)){
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+		else {
+			if (tempTask->hasEndDate() && tempTask->getIsDone()){
+				if (tempTask->getEndDate()->operator==(date)) {
+					tempTask->display();
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+			else{
+				tempTask->hide();
+			}
+
 		}
 	}
 }

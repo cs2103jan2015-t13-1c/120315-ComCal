@@ -76,11 +76,10 @@ std::string Show::execute(std::string argument) {
 							return "Please input a year above 1900";
 						}
 						else {
-//							year %= 1000;
-//							year %= 100;
 							TextStorage::getInstance()->displayMonthTasks(year, i + 1);
 							struct tm* date = timeDateInfo::setStructTm(year, i);
 							ComCalManager::getInstance()->setTimeDetails(date);
+							ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
 							return firstArg + " " + secArg + " shown";
 						}
@@ -131,6 +130,25 @@ std::string Show::execute(std::string argument) {
 					return INVALID_DATE_INPUT;
 				}
 			}
+
+			//method to show done tasks of the user specified date
+			if ((firstArg == INPUT_DONE) || (secArg == INPUT_DONE)) {
+
+				if (secArg == INPUT_DONE) {
+					std::swap(firstArg, secArg);
+				}
+
+				if (tempDate->setDate(secArg)) {
+					TextStorage::getInstance()->displayTodoTasks(*tempDate);
+					std::string sideBarTitle = tempDate->toGUIString() + " " + INPUT_DONE + " tasks\n";
+					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+					return (sideBarTitle + " shown\n");
+				}
+				else {
+					return INVALID_DATE_INPUT;
+				}
+			}
 		}
 		else { //argument now has only one word, numOfWhiteSpace == 0
 
@@ -160,6 +178,7 @@ std::string Show::execute(std::string argument) {
 				int year = date->tm_year + 1900;
 				TextStorage::getInstance()->displayMonthTasks(year, month + 1);
 				ComCalManager::getInstance()->setTimeDetails(date);
+				ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
 				return (timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown");
 			}
@@ -224,11 +243,11 @@ std::vector<Date*> Show::getDatesInWeek() {
 
 std::vector<Date*> Show::getDatesInWeek(Date* specDate) {
 	std::vector<Date*> weekDate;
-	int year = specDate->getYear();
+	int year = specDate->getYear() + 1900;
 	int month = specDate->getMonth() - 1;
 	int day = specDate->getDay();
 
-	struct tm* timeDetails = timeDateInfo::setStructTm(year, month, day);
+	struct tm* timeDetails = timeDateInfo::setStructTm(year, month, day); 
 	weekDate = getWeeklyDates(timeDetails);
 
 	return weekDate;

@@ -43,7 +43,7 @@ std::string Date::toString() {
 }
 
 std::string Date::toGUIString(){
-	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year));
+	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year%100));
 }
 
 int Date::getDay() {

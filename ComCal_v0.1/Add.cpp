@@ -234,7 +234,7 @@ std::string Add::execute(std::string argument) {
 	}
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
 	TextStorage::getInstance()->addTask(newTask);
-	Task* _addedTask = newTask;
+	_addedTask = newTask;
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 
 	return ("Added: " + newTask->toString());

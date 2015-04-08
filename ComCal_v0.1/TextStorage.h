@@ -50,8 +50,9 @@ public:
 
 	void displayAllTasks();
 	void displayTodoTasks();
-	void displayTodoTasks(Date*);
+	void displayTodoTasks(const Date &date);
 	void displayDoneTasks();
+	void displayDoneTasks(const Date &date);
 	void displayMonthTasks(int month); //1 = January, 2 = February, etc.
 	void displayMonthTasks(int year, int month);
 	void displayDatedTasks(const Date &date);
