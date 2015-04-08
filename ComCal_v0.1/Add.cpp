@@ -18,7 +18,7 @@ std::string Add::checkIfValid() {
 	// Check if argument is valid
 	
 	if (!canFind(_l)) {
-		return "Invalid add command: No location given";
+		_hasLocation = false;
 	}
 	if (!canFind(_s)) {
 		_hasStartDate = false;
@@ -32,16 +32,16 @@ std::string Add::checkIfValid() {
 	if ((_hasEndDate) && (_d > _e)) {
 		return "Invalid add command: Description should be given before end date/time";
 	}
-	if (_d > _l) {
+	if ((_hasLocation) && (_d > _l)) {
 		return "Invalid add command: Description should be given before location";
 	}
 	if ((_hasStartDate) && (_hasEndDate) && (_s > _e)) {
 		return "Invalid add command: Start date/time should be given before end date/time";
 	}
-	if ((_hasStartDate) && (_s > _l)) {
+	if ((_hasStartDate) && (_hasLocation) && (_s > _l)) {
 		return "Invalid add command: Start date/time (" + typeConversions::intToString(_s) + ") should be given before location (" + typeConversions::intToString(_l) + ")";
 	}
-	if ((_hasEndDate) && (_e > _l)) {
+	if ((_hasEndDate) && (_hasLocation) && (_e > _l)) {
 		return "Invalid add command: End date/time should be given before location";
 	}
 
@@ -154,14 +154,16 @@ void Add::getFourParameters() {
 		_endDate = _argument.substr(position, length);
 	}
 	
-	if (_usesIn) {
-		position = _l + 4;
+	if (_hasLocation) {
+		if (_usesIn) {
+			position = _l + 4;
+		}
+		else {
+			position = _l + 3;
+		}
+		length = _argument.length() - position;
+		_location = _argument.substr(position, length);
 	}
-	else {
-		position = _l + 3;
-	}
-	length = _argument.length() - position;
-	_location = _argument.substr(position, length);
 }
 
 std::string Add::execute(std::string argument) {
@@ -192,6 +194,7 @@ std::string Add::execute(std::string argument) {
 	_usesIn = false; // "from", which is 6
 	_hasStartDate = true;
 	_hasEndDate = true;
+	_hasLocation = true;
 
 	_description = "";
 	_startDate = "";
