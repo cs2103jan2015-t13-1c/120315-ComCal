@@ -139,9 +139,6 @@ struct tm* ComCalManager::getTimeDetails(){
 }
 
 void ComCalManager::populateSideBar() {
-
-	_sideBarTitle = ALL_TODO_TITLE;
-
 	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 
 	_sideBarView->clear();

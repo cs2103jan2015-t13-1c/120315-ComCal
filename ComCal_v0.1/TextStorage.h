@@ -47,11 +47,16 @@ public:
 	void addTask(Task* newTask);
 	void addTaskAtSpecificPosition(Task* newTask, int position);
 	bool deleteTask(int index);
+
 	void displayAllTasks();
-	void displayToDoTasks();
+	void displayTodoTasks();
+	void displayTodoTasks(Date*);
 	void displayDoneTasks();
 	void displayMonthTasks(int month); //1 = January, 2 = February, etc.
+	void displayMonthTasks(int year, int month);
 	void displayDatedTasks(const Date &date);
+	void displayWeekTasks(std::vector<Date*>);
+	void displayDeadlinedTasks();
 
 	bool saveTasks(std::string fileName);
 	bool loadTasks(std::string fileName);

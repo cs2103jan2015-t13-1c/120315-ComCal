@@ -26,10 +26,12 @@ static const std::string DATE_SUNDAY = "Sunday";
 static const std::string DATE_WEEK = "week";
 static const std::string DATE_LAST = "last";
 static const std::string DATE_NEXT = "next";
+static const std::string WEEK = "week";
 
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
 static const std::string INPUT_DONE = "done";
+static const std::string DEADLINED_TASK = "deadline";
 
 //Attribute keywords constant string and index int declarations:
 static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;
@@ -114,12 +116,14 @@ static const std::string ALL_TODO_TITLE = "All Todo Tasks";
 static const std::string ALL_DONE_TITLE = "All Done Tasks";
 static const std::string SEARCH_RESULTS_TITLE = "Search Results";
 static const std::string TODAY_TASKS_TITLE = "Today's tasks";
+static const std::string ALL_TASKS_WITH_DEADLINE_TITLE = "Deadlined tasks\n";
 
 //Feedbacks
 static const std::string ALL_TASKS_FEEDBACK = "All tasks shown in sideBar";
 static const std::string ALL_TODO_FEEDBACK = "All todo tasks shown in sideBar";
 static const std::string ALL_DONE_FEEDBACK = "All done tasks shown in sideBar";
 static const std::string SHOW_TODAY_FEEDBACK = "All tasks today shown in sideBar";
+static const std::string ALL_DEADLINED_FEEDBACK = "All tasks with deadlines in sideBar";
 
 //Input error messages here
 static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
@@ -128,3 +132,4 @@ static const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask v
 static const std::string INVALID_COMMAND = "This is not a valid command\n";
 static const std::string INVALID_MONTH_INPUT = "Invalid show month input";
 static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";
+static const std::string INVALID_DATE_INPUT = "Invalid date input. Proper format: 'dd/mm/yy' , 'today', 'yesterday' , 'tomorrow' , 'monday' , tuesday' etc.";

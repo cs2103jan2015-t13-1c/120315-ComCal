@@ -67,9 +67,10 @@ void TextStorage::displayAllTasks() {
 	}
 }
 
-void TextStorage::displayToDoTasks() {
+void TextStorage::displayTodoTasks() {
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
+
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 		if (!tempTask->getIsDone()) {
@@ -81,9 +82,14 @@ void TextStorage::displayToDoTasks() {
 	}
 }
 
+void TextStorage::displayTodoTasks(Date* date) {
+
+}
+
 void TextStorage::displayDoneTasks() {
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
+
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 		if (tempTask->getIsDone()) {
@@ -99,9 +105,68 @@ void TextStorage::displayDoneTasks() {
 void TextStorage::displayMonthTasks(int month) {
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
+
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
-		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->getMonth() == month)) {
+		if (tempTask->hasStartDate()) {
+			if (tempTask->getStartDate()->getMonth() == month) {
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+		else {
+			if (tempTask->hasEndDate()) {
+				if (tempTask->getStartDate()->getMonth() == month) {
+					tempTask->display();
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+		}
+	}
+}
+
+void TextStorage::displayMonthTasks(int year, int month) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+
+		if (tempTask->hasStartDate()) {
+			if ((tempTask->getStartDate()->getMonth() == month) && (tempTask->getStartDate()->getYear()+1900 == year)) {
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+		else {
+			if (tempTask->hasEndDate()) {
+				if ((tempTask->getEndDate()->getMonth() == month) && (tempTask->getEndDate()->getYear()+1900 == year)) {
+					tempTask->display();
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+	}
+}
+
+void TextStorage::displayDatedTasks(const Date &date) {
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
 			tempTask->display();
 		}
 		else {
@@ -110,12 +175,45 @@ void TextStorage::displayMonthTasks(int month) {
 	}
 }
 
-void TextStorage::displayDatedTasks(const Date &date) {
-	unsigned int size = _todoTasks->size();
-	Task* tempTask;
-	for (unsigned int i = 0; i < size; i++) {
-		tempTask = _todoTasks->at(i);
-		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
+void TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
+	unsigned int todoSize = _todoTasks->size();
+	unsigned int weekSize = weekDate.size();
+
+	//loops through todo task
+	for (int i = 0; i < todoSize; i++) {
+
+		//loops through weekdate to see if the task at i corresponds to any of the dates in weekdate
+		for (int j = 0; j < weekSize; j++) {
+
+			if (_todoTasks->at(i)->hasStartDate()) {
+				if (_todoTasks->at(i)->getStartDate()->getDay() == weekDate[j]->getDay() && _todoTasks->at(i)->getStartDate()->getMonth() == weekDate[j]->getMonth() && _todoTasks->at(i)->getStartDate()->getYear() == weekDate[j]->getYear()) {
+					_todoTasks->at(i)->display();
+					break;
+				}
+				else {
+					_todoTasks->at(i)->hide();
+				}
+			}
+			else if (_todoTasks->at(j)->hasEndDate()) {
+				if (_todoTasks->at(i)->getEndDate() == weekDate[j]) {
+					_todoTasks->at(i)->display();
+					break;
+				}
+				else {
+					_todoTasks->at(i)->hide();
+				}
+
+			}
+		}
+	}
+}
+
+void TextStorage::displayDeadlinedTasks() {
+	unsigned int todoSize = _todoTasks->size();
+
+	for (int i = 0; i < todoSize; i++) {
+		Task* tempTask = _todoTasks->at(i);
+		if (tempTask->hasEndDate()) {
 			tempTask->display();
 		}
 		else {

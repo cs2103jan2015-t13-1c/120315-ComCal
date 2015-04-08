@@ -200,7 +200,7 @@ bool Date::setDate(std::string date) {
 			if (slash2 == std::string::npos) {
 				return false;
 			}
-			if (date.size() != 9) {
+			if (date.size() != 10) {
 				return false;
 			}
 			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {

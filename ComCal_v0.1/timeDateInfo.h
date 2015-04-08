@@ -1,11 +1,6 @@
-//Hamzah will handle this whole part
-
 #pragma once
 
-#include "keywords.h"
-#include "ErrorLog.h"
-#include "typeConversions.h"
-
+#include <vector>
 #include <time.h>
 
 //DD, MM, YY length constant int declarations:
@@ -27,19 +22,21 @@ const char SEPARATORS[SIZE_SEPARATORSARRAY] = { '/' };
 
 const static std::string DAYSINPUT[14] = { "sunday", "sun", "monday", "mon", "tuesday", "tues", "wednesday", "wed", "thursday", "thurs", "friday", "fri", "saturday", "sat" };
 
+#include "Date.h"
+
 namespace timeDateInfo {
 
 	//checks if the mday, month and year number is valid
 	//Argument: string in format of "DD", "MM", "YYYY"
-	bool isMdayValid(std::string,std::string,std::string);	//Assumes month and year string inputs are valid.
+	bool isMdayValid(std::string, std::string, std::string);	//Assumes month and year string inputs are valid.
 	bool isMonthValid(std::string);
 	bool isYearValid(std::string);
 
 	//used to check whether time is within 0000 - 2359
 	bool isTimeValid(std::string);
 	bool isDayValid(std::string, int&);
-	bool isClashing(std::string);
 	bool isLeapYear(int);
+	bool isStringANum(std::string);
 
 	std::string getMonthStr(int);
 	std::string getLowerMonthStr(int);
@@ -55,14 +52,15 @@ namespace timeDateInfo {
 	//Returns: Number of days in the month
 	int getDaysInMonth(int, int);
 
-	//3 overloaded functions setStructTm
+	//4 overloaded functions setStructTm
+	//Arguments: 1=year, 2=month, 3=day
+	struct tm* setStructTm(int year, int month, int day);
 	//Arguments: 1=year, 2=month
-	tm* setStructTm(int, int);
+	struct tm* setStructTm(int year, int month);
 	//Arguments: month
-	struct tm* setStructTm(int);
+	struct tm* setStructTm(int month);
 	//Default time at the moment of using the application
 	struct tm* setStructTm();
 
 	struct tm* setDayStructTm(int);
 };
-

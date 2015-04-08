@@ -1,4 +1,5 @@
 #include "timeDateInfo.h"
+#include <time.h>
 
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
@@ -9,7 +10,7 @@ bool timeDateInfo::isMdayValid(std::string mdayInput, std::string monthInput, st
 		return false;
 	}
 
-	int numDaysInMonth = timeDateInfo::getDaysInMonth(typeConversions::stringToInt(monthInput) - 1, typeConversions::stringToInt(yearInput)-1900);
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(typeConversions::stringToInt(monthInput) - 1, typeConversions::stringToInt(yearInput) - 1900);
 
 	if (typeConversions::stringToInt(mdayInput) < 1 || typeConversions::stringToInt(mdayInput) > numDaysInMonth) {
 		return false;
@@ -69,13 +70,11 @@ bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
 	return isFound;
 }
 
-bool timeDateInfo::isClashing(std::string) {
-	return true;
-}
+bool timeDateInfo::isLeapYear(int year) {
 
-bool timeDateInfo::isLeapYear(int year)
-{
-	year += 1900;
+	if (year < 1900) {
+		year += 1900;
+	}
 
 	bool isLeap = false;
 
@@ -99,14 +98,25 @@ bool timeDateInfo::isLeapYear(int year)
 	return isLeap;
 }
 
+
+bool timeDateInfo::isStringANum(std::string str) {
+
+	std::string::iterator iter = str.begin();
+	while (iter != str.end() && isdigit(*iter)) {
+		++iter;
+	}
+
+	return !str.empty() && iter == str.end();
+}
+
 std::string timeDateInfo::getDayStr(int iter) {
-	const static std::string DAYS[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	const static std::string DAYS[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
 	return DAYS[iter];
 }
 
 std::string timeDateInfo::getLowerDayStr(int iter) {
-	const static std::string DAYS[] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
+	const static std::string DAYS[] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" };
 
 	return DAYS[iter];
 }
@@ -164,9 +174,22 @@ int timeDateInfo::getDaysInMonth(int iter, int year) {
 	return daysInMonth[iter];
 }
 
+
+struct tm* timeDateInfo::setStructTm(int year, int month, int day) {
+	struct tm* timeinfo = setStructTm(year, month);
+	timeinfo->tm_mday = day;
+	return timeinfo;
+}
+
 struct tm* timeDateInfo::setStructTm(int year, int month) {
 	struct tm* timeinfo = setStructTm(month);
-	timeinfo->tm_year = year - 1900;
+	if (year >= 1900) {
+		timeinfo->tm_year = year - 1900;
+	}
+	else {
+		timeinfo->tm_year = year;
+	}
+	
 	return timeinfo;
 }
 

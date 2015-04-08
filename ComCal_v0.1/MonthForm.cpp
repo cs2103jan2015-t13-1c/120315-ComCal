@@ -28,7 +28,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	}
 
 	ComCalManager::getInstance()->initialise(argc, charFileNames);
-	
+	TextStorage::getInstance()->displayMonthTasks(ComCalManager::getInstance()->getTimeDetails()->tm_year+1900,ComCalManager::getInstance()->getTimeDetails()->tm_mon + 1);
 	_ctrlHeld = false;
 
 	defaultView(nullptr, nullptr);
@@ -180,6 +180,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 	int monthRef = newtime->tm_mon + 1;
+	int year = newtime->tm_year;
 	std::string taskStr[NUM_BLOCKS_IN_CALENDAR];
 	System::Collections::Generic::List<System::String^> taskStrList;
 
@@ -195,8 +196,14 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 			//to loop through todoVec
 			for (int j = 0; j < todoSize; j++) {
 				Task* tempTask = TextStorage::getInstance()->getTask(j);
-				if ((tempTask->hasStartDate()) && (System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth())) {
+
+				if ((tempTask->hasStartDate()) && (System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
 					taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+				}
+				else {
+					if ((tempTask->hasEndDate()) && (System::Int32::Parse(dateList[i]->Text) == tempTask->getEndDate()->getDay()) && (monthRef == tempTask->getEndDate()->getMonth()) && (year == tempTask->getEndDate()->getYear())) {
+						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+					}
 				}
 			}
 
