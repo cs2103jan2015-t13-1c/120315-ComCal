@@ -6,15 +6,18 @@
 
 #include "Exceptions.h"
 #include "ErrorLog.h"
+#include "typeConversions.h"
+#include "keywords.h"
+#include "timeDateInfo.h"
 
 #include <string>
 
 class Date {
 private:
-	int _day;
-	int _month;
-	int _year;
-	int _time; // In hhmm 24h time notation
+	int _day;	// Day of month
+	int _month;	// Month of year, i.e. 1: Jan, 2: Feb,...
+	int _year;	// Number of years since 1900
+	int _time;	// In hhmm 24h time notation
 public:
 	Date(int day, int month, int year, int time);
 	Date(); // For this constructor, use setDate() after creating object,
@@ -29,10 +32,13 @@ public:
 	int getMonth();
 	int getYear();
 	int getTime();
+	time_t getTimeT();
 
 	bool operator==(const Date &date); // Only makes sure same date; does not check time
 
 	// Setter methods
 	bool setDate(std::string date);
 	bool setTime(int);
+	void setEndOfWeek();
+	void setEndOfDay();
 };

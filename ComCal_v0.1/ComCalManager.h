@@ -1,6 +1,17 @@
 #pragma once
 
 #include "Command.h"
+#include "Add.h"
+#include "Delete.h"
+#include "Edit.h"
+#include "Load.h"
+#include "Save.h"
+#include "Search.h"
+#include "Show.h"
+#include "timeDateInfo.h"
+#include "keywords.h"
+#include "TextStorage.h"
+#include "typeConversions.h"
 
 #include <string>
 #include <vector>

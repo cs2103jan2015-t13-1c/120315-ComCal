@@ -160,7 +160,7 @@ void ComCal_v01::MonthForm::updateCalendar() {
 int MonthForm::searchTaskMonth(struct tm* newtime) {
 	int iter = -1;
 	int desiredMnth = newtime->tm_mon + 1;
-	int desiredYr = newtime->tm_year + 1900;
+	int desiredYr = newtime->tm_year;
 
 	Task* tempTask;
 	while (iter++) {

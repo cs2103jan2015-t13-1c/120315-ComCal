@@ -2,7 +2,10 @@
 
 #pragma once
 
-#include <string>
+#include "keywords.h"
+#include "ErrorLog.h"
+#include "typeConversions.h"
+
 #include <time.h>
 
 //DD, MM, YY length constant int declarations:
@@ -22,14 +25,18 @@ const std::string leadingZero = "0";
 const int SIZE_SEPARATORSARRAY = 1;
 const char SEPARATORS[SIZE_SEPARATORSARRAY] = { '/' };
 
+const static std::string DAYSINPUT[14] = { "sunday", "sun", "monday", "mon", "tuesday", "tues", "wednesday", "wed", "thursday", "thurs", "friday", "fri", "saturday", "sat" };
+
 namespace timeDateInfo {
 
-	//checks if the date is valid
-	//Argument: string in format DDMMYY
-	bool isDateValid(std::string);
+	//checks if the mday, month and year number is valid
+	//Argument: string in format of "DD", "MM", "YYYY"
+	bool isMdayValid(std::string,std::string,std::string);	//Assumes month and year string inputs are valid.
+	bool isMonthValid(std::string);
+	bool isYearValid(std::string);
 
 	//used to check whether time is within 0000 - 2359
-	bool isTimeValid(int);
+	bool isTimeValid(std::string);
 	bool isDayValid(std::string, int&);
 	bool isClashing(std::string);
 	bool isLeapYear(int);

@@ -12,7 +12,7 @@
 
 namespace support {
 	/*************************************************************************************************************
-	Name: prepareTaskDisplayAttributeBreakdown
+	Name: extractParamsForKeywords
 	Type: support namespace method
 	Purpose: Processes input string with given vector of keywords and extracts parameters for each keyword,
 	Returns the parameters extracted as a vector of vector of strings, with the parameters extracted for each 
@@ -47,4 +47,12 @@ namespace support {
 	Location: ...
 	**************************************************************************************************************/
 	std::string prepareTaskDisplayAttributeBreakdown(Task*);
+
+	/*************************************************************************************************************
+	Name: isTaskWithinTimeRange
+	Type: support namespace method
+	Purpose: Checks and returns true if input Task pointer is within specified start and end Date objects time 
+	range, returns false otherwise.
+	**************************************************************************************************************/
+	bool isDateWithinTimeRange(Date*, Date*, Date*);
 }

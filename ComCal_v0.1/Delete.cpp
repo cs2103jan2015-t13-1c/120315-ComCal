@@ -1,47 +1,88 @@
 // Delete.cpp
 // Implementation of functions in the Delete class
-//@author A0119754X
+//@author A0085731A
 
 #include "Delete.h"
-#include "typeConversions.h"
-#include "TextStorage.h"
 
 // TODO Implement input formats 3
 
 Delete::Delete() : Command() {
+	_deletedCount = 0;
 }
 
 Delete::~Delete() {
 }
 
-void Delete::deleteMultipleTasks(std::string argument) {
-	if (argument.size() <= 0) {
-		return;
+bool Delete::checkDateBefore(Date* dateToBeChecked, Date* dateToCheckWith) {
+	if (dateToBeChecked->getTimeT() < dateToCheckWith->getTimeT()) {
+		return true;
 	}
-
-	int space = argument.find(" ");
-	std::string firstNumber = argument;
-	std::string otherNumbers = "";
-
-	if ((space != std::string::npos) && (space != -1)) {
-		firstNumber = firstNumber.substr(0, space);
+	else {
+		return false;
 	}
-	if ((space != std::string::npos) && (space != -1)) {
-		otherNumbers = argument.substr(space + 1, argument.length() - space - 1);
-	}
+}
 
-	if (typeConversions::isNumber(firstNumber)) {
-		int number = typeConversions::stringToInt(firstNumber);
-		if (TextStorage::getInstance()->getTask(number - deletedCount - 1) != NULL) {
-			_deletedTasks.push_back(TextStorage::getInstance()->getTask(number - deletedCount - 1));
+void Delete::process(std::string argument) {
+	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
+	
+	bool isProcessed = false;
+	for (int i = 0; i < DELETEBEFOREKEYWORDSARRAYSIZE; i++) {
+		int deleteBeforeKeywordPos = argument.find(DELETEBEFOREKEYWORDSARRAY[i]);
+		if (deleteBeforeKeywordPos!=std::string::npos) {
+			if (isProcessed) {
+				throw exceptionInputInvalidDeleteParams;
+			}
+			isProcessed = true;
+			if (argument.find(DELETEBEFOREKEYWORDSARRAY[i]) != 0) {
+				throw exceptionInputInvalidDeleteParams;
+			}
+			Date* date = new Date;
+			if (!date->setDate(argument.substr(DELETEBEFOREKEYWORDSARRAY[i].size()))) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			for (int j = 0; j < numOfTasks; j++) {
+				Task* task = TextStorage::getInstance()->getTask(j);
+				if (task->hasStartDate() && task->hasEndDate() || task->hasEndDate()) {
+					if (checkDateBefore(task->getEndDate(),date)) {
+						_deletedTasksIndexes.push_back(j);
+						_deletedTasks.push_back(task);
+					}
+				}
+				else if (task->hasStartDate()) {
+					if (checkDateBefore(task->getStartDate(), date)) {
+						_deletedTasksIndexes.push_back(j);
+						_deletedTasks.push_back(task);
+					}
+				}
+			}
 		}
-		if (TextStorage::getInstance()->deleteTask(number - deletedCount)) {
-			deletedTaskIndexes.push_back(number);
-			deletedCount++;
-		}
 	}
 
-	deleteMultipleTasks(otherNumbers);
+	if (!isProcessed) {
+		int nextSpacePos = argument.find(" ");
+		while (nextSpacePos != std::string::npos) {
+			std::string taskIndexString = argument.substr(0, nextSpacePos);
+			if (!typeConversions::isNumber(taskIndexString)) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			int taskIndex = typeConversions::stringToInt(taskIndexString);
+			if (taskIndex<1 || taskIndex > numOfTasks) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			_deletedTasksIndexes.push_back(typeConversions::stringToInt(taskIndexString));
+			argument = argument.substr(nextSpacePos+1);
+			nextSpacePos = argument.find(" ");
+		}
+
+		if (!typeConversions::isNumber(argument)) {
+			throw exceptionInputInvalidTaskIndex;
+		}
+		_deletedTasksIndexes.push_back(typeConversions::stringToInt(argument));
+	}
+
+	std::sort(_deletedTasksIndexes.begin(), _deletedTasksIndexes.end());
+	
+	return;
 }
 
 std::string Delete::execute(std::string argument) {
@@ -54,34 +95,41 @@ std::string Delete::execute(std::string argument) {
 	//    - delete before 22/12/14
 	//    - delete .b 22/12/14
 
-	deletedCount = 0;
+	std::string feedback = "Deleted task(s): ";
 
-	deleteMultipleTasks(argument);
-	std::string returnString = "";
-	unsigned int size = deletedTaskIndexes.size();
+	process(argument);
 
-	if (size <= 0) {
-		return "Invalid delete command: No tasks deleted";
+	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
+		Task* deletedTask = TextStorage::getInstance()->getTask(_deletedTasksIndexes[i] - _deletedCount);
+		_deletedTasks.push_back(deletedTask);
+		TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount);
+		_deletedCount++;
+		feedback += typeConversions::intToString(_deletedTasksIndexes[i]);
+		if (i < _deletedTasksIndexes.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
 	}
 
-	for (unsigned int i = 0; i < size; i++) {
-		returnString += typeConversions::intToString(deletedTaskIndexes[i]) + " ";
-	}
-
-	return ("Task(s) " + returnString + "deleted.");
+	return feedback;
 }
 
 //@author A0085731A
 std::string Delete::undo() {
-	deletedCount = 0;
-	
-	std::string feedback = "Added task(s) ";
+	_deletedCount = 0;
+
+	std::string feedback = "Undo delete: Added task(s): ";
 
 	for (unsigned int i = 0; i < _deletedTasks.size(); i++) {
-		TextStorage::getInstance()->addTaskAtSpecificPosition(_deletedTasks[i], deletedTaskIndexes[i]);
-		feedback += "(" + typeConversions::intToString(deletedTaskIndexes[i]) + ")";
+		TextStorage::getInstance()->addTaskAtSpecificPosition(_deletedTasks[i], _deletedTasksIndexes[i]);
+		feedback += "(" + typeConversions::intToString(_deletedTasksIndexes[i]) + ")";
 		if (i < _deletedTasks.size() - 1) {
 			feedback += ", ";
+		}
+		else {
+			feedback += ".";
 		}
 	}
 
@@ -89,18 +137,19 @@ std::string Delete::undo() {
 }
 
 std::string Delete::redo() {
-	std::string feedback = "Task(s) ";
+	std::string feedback = "Redo delete: Deleted task(s): ";
 	
-	for (unsigned int i = 0; i < deletedTaskIndexes.size(); i++) {
-		TextStorage::getInstance()->deleteTask(deletedTaskIndexes[i] - deletedCount);
-		deletedCount++;
-		feedback += "(" + typeConversions::intToString(deletedTaskIndexes[i]) + ")";
-		if (i < deletedTaskIndexes.size() - 1) {
+	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
+		TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount);
+		_deletedCount++;
+		feedback += "(" + typeConversions::intToString(_deletedTasksIndexes[i]) + ")";
+		if (i < _deletedTasksIndexes.size() - 1) {
 			feedback += ", ";
 		}
+		else {
+			feedback += ".";
+		}
 	}
-
-	feedback += " deleted.";
 
 	return feedback;
 }

@@ -23,6 +23,7 @@ static const std::string DATE_THURSDAY = "Thursday";
 static const std::string DATE_FRIDAY = "Friday";
 static const std::string DATE_SATURDAY = "Saturday";
 static const std::string DATE_SUNDAY = "Sunday";
+static const std::string DATE_WEEK = "week";
 static const std::string DATE_LAST = "last";
 static const std::string DATE_NEXT = "next";
 
@@ -38,27 +39,47 @@ static const int INDEX_STARTDATETIME = 1;
 static const int INDEX_ENDDATETIME = 2;
 static const int INDEX_LOCATION = 3;
 
+//Delete before certain date/time command keywords:
+static const int DELETEBEFOREKEYWORDSARRAYSIZE = 2;
+static const std::string DELETEBEFOREKEYWORDSARRAY[DELETEBEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };
+
 //Integer string:
 static const std::string INTS = "0123456789";
 
 //Attribute constant string declarations:
-static const std::string DESCRIPTION = "Description";
-static const std::string STARTDATETIME = "Start date-time";
-static const std::string STARTDATE = "Start date";
-static const std::string STARTTIME = "Start time";
-static const std::string ENDDATETIME = "End date-time";
-static const std::string ENDDATE = "End date";
-static const std::string ENDTIME = "End time";
-static const std::string DEADLINE = "Deadline";
-static const std::string DEADLINEDATE = "Deadline date";
-static const std::string DEADLINETIME = "Deadline time";
-static const std::string LOCATION = "Location";
+static const std::string DESCRIPTION = "[D]";
+static const std::string STARTDATETIME = "[S]";
+static const std::string STARTDATE = "[S-D]";
+static const std::string STARTTIME = "[S-T]";
+static const std::string ENDDATETIME = "[E]";
+static const std::string ENDDATE = "[E-D]";
+static const std::string ENDTIME = "[E-T]";
+static const std::string DEADLINE = "[DL]";
+static const std::string DEADLINEDATE = "[DL-D]";
+static const std::string DEADLINETIME = "[DL-T]";
+static const std::string LOCATION = "[L]";
 
-//Task type constant int code declarations:
+//Search-related constant declarations:
+static const int SEARCHCONDITIONKEYWORDSARRAYSIZE = 3;
+static const std::string SEARCHCONDITIONKEYWORDSARRAY[SEARCHCONDITIONKEYWORDSARRAYSIZE] = { " and ", " or ", " not " };
+static const int INDEX_AND = 0;
+static const int INDEX_OR = 1;
+static const int INDEX_NOT = 2;
+static const int INDEX_WILDCARD = -1;
+static const std::string SEARCHDATETIMERANGESTART = "from ";
+static const std::string SEARCHDATETIMERANGEEND = " to ";
+static const std::string AND = "AND";
+static const std::string OR = "OR";
+static const std::string NOT = "EXCLUDING";
+
+//Task type constant declarations:
 static const int TASKTYPECODE_FLOATING = 1;
 static const int TASKTYPECODE_DEADLINE = 2;
 static const int TASKTYPECODE_PARTIALTIMED = 3;
 static const int TASKTYPECODE_TIMED = 4;
+static const std::string TASKTYPE_FLOATING = "FLOATING";
+static const std::string TASKTYPE_PARTIALTIMED = "PARTIAL-TIMED";
+static const std::string TASKTYPE_TIMED = "TIMED";
 
 //Task type constant string declarations:
 static const std::string TASKTYPE_EVENT = "EVENT";

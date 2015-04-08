@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Command.h"
+#include "TextStorage.h"
 
 class Save : public Command {
 public:

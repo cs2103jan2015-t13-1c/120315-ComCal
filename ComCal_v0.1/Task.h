@@ -4,8 +4,9 @@
 
 #pragma once
 
-#include <string>
 #include "Date.h"
+#include "keywords.h"
+#include "typeConversions.h"
 
 class Task {
 private:

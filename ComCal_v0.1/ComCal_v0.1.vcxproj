@@ -92,6 +92,7 @@
     <ClCompile Include="MonthForm.cpp" />
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="Search.cpp" />
+    <ClCompile Include="SearchCondition.cpp" />
     <ClCompile Include="Show.cpp" />
     <ClCompile Include="support.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="rapidxml_utils.hpp" />
     <ClInclude Include="Save.h" />
     <ClInclude Include="Search.h" />
+    <ClInclude Include="SearchCondition.h" />
     <ClInclude Include="Show.h" />
     <ClInclude Include="support.h" />
     <ClInclude Include="Task.h" />

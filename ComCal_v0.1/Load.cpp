@@ -3,7 +3,6 @@
 //@author A0119754X
 
 #include "Load.h"
-#include "TextStorage.h"
 
 Load::Load() : Command() {
 }

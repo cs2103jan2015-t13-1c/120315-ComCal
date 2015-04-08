@@ -4,8 +4,13 @@
 
 #pragma once
 
-#include <string>
+#include "Task.h"
+#include "TextStorage.h"
+#include "typeConversions.h"
+#include "ComCalManager.h"
 #include "Command.h"
+
+#include <string>
 
 class Add : public Command {
 private:
@@ -16,6 +21,7 @@ private:
 	int _e;
 	int _l;
 	int _taskIndex;
+	Task* _addedTask;
 
 	bool _isValid;
 	bool _usesFrom;

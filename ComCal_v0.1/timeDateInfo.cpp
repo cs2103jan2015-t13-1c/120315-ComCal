@@ -1,27 +1,41 @@
 #include "timeDateInfo.h"
-#include "keywords.h"
-#include "ErrorLog.h"
-#include "typeConversions.h"
 
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
 
 //@author A0085731A
-; bool timeDateInfo::isDateValid(std::string dateInput) {
-	if (dateInput.size() != 6) {
+bool timeDateInfo::isMdayValid(std::string mdayInput, std::string monthInput, std::string yearInput) {
+	if (!typeConversions::isNumber(mdayInput)) {
 		return false;
 	}
 
-	int month = typeConversions::stringToInt(dateInput.substr(2, 2));
-	int year = typeConversions::stringToInt(dateInput.substr(4, 2));
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(typeConversions::stringToInt(monthInput) - 1, typeConversions::stringToInt(yearInput)-1900);
 
-	if ((month < 1 || month>12) || (year < 0 || year > 99)) {
+	if (typeConversions::stringToInt(mdayInput) < 1 || typeConversions::stringToInt(mdayInput) > numDaysInMonth) {
 		return false;
 	}
 
-	int numDaysInMonth = timeDateInfo::getDaysInMonth(month - 1, year + 100);
+	return true;
+}
 
-	if (typeConversions::stringToInt(dateInput.substr(0, 2)) > numDaysInMonth) {
+bool timeDateInfo::isMonthValid(std::string monthInput) {
+	if (!typeConversions::isNumber(monthInput)) {
+		return false;
+	}
+
+	if (typeConversions::stringToInt(monthInput) < 1 || typeConversions::stringToInt(monthInput) > 12) {
+		return false;
+	}
+
+	return true;
+}
+
+bool timeDateInfo::isYearValid(std::string yearInput) {
+	if (!typeConversions::isNumber(yearInput)) {
+		return false;
+	}
+
+	if (typeConversions::stringToInt(yearInput) < 1900) {
 		return false;
 	}
 
@@ -29,8 +43,12 @@
 }
 
 //@author A0085731A
-bool timeDateInfo::isTimeValid(int timeInput) {
-	if (timeInput < 0 || timeInput > 2359) {
+bool timeDateInfo::isTimeValid(std::string timeInput) {
+	if (!typeConversions::isNumber(timeInput)) {
+		return false;
+	}
+
+	if (typeConversions::stringToInt(timeInput) < 0 || typeConversions::stringToInt(timeInput) > 2359) {
 		return false;
 	}
 
@@ -41,8 +59,6 @@ bool timeDateInfo::isTimeValid(int timeInput) {
 bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
 	bool isFound = false;
 
-	const static std::string DAYSINPUT[14] = { "sunday", "sun", "monday", "mon", "tuesday", "tues", "wednesday", "wed", "thursday", "thurs", "friday", "fri", "saturday", "sat" };
-
 	for (int i = 0; i < 14; i++) {
 		if (dayInput == DAYSINPUT[i]) {
 			index = i;
@@ -50,7 +66,7 @@ bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
 		}
 	}
 
-	return true;
+	return isFound;
 }
 
 bool timeDateInfo::isClashing(std::string) {
@@ -59,6 +75,8 @@ bool timeDateInfo::isClashing(std::string) {
 
 bool timeDateInfo::isLeapYear(int year)
 {
+	year += 1900;
+
 	bool isLeap = false;
 
 	if (year % 4 != 0) {
@@ -139,7 +157,7 @@ std::string timeDateInfo::getShortLowerMonthStr(int iter) {
 int timeDateInfo::getDaysInMonth(int iter, int year) {
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-	if ((iter == 1) && timeDateInfo::isLeapYear(year + 1900)) {
+	if ((iter == 1) && timeDateInfo::isLeapYear(year)) {
 		daysInMonth[1] = 29;
 	}
 

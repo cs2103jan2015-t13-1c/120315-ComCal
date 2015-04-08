@@ -2,8 +2,6 @@
 // Implementation of functions in the Edit class
 //@author A0085731A
 
-#include <string>
-#include <vector>
 #include "Edit.h"
 
 Edit::Edit() : Command() {
@@ -326,10 +324,10 @@ std::string Edit::prepareFeedback(){
 	}
 
 	if (editedType == originalType) {
-		feedback += "of " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):\n";
+		feedback += "of " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):";
 	}
 	else {
-		feedback += "of " + originalType + " to " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):\n";
+		feedback += "of " + originalType + " to " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "): ";
 	}
 
 	taskDisplay = support::prepareTaskDisplayAttributeBreakdown(_editedTask);

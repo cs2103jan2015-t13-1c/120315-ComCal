@@ -3,12 +3,6 @@
 //@author A0119754X
 
 #include "Show.h"
-#include "TextStorage.h"
-#include "ComCalManager.h"
-#include "timeDateInfo.h"
-#include "keywords.h"
-#include "typeConversions.h"
-#include "Date.h"
 
 #include <ctype.h>
 

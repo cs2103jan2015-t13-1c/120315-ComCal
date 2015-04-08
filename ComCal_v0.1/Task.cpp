@@ -3,8 +3,6 @@
 //@author A0119754X
 
 #include "Task.h"
-#include "keywords.h"
-#include "typeConversions.h"
 
 Task::Task() {
 	_description = "";
@@ -132,24 +130,50 @@ int Task::getTaskTypeCode() {
 
 // Converts the Task object into a String to save into text file
 std::string Task::toString() {
-	std::string returnString =  _description + " " + _location + " ";
+	std::string returnString = "";
+	switch (_taskTypeCode) {
+	case TASKTYPECODE_FLOATING:
+		returnString += TASKTYPECODE_FLOATING;
+		break;
+	case TASKTYPECODE_DEADLINE:
+		returnString += TASKTYPE_DEADLINE;
+		break;
+	case TASKTYPECODE_PARTIALTIMED:
+		returnString += TASKTYPE_PARTIALTIMED;
+		break;
+	case TASKTYPECODE_TIMED:
+		returnString += TASKTYPE_TIMED;
+		break;
+	} 
+		
+	returnString += " task - " + DESCRIPTION + ": " + _description + "; ";
+
 	if (hasStartDate()) {
-		returnString += _startDate->toString() + " ";
+		returnString += STARTDATETIME + ": " + _startDate->toString() + "; ";
 	}
+
 	if (hasEndDate()) {
-		returnString += _endDate->toString();
+		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
 	}
+
+	returnString += LOCATION + ": " + _location;
+
 	return returnString;
 }
 
 // Converts Task object into a string for GUI
 std::string Task::toGUIString() {
-	std::string returnString = _description + " " + _location + " ";
+	std::string returnString = DESCRIPTION + ": " + _description + "; ";
+	
 	if (hasStartDate()) {
-		returnString += _startDate->toString() + " ";
+		returnString += STARTDATETIME + ": " + _startDate->toString() + "; ";
 	}
+
 	if (hasEndDate()) {
-		returnString += _endDate->toString();
+		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
 	}
+
+	returnString += LOCATION + ": " + _location;
+
 	return returnString;
 }

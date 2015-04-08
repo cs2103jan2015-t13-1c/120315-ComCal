@@ -172,7 +172,7 @@ bool TextStorage::saveTasks(std::string fileName)
 				detailsNode->append_node(dateNode);
 
 				dateNode = xmlDocument.allocate_node(node_element, "year");
-				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getYear()).c_str()));
+				dateNode->value(xmlDocument.allocate_string(typeConversions::intToString(tempDate->getYear()+1900).c_str()));
 				detailsNode->append_node(dateNode);
 
 				dateNode = xmlDocument.allocate_node(node_element, "time");
@@ -236,10 +236,10 @@ bool TextStorage::loadTasks(std::string fileName)
 				year = typeConversions::stringToInt(dateNode->first_node("year")->value());
 				time = typeConversions::stringToInt(dateNode->first_node("time")->value());
 				if (i == 0) {
-					startDate = new Date(day, month, year, time);
+					startDate = new Date(day, month, year-1900, time);
 				}
 				else {
-					endDate = new Date(day, month, year, time);
+					endDate = new Date(day, month, year-1900, time);
 				}
 			}
 		}

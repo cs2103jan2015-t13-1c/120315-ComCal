@@ -108,6 +108,9 @@
     <ClCompile Include="Command.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
+    <ClCompile Include="SearchCondition.cpp">
+      <Filter>ComCalTypes\ComCalTypesCPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Exceptions.h">
       <Filter>ComCalComponents\ComCalComponentsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchCondition.h">
+      <Filter>ComCalTypes\ComCalTypesHeader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -96,6 +96,14 @@ std::string support::getTaskType(int taskTypeCode) {
 }
 
 bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
+	if (startDate->getTimeT() > endDate->getTimeT()) {
+		return false;
+	}
+	else {
+		return true;
+	}
+	
+	/*
 	bool startEndTimeValidity = true;
 
 	if (startDate->getYear() > endDate->getYear()) {
@@ -109,32 +117,42 @@ bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
 	}
 
 	return startEndTimeValidity;
+	*/
 }
 
 std::string support::prepareTaskDisplayAttributeBreakdown(Task* task) {
 	std::string taskDisplay = "";
 
 	if (task->getDescription() != "") {
-		taskDisplay += DESCRIPTION + ":\t " + task->getDescription() + "\n";
+		taskDisplay += DESCRIPTION + ": " + task->getDescription() + "; ";
 	}
 
 	if (task->getStartDate() != NULL) {
-		taskDisplay += STARTDATETIME + ":\t" + task->getStartDate()->toString() + "\n";
+		taskDisplay += STARTDATETIME + ": " + task->getStartDate()->toString() + "; ";
 	}
 
 	if (task->getEndDate() != NULL) {
 		if (task->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
-			taskDisplay += DEADLINE + ":\t";
+			taskDisplay += DEADLINE + ": ";
 		}
 		else {
-			taskDisplay += ENDDATETIME + ":\t ";
+			taskDisplay += ENDDATETIME + ": ";
 		}	
-		taskDisplay += task->getEndDate()->toString() + "\n";
+		taskDisplay += task->getEndDate()->toString() + "; ";
 	}
 
 	if (task->getLocation() != "") {
-		taskDisplay += LOCATION + ":\t " + task->getLocation() + "\n";
+		taskDisplay += LOCATION + ": " + task->getLocation();
 	}
 
 	return taskDisplay;
+}
+
+bool support::isDateWithinTimeRange(Date* dateUnderExam, Date* timeRangeStart, Date* timeRangeEnd) {
+	if (dateUnderExam->getTimeT() < timeRangeStart->getTimeT() || dateUnderExam->getTimeT() > timeRangeEnd->getTimeT()) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }

@@ -7,10 +7,6 @@
 // TODO Make sure that end date > start date
 
 #include "Add.h"
-#include "Task.h"
-#include "TextStorage.h"
-#include "typeConversions.h"
-#include "ComCalManager.h"
 
 Add::Add() : Command() {
 }
@@ -24,6 +20,7 @@ bool Add::canFind(int index) {
 
 std::string Add::checkIfValid() {
 	// Check if argument is valid
+	
 	if (!canFind(_l)) {
 		return "Invalid add command: No location given";
 	}
@@ -231,9 +228,10 @@ std::string Add::execute(std::string argument) {
 	}
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
 	TextStorage::getInstance()->addTask(newTask);
+	Task* _addedTask = newTask;
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 
-	return ("Added " + newTask->toString());
+	return ("Added: " + newTask->toString());
 }
 
 //@author A0085731A
@@ -242,25 +240,18 @@ std::string Add::undo() {
 
 	TextStorage::getInstance()->deleteTask(_taskIndex);
 
-	feedback = "Task (" + typeConversions::intToString(_taskIndex) + ") deleted.";
+	feedback = "Undo add: Deleted Task (" + typeConversions::intToString(_taskIndex) + ").";
 
 	return feedback;
 }
 
 std::string Add::redo() {
-	Date* startDate = new Date;
-	startDate->setDate(_startDate);
-	Date* endDate = new Date;
-	endDate->setDate(_endDate);
-
-	Task* newTask = new Task(_description, _location, startDate, endDate);
-
 	if (_taskIndex >= TextStorage::getInstance()->getNumberOfTasks()) {
-		TextStorage::getInstance()->addTask(newTask);
+		TextStorage::getInstance()->addTask(_addedTask);
 	}
 	else {
-		TextStorage::getInstance()->addTaskAtSpecificPosition(newTask, _taskIndex);
+		TextStorage::getInstance()->addTaskAtSpecificPosition(_addedTask, _taskIndex);
 	}
 
-	return ("Added " + newTask->toString());
+	return ("Redo add: Added " + _addedTask->toString());
 }
