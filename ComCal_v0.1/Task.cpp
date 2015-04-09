@@ -158,7 +158,6 @@ std::string Task::toString() {
 		break;
 	} 
 		
-<<<<<<< HEAD
 	returnString += " task - " + DESCRIPTION + ": \"" + _description + "\"";
 
 	if (hasStartDate()) {
@@ -172,9 +171,8 @@ std::string Task::toString() {
 	if (_location != "") {
 		returnString += "; " + LOCATION + ": \"" + _location + "\"";
 	}
-=======
+
 	returnString += " task - " + toGUIString();
->>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 
 	return returnString;
 }
@@ -191,13 +189,11 @@ std::string Task::toGUIString() {
 		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
 	}
 
-<<<<<<< HEAD
 	if (_location != "") {
-		returnString += LOCATION + ": \"" + _location + "\"";
-=======
+	returnString += LOCATION + ": \"" + _location + "\"";
+	}
 	if (_location.size() > 0) {
 		returnString += LOCATION + ": " + _location;
->>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 	}
 
 	return returnString;

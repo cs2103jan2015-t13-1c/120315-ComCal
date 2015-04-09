@@ -262,12 +262,11 @@ bool Date::setDate(std::string date) {
 			if (slash2 == std::string::npos) {
 				return false;
 			}
-<<<<<<< HEAD
-=======
+
 			if (date.size() != 10) {
 				return false;
 			}
->>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
+
 			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {
 				_year = typeConversions::stringToInt(date.substr(slash2 + 1))-1900;
 				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, slash2-(slash1+1)))) {

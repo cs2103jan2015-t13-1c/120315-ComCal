@@ -232,11 +232,11 @@ std::string Add::execute(std::string argument) {
 			return "Invalid add command: Invalid end date and time format";
 		}
 	}
-<<<<<<< HEAD
+
 	
 	_addedTask = new Task(_description, _location, objStartDate, objEndDate);
 	TextStorage::getInstance()->addTask(_addedTask);
-=======
+
 	if ((_hasStartDate) && (_hasEndDate)) {
 		if (*objStartDate > *objEndDate) {
 			delete objStartDate;
@@ -247,7 +247,7 @@ std::string Add::execute(std::string argument) {
 	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
 	TextStorage::getInstance()->addTask(newTask);
 	_addedTask = newTask;
->>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
+
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 
 	return ("Added: " + _addedTask->toString());

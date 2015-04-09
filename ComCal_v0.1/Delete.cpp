@@ -71,29 +71,31 @@ void Delete::process(std::string argument) {
 				throw exceptionInputInvalidDeleteParams;
 			}
 			for (int i = 0; i < numOfTasks; i++) {
-				_deletedTasksIndexes.push_back(i);
+				_deletedTasksIndexes.push_back(i+1);
 			}
-		}
-		int nextSpacePos = argument.find(" ");
-		while (nextSpacePos != std::string::npos) {
-			std::string taskIndexString = argument.substr(0, nextSpacePos);
-			if (!typeConversions::isNumber(taskIndexString)) {
-				throw exceptionInputInvalidTaskIndex;
+		} 
+		else {
+			int nextSpacePos = argument.find(" ");
+			while (nextSpacePos != std::string::npos) {
+				std::string taskIndexString = argument.substr(0, nextSpacePos);
+				if (!typeConversions::isNumber(taskIndexString)) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				int taskIndex = typeConversions::stringToInt(taskIndexString);
+				if (taskIndex < 1 || taskIndex > numOfTasks) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				_deletedTasksIndexes.push_back(taskIndex);
+				argument = argument.substr(nextSpacePos + 1);
+				support::isSpacesOnly(argument);
+				nextSpacePos = argument.find(" ");
 			}
-			int taskIndex = typeConversions::stringToInt(taskIndexString);
-			if (taskIndex < 1 || taskIndex > numOfTasks) {
-				throw exceptionInputInvalidTaskIndex;
-			}
-			_deletedTasksIndexes.push_back(taskIndex);
-			argument = argument.substr(nextSpacePos+1);
-			support::isSpacesOnly(argument);
-			nextSpacePos = argument.find(" ");
-		}
 
-		if (!typeConversions::isNumber(argument)) {
-			throw exceptionInputInvalidTaskIndex;
+			if (!typeConversions::isNumber(argument)) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			_deletedTasksIndexes.push_back(typeConversions::stringToInt(argument));
 		}
-		_deletedTasksIndexes.push_back(typeConversions::stringToInt(argument));
 	}
 
 	std::sort(_deletedTasksIndexes.begin(), _deletedTasksIndexes.end());
