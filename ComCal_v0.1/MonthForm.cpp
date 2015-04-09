@@ -56,8 +56,6 @@ void MonthForm::guiUpdate() {
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	String^ feedBack;
 
-	feedBackBox->Text = nullptr;
-
 	if (e->KeyCode == Keys::Enter) {
 		if (userInputBox->Text == "exit" || userInputBox->Text == "close") {
 			Application::Exit();
