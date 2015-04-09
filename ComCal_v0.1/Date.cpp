@@ -371,9 +371,11 @@ bool Date::setDate(std::string date) {
 //@author A0119754X
 // If the date string has no date, then set it to be the same as the date in start date
 bool Date::setDate(std::string date, Date* startDate) {
-	_day = startDate->_day;
-	_month = startDate->_month;
-	_year = startDate->_year;
+	if (startDate != NULL) {
+		_day = startDate->_day;
+		_month = startDate->_month;
+		_year = startDate->_year;
+	}
 	if (!setDate(date)) {
 		return false;
 	}
