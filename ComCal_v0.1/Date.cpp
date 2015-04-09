@@ -263,10 +263,6 @@ bool Date::setDate(std::string date) {
 				return false;
 			}
 
-			if (date.size() != 10) {
-				return false;
-			}
-
 			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {
 				_year = typeConversions::stringToInt(date.substr(slash2 + 1))-1900;
 				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, slash2-(slash1+1)))) {
