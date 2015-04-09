@@ -61,13 +61,12 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			Application::Exit();
 		}
 		else{
-			feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));
-			//try {
-			//	
-			//}
-			//catch (std::exception& exception) {
-			//	feedBack = typeConversions::convertstrToStr(exception.what());
-			//}
+			try {
+				feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));	
+			}
+			catch (std::exception& exception) {
+				feedBack = typeConversions::convertstrToStr(exception.what());
+			}
 
 			guiUpdate();
 

@@ -71,6 +71,14 @@ time_t Date::getTimeT() {
 	return mktime(dateTimeInfo);
 }
 
+std::string Date::getTimeString() {
+	std::string str = typeConversions::intToString(_time);
+	while (str.size() < 4) {
+		str = "0" + str;
+	}
+	return str;
+}
+
 // Only makes sure same date; does not check time
 bool Date::operator==(const Date &date) {
 	if (_day != date._day) {

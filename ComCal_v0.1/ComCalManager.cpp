@@ -155,16 +155,16 @@ void ComCalManager::populateSideBar() {
 				startDate = tempTask->getStartDate();
 				if (tempTask->hasEndDate()) { // Has both start date and end date
 					endDate = tempTask->getEndDate();
-					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + typeConversions::intToString(startDate->getTime())
-											    + " to " + endDate->toGUIString() + " " + typeConversions::intToString(endDate->getTime()));
+					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + startDate->getTimeString()
+											    + " to " + endDate->toGUIString() + " " + endDate->getTimeString());
 				}
 				else { // Has only start date
-					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + typeConversions::intToString(startDate->getTime()));
+					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + startDate->getTimeString());
 				}
 			}
 			else if (tempTask->hasEndDate()) { // Has only end date
 				endDate = tempTask->getEndDate();
-				_sideBarView->push_back("    Time: by " + endDate->toGUIString() + " " + typeConversions::intToString(endDate->getTime()));
+				_sideBarView->push_back("    Time: by " + endDate->toGUIString() + " " + endDate->getTimeString());
 			}
 
 			location = tempTask->getLocation();
