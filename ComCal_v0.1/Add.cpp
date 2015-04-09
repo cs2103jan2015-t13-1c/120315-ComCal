@@ -86,6 +86,12 @@ void Add::findDSEL() {
 		if (canFind(_l)) {
 			_usesIn = true;
 		}
+		else {
+			_l = _argument.find(" at ");
+			if (canFind(_l)) {
+				_usesIn = true;
+			}
+		}
 	}
 }
 
@@ -171,7 +177,7 @@ std::string Add::execute(std::string argument) {
 	// 1) .d, _			(indicates description)
 	// 2) .s, from, on	(indicates start date and time)
 	// 3) .e, to, by	(indicates end date and time)
-	// 4) .l, in		(indicates location)
+	// 4) .l, in, at	(indicates location)
 
 	// Available add formats:
 	// 1) All four delimiters in
@@ -180,6 +186,7 @@ std::string Add::execute(std::string argument) {
 	// 3) No start date and time
 	// 4) No end date and time
 	// 5) Neither start date and time nor end date and time
+	// Location is now optional as well
 
 	// string::find() returns string::npos if no matches are found
 	// string::substr() takes in position and length as arguments
