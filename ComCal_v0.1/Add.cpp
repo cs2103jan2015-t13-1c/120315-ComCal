@@ -226,12 +226,12 @@ std::string Add::execute(std::string argument) {
 			return "Invalid add command: Invalid end date and time format";
 		}
 	}
-	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
-	TextStorage::getInstance()->addTask(newTask);
-	Task* _addedTask = newTask;
+	
+	_addedTask = new Task(_description, _location, objStartDate, objEndDate);
+	TextStorage::getInstance()->addTask(_addedTask);
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 
-	return ("Added: " + newTask->toString());
+	return ("Added: " + _addedTask->toString());
 }
 
 //@author A0085731A
@@ -253,5 +253,7 @@ std::string Add::redo() {
 		TextStorage::getInstance()->addTaskAtSpecificPosition(_addedTask, _taskIndex);
 	}
 
-	return ("Redo add: Added " + _addedTask->toString());
+	std::string feedback = "Redo add: Added " + _addedTask->toString();
+
+	return feedback;
 }

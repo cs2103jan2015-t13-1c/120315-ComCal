@@ -50,6 +50,10 @@ const std::string INPUTERROR_NOEXISTINGDATE = "INPUT ERROR: No existing date - p
 const std::string INPUTERROR_INVALIDDONE = "INPUT ERROR: Invalid done - can only done TO-DO or DEADLINE.";
 const std::string INPUTERROR_INVALIDUNDO = "INPUT ERROR: No further previous actions to undo.";
 const std::string INPUTERROR_INVALIDREDO = "INPUT ERROR: No further previous undo actions to redo.";
+const std::string INPUTERROR_INVALIDTIMERANGESTARTMISSING = "INPUT ERROR: Missing time range start keyword: \"from\"";
+const std::string INPUTERROR_INVALIDTIMERANGEENDMISSING = "INPUT ERROR: Missing time range end keyword: \"to\"";
+const std::string INPUTERROR_INVALIDSPACESONLY = "INPUT ERROR: A portion of the/Entire input contains spaces only, please revise.";
+const std::string INPUTERROR_INVALIDCANNOTREMOVEDESCRIPTION = "INPUT ERROR: Cannot remove description of task.";
 
 class ExceptionInputNoCommand : public std::exception {
 	const char* what() const throw()
@@ -64,6 +68,34 @@ class ExceptionInputInvalidCommand : public std::exception {
 		return INPUTERROR_INVALIDCOMMAND.c_str();
 	}
 } static exceptionInputInvalidCommand;
+
+class ExceptionInputInvalidCannotRemoveDescription : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDCANNOTREMOVEDESCRIPTION.c_str();
+	}
+} static exceptionInputInvalidCannotRemoveDescription;
+
+class ExceptionInputInvalidSpacesOnly : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDSPACESONLY.c_str();
+	}
+} static exceptionInputInvalidSpacesOnly;
+
+class ExceptionInputInvalidTimeRangeStartMissing : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTIMERANGESTARTMISSING.c_str();
+	}
+} static exceptionInputInvalidTimeRangeStartMissing;
+
+class ExceptionInputInvalidTimeRangeEndMissing : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTIMERANGEENDMISSING.c_str();
+	}
+} static exceptionInputInvalidTimeRangeEndMissing;
 
 class ExceptionInputInvalidDeleteParams : public std::exception {
 	const char* what() const throw()

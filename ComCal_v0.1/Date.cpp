@@ -200,15 +200,12 @@ bool Date::setDate(std::string date) {
 			if (slash2 == std::string::npos) {
 				return false;
 			}
-			if (date.size() != 9) {
-				return false;
-			}
 			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {
 				_year = typeConversions::stringToInt(date.substr(slash2 + 1))-1900;
-				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, 2))) {
-					_month = typeConversions::stringToInt(date.substr(slash1 + 1, 2));
-					if (timeDateInfo::isMdayValid(date.substr(0, 2), date.substr(slash1 + 1, 2), date.substr(slash2 + 1))) {
-						_day = typeConversions::stringToInt(date.substr(0, 2));
+				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, slash2-(slash1+1)))) {
+					_month = typeConversions::stringToInt(date.substr(slash1 + 1, slash2-(slash1+1)));
+					if (timeDateInfo::isMdayValid(date.substr(0, slash1), date.substr(slash1 + 1, slash2-(slash1+1)), date.substr(slash2 + 1))) {
+						_day = typeConversions::stringToInt(date.substr(0, slash1));
 					}
 					else {
 						return false;

@@ -23,7 +23,7 @@ bool timeDateInfo::isMonthValid(std::string monthInput) {
 		return false;
 	}
 
-	if (typeConversions::stringToInt(monthInput) < 1 || typeConversions::stringToInt(monthInput) > 12) {
+	if (typeConversions::stringToInt(monthInput) < 0 || typeConversions::stringToInt(monthInput) > 11) {
 		return false;
 	}
 

@@ -55,4 +55,12 @@ namespace support {
 	range, returns false otherwise.
 	**************************************************************************************************************/
 	bool isDateWithinTimeRange(Date*, Date*, Date*);
+	
+	/*************************************************************************************************************
+	Name: isSpacesOnly
+	Type: support namespace method
+	Purpose: Checks and returns true if input reference string contains only spaces, returns false otherwise. Also
+	trims any leading and ending spaces of input reference string. 
+	**************************************************************************************************************/
+	bool isSpacesOnly(std::string&);
 }

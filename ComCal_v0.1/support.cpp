@@ -63,6 +63,9 @@ std::vector<std::vector<std::string>> support::extractParamsForKeywords(std::str
 				paramLength = nextKeywordPos - (keywordsStartPos[i][j] + keywords[i].size());
 				if (paramLength > 0) {
 					param = input.substr(keywordsStartPos[i][j] + keywords[i].size(), paramLength);
+					if (support::isSpacesOnly(param)) {
+						throw exceptionInputInvalidSpacesOnly;
+					}
 					params.push_back(param);
 				}
 				else {
@@ -123,26 +126,24 @@ bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
 std::string support::prepareTaskDisplayAttributeBreakdown(Task* task) {
 	std::string taskDisplay = "";
 
-	if (task->getDescription() != "") {
-		taskDisplay += DESCRIPTION + ": " + task->getDescription() + "; ";
-	}
+	taskDisplay += DESCRIPTION + ": \"" + task->getDescription() + "\"";
 
 	if (task->getStartDate() != NULL) {
-		taskDisplay += STARTDATETIME + ": " + task->getStartDate()->toString() + "; ";
+		taskDisplay += "; " + STARTDATETIME + ": " + task->getStartDate()->toString();
 	}
 
 	if (task->getEndDate() != NULL) {
 		if (task->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
-			taskDisplay += DEADLINE + ": ";
+			taskDisplay += "; " + DEADLINE + ": ";
 		}
 		else {
-			taskDisplay += ENDDATETIME + ": ";
+			taskDisplay += "; " + ENDDATETIME + ": ";
 		}	
-		taskDisplay += task->getEndDate()->toString() + "; ";
+		taskDisplay += task->getEndDate()->toString();
 	}
 
 	if (task->getLocation() != "") {
-		taskDisplay += LOCATION + ": " + task->getLocation();
+		taskDisplay += "; " + LOCATION + ": \"" + task->getLocation() + "\"";
 	}
 
 	return taskDisplay;
@@ -155,4 +156,19 @@ bool support::isDateWithinTimeRange(Date* dateUnderExam, Date* timeRangeStart, D
 	else {
 		return true;
 	}
+}
+
+bool support::isSpacesOnly(std::string& input) {
+	while (input.substr(0,1)==" ") {
+		if (input.size() <= 1) {
+			return true;
+		}
+		input = input.substr(1);	
+	}
+
+	while (input.substr(input.size() - 1) == " ") {
+		input = input.substr(0, input.size() - 1);
+	}
+
+	return false;
 }

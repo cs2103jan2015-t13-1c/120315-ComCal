@@ -8,6 +8,7 @@
 #include "typeConversions.h"
 #include "TextStorage.h"
 #include "Exceptions.h"
+#include "support.h"
 
 #include <vector>
 #include <algorithm>

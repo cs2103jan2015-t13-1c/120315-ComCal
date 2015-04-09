@@ -14,6 +14,7 @@ Search::~Search() {
 }
 
 bool Search::isResultWildcardSearch(Task* taskUnderExam, std::string searchContents) {
+	searchContents = searchContents.substr(1);
 	if (taskUnderExam->getDescription().find(searchContents) == std::string::npos && taskUnderExam->getLocation().find(searchContents) == std::string::npos) {
 		return false;
 	}
@@ -49,8 +50,14 @@ bool Search::isResultDateSearch(Date* taskDate, std::string searchContents) {
 	if (timeRangeStartPos > 0) {
 		throw exceptionInputInvalidDateTimeShowSearch;
 	}
+	else if (timeRangeStartPos != std::string::npos&&timeRangeEndPos == std::string::npos) {
+		throw exceptionInputInvalidTimeRangeEndMissing;
+	}
+	else if (timeRangeStartPos == std::string::npos&&timeRangeEndPos != std::string::npos) {
+		throw exceptionInputInvalidTimeRangeStartMissing;
+	}
 	else if (timeRangeStartPos != std::string::npos&&timeRangeEndPos != std::string::npos) {
-		std::string timeRangeStartString = searchContents.substr(SEARCHDATETIMERANGESTART.size(), timeRangeEndPos);
+		std::string timeRangeStartString = searchContents.substr(SEARCHDATETIMERANGESTART.size(), timeRangeEndPos - SEARCHDATETIMERANGESTART.size());
 		if (!timeRangeStart->setDate(timeRangeStartString)) {
 			throw exceptionInputInvalidDateTimeShowSearch;
 		}
@@ -94,7 +101,7 @@ std::string Search::execute(std::string argument) {
 	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
 	for (unsigned int i = 0; i < _searchConditions.size(); i++) {
 		std::vector<int> attributesToSearch = _searchConditions[i].getAttributesToSearch();
-		std::vector<std::string> contentsToSearch = _searchConditions[i].getContentsToSearch();
+		std::vector<std::vector<std::string>> contentsToSearch = _searchConditions[i].getContentsToSearch();
 		switch (_searchConditions[i].getCondition()) {
 		case INDEX_AND:
 			if (!_searchResults.empty()) {
@@ -104,43 +111,63 @@ std::string Search::execute(std::string argument) {
 					for (unsigned int k = 0; k < attributesToSearch.size(); k++) {
 						switch (attributesToSearch[k]) {
 						case INDEX_WILDCARD:
-							if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						case INDEX_DESCRIPTION:
-							if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						case INDEX_STARTDATETIME:
-							if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
 							}
 							else {
-								j++;
+								_searchResults.erase(_searchResults.begin() + j);
 							}
 							break;
 						case INDEX_ENDDATETIME:
-							if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
 							}
 							else {
-								j++;
+								_searchResults.erase(_searchResults.begin() + j);
 							}
 							break;
 						case INDEX_LOCATION:
-							if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						default:
@@ -155,7 +182,7 @@ std::string Search::execute(std::string argument) {
 				bool isInResults = false;
 				if (!_searchResults.empty()) {
 					for (unsigned int k = 0; k < _searchResults.size(); k++) {
-						if (TextStorage::getInstance()->getTask(j) == _searchResults[k]) {
+						if (_searchResults[k] == TextStorage::getInstance()->getTask(j)) {
 							isInResults = true;
 						}
 					}
@@ -166,28 +193,48 @@ std::string Search::execute(std::string argument) {
 					for (unsigned int k = 0; k < attributesToSearch.size() && satisfySearch; k++) {
 						switch (attributesToSearch[k]) {
 						case INDEX_WILDCARD:
-							if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k])) {
-								satisfySearch = false;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
 							}
 							break;
 						case INDEX_DESCRIPTION:
-							if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k])) {
-								satisfySearch = false;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
 							}
 							break;
 						case INDEX_STARTDATETIME:
-							if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k])) {
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										satisfySearch = false;
+									}
+								}
+							}
+							else {
 								satisfySearch = false;
 							}
 							break;
 						case INDEX_ENDDATETIME:
-							if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k])) {
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										satisfySearch = false;
+									}
+								}
+							}
+							else {
 								satisfySearch = false;
 							}
 							break;
 						case INDEX_LOCATION:
-							if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k])) {
-								satisfySearch = false;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
 							}
 							break;
 						default:
@@ -209,43 +256,63 @@ std::string Search::execute(std::string argument) {
 					for (unsigned int k = 0; k < attributesToSearch.size(); k++) {
 						switch (attributesToSearch[k]) {
 						case INDEX_WILDCARD:
-							if (isResultWildcardSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						case INDEX_DESCRIPTION:
-							if (isResultDescriptionSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						case INDEX_STARTDATETIME:
-							if (isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
 							}
 							else {
 								j++;
 							}
 							break;
 						case INDEX_ENDDATETIME:
-							if (isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
 							}
 							else {
 								j++;
 							}
 							break;
 						case INDEX_LOCATION:
-							if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k])) {
-								_searchResults.erase(_searchResults.begin() + j);
-							}
-							else {
-								j++;
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
 							}
 							break;
 						default:
@@ -274,15 +341,15 @@ std::string Search::execute(std::string argument) {
 }
 
 void Search::process(std::string argument) {
-	int conditionIndex = 1;
 	std::string previousContents;
 	int nextConditionCode;
 	int nextConditionPos = getNextConditionAndPosAndPreviousContents(argument, nextConditionCode, previousContents);
+	int conditionIndex = 1;
 	SearchCondition firstSearchCondition(INDEX_OR);
 	_searchConditions.push_back(firstSearchCondition);
 	while (nextConditionPos!=std::string::npos) {
-		SearchCondition searchCondition(nextConditionPos);
-		_searchConditions.push_back(searchCondition);
+		SearchCondition nextSearchCondition(nextConditionCode);
+		_searchConditions.push_back(nextSearchCondition);
 		_searchConditions[conditionIndex-1].setContents(previousContents);
 		nextConditionPos = getNextConditionAndPosAndPreviousContents(argument, nextConditionCode, previousContents);
 		conditionIndex++;
@@ -295,20 +362,13 @@ void Search::process(std::string argument) {
 int Search::getNextConditionAndPosAndPreviousContents(std::string& input, int& conditionCode, std::string& previousContents) {
 	std::vector<int> conditionPosVect;
 	std::vector<int> conditionCodeVect;
+	std::string inputLowerCase = typeConversions::toLowerCase(input);
 
 	for (int i = 0; i < SEARCHCONDITIONKEYWORDSARRAYSIZE; i++) {
-		conditionPosVect.push_back(input.find(SEARCHCONDITIONKEYWORDSARRAY[i]));
-		conditionCodeVect.push_back(i);
-	}
-
-	unsigned int i = 0;
-	while (i < conditionPosVect.size()) {
-		if (conditionPosVect[i] == std::string::npos) {
-			conditionPosVect.erase(conditionPosVect.begin() + i);
-			conditionCodeVect.erase(conditionCodeVect.begin() + i);
-		}
-		else {
-			i++;
+		int conditionPos = inputLowerCase.find(SEARCHCONDITIONKEYWORDSARRAY[i]);
+		if (conditionPos != std::string::npos) {
+			conditionPosVect.push_back(conditionPos);
+			conditionCodeVect.push_back(i);
 		}
 	}
 
@@ -326,6 +386,9 @@ int Search::getNextConditionAndPosAndPreviousContents(std::string& input, int& c
 	}
 
 	previousContents = input.substr(0,conditionPos);
+	if (support::isSpacesOnly(previousContents)){
+		throw exceptionInputInvalidSpacesOnly;
+	}
 	input = input.substr(conditionPos + SEARCHCONDITIONKEYWORDSARRAY[conditionCode].size());
 
 	return conditionPos;
@@ -338,35 +401,60 @@ std::string Search::prepareFeedback() {
 		if (i != 0) {
 			switch (_searchConditions[i].getCondition()) {
 			case INDEX_AND:
-				feedback += " " + AND + "(";
+				feedback += " " + AND + " (";
 				break;
 			case INDEX_OR:
-				feedback += " " + OR + "(";
+				feedback += " " + OR + " (";
 				break;
 			case INDEX_NOT:
-				feedback += " " + NOT + "(";
+				feedback += " " + NOT + " (";
 			}
 		}
-		for (unsigned int j = 0; j < _searchConditions[0].getAttributesToSearch().size(); j++) {
-			switch (_searchConditions[0].getAttributesToSearch()[j]) {
+		else {
+			feedback += "(";
+		}
+		for (unsigned int j = 0; j < _searchConditions[i].getAttributesToSearch().size(); j++) {
+			switch (_searchConditions[i].getAttributesToSearch()[j]) {
 			case INDEX_DESCRIPTION:
-				feedback += DESCRIPTION + ": ";
+				feedback += " " + DESCRIPTION + ": ";
 				break;
 			case INDEX_STARTDATETIME:
-				feedback += STARTDATETIME + ": ";
+				feedback += " " + STARTDATETIME + ": ";
 				break;
 			case INDEX_ENDDATETIME:
-				feedback += ENDDATETIME + ": ";
+				feedback += " " + ENDDATETIME + ": ";
 				break;
 			case INDEX_LOCATION:
-				feedback += LOCATION + ": ";
+				feedback += " " + LOCATION + ": ";
 				break;
 			}
-			feedback += _searchConditions[0].getContentsToSearch()[j] + "; ";
+			for (unsigned int k = 0; k < _searchConditions[i].getContentsToSearch()[j].size(); k++) {
+				switch (_searchConditions[i].getAttributesToSearch()[j]) {
+				case INDEX_DESCRIPTION:
+					feedback += "\"";
+					break;
+				case INDEX_LOCATION:
+					feedback += "\"";
+					break;
+				}
+				feedback += _searchConditions[i].getContentsToSearch()[j][k];
+				switch (_searchConditions[i].getAttributesToSearch()[j]) {
+				case INDEX_DESCRIPTION:
+					feedback += "\"";
+					break;
+				case INDEX_LOCATION:
+					feedback += "\"";
+					break;
+				}
+				if (k < _searchConditions[i].getContentsToSearch()[j].size() - 1) {
+					feedback += ", ";
+				}
+			}
+			if (j < _searchConditions[i].getAttributesToSearch().size() - 1) {
+				feedback += ";";
+			}
 		}
-		if (i != 0) {
-			feedback += ")";
-		}
+		feedback += " )";
 	}
 
 	return feedback;

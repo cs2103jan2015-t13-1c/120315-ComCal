@@ -42,6 +42,7 @@ static const int INDEX_LOCATION = 3;
 //Delete before certain date/time command keywords:
 static const int DELETEBEFOREKEYWORDSARRAYSIZE = 2;
 static const std::string DELETEBEFOREKEYWORDSARRAY[DELETEBEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };
+static const std::string DELETEALLKEYWORD = "all";
 
 //Integer string:
 static const std::string INTS = "0123456789";

@@ -14,18 +14,18 @@ SearchCondition::~SearchCondition() {
 }
 
 void SearchCondition::setContents(std::string contents) {
+	contents = " " + contents;
 	std::vector<std::vector<std::string>> keywordsAndParams = support::extractParamsForKeywords(contents, _attributeKeywords);
 
 	if (contents != "") {
 		_attributesToSearch.push_back(INDEX_WILDCARD);
-		_contentsToSearch.push_back(contents);
+		contents = contents.substr(1);
+		std::vector<std::string> contentsToSearch;
+		contentsToSearch.push_back(contents);
+		_contentsToSearch.push_back(contentsToSearch);
 	}
 	for (unsigned int i = 0; i < keywordsAndParams.size(); i++) {
 		if (!keywordsAndParams[i].empty()) {
-			if (keywordsAndParams[i][0] == "") {
-				throw exceptionInputMissingAttributeParam;
-			}
-
 			switch (i) {
 			case INDEX_DESCRIPTION:
 				_attributesToSearch.push_back(INDEX_DESCRIPTION);
@@ -41,7 +41,12 @@ void SearchCondition::setContents(std::string contents) {
 				break;
 			}
 
-			_contentsToSearch.push_back(keywordsAndParams[i][0]);
+			for (unsigned int j = 0; j < keywordsAndParams[i].size(); j++) {
+				if (keywordsAndParams[i][j] == "") {
+					throw exceptionInputMissingAttributeParam;
+				}
+			}
+			_contentsToSearch.push_back(keywordsAndParams[i]);
 		}
 	}
 }
@@ -54,6 +59,6 @@ std::vector<int> SearchCondition::getAttributesToSearch() {
 	return _attributesToSearch;
 }
 
-std::vector<std::string> SearchCondition::getContentsToSearch() {
+std::vector<std::vector<std::string>> SearchCondition::getContentsToSearch() {
 	return _contentsToSearch;
 }

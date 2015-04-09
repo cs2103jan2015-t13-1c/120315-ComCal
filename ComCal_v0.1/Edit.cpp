@@ -12,14 +12,15 @@ Edit::~Edit() {
 }
 
 std::string Edit::execute(std::string userInput) {
-	std::string feedbackString;
-
 	process(userInput);
 
 	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
 		if (_attributesToBeEdited[i] == DESCRIPTION) {
 			if (_attributesToBeEdited[i] == "") {
 				throw exceptionInputInvalidEditRemoveDescription;
+			}
+			if (_contentsToBeEdited[i] == "") {
+				throw exceptionInputInvalidCannotRemoveDescription;
 			}
 			_editedTask->setDescription(_contentsToBeEdited[i]);
 		}
@@ -36,23 +37,28 @@ std::string Edit::execute(std::string userInput) {
 			_editedTask->setStartDate(editTaskStartDateTime);
 		}
 		else if (_attributesToBeEdited[i] == STARTDATE) {
-			Date* editTaskStartDateTime = new Date();
-			if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
-				throw exceptionInputInvalidDate;
+			if (_contentsToBeEdited[i] == "") {
+				_editedTask->setStartDate(NULL);
 			}
-			if (_editedTask->getStartDate() != NULL) {
-				int existingTime = _editedTask->getStartDate()->getTime();
-				editTaskStartDateTime->setTime(existingTime);
-			}
-			if (editTaskStartDateTime->getTime() == NULL){
-				editTaskStartDateTime->setTime(0);
-			}
-			if (_editedTask->getEndDate() != NULL) {
-				if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
-					throw exceptionInputStartLaterThanEndTime;
+			else {
+				Date* editTaskStartDateTime = new Date();
+				if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
+					throw exceptionInputInvalidDate;
 				}
+				if (_editedTask->getStartDate() != NULL) {
+					int existingTime = _editedTask->getStartDate()->getTime();
+					editTaskStartDateTime->setTime(existingTime);
+				}
+				if (editTaskStartDateTime->getTime() == NULL){
+					editTaskStartDateTime->setTime(0);
+				}
+				if (_editedTask->getEndDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setStartDate(editTaskStartDateTime);
 			}
-			_editedTask->setStartDate(editTaskStartDateTime);
 		}
 		else if (_attributesToBeEdited[i] == STARTTIME) {
 			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
@@ -91,23 +97,28 @@ std::string Edit::execute(std::string userInput) {
 			_editedTask->setEndDate(editTaskEndDateTime);
 		}
 		else if (_attributesToBeEdited[i] == ENDDATE) {
-			Date* editTaskEndDateTime = new Date();
-			if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
-				throw exceptionInputInvalidDate;
+			if (_contentsToBeEdited[i] == "") {
+				_editedTask->setEndDate(NULL);
 			}
-			if (_editedTask->getEndDate() != NULL) {
-				int existingTime = _editedTask->getEndDate()->getTime();
-				editTaskEndDateTime->setTime(existingTime);
-			}
-			if (editTaskEndDateTime->getTime() == NULL){
-				editTaskEndDateTime->setTime(2359);
-			}
-			if (_editedTask->getStartDate() != NULL) {
-				if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
-					throw exceptionInputStartLaterThanEndTime;
+			else {
+				Date* editTaskEndDateTime = new Date();
+				if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
+					throw exceptionInputInvalidDate;
 				}
+				if (_editedTask->getEndDate() != NULL) {
+					int existingTime = _editedTask->getEndDate()->getTime();
+					editTaskEndDateTime->setTime(existingTime);
+				}
+				if (editTaskEndDateTime->getTime() == NULL){
+					editTaskEndDateTime->setTime(2359);
+				}
+				if (_editedTask->getStartDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setEndDate(editTaskEndDateTime);
 			}
-			_editedTask->setEndDate(editTaskEndDateTime);
 		}
 		else if (_attributesToBeEdited[i] == ENDTIME) {
 			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
@@ -138,15 +149,17 @@ std::string Edit::execute(std::string userInput) {
 		}
 	}
 
-	feedbackString = prepareFeedback();
+	std::string feedback = prepareFeedback();
 
-	return feedbackString;
+	return feedback;
 }
 
 void Edit::process(std::string userInput) {
-	furnishTaskToBeEdited(userInput);
+	if (support::isSpacesOnly(userInput)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
 
-	std::vector<std::vector<std::string>> keywordsAndParams;
+	furnishTaskToBeEdited(userInput);
 
 	furnishEditContents(userInput);
 }
@@ -156,17 +169,15 @@ void Edit::furnishTaskToBeEdited(std::string &userInput) {
 		throw exceptionInputMissingEditTaskIndexAndParams;
 	}
 
-	int taskIndexToBeEdited = extractTaskIndex(userInput);
+	_taskIndexToBeEdited = extractTaskIndex(userInput);
 
-	Task* originalTask = TextStorage::getInstance()->getTask(taskIndexToBeEdited-1);
+	Task* originalTask = TextStorage::getInstance()->getTask(_taskIndexToBeEdited-1);
 
 	if(originalTask == NULL) {
 		throw exceptionInputInvalidTaskIndex;
 	}
 
-	_taskIndexToBeEdited = taskIndexToBeEdited;
-
-	_originalTask = new Task();
+	_originalTask = new Task;
 	_originalTask->setDescription(originalTask->getDescription());
 	if (originalTask->getStartDate() != NULL) {
 		Date* originalStartDate = new Date(originalTask->getStartDate()->getDay(), originalTask->getStartDate()->getMonth(), originalTask->getStartDate()->getYear(), originalTask->getStartDate()->getTime());
@@ -190,13 +201,13 @@ int Edit::extractTaskIndex(std::string &userInput){
 		throw exceptionInputMissingEditParams;
 	}
 
-	if (!(userInput.substr(0,spacePosition).find_first_not_of(INTS) == std::string::npos)) {
+	if (!typeConversions::isNumber(userInput.substr(0,spacePosition))) {
 		throw exceptionInputInvalidTaskIndex;
 	}
 
 	std::string taskIndexToBeEditedString = userInput.substr(0, spacePosition);
 
-	userInput = userInput.substr(spacePosition);
+	userInput = userInput.substr(spacePosition + 1);
 
 	int taskIndexToBeEdited = typeConversions::stringToInt(taskIndexToBeEditedString);
 
@@ -207,6 +218,12 @@ void Edit::furnishEditContents(std::string &userInput) {
 	if (userInput == "") {
 		throw exceptionInputMissingEditParams;
 	}
+
+	if (support::isSpacesOnly(userInput)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	userInput = " " + userInput;
 
 	std::vector<std::vector<std::string>> keywordsAndParams = support::extractParamsForKeywords(userInput, _attributeKeywords);
 

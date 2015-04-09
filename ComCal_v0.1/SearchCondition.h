@@ -37,7 +37,7 @@ private:
 	Type: Vector of strings attribute
 	Purpose: Holds contents of each corresponding index attribute to search.
 	****************************************************************************************************/
-	std::vector<std::string> _contentsToSearch;
+	std::vector<std::vector<std::string>> _contentsToSearch;
 
 public:
 	/****************************************************************************************************
@@ -74,5 +74,5 @@ public:
 	Type: Method
 	Purpose: Returns vector of strings of corresponding contents to search.
 	****************************************************************************************************/
-	std::vector<std::string> getContentsToSearch();
+	std::vector<std::vector<std::string>> getContentsToSearch();
 };

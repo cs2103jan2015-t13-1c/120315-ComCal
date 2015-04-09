@@ -21,18 +21,17 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
 	_isHidden = false;
-
-	if (_startDate == NULL&&_endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	if (_startDate != NULL&&_endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_TIMED;
 	}
 	else if (_startDate != NULL && _endDate == NULL) {
 		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
 	}
-	else{
-		_taskTypeCode = TASKTYPECODE_TIMED;
+	else if (_startDate == NULL && _endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
+	else {
+		_taskTypeCode = TASKTYPECODE_FLOATING;
 	}
 }
 
@@ -43,18 +42,17 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_endDate = endDate;
 	_isDone = false;
 	_isHidden = false;
-
-	if (_startDate == NULL&&_endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	if (_startDate != NULL&&_endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_TIMED;
 	}
 	else if (_startDate != NULL && _endDate == NULL) {
 		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
 	}
-	else{
-		_taskTypeCode = TASKTYPECODE_TIMED;
+	else if (_startDate == NULL && _endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
+	else {
+		_taskTypeCode = TASKTYPECODE_FLOATING;
 	}
 }
 
@@ -110,10 +108,24 @@ void Task::setLocation(std::string location) {
 
 void Task::setStartDate(Date* startDate) {
 	_startDate = startDate;
+
+	if (_endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
+	}
+	else {
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
 }
 
 void Task::setEndDate(Date* endDate) {
 	_endDate = endDate;
+
+	if (_startDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
+	else {
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
 }
 
 void Task::hide() {
@@ -146,24 +158,26 @@ std::string Task::toString() {
 		break;
 	} 
 		
-	returnString += " task - " + DESCRIPTION + ": " + _description + "; ";
+	returnString += " task - " + DESCRIPTION + ": \"" + _description + "\"";
 
 	if (hasStartDate()) {
-		returnString += STARTDATETIME + ": " + _startDate->toString() + "; ";
+		returnString += "; " + STARTDATETIME + ": " + _startDate->toString();
 	}
 
 	if (hasEndDate()) {
-		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
+		returnString += "; " + ENDDATETIME + ": " + _endDate->toString();
 	}
-
-	returnString += LOCATION + ": " + _location;
+	
+	if (_location != "") {
+		returnString += "; " + LOCATION + ": \"" + _location + "\"";
+	}
 
 	return returnString;
 }
 
 // Converts Task object into a string for GUI
 std::string Task::toGUIString() {
-	std::string returnString = DESCRIPTION + ": " + _description + "; ";
+	std::string returnString = DESCRIPTION + ": \"" + _description + "\"; ";
 	
 	if (hasStartDate()) {
 		returnString += STARTDATETIME + ": " + _startDate->toString() + "; ";
@@ -173,7 +187,9 @@ std::string Task::toGUIString() {
 		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
 	}
 
-	returnString += LOCATION + ": " + _location;
+	if (_location != "") {
+		returnString += LOCATION + ": \"" + _location + "\"";
+	}
 
 	return returnString;
 }
