@@ -233,10 +233,6 @@ std::string Add::execute(std::string argument) {
 		}
 	}
 
-	
-	_addedTask = new Task(_description, _location, objStartDate, objEndDate);
-	TextStorage::getInstance()->addTask(_addedTask);
-
 	if ((_hasStartDate) && (_hasEndDate)) {
 		if (*objStartDate > *objEndDate) {
 			delete objStartDate;
@@ -244,9 +240,9 @@ std::string Add::execute(std::string argument) {
 			return "Invalid add command: End date must be later than time date";
 		}
 	}
-	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
-	TextStorage::getInstance()->addTask(newTask);
-	_addedTask = newTask;
+
+	_addedTask = new Task(_description, _location, objStartDate, objEndDate);
+	TextStorage::getInstance()->addTask(_addedTask);
 
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 

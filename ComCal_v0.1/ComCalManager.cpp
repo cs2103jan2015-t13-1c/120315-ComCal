@@ -61,7 +61,7 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		feedBackMessage = command->execute(argument);
 		_commandHistory.push(command);
 		populateSideBar();
-		while (_undoHistory.empty()) {
+		while (!_undoHistory.empty()) {
 			_undoHistory.pop();
 		}
 	}
@@ -75,10 +75,10 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		command = new Load();
 		feedBackMessage = command->execute(argument);
 		populateSideBar();
-		while (_commandHistory.empty()) {
+		while (!_commandHistory.empty()) {
 			_commandHistory.pop();
 		}
-		while (_undoHistory.empty()) {
+		while (!_undoHistory.empty()) {
 			_undoHistory.pop();
 		}
 	}

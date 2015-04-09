@@ -192,28 +192,23 @@ std::string Task::toString() {
 		returnString += "; " + LOCATION + ": \"" + _location + "\"";
 	}
 
-	returnString += " task - " + toGUIString();
-
 	return returnString;
 }
 
 // Gets the string of this task to be rendered in GUI elements, ie. calendar, sidebar, etc.
 std::string Task::toGUIString() {
-	std::string returnString = DESCRIPTION + ": \"" + _description + "\"; ";
-	
+	std::string returnString = " task - " + DESCRIPTION + ": \"" + _description + "\"";
+
 	if (hasStartDate()) {
-		returnString += STARTDATETIME + ": " + _startDate->toString() + "; ";
+		returnString += "; " + STARTDATETIME + ": " + _startDate->toString();
 	}
 
 	if (hasEndDate()) {
-		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
+		returnString += "; " + ENDDATETIME + ": " + _endDate->toString();
 	}
 
 	if (_location != "") {
-	returnString += LOCATION + ": \"" + _location + "\"";
-	}
-	if (_location.size() > 0) {
-		returnString += LOCATION + ": " + _location;
+		returnString += "; " + LOCATION + ": \"" + _location + "\"";
 	}
 
 	return returnString;
