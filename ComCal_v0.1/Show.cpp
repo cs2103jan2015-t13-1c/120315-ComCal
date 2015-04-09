@@ -103,10 +103,10 @@ std::string Show::execute(std::string argument) {
 
 				if (tempDate->setDate(secArg)) {
 					TextStorage::getInstance()->displayWeekTasks(getDatesInWeek(tempDate));
-					std::string sideBarTitle = tempDate->toGUIString() + " " + WEEK + " tasks\n";
+					std::string sideBarTitle = tempDate->toGUIString() + " " + WEEK + " tasks";
 					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
-					return (sideBarTitle + " shown\n");
+					return (sideBarTitle + " shown");
 				}
 				else{
 					return INVALID_DATE_INPUT;
