@@ -109,7 +109,7 @@ static const int SECONDS_IN_WEEK = 7 * SECONDS_IN_DAY;
 
 //keyboard shortcuts
 static const std::string NEWLINE = " \n";
-static const std::string INDEX_DESCRIPTION_SEPARATOR = ". ";
+static const std::string INDEX_DESCRIPTION_SEPARATOR = ") ";
 
 //SideBar titles
 static const std::string ALL_TODO_TITLE = "All Todo Tasks";
