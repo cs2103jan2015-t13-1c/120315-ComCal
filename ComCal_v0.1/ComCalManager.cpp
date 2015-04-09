@@ -149,7 +149,7 @@ void ComCalManager::populateSideBar() {
 	for (int i = 0; i < todoSize; i++) {
 		tempTask = TextStorage::getInstance()->getTask(i);
 		if (!tempTask->isHidden()) {
-			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + "Desc: " + tempTask->getDescription());
+			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + "Desc: " + tempTask->getDescription() + " [" + (tempTask->getIsDone() ? "done" : "todo") + "]");
 
 			if (tempTask->hasStartDate()) {
 				startDate = tempTask->getStartDate();
