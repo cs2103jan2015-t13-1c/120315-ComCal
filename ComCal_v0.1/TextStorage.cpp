@@ -67,7 +67,8 @@ void TextStorage::displayAllTasks() {
 	}
 }
 
-void TextStorage::displayTodoTasks() {
+int TextStorage::displayTodoTasks() {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -75,14 +76,17 @@ void TextStorage::displayTodoTasks() {
 		tempTask = _todoTasks->at(i);
 		if (!tempTask->getIsDone()) {
 			tempTask->display();
+			count ++;
 		}
 		else {
 			tempTask->hide();
 		}
 	}
+	return count;
 }
 
-void TextStorage::displayTodoTasks(const Date &date) {
+int TextStorage::displayTodoTasks(const Date &date) {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -92,6 +96,7 @@ void TextStorage::displayTodoTasks(const Date &date) {
 		if (tempTask->hasStartDate() && !tempTask->getIsDone()) {
 			if (tempTask->getStartDate()->operator==(date)){
 				tempTask->display();
+				count++;
 			}
 			else {
 				tempTask->hide();
@@ -101,6 +106,7 @@ void TextStorage::displayTodoTasks(const Date &date) {
 			if (tempTask->hasEndDate() && !tempTask->getIsDone()){
 				if (tempTask->getEndDate()->operator==(date)) {
 					tempTask->display();
+					count++;
 				}
 				else {
 					tempTask->hide();
@@ -112,9 +118,11 @@ void TextStorage::displayTodoTasks(const Date &date) {
 
 		}
 	}
+	return count;
 }
 
-void TextStorage::displayDoneTasks() {
+int TextStorage::displayDoneTasks() {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -122,14 +130,18 @@ void TextStorage::displayDoneTasks() {
 		tempTask = _todoTasks->at(i);
 		if (tempTask->getIsDone()) {
 			tempTask->display();
+			count++;
 		}
 		else {
 			tempTask->hide();
 		}
 	}
+
+	return count;
 }
 
-void TextStorage::displayDoneTasks(const Date &date) {
+int TextStorage::displayDoneTasks(const Date &date) {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -139,6 +151,7 @@ void TextStorage::displayDoneTasks(const Date &date) {
 		if (tempTask->hasStartDate() && tempTask->getIsDone()) {
 			if (tempTask->getStartDate()->operator==(date)){
 				tempTask->display();
+				count++;
 			}
 			else {
 				tempTask->hide();
@@ -148,6 +161,7 @@ void TextStorage::displayDoneTasks(const Date &date) {
 			if (tempTask->hasEndDate() && tempTask->getIsDone()){
 				if (tempTask->getEndDate()->operator==(date)) {
 					tempTask->display();
+					count++;
 				}
 				else {
 					tempTask->hide();
@@ -156,13 +170,14 @@ void TextStorage::displayDoneTasks(const Date &date) {
 			else{
 				tempTask->hide();
 			}
-
 		}
 	}
+	return count;
 }
 
 //1 = January, 2 = February, etc.
-void TextStorage::displayMonthTasks(int month) {
+int TextStorage::displayMonthTasks(int month) {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -171,6 +186,7 @@ void TextStorage::displayMonthTasks(int month) {
 		if (tempTask->hasStartDate()) {
 			if (tempTask->getStartDate()->getMonth() == month) {
 				tempTask->display();
+				count++;
 			}
 			else {
 				tempTask->hide();
@@ -180,6 +196,7 @@ void TextStorage::displayMonthTasks(int month) {
 			if (tempTask->hasEndDate()) {
 				if (tempTask->getStartDate()->getMonth() == month) {
 					tempTask->display();
+				count++;
 				}
 				else {
 					tempTask->hide();
@@ -187,9 +204,11 @@ void TextStorage::displayMonthTasks(int month) {
 			}
 		}
 	}
+	return count;
 }
 
-void TextStorage::displayMonthTasks(int year, int month) {
+int TextStorage::displayMonthTasks(int year, int month) {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -199,6 +218,7 @@ void TextStorage::displayMonthTasks(int year, int month) {
 		if (tempTask->hasStartDate()) {
 			if ((tempTask->getStartDate()->getMonth() == month) && (tempTask->getStartDate()->getYear()+1900 == year)) {
 				tempTask->display();
+				count++;
 			}
 			else {
 				tempTask->hide();
@@ -208,6 +228,7 @@ void TextStorage::displayMonthTasks(int year, int month) {
 			if (tempTask->hasEndDate()) {
 				if ((tempTask->getEndDate()->getMonth() == month) && (tempTask->getEndDate()->getYear()+1900 == year)) {
 					tempTask->display();
+				count++;
 				}
 				else {
 					tempTask->hide();
@@ -218,9 +239,11 @@ void TextStorage::displayMonthTasks(int year, int month) {
 			}
 		}
 	}
+	return count;
 }
 
-void TextStorage::displayDatedTasks(const Date &date) {
+int TextStorage::displayDatedTasks(const Date &date) {
+	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
 
@@ -228,14 +251,17 @@ void TextStorage::displayDatedTasks(const Date &date) {
 		tempTask = _todoTasks->at(i);
 		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
 			tempTask->display();
+			count++;
 		}
 		else {
 			tempTask->hide();
 		}
 	}
+	return count;
 }
 
-void TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
+int TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
+	int count = 0;
 	unsigned int todoSize = _todoTasks->size();
 	unsigned int weekSize = weekDate.size();
 
@@ -248,6 +274,7 @@ void TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
 			if (_todoTasks->at(i)->hasStartDate()) {
 				if (_todoTasks->at(i)->getStartDate()->getDay() == weekDate[j]->getDay() && _todoTasks->at(i)->getStartDate()->getMonth() == weekDate[j]->getMonth() && _todoTasks->at(i)->getStartDate()->getYear() == weekDate[j]->getYear()) {
 					_todoTasks->at(i)->display();
+					count++;
 					break;
 				}
 				else {
@@ -257,6 +284,7 @@ void TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
 			else if (_todoTasks->at(j)->hasEndDate()) {
 				if (_todoTasks->at(i)->getEndDate() == weekDate[j]) {
 					_todoTasks->at(i)->display();
+					count++;
 					break;
 				}
 				else {
@@ -266,20 +294,24 @@ void TextStorage::displayWeekTasks(std::vector<Date*> weekDate) {
 			}
 		}
 	}
+	return count = 0;
 }
 
-void TextStorage::displayDeadlinedTasks() {
+int TextStorage::displayDeadlinedTasks() {
+	int count = 0;
 	unsigned int todoSize = _todoTasks->size();
 
 	for (int i = 0; i < todoSize; i++) {
 		Task* tempTask = _todoTasks->at(i);
 		if (tempTask->hasEndDate()) {
 			tempTask->display();
+			count++;
 		}
 		else {
 			tempTask->hide();
 		}
 	}
+	return count;
 }
 
 bool TextStorage::saveTasks(std::string fileName)

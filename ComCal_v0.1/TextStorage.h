@@ -49,15 +49,15 @@ public:
 	bool deleteTask(int index);
 
 	void displayAllTasks();
-	void displayTodoTasks();
-	void displayTodoTasks(const Date &date);
-	void displayDoneTasks();
-	void displayDoneTasks(const Date &date);
-	void displayMonthTasks(int month); //1 = January, 2 = February, etc.
-	void displayMonthTasks(int year, int month);
-	void displayDatedTasks(const Date &date);
-	void displayWeekTasks(std::vector<Date*>);
-	void displayDeadlinedTasks();
+	int displayTodoTasks();
+	int displayTodoTasks(const Date &date);
+	int displayDoneTasks();
+	int displayDoneTasks(const Date &date);
+	int displayMonthTasks(int month); //1 = January, 2 = February, etc.
+	int displayMonthTasks(int year, int month);
+	int displayDatedTasks(const Date &date);
+	int displayWeekTasks(std::vector<Date*>);
+	int displayDeadlinedTasks();
 
 	bool saveTasks(std::string fileName);
 	bool loadTasks(std::string fileName);
