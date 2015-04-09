@@ -172,3 +172,12 @@ bool support::isSpacesOnly(std::string& input) {
 
 	return false;
 }
+
+bool support::checkDateBefore(Date* dateToBeChecked, Date* dateToCheckWith) {
+	if (dateToBeChecked->getTimeT() < dateToCheckWith->getTimeT()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

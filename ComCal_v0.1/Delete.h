@@ -20,7 +20,6 @@ private:
 	int _deletedCount;
 
 	void process(std::string);
-	bool checkDateBefore(Date*,Date*);
 
 public:
 	Delete();

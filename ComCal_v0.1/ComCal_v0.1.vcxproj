@@ -88,6 +88,7 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Delete.cpp" />
+    <ClCompile Include="Done.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="ErrorLog.cpp" />
     <ClCompile Include="Load.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="TextStorage.cpp" />
     <ClCompile Include="timeDateInfo.cpp" />
     <ClCompile Include="typeConversions.cpp" />
+    <ClCompile Include="Undone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add.h" />
@@ -110,6 +112,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Delete.h" />
+    <ClInclude Include="Done.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="Exceptions.h" />
@@ -131,6 +134,7 @@
     <ClInclude Include="TextStorage.h" />
     <ClInclude Include="timeDateInfo.h" />
     <ClInclude Include="typeConversions.h" />
+    <ClInclude Include="Undone.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MonthForm.resx">

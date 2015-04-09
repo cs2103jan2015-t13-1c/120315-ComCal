@@ -12,6 +12,8 @@
 #include "keywords.h"
 #include "TextStorage.h"
 #include "typeConversions.h"
+#include "Done.h"
+#include "Undone.h"
 
 #include <string>
 #include <vector>

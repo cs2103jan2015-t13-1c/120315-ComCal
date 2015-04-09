@@ -42,6 +42,8 @@ public:
 	void setEndDate(Date*);
 	void hide();
 	void display();
+	void done();
+	void undone();
 
 	std::string toString();
 	std::string toGUIString();

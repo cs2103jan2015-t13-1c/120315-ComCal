@@ -13,15 +13,6 @@ Delete::Delete() : Command() {
 Delete::~Delete() {
 }
 
-bool Delete::checkDateBefore(Date* dateToBeChecked, Date* dateToCheckWith) {
-	if (dateToBeChecked->getTimeT() < dateToCheckWith->getTimeT()) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 void Delete::process(std::string argument) {
 	if (support::isSpacesOnly(argument)) {
 		throw exceptionInputInvalidSpacesOnly;
@@ -30,17 +21,17 @@ void Delete::process(std::string argument) {
 	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
 
 	bool isProcessed = false;
-	for (int i = 0; i < DELETEBEFOREKEYWORDSARRAYSIZE; i++) {
-		int deleteBeforeKeywordPos = argument.find(DELETEBEFOREKEYWORDSARRAY[i]);
-		if (deleteBeforeKeywordPos != std::string::npos) {
+	for (int i = 0; i < BEFOREKEYWORDSARRAYSIZE; i++) {
+		int beforeKeywordPos = argument.find(BEFOREKEYWORDSARRAY[i]);
+		if (beforeKeywordPos != std::string::npos) {
 			if (isProcessed) {
-				throw exceptionInputInvalidDeleteParams;
+				throw exceptionInputInvalidDelParams;
 			}
 			isProcessed = true;
-			if (argument.find(DELETEBEFOREKEYWORDSARRAY[i]) != 0) {
-				throw exceptionInputInvalidDeleteParams;
+			if (argument.find(BEFOREKEYWORDSARRAY[i]) != 0) {
+				throw exceptionInputInvalidDelParams;
 			}
-			std::string dateString = argument.substr(DELETEBEFOREKEYWORDSARRAY[i].size());
+			std::string dateString = argument.substr(BEFOREKEYWORDSARRAY[i].size());
 			if(support::isSpacesOnly(dateString)) {
 				throw exceptionInputInvalidSpacesOnly;
 			}
@@ -52,12 +43,12 @@ void Delete::process(std::string argument) {
 			for (int j = 0; j < numOfTasks; j++) {
 				Task* task = TextStorage::getInstance()->getTask(j);
 				if (task->hasStartDate() && task->hasEndDate() || task->hasEndDate()) {
-					if (checkDateBefore(task->getEndDate(), date)) {
+					if (support::checkDateBefore(task->getEndDate(), date)) {
 						_deletedTasksIndexes.push_back(j + 1);
 					}
 				}
 				else if (task->hasStartDate()) {
-					if (checkDateBefore(task->getStartDate(), date)) {
+					if (support::checkDateBefore(task->getStartDate(), date)) {
 						_deletedTasksIndexes.push_back(j + 1);
 					}
 				}
@@ -66,9 +57,9 @@ void Delete::process(std::string argument) {
 	}
 
 	if (!isProcessed) {
-		if (argument.find(DELETEALLKEYWORD) != std::string::npos) {
-			if (argument.find(DELETEALLKEYWORD) > 0) {
-				throw exceptionInputInvalidDeleteParams;
+		if (argument.find(ALLKEYWORD) != std::string::npos) {
+			if (argument.find(ALLKEYWORD) > 0) {
+				throw exceptionInputInvalidDelParams;
 			}
 			for (int i = 0; i < numOfTasks; i++) {
 				_deletedTasksIndexes.push_back(i+1);

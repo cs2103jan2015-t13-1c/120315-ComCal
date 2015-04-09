@@ -44,6 +44,8 @@ const std::string INPUTERROR_STARTLATERTHANENDTIME = "INPUT ERROR: Start time is
 const std::string INPUTERROR_MISSINGTASKINDEX = "INPUT ERROR: Missing task index(es) - pls enter number index(es) of desired task(s) from above task display. If there are no tasks displayed above, pls display tasks by entering show command. " + INPUTHELP_SHOW;
 const std::string INPUTERROR_INVALIDTASKINDEX = "INPUT ERROR: Invalid task index format - pls enter number index of desired task.";
 const std::string INPUTERROR_INVALIDDELPARAMS = "INPUT ERROR: Invalid delete parameters - pls see below for valid parameter formats: " + INPUTHELP_DEL;
+const std::string INPUTERROR_INVALIDDONEPARAMS = "INPUT ERROR: Invalid done parameters - pls see below for valid parameter formats: " + INPUTHELP_DONE;
+const std::string INPUTERROR_INVALIDUNDONEPARAMS = "INPUT ERROR: Invalid undone parameters - pls see below for valid parameter formats: " + INPUTHELP_UNDONE;
 const std::string INPUTERROR_INVALIDATTRIBUTEKEYWORD = "INPUT ERROR: Invalid attribute keyword - pls see below for valid keywords: " + INPUTHELP_ATTRIBUTEKEYWORDS;
 const std::string INPUTERROR_INVALIDEDITREMOVEDESCRIPTION = "INPUT ERROR: Cannot remove description - every task requires a description.";
 const std::string INPUTERROR_NOEXISTINGDATE = "INPUT ERROR: No existing date - pls specify a date/day along with the time.";
@@ -97,12 +99,26 @@ class ExceptionInputInvalidTimeRangeEndMissing : public std::exception {
 	}
 } static exceptionInputInvalidTimeRangeEndMissing;
 
-class ExceptionInputInvalidDeleteParams : public std::exception {
+class ExceptionInputInvalidDelParams : public std::exception {
 	const char* what() const throw()
 	{
 		return INPUTERROR_INVALIDDELPARAMS.c_str();
 	}
-} static exceptionInputInvalidDeleteParams;
+} static exceptionInputInvalidDelParams;
+
+class ExceptionInputInvalidDoneParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDONEPARAMS.c_str();
+	}
+} static exceptionInputInvalidDoneParams;
+
+class ExceptionInputInvalidUndoneParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDUNDONEPARAMS.c_str();
+	}
+} static exceptionInputInvalidUndoneParams;
 
 class ExceptionInputInvalidTime : public std::exception {
 	const char* what() const throw()

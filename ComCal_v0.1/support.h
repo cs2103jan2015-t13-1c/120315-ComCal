@@ -63,4 +63,11 @@ namespace support {
 	trims any leading and ending spaces of input reference string. 
 	**************************************************************************************************************/
 	bool isSpacesOnly(std::string&);
+
+	/*************************************************************************************************************
+	Name: checkDateBefore
+	Type: support namespace method
+	Purpose: Checks and returns true if first input date is before second input date, returns false otherwise.
+	**************************************************************************************************************/
+	bool checkDateBefore(Date*, Date*);
 }

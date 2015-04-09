@@ -11,6 +11,8 @@ static const std::string COMMAND_SAVE = "save";
 static const std::string COMMAND_SEARCH = "search";
 static const std::string COMMAND_SHOW = "show";
 static const std::string COMMAND_UNDO = "undo";
+static const std::string COMMAND_DONE = "done";
+static const std::string COMMAND_UNDONE = "undone";
 
 // Strings for date input
 static const std::string DATE_YESTERDAY = "yesterday";
@@ -42,9 +44,9 @@ static const int INDEX_ENDDATETIME = 2;
 static const int INDEX_LOCATION = 3;
 
 //Delete before certain date/time command keywords:
-static const int DELETEBEFOREKEYWORDSARRAYSIZE = 2;
-static const std::string DELETEBEFOREKEYWORDSARRAY[DELETEBEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };
-static const std::string DELETEALLKEYWORD = "all";
+static const int BEFOREKEYWORDSARRAYSIZE = 2;
+static const std::string BEFOREKEYWORDSARRAY[BEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };
+static const std::string ALLKEYWORD = "all";
 
 //Integer string:
 static const std::string INTS = "0123456789";

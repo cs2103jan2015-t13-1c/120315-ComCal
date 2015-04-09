@@ -308,11 +308,9 @@ std::string Edit::prepareFeedback(){
 	std::string feedback = "Edited ";
 	std::string taskDisplay;
 	
-	std::string originalType;
-	originalType = support::getTaskType(_originalTask->getTaskTypeCode());
+	std::string originalType = support::getTaskType(_originalTask->getTaskTypeCode());
 
-	std::string editedType;
-	editedType = support::getTaskType(_editedTask->getTaskTypeCode());
+	std::string editedType = support::getTaskType(_editedTask->getTaskTypeCode());
 
 	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
 		if (editedType == TASKTYPE_DEADLINE) {

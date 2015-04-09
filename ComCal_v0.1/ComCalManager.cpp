@@ -61,6 +61,9 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		feedBackMessage = command->execute(argument);
 		_commandHistory.push(command);
 		populateSideBar();
+		while (_undoHistory.empty()) {
+			_undoHistory.pop();
+		}
 	}
 	else if (function.compare(COMMAND_EDIT) == 0) {
 		command = new Edit();
@@ -72,6 +75,12 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		command = new Load();
 		feedBackMessage = command->execute(argument);
 		populateSideBar();
+		while (_commandHistory.empty()) {
+			_commandHistory.pop();
+		}
+		while (_undoHistory.empty()) {
+			_undoHistory.pop();
+		}
 	}
 	else if (function.compare(COMMAND_REDO) == 0) {
 		if (!_undoHistory.empty()) {
@@ -111,6 +120,16 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		else {
 			feedBackMessage = "Error: No previous actions to undo.";
 		}
+	}
+	else if (function.compare(COMMAND_DONE) == 0) {
+		command = new Done();
+		feedBackMessage = command->execute(argument);
+		populateSideBar();
+	}
+	else if (function.compare(COMMAND_UNDONE) == 0) {
+		command = new Undone();
+		feedBackMessage = command->execute(argument);
+		populateSideBar();
 	}
 	else {
 		feedBackMessage = INVALID_COMMAND;

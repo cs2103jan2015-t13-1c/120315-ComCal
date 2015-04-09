@@ -86,6 +86,14 @@ bool Task::getIsDone() {
 	return _isDone;
 }
 
+void Task::done() {
+	_isDone = true;
+}
+
+void Task::undone() {
+	_isDone = false;
+}
+
 bool Task::hasStartDate() {
 	return !(_startDate == NULL);
 }
@@ -109,22 +117,34 @@ void Task::setLocation(std::string location) {
 void Task::setStartDate(Date* startDate) {
 	_startDate = startDate;
 
-	if (_endDate == NULL) {
+	if (_startDate != NULL&&_endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
+	else if (_startDate != NULL && _endDate == NULL) {
 		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
 	}
+	else if (_startDate == NULL && _endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_DEADLINE;
+	}
 	else {
-		_taskTypeCode = TASKTYPECODE_TIMED;
+		_taskTypeCode = TASKTYPECODE_FLOATING;
 	}
 }
 
 void Task::setEndDate(Date* endDate) {
 	_endDate = endDate;
 
-	if (_startDate == NULL) {
+	if (_startDate != NULL&&_endDate != NULL) {
+		_taskTypeCode = TASKTYPECODE_TIMED;
+	}
+	else if (_startDate != NULL && _endDate == NULL) {
+		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
+	}
+	else if (_startDate == NULL && _endDate != NULL) {
 		_taskTypeCode = TASKTYPECODE_DEADLINE;
 	}
 	else {
-		_taskTypeCode = TASKTYPECODE_TIMED;
+		_taskTypeCode = TASKTYPECODE_FLOATING;
 	}
 }
 
