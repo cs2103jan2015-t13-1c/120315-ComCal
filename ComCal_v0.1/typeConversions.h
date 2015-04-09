@@ -18,6 +18,7 @@ namespace typeConversions{
 	bool isNumber(std::string str);
 
 	std::string toLowerCase(std::string str);
+	std::string trimExtraSpaces(std::string str);
 
 	void convertArrStrToConststrArr(array<System::String^>^, const char**, int);
 }

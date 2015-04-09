@@ -139,17 +139,40 @@ struct tm* ComCalManager::getTimeDetails(){
 }
 
 void ComCalManager::populateSideBar() {
-
-	_sideBarTitle = ALL_TODO_TITLE;
-
 	int todoSize = TextStorage::getInstance()->getNumberOfTasks();
 
 	_sideBarView->clear();
 	Task* tempTask;
+	Date* startDate;
+	Date* endDate;
+	std::string location;
 	for (int i = 0; i < todoSize; i++) {
 		tempTask = TextStorage::getInstance()->getTask(i);
 		if (!tempTask->isHidden()) {
-			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toGUIString());
+			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + "Desc: " + tempTask->getDescription() + " [" + (tempTask->getIsDone() ? "done" : "todo") + "]");
+
+			if (tempTask->hasStartDate()) {
+				startDate = tempTask->getStartDate();
+				if (tempTask->hasEndDate()) { // Has both start date and end date
+					endDate = tempTask->getEndDate();
+					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + startDate->getTimeString()
+											    + " to " + endDate->toGUIString() + " " + endDate->getTimeString());
+				}
+				else { // Has only start date
+					_sideBarView->push_back("    Time: " + startDate->toGUIString() + " " + startDate->getTimeString());
+				}
+			}
+			else if (tempTask->hasEndDate()) { // Has only end date
+				endDate = tempTask->getEndDate();
+				_sideBarView->push_back("    Time: by " + endDate->toGUIString() + " " + endDate->getTimeString());
+			}
+
+			location = tempTask->getLocation();
+			if (location.size() > 0) {
+				_sideBarView->push_back("    Loc: " + location);
+			}
+
+			_sideBarView->push_back("");
 		}
 	}
 }

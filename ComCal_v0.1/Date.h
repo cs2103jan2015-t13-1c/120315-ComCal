@@ -33,11 +33,15 @@ public:
 	int getYear();
 	int getTime();
 	time_t getTimeT();
+	std::string getTimeString();
 
 	bool operator==(const Date &date); // Only makes sure same date; does not check time
+	bool operator>(const Date &date);
+	bool isDateDefined();
 
 	// Setter methods
 	bool setDate(std::string date);
+	bool setDate(std::string date, Date* startDate);
 	bool setTime(int);
 	void setEndOfWeek();
 	void setEndOfDay();

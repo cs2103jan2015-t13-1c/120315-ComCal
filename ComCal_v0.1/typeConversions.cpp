@@ -44,6 +44,18 @@ std::string typeConversions::toLowerCase(std::string str) {
 	return str;
 }
 
+// Removes the extra spaces in the string, eg. "a bc   def  ghi" becomes "a bc def ghi"
+std::string typeConversions::trimExtraSpaces(std::string str) {
+	while (true) {
+		int find = str.find("  ");
+		if ((find == -1) || (find == std::string::npos)) {
+			return str;
+		}
+		str = str.substr(0, find) + str.substr(find + 1, str.length() - find - 1);
+	}
+	return str;
+}
+
 void typeConversions::convertArrStrToConststrArr(array<System::String^>^ fileNames, const char** strFilesNames, int numOfSpecifiedFiles) {
 
 	msclr::interop::marshal_context^ context = gcnew msclr::interop::marshal_context();

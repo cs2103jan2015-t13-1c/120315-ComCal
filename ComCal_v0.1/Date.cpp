@@ -12,7 +12,10 @@ Date::Date(int day, int month, int year, int time) {
 }
 
 Date::Date() {
-	_time = NULL;
+	_day = 0;
+	_month = 0;
+	_year = 0;
+	_time = 0;
 }
 
 Date::~Date() {
@@ -40,7 +43,7 @@ std::string Date::toString() {
 }
 
 std::string Date::toGUIString(){
-	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year));
+	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year%100));
 }
 
 int Date::getDay() {
@@ -68,13 +71,63 @@ time_t Date::getTimeT() {
 	return mktime(dateTimeInfo);
 }
 
+std::string Date::getTimeString() {
+	std::string str = typeConversions::intToString(_time);
+	while (str.size() < 4) {
+		str = "0" + str;
+	}
+	return str;
+}
+
+// Only makes sure same date; does not check time
 bool Date::operator==(const Date &date) {
-	if (_day != date._day)
+	if (_day != date._day) {
 		return false;
-	if (_month != date._month)
+	}
+	if (_month != date._month) {
 		return false;
-	if (_year != date._year)
+	}
+	if (_year != date._year) {
 		return false;
+	}
+	return true;
+}
+
+bool Date::operator>(const Date &date) {
+	if (_year > date._year) {
+		return true;
+	}
+	if (_year < date._year) {
+		return false;
+	}
+	if (_month > date._month) {
+		return true;
+	}
+	if (_month < date._month) {
+		return false;
+	}
+	if (_day > date._day) {
+		return true;
+	}
+	if (_day < date._day) {
+		return false;
+	}
+	if (_time > date._time) {
+		return true;
+	}
+	return false;
+}
+
+bool Date::isDateDefined() {
+	if (_day == 0) {
+		return false;
+	}
+	if (_month == 0) {
+		return false;
+	}
+	if (_year == 0) {
+		return false;
+	}
 	return true;
 }
 
@@ -191,7 +244,16 @@ bool Date::setDate(std::string date) {
 					}
 				}
 				else {
-					return false;
+					// Check if current date is uninitialized. If it is, return false.
+					if (!isDateDefined()) {
+						return false;
+					}
+					// Else, it has been set a date already, so set the time
+					if (!typeConversions::isNumber(date)) {
+						return false;
+					}
+					_time = typeConversions::stringToInt(date);
+					return true;
 				}
 			}
 		}
@@ -200,6 +262,12 @@ bool Date::setDate(std::string date) {
 			if (slash2 == std::string::npos) {
 				return false;
 			}
+<<<<<<< HEAD
+=======
+			if (date.size() != 10) {
+				return false;
+			}
+>>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {
 				_year = typeConversions::stringToInt(date.substr(slash2 + 1))-1900;
 				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, slash2-(slash1+1)))) {
@@ -308,6 +376,20 @@ bool Date::setDate(std::string date) {
 		}
 	}
 
+	return true;
+}
+
+//@author A0119754X
+// If the date string has no date, then set it to be the same as the date in start date
+bool Date::setDate(std::string date, Date* startDate) {
+	if (startDate != NULL) {
+		_day = startDate->_day;
+		_month = startDate->_month;
+		_year = startDate->_year;
+	}
+	if (!setDate(date)) {
+		return false;
+	}
 	return true;
 }
 

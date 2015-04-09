@@ -29,6 +29,7 @@ private:
 	bool _usesTo;
 	bool _usesBy;
 	bool _usesIn;
+	bool _hasLocation;
 	bool _hasStartDate;
 	bool _hasEndDate;
 

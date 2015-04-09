@@ -140,7 +140,7 @@ int Task::getTaskTypeCode() {
 	return _taskTypeCode;
 }
 
-// Converts the Task object into a String to save into text file
+// Gets the string of this task to be shown in the feedback box
 std::string Task::toString() {
 	std::string returnString = "";
 	switch (_taskTypeCode) {
@@ -158,6 +158,7 @@ std::string Task::toString() {
 		break;
 	} 
 		
+<<<<<<< HEAD
 	returnString += " task - " + DESCRIPTION + ": \"" + _description + "\"";
 
 	if (hasStartDate()) {
@@ -171,11 +172,14 @@ std::string Task::toString() {
 	if (_location != "") {
 		returnString += "; " + LOCATION + ": \"" + _location + "\"";
 	}
+=======
+	returnString += " task - " + toGUIString();
+>>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 
 	return returnString;
 }
 
-// Converts Task object into a string for GUI
+// Gets the string of this task to be rendered in GUI elements, ie. calendar, sidebar, etc.
 std::string Task::toGUIString() {
 	std::string returnString = DESCRIPTION + ": \"" + _description + "\"; ";
 	
@@ -187,8 +191,13 @@ std::string Task::toGUIString() {
 		returnString += ENDDATETIME + ": " + _endDate->toString() + "; ";
 	}
 
+<<<<<<< HEAD
 	if (_location != "") {
 		returnString += LOCATION + ": \"" + _location + "\"";
+=======
+	if (_location.size() > 0) {
+		returnString += LOCATION + ": " + _location;
+>>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 	}
 
 	return returnString;

@@ -2,10 +2,6 @@
 // Implementation of functions in the Add class
 //@author A0119754X
 
-// TODO Have Date handle strings like "Tuesday", "Friday", "next Wednesday", "last Saturday", etc.
-// TODO Implement "no end date, only end time" so that end date = start date
-// TODO Make sure that end date > start date
-
 #include "Add.h"
 
 Add::Add() : Command() {
@@ -22,7 +18,7 @@ std::string Add::checkIfValid() {
 	// Check if argument is valid
 	
 	if (!canFind(_l)) {
-		return "Invalid add command: No location given";
+		_hasLocation = false;
 	}
 	if (!canFind(_s)) {
 		_hasStartDate = false;
@@ -36,16 +32,16 @@ std::string Add::checkIfValid() {
 	if ((_hasEndDate) && (_d > _e)) {
 		return "Invalid add command: Description should be given before end date/time";
 	}
-	if (_d > _l) {
+	if ((_hasLocation) && (_d > _l)) {
 		return "Invalid add command: Description should be given before location";
 	}
 	if ((_hasStartDate) && (_hasEndDate) && (_s > _e)) {
 		return "Invalid add command: Start date/time should be given before end date/time";
 	}
-	if ((_hasStartDate) && (_s > _l)) {
+	if ((_hasStartDate) && (_hasLocation) && (_s > _l)) {
 		return "Invalid add command: Start date/time (" + typeConversions::intToString(_s) + ") should be given before location (" + typeConversions::intToString(_l) + ")";
 	}
-	if ((_hasEndDate) && (_e > _l)) {
+	if ((_hasEndDate) && (_hasLocation) && (_e > _l)) {
 		return "Invalid add command: End date/time should be given before location";
 	}
 
@@ -89,6 +85,12 @@ void Add::findDSEL() {
 		_l = _argument.find(" in ");
 		if (canFind(_l)) {
 			_usesIn = true;
+		}
+		else {
+			_l = _argument.find(" at ");
+			if (canFind(_l)) {
+				_usesIn = true;
+			}
 		}
 	}
 }
@@ -158,14 +160,16 @@ void Add::getFourParameters() {
 		_endDate = _argument.substr(position, length);
 	}
 	
-	if (_usesIn) {
-		position = _l + 4;
+	if (_hasLocation) {
+		if (_usesIn) {
+			position = _l + 4;
+		}
+		else {
+			position = _l + 3;
+		}
+		length = _argument.length() - position;
+		_location = _argument.substr(position, length);
 	}
-	else {
-		position = _l + 3;
-	}
-	length = _argument.length() - position;
-	_location = _argument.substr(position, length);
 }
 
 std::string Add::execute(std::string argument) {
@@ -173,7 +177,7 @@ std::string Add::execute(std::string argument) {
 	// 1) .d, _			(indicates description)
 	// 2) .s, from, on	(indicates start date and time)
 	// 3) .e, to, by	(indicates end date and time)
-	// 4) .l, in		(indicates location)
+	// 4) .l, in, at	(indicates location)
 
 	// Available add formats:
 	// 1) All four delimiters in
@@ -182,6 +186,7 @@ std::string Add::execute(std::string argument) {
 	// 3) No start date and time
 	// 4) No end date and time
 	// 5) Neither start date and time nor end date and time
+	// Location is now optional as well
 
 	// string::find() returns string::npos if no matches are found
 	// string::substr() takes in position and length as arguments
@@ -196,6 +201,7 @@ std::string Add::execute(std::string argument) {
 	_usesIn = false; // "from", which is 6
 	_hasStartDate = true;
 	_hasEndDate = true;
+	_hasLocation = true;
 
 	_description = "";
 	_startDate = "";
@@ -221,14 +227,27 @@ std::string Add::execute(std::string argument) {
 	}
 	if (_hasEndDate) {
 		objEndDate = new Date();
-		if (!objEndDate->setDate(_endDate)) {
+		if (!objEndDate->setDate(_endDate, objStartDate)) {
 			delete objEndDate;
 			return "Invalid add command: Invalid end date and time format";
 		}
 	}
+<<<<<<< HEAD
 	
 	_addedTask = new Task(_description, _location, objStartDate, objEndDate);
 	TextStorage::getInstance()->addTask(_addedTask);
+=======
+	if ((_hasStartDate) && (_hasEndDate)) {
+		if (*objStartDate > *objEndDate) {
+			delete objStartDate;
+			delete objEndDate;
+			return "Invalid add command: End date must be later than time date";
+		}
+	}
+	Task* newTask = new Task(_description, _location, objStartDate, objEndDate);
+	TextStorage::getInstance()->addTask(newTask);
+	_addedTask = newTask;
+>>>>>>> 38bc7baea9468b564006ea9d36b6e0c333516bd4
 	_taskIndex = TextStorage::getInstance()->getNumberOfTasks();
 
 	return ("Added: " + _addedTask->toString());
