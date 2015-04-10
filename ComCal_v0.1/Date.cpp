@@ -291,6 +291,9 @@ bool Date::setDate(std::string date) {
 				if (!setDate(date.substr(0, space1))) {
 					return false;
 				}
+				if (!timeDateInfo::isTimeValid(time)) {
+					return false;
+				}
 				_time = typeConversions::stringToInt(time);
 			}
 			else { // Either 3 or 4 with no time

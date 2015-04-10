@@ -43,16 +43,28 @@ bool timeDateInfo::isYearValid(std::string yearInput) {
 	return true;
 }
 
-//@author A0085731A
+//@author A0119754X
 bool timeDateInfo::isTimeValid(std::string timeInput) {
+	if (timeInput.size() != 4) {
+		return false;
+	}
 	if (!typeConversions::isNumber(timeInput)) {
 		return false;
 	}
-
-	if (typeConversions::stringToInt(timeInput) < 0 || typeConversions::stringToInt(timeInput) > 2359) {
+	int hour = typeConversions::stringToInt(timeInput.substr(0, 2));
+	if (hour < 0) {
 		return false;
 	}
-
+	if (hour >= 24) {
+		return false;
+	}
+	int minutes = typeConversions::stringToInt(timeInput.substr(2, 2));
+	if (minutes < 0) {
+		return false;
+	}
+	if (minutes >= 60) {
+		return false;
+	}
 	return true;
 }
 
