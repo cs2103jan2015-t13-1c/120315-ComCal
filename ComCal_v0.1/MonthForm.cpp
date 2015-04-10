@@ -73,7 +73,7 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			userInputBox->Text = nullptr;
 		}
 		else if (e->KeyCode == Keys::Y) {
-			// Redo here
+			// Redo
 			ComCalManager* managerInstance = ComCalManager::getInstance();
 			feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand("redo"));
 			guiUpdate();

@@ -304,13 +304,11 @@ int TextStorage::displayDatedTasks(const Date &date) {
 
 int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 	int count = 0;
-	int i = 0;
 	unsigned int todoSize = _todoTasks->size();
 	unsigned int weekSize = weekDate.size();
 
 	//loops through todo task
-//	for (int i = 0; i < todoSize; i++) {
-	while (i<todoSize) {
+	for (int i = 0; i < todoSize; i++) {
 		//loops through weekdate to see if the task at i corresponds to any of the dates in weekdate
 		for (int j = 0; j < weekSize; j++) {
 
@@ -318,7 +316,7 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 				if (_todoTasks->at(i)->getStartDate()->getDay() == weekDate[j].getDay() && _todoTasks->at(i)->getStartDate()->getMonth() == weekDate[j].getMonth() && _todoTasks->at(i)->getStartDate()->getYear() == weekDate[j].getYear()) {
 					_todoTasks->at(i)->display();
 					count++;
-//					break;
+					break;
 				}
 				else {
 					_todoTasks->at(i)->hide();
@@ -328,7 +326,7 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 				if (_todoTasks->at(i)->getEndDate()->getDay() == weekDate[j].getDay() && _todoTasks->at(i)->getEndDate()->getMonth() == weekDate[j].getMonth() && _todoTasks->at(i)->getEndDate()->getYear() == weekDate[j].getYear()) {
 					_todoTasks->at(i)->display();
 					count++;
-//					break;
+					break;
 				}
 				else {
 					_todoTasks->at(i)->hide();
@@ -336,7 +334,6 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 
 			}
 		}
-		i++;
 	}
 	return count;
 }
