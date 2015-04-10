@@ -443,17 +443,20 @@ bool TextStorage::loadTasks(std::string fileName)
 
 	std::string description;
 	std::string location;
+	std::string isDone;
 	Date* startDate;
 	Date* endDate;
 	int day;
 	int month;
 	int year;
 	int time;
+	Task* task;
 	xml_node<>* dateNode;
 
 	for (xml_node<>* taskNode = xmlDocument.first_node("task"); taskNode != NULL; taskNode = taskNode->next_sibling()) {
 		description = taskNode->first_node("description")->value();
 		location = taskNode->first_node("location")->value();
+		isDone = taskNode->first_node("isDone")->value();
 
 		startDate = NULL;
 		endDate = NULL;
@@ -477,8 +480,12 @@ bool TextStorage::loadTasks(std::string fileName)
 				}
 			}
 		}
-
-		_todoTasks->push_back(new Task(description, location, startDate, endDate));
+		
+		task = new Task(description, location, startDate, endDate);
+		if (isDone.compare("true") == 0) {
+			task->done();
+		}
+		_todoTasks->push_back(task);
 	}
 
 	return true;
