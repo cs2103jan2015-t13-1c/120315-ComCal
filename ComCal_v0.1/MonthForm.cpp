@@ -64,10 +64,22 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			userInputBox->Text = nullptr;
 		}
 		else if (e->KeyCode == Keys::Z) {
-			// Undo here
+			// Undo
+			ComCalManager* managerInstance = ComCalManager::getInstance();
+			feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand("undo"));
+			guiUpdate();
+			feedBackBox->Text = feedBack;
+			managerInstance->resetCommandIndex();
+			userInputBox->Text = nullptr;
 		}
 		else if (e->KeyCode == Keys::Y) {
 			// Redo here
+			ComCalManager* managerInstance = ComCalManager::getInstance();
+			feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand("redo"));
+			guiUpdate();
+			feedBackBox->Text = feedBack;
+			managerInstance->resetCommandIndex();
+			userInputBox->Text = nullptr;
 		}
 		_ctrlHeld = false;
 	}
@@ -77,7 +89,6 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		}
 		else{
 			ComCalManager* managerInstance = ComCalManager::getInstance();
-			managerInstance->resetCommandIndex();
 			try {
 				feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));	
 			}
@@ -86,9 +97,8 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			}
 
 			guiUpdate();
-
 			feedBackBox->Text = feedBack;
-
+			managerInstance->resetCommandIndex();
 			userInputBox->Text = nullptr;
 		}
 	}
