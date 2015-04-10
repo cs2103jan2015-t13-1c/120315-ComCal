@@ -56,13 +56,30 @@ void MonthForm::guiUpdate() {
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	String^ feedBack;
 
-	if (e->KeyCode == Keys::Enter) {
+	if (_ctrlHeld) {
+		if (e->KeyCode == Keys::D) {
+			setCalendarDate_MonthForm(timeDateInfo::setStructTm());
+			guiUpdate();
+			feedBackBox->Text = typeConversions::convertstrToStr("show reset");
+			userInputBox->Text = nullptr;
+		}
+		else if (e->KeyCode == Keys::Z) {
+			// Undo here
+		}
+		else if (e->KeyCode == Keys::Y) {
+			// Redo here
+		}
+		_ctrlHeld = false;
+	}
+	else if (e->KeyCode == Keys::Enter) {
 		if (userInputBox->Text == "exit" || userInputBox->Text == "close") {
 			Application::Exit();
 		}
 		else{
+			ComCalManager* managerInstance = ComCalManager::getInstance();
+			managerInstance->resetCommandIndex();
 			try {
-				feedBack = typeConversions::convertstrToStr(ComCalManager::getInstance()->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));	
+				feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));	
 			}
 			catch (std::exception& exception) {
 				feedBack = typeConversions::convertstrToStr(exception.what());
@@ -75,21 +92,18 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 			userInputBox->Text = nullptr;
 		}
 	}
-
-	if (e->KeyCode == Keys::D) {
-		if (_ctrlHeld == true) {
-			setCalendarDate_MonthForm(timeDateInfo::setStructTm());
-
-			_ctrlHeld = false;
-		}
+	else if (e->KeyCode == Keys::Up) {
+		std::string str = ComCalManager::getInstance()->moveCommandIndexUp();
+		userInputBox->Text = ((str.size() <= 0) ? nullptr : typeConversions::convertstrToStr(str));
+	}
+	else if (e->KeyCode == Keys::Down) {
+		std::string str = ComCalManager::getInstance()->moveCommandIndexDown();
+		userInputBox->Text = ((str.size() <= 0) ? nullptr : typeConversions::convertstrToStr(str));
 	}
 }
 
 System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
-
-	_ctrlHeld = false;
-
-	if (e->KeyCode == Keys::Control) {
+	if (e->KeyCode == Keys::ControlKey) {
 		_ctrlHeld = true;
 	}
 }

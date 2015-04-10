@@ -7,6 +7,7 @@
 ComCalManager* ComCalManager::_instance = NULL;
 
 ComCalManager::ComCalManager(){
+	_commandIndex = 0;
 	_sideBarView = new std::vector<std::string>();
 	_timeDetails = timeDateInfo::setStructTm();
 }
@@ -33,6 +34,8 @@ ComCalManager::~ComCalManager() {
 }
 
 std::string ComCalManager::deduceCommand(std::string userInput) {
+	_commands.push_back(userInput);
+	resetCommandIndex();
 	std::string feedBackMessage;
 
 	int space = userInput.find(" ");
@@ -196,10 +199,35 @@ void ComCalManager::populateSideBar() {
 	}
 }
 
-void ComCalManager::setSideBarTitle(std::string sideBarTitle){
+void ComCalManager::setTimeDetails(struct tm* timeDetails) {
+	_timeDetails = timeDetails;
+}
+
+void ComCalManager::setSideBarTitle(std::string sideBarTitle) {
 	_sideBarTitle = sideBarTitle;
 }
 
-void ComCalManager::setTimeDetails(struct tm* timeDetails){
-	_timeDetails = timeDetails;
+void ComCalManager::resetCommandIndex() {
+	_commandIndex = _commands.size();
+}
+
+std::string ComCalManager::moveCommandIndexUp() {
+	_commandIndex--;
+	if (_commandIndex < 0) {
+		_commandIndex = 0;
+	}
+	if (_commands.size() <= 0) {
+		return "";
+	}
+	return _commands[_commandIndex];
+}
+
+std::string ComCalManager::moveCommandIndexDown() {
+	_commandIndex++;
+	int size = _commands.size();
+	if (_commandIndex >= size) {
+		_commandIndex = size;
+		return "";
+	}
+	return _commands[_commandIndex];
 }

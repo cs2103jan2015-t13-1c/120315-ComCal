@@ -31,6 +31,9 @@ private:
 	std::string _sideBarTitle;
 	struct tm* _timeDetails;
 
+	int _commandIndex;
+	std::vector<std::string> _commands;
+
 	std::stack<Command*> _commandHistory;
 	std::stack<Command*> _undoHistory;
 public:
@@ -56,4 +59,8 @@ public:
 	void populateSideBar();
 	void setTimeDetails(struct tm*);
 	void setSideBarTitle(std::string);
+
+	void resetCommandIndex();
+	std::string moveCommandIndexUp();
+	std::string moveCommandIndexDown();
 };
