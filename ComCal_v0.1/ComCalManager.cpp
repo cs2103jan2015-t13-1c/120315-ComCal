@@ -198,10 +198,6 @@ void ComCalManager::populateSideBar() {
 	}
 }
 
-void ComCalManager::setTimeDetails(struct tm* timeDetails) {
-	_timeDetails = timeDetails;
-}
-
 void ComCalManager::setSideBarTitle(std::string sideBarTitle) {
 	_sideBarTitle = sideBarTitle;
 }

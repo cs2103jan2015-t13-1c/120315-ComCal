@@ -222,14 +222,14 @@ std::string Add::execute(std::string argument) {
 		objStartDate = new Date();
 		if (!objStartDate->setDate(_startDate)) {
 			delete objStartDate;
-			return "Invalid add command: Invalid start date and time format (please enter: DD/MM/YY HHMM)";
+			return "Invalid add command: Invalid start date and time format (please enter: DD/MM/YYYY HHMM)";
 		}
 	}
 	if (_hasEndDate) {
 		objEndDate = new Date();
 		if (!objEndDate->setDate(_endDate, objStartDate)) {
 			delete objEndDate;
-			return "Invalid add command: Invalid end date and time format (please enter: DD/MM/YY HHMM)";
+			return "Invalid add command: Invalid end date and time format (please enter: DD/MM/YYYY HHMM)";
 		}
 	}
 

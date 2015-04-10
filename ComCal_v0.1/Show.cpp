@@ -78,7 +78,7 @@ std::string Show::execute(std::string argument) {
 						else {
 							count = TextStorage::getInstance()->displayMonthTasks(year, i + 1);
 							struct tm* date = timeDateInfo::setStructTm(year, i);
-							ComCalManager::getInstance()->setTimeDetails(date);
+							//ComCalManager::getInstance()->setTimeDetails(date);
 							ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
 							return firstArg + " " + secArg + " shown (count: " + typeConversions::intToString(count) + ")";
@@ -234,7 +234,7 @@ std::string Show::execute(std::string argument) {
 				struct tm* date = timeDateInfo::setStructTm(month);
 				int year = date->tm_year + 1900;
 				count = TextStorage::getInstance()->displayMonthTasks(year, month + 1);
-				ComCalManager::getInstance()->setTimeDetails(date);
+				//ComCalManager::getInstance()->setTimeDetails(date);
 				ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
 				return (timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown (count: " + typeConversions::intToString(count) + ")");

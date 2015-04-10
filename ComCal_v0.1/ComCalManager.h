@@ -57,7 +57,6 @@ public:
 
 	//Setter methods
 	void populateSideBar();
-	void setTimeDetails(struct tm*);
 	void setSideBarTitle(std::string);
 
 	void resetCommandIndex();
