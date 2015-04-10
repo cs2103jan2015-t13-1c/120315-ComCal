@@ -3,20 +3,20 @@
 #include <vector>
 #include <time.h>
 
-//DD, MM, YY length constant int declarations:
+// DD, MM, YY length constant int declarations:
 const int LENGTH_MDAYINPUT = 2;
 const int LENGTH_MONTHINPUT = 2;
 const int LENGTH_YEARINPUT = 2;
 
-//Length of time input constant int declarations:
+// Length of time input constant int declarations:
 const int LENGTH_TIMEINPUT = 4;
 const int LENGTH_HOURINPUT = 2;
 const int LENGTH_MININPUT = 2;
 
-//Leading 0 for date/time formatting constant string declaration:
+// Leading 0 for date/time formatting constant string declaration:
 const std::string leadingZero = "0";
 
-//DD/MM/YY date input seperator constant string and index int declarations:
+// DD/MM/YY date input seperator constant string and index int declarations:
 const int SIZE_SEPARATORSARRAY = 1;
 const char SEPARATORS[SIZE_SEPARATORSARRAY] = { '/' };
 
@@ -28,7 +28,7 @@ namespace timeDateInfo {
 
 	//checks if the mday, month and year number is valid
 	//Argument: string in format of "DD", "MM", "YYYY"
-	bool isMdayValid(std::string, std::string, std::string);	//Assumes month and year string inputs are valid.
+	bool isMdayValid(std::string, int, int);	//Assumes month and year string inputs are valid.
 	bool isMonthValid(std::string);
 	bool isYearValid(std::string);
 

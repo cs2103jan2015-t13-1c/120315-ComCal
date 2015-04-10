@@ -266,24 +266,23 @@ bool Date::setDate(std::string date) {
 				return false;
 			}
 
-			if (timeDateInfo::isYearValid(date.substr(slash2 + 1))) {
-				_year = typeConversions::stringToInt(date.substr(slash2 + 1))-1900;
-				if (timeDateInfo::isMonthValid(date.substr(slash1 + 1, slash2-(slash1+1)))) {
-					_month = typeConversions::stringToInt(date.substr(slash1 + 1, slash2-(slash1+1)));
-					if (timeDateInfo::isMdayValid(date.substr(0, slash1), date.substr(slash1 + 1, slash2-(slash1+1)), date.substr(slash2 + 1))) {
-						_day = typeConversions::stringToInt(date.substr(0, slash1));
-					}
-					else {
-						return false;
-					}
-				}
-				else {
-					return false;
-				}
-			}
-			else {
+			std::string tempString = date.substr(slash2 + 1); // YYYY
+			if (!timeDateInfo::isYearValid(tempString)) {
 				return false;
 			}
+			_year = typeConversions::stringToInt(tempString) - 1900;
+
+			tempString = date.substr(slash1 + 1, slash2 - slash1 - 1); // MM
+			if (!timeDateInfo::isMonthValid(tempString)) {
+				return false;
+			}
+			_month = typeConversions::stringToInt(tempString);
+
+			tempString = date.substr(0, slash1); // DD
+			if (!timeDateInfo::isMdayValid(tempString, _month, _year + 1900)) {
+				return false;
+			}
+			_day = typeConversions::stringToInt(tempString);
 		}
 	}
 	else {

@@ -5,12 +5,12 @@
 //key in all error messages inside keywords.h as const std::strings
 
 //@author A0085731A
-bool timeDateInfo::isMdayValid(std::string mdayInput, std::string monthInput, std::string yearInput) {
+bool timeDateInfo::isMdayValid(std::string mdayInput, int month, int year) {
 	if (!typeConversions::isNumber(mdayInput)) {
 		return false;
 	}
 
-	int numDaysInMonth = timeDateInfo::getDaysInMonth(typeConversions::stringToInt(monthInput) - 1, typeConversions::stringToInt(yearInput) - 1900);
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(month - 1, year - 1900);
 
 	if (typeConversions::stringToInt(mdayInput) < 1 || typeConversions::stringToInt(mdayInput) > numDaysInMonth) {
 		return false;
@@ -23,11 +23,13 @@ bool timeDateInfo::isMonthValid(std::string monthInput) {
 	if (!typeConversions::isNumber(monthInput)) {
 		return false;
 	}
-
-	if (typeConversions::stringToInt(monthInput) < 0 || typeConversions::stringToInt(monthInput) > 11) {
+	int month = typeConversions::stringToInt(monthInput);
+	if (month <= 0) {
 		return false;
 	}
-
+	if (month > 12) {
+		return false;
+	}
 	return true;
 }
 
