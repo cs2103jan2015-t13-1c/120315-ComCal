@@ -147,14 +147,15 @@ bool Date::setDate(std::string date) {
 	if (space1 == std::string::npos) { // No spaces. Either 1 or 2
 		int slash1 = date.find("/");
 		if (slash1 == std::string::npos) { // Input format number 2
-			struct tm* currentTime = timeDateInfo::setStructTm();
 			date = typeConversions::toLowerCase(date);
 			if (date.compare(DATE_TODAY) == 0) {
+				struct tm* currentTime = timeDateInfo::setStructTm();
 				_day = currentTime->tm_mday;
 				_month = currentTime->tm_mon + 1;
 				_year = currentTime->tm_year;
 			}
 			else if (date.compare(DATE_YESTERDAY) == 0) {
+				struct tm* currentTime = timeDateInfo::setStructTm();
 				_day = currentTime->tm_mday - 1;
 				if (_day == 0) {
 					_month = currentTime->tm_mon;
@@ -173,6 +174,7 @@ bool Date::setDate(std::string date) {
 				}
 			}
 			else if (date.compare(DATE_TOMORROW) == 0) {
+				struct tm* currentTime = timeDateInfo::setStructTm();
 				_day = currentTime->tm_mday + 1;
 				if (_day > timeDateInfo::getDaysInMonth(currentTime->tm_mon, currentTime->tm_year)) {
 					_month = currentTime->tm_mon + 2;
@@ -193,6 +195,7 @@ bool Date::setDate(std::string date) {
 			else if (date.compare(DATE_WEEK) == 0) {
 				//@author A0085731A
 				//For week: "week" will return the start date and time of the week
+				struct tm* currentTime = timeDateInfo::setStructTm();
 				int daysDifference = currentTime->tm_wday - 0;
 				_day = currentTime->tm_mday - daysDifference;
 				if (_day < 1) {
@@ -220,7 +223,8 @@ bool Date::setDate(std::string date) {
 				int dayIndex;
 
 				if (timeDateInfo::isDayValid(date, dayIndex)) {
-					dayIndex = ((dayIndex + 2) / 2)-1;
+					struct tm* currentTime = timeDateInfo::setStructTm();
+					dayIndex = ((dayIndex + 2) / 2) - 1;
 					int daysDifference = dayIndex - currentTime->tm_wday;
 					_day = currentTime->tm_mday + daysDifference;
 
