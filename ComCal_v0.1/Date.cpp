@@ -15,35 +15,42 @@ Date::Date() {
 	_day = 0;
 	_month = 0;
 	_year = 0;
-	_time = 0;
+	_time = -1;
 }
 
 Date::~Date() {
 }
 
+// "DD/MM/YY HHRR"
 std::string Date::toString() {
-	std::string dateString = "";
-
-	dateString += typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year%100) + " ";
-	
-	if (_time < 10) {
-		dateString += "000" + typeConversions::intToString(_time);
-	}
-	else if (_time < 100) {
-		dateString += "00" + typeConversions::intToString(_time);
-	}
-	else if (_time < 1000) {
-		dateString += "0" + typeConversions::intToString(_time);
-	}
-	else {
-		dateString += typeConversions::intToString(_time);
-	}
-
-	return dateString;
+	return toGUIString() + toTimeString();
 }
 
+// "DD/MM/YY"
 std::string Date::toGUIString(){
-	return (typeConversions::intToString(_day) + "/" + typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year%100));
+	std::string str = "";
+	if (_day < 10) {
+		str += "0";
+	}
+	str += typeConversions::intToString(_day) + "/";
+	if (_month < 10) {
+		str += "0";
+	}
+	str += typeConversions::intToString(_month) + "/" + typeConversions::intToString(_year + 1900);
+
+	return str;
+}
+
+// " HHMM" if time exists and "" if it doesn't
+std::string Date::toTimeString() {
+	if (_time == -1) {
+		return "";
+	}
+	std::string str = typeConversions::intToString(_time);
+	while (str.size() < 4) {
+		str = "0" + str;
+	}
+	return " " + str;
 }
 
 int Date::getDay() {
@@ -69,14 +76,6 @@ time_t Date::getTimeT() {
 	dateTimeInfo->tm_year = _year;
 
 	return mktime(dateTimeInfo);
-}
-
-std::string Date::getTimeString() {
-	std::string str = typeConversions::intToString(_time);
-	while (str.size() < 4) {
-		str = "0" + str;
-	}
-	return str;
 }
 
 // Only makes sure same date; does not check time

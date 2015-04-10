@@ -26,6 +26,7 @@ public:
 	
 	std::string toString();
 	std::string toGUIString();
+	std::string toTimeString();
 
 	// Getter methods
 	int getDay();
@@ -33,7 +34,6 @@ public:
 	int getYear();
 	int getTime();
 	time_t getTimeT();
-	std::string getTimeString();
 
 	bool operator==(const Date &date); // Only makes sure same date; does not check time
 	bool operator>(const Date &date);
