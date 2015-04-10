@@ -232,7 +232,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 				}
 
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) {
-					if ((tempTask->getStartDate()->getMonth() == tempTask->getEndDate()->getMonth()) && (tempTask->getStartDate()->getYear() == tempTask->getEndDate()->getYear())) {
+					if ((tempTask->getStartDate()->getMonth() == tempTask->getEndDate()->getMonth()) && (tempTask->getStartDate()->getYear() == tempTask->getEndDate()->getYear()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
 						if ((System::Int32::Parse(dateList[i]->Text) >= tempTask->getStartDate()->getDay()) && (System::Int32::Parse(dateList[i]->Text) <= tempTask->getEndDate()->getDay())) {
 							taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
 						}
