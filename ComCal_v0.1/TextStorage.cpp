@@ -322,7 +322,7 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 					_todoTasks->at(i)->hide();
 				}
 			}
-			else if (_todoTasks->at(j)->hasEndDate()) {
+			else if (_todoTasks->at(i)->hasEndDate()) {
 				if (_todoTasks->at(i)->getEndDate()->getDay() == weekDate[j].getDay() && _todoTasks->at(i)->getEndDate()->getMonth() == weekDate[j].getMonth() && _todoTasks->at(i)->getEndDate()->getYear() == weekDate[j].getYear()) {
 					_todoTasks->at(i)->display();
 					count++;
