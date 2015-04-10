@@ -238,16 +238,18 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 						}
 					}
 					else {
-						if ((System::Int32::Parse(dateList[i]->Text) >= tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
-							taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
-						}
+						if ((monthRef <= tempTask->getEndDate()->getMonth()) && (year <= tempTask->getEndDate()->getYear())) {
+							if ((System::Int32::Parse(dateList[i]->Text) >= tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
+								taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+							}
 
-						if ((tempTask->getStartDate()->getMonth() < monthRef) && (monthRef < tempTask->getEndDate()->getMonth()) && (year >= tempTask->getStartDate()->getYear()) && (year <= tempTask->getStartDate()->getYear())) {
-							taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
-						}
+							if ((tempTask->getStartDate()->getMonth() < monthRef) && (monthRef < tempTask->getEndDate()->getMonth()) && (year >= tempTask->getStartDate()->getYear()) && (year <= tempTask->getEndDate()->getYear())) {
+								taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+							}
 
-						if ((monthRef == tempTask->getEndDate()->getMonth()) && (year = tempTask->getEndDate()->getYear()) && (System::Int32::Parse(dateList[i]->Text) <= tempTask->getEndDate()->getDay())) {
-							taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+							if ((monthRef == tempTask->getEndDate()->getMonth()) && (year = tempTask->getEndDate()->getYear()) && (System::Int32::Parse(dateList[i]->Text) <= tempTask->getEndDate()->getDay())) {
+								taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+							}
 						}
 					}
 				}
