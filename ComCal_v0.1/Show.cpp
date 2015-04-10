@@ -149,6 +149,52 @@ std::string Show::execute(std::string argument) {
 					return INVALID_DATE_INPUT;
 				}
 			}
+
+			//method to show todo/done floating tasks
+			if (firstArg == FLOATING_TASKS || secArg == FLOATING_TASKS) {
+
+				if (secArg == FLOATING_TASKS) {
+					std::swap(firstArg, secArg);
+				}
+
+				bool isDone;
+				if (secArg == INPUT_DONE) {
+					isDone = true;
+				}
+				else {
+					if (secArg == INPUT_TODO) {
+						isDone = false;
+					}
+					else {
+						return TODO_DONE_INPUT_ERROR;
+					}
+				}
+
+				count = TextStorage::getInstance()->displayFloatingTasks(isDone);
+
+				if (isDone){
+					ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_FLOATING_TASKS_TITLE);
+				}
+				else {
+					ComCalManager::getInstance()->setSideBarTitle(ALL_TODO_FLOATING_TASKS_TITLE);
+				}
+
+
+				if (count == 0) {
+					return ZERO_SHOW_RESULTS;
+				}
+				else {
+					if (isDone){
+						return ALL_DONE_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
+					}
+					else {
+						return ALL_TODO_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
+					}
+
+				}
+
+			}
+
 		}
 		else { //argument now has only one word, numOfWhiteSpace == 0
 
@@ -170,6 +216,18 @@ std::string Show::execute(std::string argument) {
 				return ALL_DEADLINED_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
 			}
 
+			if (argument == FLOATING_TASKS) {
+				count = TextStorage::getInstance()->displayFloatingTasks();
+				ComCalManager::getInstance()->setSideBarTitle(ALL_FLOATING_TASKS_TITLE);
+
+				if (count == 0) {
+					return ZERO_SHOW_RESULTS;
+				}
+				else {
+					return ALL_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
+				}
+			}
+
 			// User specifies "show 'month'" 
 			int month = getMonthInput(argument);
 			if (month != -1) {
@@ -183,15 +241,15 @@ std::string Show::execute(std::string argument) {
 			}
 
 			if (argument == WEEK) {
-				std::vector<Date*> weekDate = getDatesInWeek();
+				std::vector<Date> weekDate = getDatesInWeek();
 
 				count = TextStorage::getInstance()->displayWeekTasks(weekDate);
-				ComCalManager::getInstance()->setSideBarTitle("This week's task");
+				ComCalManager::getInstance()->setSideBarTitle(THIS_WEEK_ALL_TASK);
 
-				for (unsigned int j = 0; j < weekDate.size(); j++) {
-					delete weekDate[j];
-					weekDate[j] = nullptr;
-				}
+//				for (unsigned int j = 0; j < weekDate.size(); j++) {
+//					delete weekDate[j];
+//					weekDate[j] = nullptr;
+//				}
 
 				return "Current week shown (count: " + typeConversions::intToString(count) + ")";
 			}
@@ -230,8 +288,8 @@ int Show::getMonthInput(std::string argument) {
 	return -1;
 }
 
-std::vector<Date*> Show::getDatesInWeek() {
-	std::vector<Date*> weekDate;
+std::vector<Date> Show::getDatesInWeek() {
+	std::vector<Date> weekDate;
 
 	struct tm * timeDetails = timeDateInfo::setStructTm();
 	weekDate = getWeeklyDates(timeDetails);
@@ -240,8 +298,8 @@ std::vector<Date*> Show::getDatesInWeek() {
 }
 
 
-std::vector<Date*> Show::getDatesInWeek(Date* specDate) {
-	std::vector<Date*> weekDate;
+std::vector<Date> Show::getDatesInWeek(Date* specDate) {
+	std::vector<Date> weekDate;
 	int year = specDate->getYear() + 1900;
 	int month = specDate->getMonth() - 1;
 	int day = specDate->getDay();
@@ -252,8 +310,8 @@ std::vector<Date*> Show::getDatesInWeek(Date* specDate) {
 	return weekDate;
 }
 
-std::vector<Date*> Show::getWeeklyDates(struct tm* timeDetails) {
-	std::vector<Date*> weekDate;
+std::vector<Date> Show::getWeeklyDates(struct tm* timeDetails) {
+	std::vector<Date> weekDate;
 	int dayWeek = timeDetails->tm_wday;
 	int dayMonth = timeDetails->tm_mday;
 	int month = timeDetails->tm_mon;
@@ -281,7 +339,7 @@ std::vector<Date*> Show::getWeeklyDates(struct tm* timeDetails) {
 	for (int i = 0; i < DAYS_IN_WEEK; i++) {
 //		int shortYr = year % 100;
 		int tempMonth = month + 1;
-		weekDate.push_back(new Date(dayMonth, tempMonth, year, 0000));
+		weekDate.push_back(Date(dayMonth, tempMonth, year, 0000));
 
 		if (dayMonth == timeDateInfo::getDaysInMonth(month, year) && (month != 11)) {
 			month++;

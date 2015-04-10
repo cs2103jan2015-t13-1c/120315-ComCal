@@ -34,6 +34,7 @@ static const std::string WEEK = "week";
 static const std::string INPUT_TODO = "todo";
 static const std::string INPUT_DONE = "done";
 static const std::string DEADLINED_TASK = "deadline";
+static const std::string FLOATING_TASKS = "floating";
 
 //Attribute keywords constant string and index int declarations:
 static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;
@@ -118,18 +119,44 @@ static const std::string INDEX_DESCRIPTION_SEPARATOR = ") ";
 static const std::string ALL_TODO_TITLE = "All Todo Tasks";
 static const std::string ALL_DONE_TITLE = "All Done Tasks";
 static const std::string SEARCH_RESULTS_TITLE = "Search Results";
-static const std::string TODAY_TASKS_TITLE = "Today's tasks";
-static const std::string ALL_TASKS_WITH_DEADLINE_TITLE = "Deadlined tasks\n";
+static const std::string TODAY_TASKS_TITLE = "Today's Tasks";
+
+static const std::string ALL_TASKS_WITH_DEADLINE_TITLE = "Deadlined Tasks\n";
+static const std::string ALL_TODO_TASKS_WITH_DEADLINE_TITLE = "Todo Deadlined Tasks";
+static const std::string ALL_DONE_TASKS_WITH_DEADLINE_TITLE = "Done Deadlined Tasks";
+
+static const std::string ALL_FLOATING_TASKS_TITLE = "Floating Tasks";
+static const std::string ALL_TODO_FLOATING_TASKS_TITLE = "Todo Floating Tasks";
+static const std::string ALL_DONE_FLOATING_TASKS_TITLE = "Done Floating Tasks";
+
+static const std::string ALL_PARTIAL_TASKS_TITLE = "Partial-timed Tasks";
+static const std::string ALL_TODO_PARTIAL_TASKS_TITLE = "Todo Partial-timed Tasks";
+static const std::string ALL_DONE_PARTIAL_TASKS_TITLE = "Done Partial-timed Tasks";
+
+static const std::string THIS_WEEK_ALL_TASK = "This week's task";
 
 //Feedbacks
 static const std::string ALL_TASKS_FEEDBACK = "All tasks shown in sideBar";
 static const std::string ALL_TODO_FEEDBACK = "All todo tasks shown in sideBar";
 static const std::string ALL_DONE_FEEDBACK = "All done tasks shown in sideBar";
 static const std::string SHOW_TODAY_FEEDBACK = "All tasks today shown in sideBar";
+static const std::string ZERO_SHOW_RESULTS = "There are zero show reults";
+
 static const std::string ALL_DEADLINED_FEEDBACK = "All tasks with deadlines in sideBar";
+static const std::string ALL_TODO_DEADLINED_FEEDBACK = "All todo tasks with deadlines in sideBar";
+static const std::string ALL_DONE_DEADLINED_FEEDBACK = "All done tasks with deadlines in sideBar";
+
+static const std::string ALL_PARTIAL_FEEDBACK = "All partial-timed tasks in sideBar";
+static const std::string ALL_TODO_PARTIAL_FEEDBACK = "All todo partial-timed tasks in sideBar";
+static const std::string ALL_DONE_PARTIAL_FEEDBACK = "All done partial-timed tasks in sideBar";
+
+static const std::string ALL_FLOATING_TASKS_FEEDBACK = "All floating tasks in sideBar";
+static const std::string ALL_TODO_FLOATING_TASKS_FEEDBACK = "All todo floating tasks in sideBar";
+static const std::string ALL_DONE_FLOATING_TASKS_FEEDBACK = "All done floating tasks in sideBar";
 
 //Input error messages here
 static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
+static const std::string TODO_DONE_INPUT_ERROR = "Invalid todo/done input: Please input either 'todo' or 'done'";
 static const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
 static const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
 static const std::string INVALID_COMMAND = "This is not a valid command\n";

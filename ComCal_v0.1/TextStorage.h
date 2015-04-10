@@ -53,10 +53,12 @@ public:
 	int displayTodoTasks(const Date &date);
 	int displayDoneTasks();
 	int displayDoneTasks(const Date &date);
+	int displayFloatingTasks();
+	int displayFloatingTasks(bool isDone);
 	int displayMonthTasks(int month); //1 = January, 2 = February, etc.
 	int displayMonthTasks(int year, int month);
 	int displayDatedTasks(const Date &date);
-	int displayWeekTasks(std::vector<Date*>);
+	int displayWeekTasks(std::vector<Date>);
 	int displayDeadlinedTasks();
 
 	bool saveTasks(std::string fileName);
