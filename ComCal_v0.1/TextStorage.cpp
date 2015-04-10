@@ -359,6 +359,9 @@ bool TextStorage::saveTasks(std::string fileName)
 {
 	xml_document<> xmlDocument;
 	std::ofstream saveFile(fileName);
+	if (!saveFile.is_open()) {
+		return false;
+	}
 
 	xml_node<>* xmlDeclarationNode = xmlDocument.allocate_node(node_declaration);
 	xmlDeclarationNode->append_attribute(xmlDocument.allocate_attribute("version", "1.0"));
@@ -433,6 +436,10 @@ bool TextStorage::loadTasks(std::string fileName)
 	xml_document<> xmlDocument;
 
 	std::ifstream loadFile(fileName);
+	if (!loadFile.is_open()) {
+		return false;
+	}
+
 	std::vector<char> buffer((std::istreambuf_iterator<char>(loadFile)), std::istreambuf_iterator<char>());
 	buffer.push_back('\0');
 

@@ -14,6 +14,8 @@ std::string Load::execute(std::string argument) {
 	if (argument.compare("") == 0) {
 		argument = TextStorage::getInstance()->getTodoFileName();
 	}
-	TextStorage::getInstance()->loadTasks(argument);
-	return ("Tasks loaded from " + argument + " successfully.");
+	if (TextStorage::getInstance()->loadTasks(argument)) {
+		return ("Tasks loaded from " + argument + " successfully.");
+	}
+	return ("Loading failed. File " + argument + " does not exist.");
 }

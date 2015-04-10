@@ -14,6 +14,8 @@ std::string Save::execute(std::string argument) {
 	if (argument.compare("") == 0) {
 		argument = TextStorage::getInstance()->getTodoFileName();
 	}
-	TextStorage::getInstance()->saveTasks(argument);
-	return ("Tasks saved to " + argument + " successfully.");
+	if (TextStorage::getInstance()->saveTasks(argument)) {
+		return ("Tasks saved to " + argument + " successfully.");
+	}
+	return ("Failed to save to " + argument);
 }
