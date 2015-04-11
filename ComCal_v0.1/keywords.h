@@ -175,3 +175,4 @@ static const std::string INVALID_MONTH_INPUT = "Invalid show month input";
 static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";
 static const std::string INVALID_DATE_INPUT = "Invalid date input. Proper format: 'dd/mm/yy' , 'today', 'yesterday' , 'tomorrow' , 'monday' , tuesday' etc.";
 static const std::string INVALID_NEXT_INPUT = "Please input in the format 'next month' or 'next week'";
+static const std::string INVALID_YEAR_ERROR = "Please input a year above 1900";

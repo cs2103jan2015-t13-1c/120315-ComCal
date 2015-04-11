@@ -22,16 +22,19 @@ private:
 	//Arguments: None
 	//Returns: dates within the week of the current time
 	std::vector<Date> getDatesInWeek();
+
 	//Arguments: Date corresponding to the date specified by used
 	//Returns:: Dates within the week that contains the argument
 	std::vector<Date> getDatesInWeek(Date specDate);
 
+	Date getNextWeekDate(int year, int month, int mday, int wday);
 	std::vector<Date> getWeeklyDates(struct tm*);
+
 	//Arguments: 1) int year - years after 1900, 2_month
 	std::vector<Date> getWeeklyDates(int year, int month, int mday, int wday);
 
 	std::string prepShowFeedback(std::string feedback,int count);
-	Date getNextWeekDate(int year, int month, int mday, int wday);
+	
 public:
 	Show();
 	~Show();

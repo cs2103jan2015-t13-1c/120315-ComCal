@@ -22,6 +22,7 @@ Show::~Show() {
 
 std::string Show::execute(std::string argument) {
 	std::string feedBack;
+	std::string sideBarTitle;
 	int count;
 
 	if (argument.size() <= 0) { // Display all tasks
@@ -61,38 +62,34 @@ std::string Show::execute(std::string argument) {
 			std::string secArg = argument.substr(space + 1, argument.size());
 
 			//1) Method to display month with specified year eg. May 2016
-			for (int i = 0; i < MONTHS_IN_YEAR; i++) {
-
 				//condition to check if user specified a month with a year
-				if (secArg == timeDateInfo::getLowerMonthStr(i) || firstArg == timeDateInfo::getLowerMonthStr(i)) {
+				if (getMonthInput(firstArg) != -1 || getMonthInput(secArg) != -1) {
 
 					if (timeDateInfo::isStringANum(firstArg)) {
 						std::swap(firstArg, secArg);
 					}
+					int i = getMonthInput(firstArg);
 
 					if (timeDateInfo::isStringANum(secArg) && secArg.size() == 4) {
 						int year = typeConversions::stringToInt(secArg);
 
 						if (year < 1900){
-							return "Please input a year above 1900";
+							return INVALID_YEAR_ERROR;
 						}
 						else {
 							count = TextStorage::getInstance()->displayMonthTasks(year, i + 1);
 							struct tm* date = timeDateInfo::setStructTm(year, i);
-							//ComCalManager::getInstance()->setTimeDetails(date);
-							ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
+							sideBarTitle = timeDateInfo::getMonthStr(i) + " " + secArg + " tasks\n";
+							ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
-							return firstArg + " " + secArg + " shown (count: " + typeConversions::intToString(count) + ")";
+							return prepShowFeedback(firstArg+" "+secArg, count);
 						}
 					}
 					else{
 						return "Please input a valid year in the format YYYY eg. 2016";
 					}
+				}//end of month and year condition
 
-
-					break;
-				}
-			} //end of month and year condition
 
 			//method to display all the tasks in a week with specific date in the week
 			if (((firstArg == WEEK) || (secArg == WEEK))) {
@@ -105,16 +102,16 @@ std::string Show::execute(std::string argument) {
 					Date tempDate;
 					if (tempDate.setDate(secArg)) {
 						count = TextStorage::getInstance()->displayWeekTasks(getDatesInWeek(tempDate));
-						std::string sideBarTitle = tempDate.toGUIString() + " " + WEEK + " tasks";
+						sideBarTitle = tempDate.toGUIString() + " " + WEEK + " tasks";
 						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
-						return (sideBarTitle + " shown (count: " + typeConversions::intToString(count) + ")");
+						return prepShowFeedback(sideBarTitle, count);
 					}
 					else{
 						return INVALID_DATE_INPUT;
 					}
 				}
-			}
+			}//end of all tasks within specific date in week
 
 			//method to show todo tasks of the user specified date
 			if ((firstArg == INPUT_TODO) || (secArg == INPUT_TODO)) {
@@ -130,7 +127,7 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
-			}
+			}//end of todo tasks within specified date
 
 			//method to show done tasks of the user specified date
 			if ((firstArg == INPUT_DONE) || (secArg == INPUT_DONE)) {
@@ -141,7 +138,7 @@ std::string Show::execute(std::string argument) {
 				Date tempDate;
 				if (tempDate.setDate(secArg)) {
 					count = TextStorage::getInstance()->displayTodoTasks(tempDate);
-					std::string sideBarTitle = tempDate.toGUIString() + " " + INPUT_DONE + " tasks\n";
+					sideBarTitle = tempDate.toGUIString() + " " + INPUT_DONE + " tasks\n";
 					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
 					return prepShowFeedback(sideBarTitle, count);
@@ -149,7 +146,7 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
-			}
+			}//end of show done tasks within specified date
 
 			//method to show todo/done floating tasks
 			if (firstArg == FLOATING_TASKS || secArg == FLOATING_TASKS) {
@@ -186,12 +183,11 @@ std::string Show::execute(std::string argument) {
 				}
 				else {
 					if (isDone){
-						return ALL_DONE_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
+						return prepShowFeedback(ALL_DONE_FLOATING_TASKS_FEEDBACK, count);
 					}
 					else {
-						return ALL_TODO_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
+						return prepShowFeedback(ALL_TODO_FLOATING_TASKS_FEEDBACK, count);
 					}
-
 				}
 
 			}//end of todo/done floating tasks
@@ -218,6 +214,8 @@ std::string Show::execute(std::string argument) {
 						else {
 							month++;
 						}
+
+
 
 						count = TextStorage::getInstance()->displayMonthTasks(year, month);
 						ComCalManager::getInstance()->setSideBarTitle(NEXT_MONTH_TITLE);
@@ -250,7 +248,8 @@ std::string Show::execute(std::string argument) {
 			if (argument == INPUT_TODO) { // Display all tasks that are not done
 				ComCalManager::getInstance()->setSideBarTitle(ALL_TODO_TITLE);
 				count = TextStorage::getInstance()->displayTodoTasks();
-				return ALL_TODO_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
+
+				return prepShowFeedback(ALL_TODO_FEEDBACK, count);
 			}
 
 			if (argument == ALL_TASKS) {
@@ -263,7 +262,8 @@ std::string Show::execute(std::string argument) {
 			if (argument == INPUT_DONE) { // Display all tasks that are done
 				count = TextStorage::getInstance()->displayDoneTasks();
 				ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_TITLE);
-				return ALL_DONE_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
+
+				return prepShowFeedback(ALL_DONE_FEEDBACK, count);
 			}
 
 			if (argument == DEADLINED_TASK) { 
@@ -285,11 +285,11 @@ std::string Show::execute(std::string argument) {
 			if (month != -1) {
 				struct tm* date = timeDateInfo::setStructTm(month);
 				int year = date->tm_year + 1900;
+
 				count = TextStorage::getInstance()->displayMonthTasks(year, month + 1);
-				//ComCalManager::getInstance()->setTimeDetails(date);
 				ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
-				return (timeDateInfo::getMonthStr(getMonthInput(argument)) + " shown (count: " + typeConversions::intToString(count) + ")");
+				return prepShowFeedback(timeDateInfo::getMonthStr(getMonthInput(argument)), count);
 			}
 
 			if (argument == WEEK) {
@@ -305,10 +305,10 @@ std::string Show::execute(std::string argument) {
 			Date* showDate = new Date();
 			if (showDate->setDate(argument)) {
 				count = TextStorage::getInstance()->displayDatedTasks(*showDate);
-				std::string strDate = showDate->toGUIString();
-				ComCalManager::getInstance()->setSideBarTitle(showDate->toString());
+				sideBarTitle = showDate->toGUIString();
+				ComCalManager::getInstance()->setSideBarTitle(showDate->toString() + " tasks");
 
-				return prepShowFeedback(strDate, count);
+				return prepShowFeedback(sideBarTitle + " tasks", count);
 			}
 
 			delete showDate;
@@ -340,7 +340,6 @@ std::vector<Date> Show::getDatesInWeek() {
 
 	struct tm * timeDetails = timeDateInfo::setStructTm();
 	weekDate = getWeeklyDates(timeDetails->tm_year, timeDetails->tm_mon, timeDetails->tm_mday, timeDetails->tm_wday);
-//	weekDate = getWeeklyDates(timeDetails);
 
 	return weekDate;
 }
@@ -384,7 +383,6 @@ std::vector<Date> Show::getWeeklyDates(int year, int month, int mday, int wday) 
 	}
 
 	for (int i = 0; i < DAYS_IN_WEEK; i++) {
-		//int shortYr = year % 100;
 		int tempMonth = month + 1;
 		weekDate.push_back(Date(mday, tempMonth, year, 0000));
 

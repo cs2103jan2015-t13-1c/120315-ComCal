@@ -2650,6 +2650,7 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 			this->sideBar->Location = System::Drawing::Point(12, 31);
 			this->sideBar->Multiline = true;
 			this->sideBar->Name = L"sideBar";
+			this->sideBar->ReadOnly = true;
 			this->sideBar->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->sideBar->Size = System::Drawing::Size(273, 591);
 			this->sideBar->TabIndex = 3;
