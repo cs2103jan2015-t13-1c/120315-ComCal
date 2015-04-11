@@ -30,7 +30,7 @@ private:
 	Date getNextWeekDate(int year, int month, int mday, int wday);
 	std::vector<Date> getWeeklyDates(struct tm*);
 
-	//Arguments: 1) int year - years after 1900, 2_month
+	//Arguments: 1) int year - years after 1900, month, day of the month, day of the week
 	std::vector<Date> getWeeklyDates(int year, int month, int mday, int wday);
 
 	std::string prepShowFeedback(std::string feedback,int count);

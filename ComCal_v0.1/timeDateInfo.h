@@ -22,8 +22,6 @@ const char SEPARATORS[SIZE_SEPARATORSARRAY] = { '/' };
 
 const static std::string DAYSINPUT[14] = { "sunday", "sun", "monday", "mon", "tuesday", "tues", "wednesday", "wed", "thursday", "thurs", "friday", "fri", "saturday", "sat" };
 
-#include "Date.h"
-
 namespace timeDateInfo {
 
 	//checks if the mday, month and year number is valid

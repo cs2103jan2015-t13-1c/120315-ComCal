@@ -33,6 +33,7 @@ public:
 	bool hasStartDate();
 	bool hasEndDate();
 	bool isHidden();
+	bool isBetween(const Date &date); //checks if a date is between the start and end date inclusive
 	int getTaskTypeCode();
 
 	// Setter methods

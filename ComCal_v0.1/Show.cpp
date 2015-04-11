@@ -215,8 +215,6 @@ std::string Show::execute(std::string argument) {
 							month++;
 						}
 
-
-
 						count = TextStorage::getInstance()->displayMonthTasks(year, month);
 						ComCalManager::getInstance()->setSideBarTitle(NEXT_MONTH_TITLE);
 						timeDateInfo::setStructTm(year, month-1);
@@ -224,6 +222,8 @@ std::string Show::execute(std::string argument) {
 						return prepShowFeedback(NEXT_MONTH_TASKS_FEEDBACK, count);					
 					}//end of next month method
 
+
+					//start of show week of with a specific date inside
 					if (secArg == DATE_WEEK) {
 						Date startOfNextWeek = getNextWeekDate(year, month, day, wday);
 						std::vector<Date> datesInWeek = getDatesInWeek(startOfNextWeek);
@@ -232,7 +232,7 @@ std::string Show::execute(std::string argument) {
 						ComCalManager::getInstance()->setSideBarTitle(NEXT_WEEK_TITLE);
 
 						return prepShowFeedback(NEXT_WEEK_TASKS_FEEDBACK, count);
-					}
+					}//end of show week with specified date
 
 				}
 				else {
@@ -271,6 +271,13 @@ std::string Show::execute(std::string argument) {
 				ComCalManager::getInstance()->setSideBarTitle(ALL_TASKS_WITH_DEADLINE_TITLE);
 
 				return prepShowFeedback(ALL_DEADLINED_FEEDBACK, count);
+			}
+
+			if (argument == TASKTYPE_TIMED) {
+				count = TextStorage::getInstance()->displayTimedTasks();
+				ComCalManager::getInstance()->setSideBarTitle(ALL_TIMED_TASKS_TITLE);
+
+				return prepShowFeedback(ALL_TIMED_TASKS_FEEDBACK, count);
 			}
 
 			if (argument == FLOATING_TASKS) {

@@ -53,6 +53,8 @@ public:
 	int displayTodoTasks(const Date &date);
 	int displayDoneTasks();
 	int displayDoneTasks(const Date &date);
+	int displayTimedTasks();
+	int displayTimedTasks(const Date &date);
 	int displayFloatingTasks();
 	int displayFloatingTasks(bool isDone);
 	int displayMonthTasks(int month); //1 = January, 2 = February, etc.

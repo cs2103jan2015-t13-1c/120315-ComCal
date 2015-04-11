@@ -121,6 +121,45 @@ bool Date::operator>(const Date &date) {
 	return false;
 }
 
+bool Date::operator<=(const Date &date) {
+
+	if (date._year > _year) {
+		return true;
+	}
+	else {
+		if (date._month > _month && date._year >= _year) {
+			return true;
+		}
+		else {
+			if (date._day >= _day && date._month >= _month && date._year >= _year) {
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+}
+
+bool Date::operator>=(const Date &date) {
+	if (date._year < _year) {
+		return true;
+	}
+	else {
+		if (date._month < _month && date._year <= _year) {
+			return true;
+		}
+		else {
+			if (date._day <= _day && date._month <= _month && date._year <= _year) {
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+	}
+}
+
 bool Date::isDateDefined() {
 	if (_day == 0) {
 		return false;

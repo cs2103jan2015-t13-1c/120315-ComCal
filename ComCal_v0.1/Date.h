@@ -37,6 +37,8 @@ public:
 
 	bool operator==(const Date &date); // Only makes sure same date; does not check time
 	bool operator>(const Date &date);
+	bool operator<=(const Date &date);
+	bool operator>=(const Date &date);
 	bool isDateDefined();
 
 	// Setter methods

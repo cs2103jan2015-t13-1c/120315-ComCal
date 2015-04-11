@@ -138,6 +138,10 @@ static const std::string ALL_PARTIAL_TASKS_TITLE = "Partial-timed Tasks";
 static const std::string ALL_TODO_PARTIAL_TASKS_TITLE = "Todo Partial-timed Tasks";
 static const std::string ALL_DONE_PARTIAL_TASKS_TITLE = "Done Partial-timed Tasks";
 
+static const std::string ALL_TIMED_TASKS_TITLE = "Partial-timed Tasks";
+static const std::string ALL_TODO_TIMED_TASKS_TITLE = "Todo Timed Tasks";
+static const std::string ALL_DONE_TIMED_TASKS_TITLE = "Done Timed Tasks";
+
 static const std::string THIS_WEEK_ALL_TASK = "This Week's Task";
 static const std::string NEXT_WEEK_TITLE = "Next Week's Tasks";
 static const std::string NEXT_MONTH_TITLE = "Next Month's Tasks";
@@ -160,6 +164,10 @@ static const std::string ALL_DONE_PARTIAL_FEEDBACK = "All done partial-timed tas
 static const std::string ALL_FLOATING_TASKS_FEEDBACK = "All floating tasks in sideBar";
 static const std::string ALL_TODO_FLOATING_TASKS_FEEDBACK = "All todo floating tasks in sideBar";
 static const std::string ALL_DONE_FLOATING_TASKS_FEEDBACK = "All done floating tasks in sideBar";
+
+static const std::string ALL_TIMED_TASKS_FEEDBACK = "All timed tasks in sideBar";
+static const std::string ALL_TODO_TIMED_TASKS_FEEDBACK = "All todo timed tasks in sideBar";
+static const std::string ALL_DONE_TIMED_TASKS_FEEDBACK = "All done timed tasks in sideBar";
 
 static const std::string NEXT_MONTH_TASKS_FEEDBACK = "Next month's tasks shown in sideBar";
 static const std::string NEXT_WEEK_TASKS_FEEDBACK = "Next week's tasks shown in sideBar";

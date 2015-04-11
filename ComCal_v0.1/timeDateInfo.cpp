@@ -1,5 +1,7 @@
 #include "timeDateInfo.h"
 #include <time.h>
+#include "typeConversions.h"
+#include "keywords.h"
 
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
@@ -84,6 +86,7 @@ bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
 	return isFound;
 }
 
+//@A0110783L
 bool timeDateInfo::isLeapYear(int year) {
 
 	if (year < 1900) {
@@ -112,7 +115,7 @@ bool timeDateInfo::isLeapYear(int year) {
 	return isLeap;
 }
 
-
+//@A0110783L
 bool timeDateInfo::isStringANum(std::string str) {
 
 	std::string::iterator iter = str.begin();
@@ -123,24 +126,28 @@ bool timeDateInfo::isStringANum(std::string str) {
 	return !str.empty() && iter == str.end();
 }
 
+//@A0110783L
 std::string timeDateInfo::getDayStr(int iter) {
 	const static std::string DAYS[] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
 	return DAYS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getLowerDayStr(int iter) {
 	const static std::string DAYS[] = { "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" };
 
 	return DAYS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getShortDayStr(int iter) {
 	const static std::string DAYS[] = { "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat" };
 
 	return DAYS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getShortLowerDayStr(int iter) {
 	const static std::string DAYS[28] = { "sun", "mon", "tue", "wed", "thurs", "fri", "sat" };
 
@@ -150,6 +157,7 @@ std::string timeDateInfo::getShortLowerDayStr(int iter) {
 //Hamzah
 //returns the month in string form
 //Argument: an int corresponding to the month, eg. 0=January, 1=February,..,11=December
+//@A0110783L
 std::string timeDateInfo::getMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "January", "February", "March", "April", "May",
 		"June", "July", "August", "September", "October", "November", "December" };
@@ -157,6 +165,7 @@ std::string timeDateInfo::getMonthStr(int iter) {
 	return MONTHS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getLowerMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "january", "february", "march", "april", "may",
 		"june", "july", "august", "september", "october", "november", "december" };
@@ -164,6 +173,7 @@ std::string timeDateInfo::getLowerMonthStr(int iter) {
 	return MONTHS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getShortMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "Jan", "Feb", "Mar", "Apr", "May",
 		"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -171,6 +181,7 @@ std::string timeDateInfo::getShortMonthStr(int iter) {
 	return MONTHS[iter];
 }
 
+//@A0110783L
 std::string timeDateInfo::getShortLowerMonthStr(int iter) {
 	const static std::string MONTHS[MONTHS_IN_YEAR] = { "jan", "feb", "mar", "apr", "may",
 		"jun", "jul", "aug", "sep", "oct", "nov", "dec" };
@@ -178,6 +189,7 @@ std::string timeDateInfo::getShortLowerMonthStr(int iter) {
 	return MONTHS[iter];
 }
 
+//@A0110783L
 int timeDateInfo::getDaysInMonth(int iter, int year) {
 	int daysInMonth[MONTHS_IN_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
@@ -188,7 +200,7 @@ int timeDateInfo::getDaysInMonth(int iter, int year) {
 	return daysInMonth[iter];
 }
 
-
+//@A0110783L
 struct tm* timeDateInfo::setStructTm(int year, int month, int day) {
 	struct tm* timeinfo = setStructTm(year, month);
 	timeinfo->tm_mday = day;
@@ -196,6 +208,7 @@ struct tm* timeDateInfo::setStructTm(int year, int month, int day) {
 	return timeinfo;
 }
 
+//@A0110783L
 struct tm* timeDateInfo::setStructTm(int year, int month) {
 	struct tm* timeinfo = setStructTm(month);
 	if (year >= 1900) {
@@ -208,6 +221,7 @@ struct tm* timeDateInfo::setStructTm(int year, int month) {
 	return timeinfo;
 }
 
+//@A0110783L
 struct tm* timeDateInfo::setStructTm(int month) {
 	struct tm* timeinfo = setStructTm();
 	timeinfo->tm_mon = month;
@@ -215,6 +229,7 @@ struct tm* timeDateInfo::setStructTm(int month) {
 	return timeinfo;
 }
 
+//@A0110783L
 struct tm* timeDateInfo::setStructTm() {
 	time_t rawtime;
 	time(&rawtime);
@@ -223,6 +238,7 @@ struct tm* timeDateInfo::setStructTm() {
 	return timeinfo;
 }
 
+//@A0110783L
 struct tm* timeDateInfo::setDayStructTm(int day) {
 	struct tm* timeinfo = setStructTm();
 	timeinfo->tm_wday = day;
