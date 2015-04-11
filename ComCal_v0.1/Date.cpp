@@ -127,11 +127,11 @@ bool Date::operator<=(const Date &date) {
 		return true;
 	}
 	else {
-		if (date._month > _month && date._year >= _year) {
+		if (date._month > _month && date._year == _year) {
 			return true;
 		}
 		else {
-			if (date._day >= _day && date._month >= _month && date._year >= _year) {
+			if (date._day >= _day && date._month == _month && date._year == _year) {
 				return true;
 			}
 			else{
@@ -146,11 +146,11 @@ bool Date::operator>=(const Date &date) {
 		return true;
 	}
 	else {
-		if (date._month < _month && date._year <= _year) {
+		if (date._month < _month && date._year == _year) {
 			return true;
 		}
 		else {
-			if (date._day <= _day && date._month <= _month && date._year <= _year) {
+			if (date._day <= _day && date._month == _month && date._year == _year) {
 				return true;
 			}
 			else{

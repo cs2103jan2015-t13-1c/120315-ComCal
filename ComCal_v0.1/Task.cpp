@@ -109,7 +109,7 @@ bool Task::isHidden() {
 bool Task::isBetween(const Date &date) {
 	bool isBetween = false;
 
-	if (_startDate->operator<=(date) && !_endDate->operator<=(date)) {
+	if (_startDate->operator<=(date) && _endDate->operator>=(date)) {
 		isBetween = true;
 	}
 	

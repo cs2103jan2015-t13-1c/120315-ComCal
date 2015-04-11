@@ -391,12 +391,27 @@ int TextStorage::displayDatedTasks(const Date &date) {
 
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
-		if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
-			tempTask->display();
-			count++;
+
+		if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED){
+			if (tempTask->isBetween(date)){
+				tempTask->display();
+				count++;
+			}
 		}
 		else {
-			tempTask->hide();
+			if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
+				tempTask->display();
+				count++;
+			}
+			else {
+				if ((tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) && (tempTask->getEndDate()->operator==(date))) {
+					tempTask->display();
+					count++;
+				}
+				else{
+					tempTask->hide();
+				}
+			}
 		}
 	}
 	return count;
