@@ -60,11 +60,15 @@ bool TextStorage::deleteTask(int index) {
 	return true;
 }
 
-void TextStorage::displayAllTasks() {
+int TextStorage::displayAllTasks() {
 	unsigned int size = _todoTasks->size();
+	int count = 0;
 	for (unsigned int i = 0; i < size; i++) {
 		_todoTasks->at(i)->display();
+		count++;
 	}
+
+	return count;
 }
 
 int TextStorage::displayTodoTasks() {

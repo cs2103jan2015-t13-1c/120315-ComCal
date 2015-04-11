@@ -5,6 +5,10 @@
 #include "Date.h"
 
 Date::Date(int day, int month, int year, int time) {
+	if (year > 1900){
+		year -= 1900;
+	}
+
 	_day = day;
 	_month = month;
 	_year = year;

@@ -48,7 +48,7 @@ public:
 	void addTaskAtSpecificPosition(Task* newTask, int position);
 	bool deleteTask(int index);
 
-	void displayAllTasks();
+	int displayAllTasks();
 	int displayTodoTasks();
 	int displayTodoTasks(const Date &date);
 	int displayDoneTasks();

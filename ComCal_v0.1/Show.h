@@ -16,6 +16,7 @@ class Show : public Command {
 	
 private:
 	int getMonthInput(std::string argument);
+
 	//2 overloaded functions of getDatesInWeek
 	//Purpose: To return a vector of dates that corresponds to the week depending on which overload is used
 	//Arguments: None
@@ -26,6 +27,9 @@ private:
 	std::vector<Date> getDatesInWeek(Date* specDate);
 
 	std::vector<Date> getWeeklyDates(struct tm*);
+
+	std::string prepShowFeedback(std::string feedback,int count);
+	Date* getNextWeekDate(int year, int month, int mday, int wday);
 public:
 	Show();
 	~Show();

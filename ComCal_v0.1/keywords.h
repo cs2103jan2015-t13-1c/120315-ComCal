@@ -26,6 +26,7 @@ static const std::string DATE_FRIDAY = "Friday";
 static const std::string DATE_SATURDAY = "Saturday";
 static const std::string DATE_SUNDAY = "Sunday";
 static const std::string DATE_WEEK = "week";
+static const std::string DATE_MONTH = "month";
 static const std::string DATE_LAST = "last";
 static const std::string DATE_NEXT = "next";
 static const std::string WEEK = "week";
@@ -35,6 +36,7 @@ static const std::string INPUT_TODO = "todo";
 static const std::string INPUT_DONE = "done";
 static const std::string DEADLINED_TASK = "deadline";
 static const std::string FLOATING_TASKS = "floating";
+static const std::string ALL_TASKS = "all";
 
 //Attribute keywords constant string and index int declarations:
 static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;
@@ -114,12 +116,15 @@ static const int SECONDS_IN_WEEK = 7 * SECONDS_IN_DAY;
 //keyboard shortcuts
 static const std::string NEWLINE = " \n";
 static const std::string INDEX_DESCRIPTION_SEPARATOR = ") ";
+static const std::string SHOW_COUNT_START = "(Show count: ";
+static const std::string SHOW_COUNT_END = ")";
 
 //SideBar titles
 static const std::string ALL_TODO_TITLE = "All Todo Tasks";
 static const std::string ALL_DONE_TITLE = "All Done Tasks";
 static const std::string SEARCH_RESULTS_TITLE = "Search Results";
 static const std::string TODAY_TASKS_TITLE = "Today's Tasks";
+static const std::string ALL_TASKS_TITLE = "All tasks";
 
 static const std::string ALL_TASKS_WITH_DEADLINE_TITLE = "Deadlined Tasks\n";
 static const std::string ALL_TODO_TASKS_WITH_DEADLINE_TITLE = "Todo Deadlined Tasks";
@@ -133,7 +138,9 @@ static const std::string ALL_PARTIAL_TASKS_TITLE = "Partial-timed Tasks";
 static const std::string ALL_TODO_PARTIAL_TASKS_TITLE = "Todo Partial-timed Tasks";
 static const std::string ALL_DONE_PARTIAL_TASKS_TITLE = "Done Partial-timed Tasks";
 
-static const std::string THIS_WEEK_ALL_TASK = "This week's task";
+static const std::string THIS_WEEK_ALL_TASK = "This Week's Task";
+static const std::string NEXT_WEEK_TITLE = "Next Week's Tasks";
+static const std::string NEXT_MONTH_TITLE = "Next Month's Tasks";
 
 //Feedbacks
 static const std::string ALL_TASKS_FEEDBACK = "All tasks shown in sideBar";
@@ -154,6 +161,10 @@ static const std::string ALL_FLOATING_TASKS_FEEDBACK = "All floating tasks in si
 static const std::string ALL_TODO_FLOATING_TASKS_FEEDBACK = "All todo floating tasks in sideBar";
 static const std::string ALL_DONE_FLOATING_TASKS_FEEDBACK = "All done floating tasks in sideBar";
 
+static const std::string NEXT_MONTH_TASKS_FEEDBACK = "Next month's tasks shown in sideBar";
+static const std::string NEXT_WEEK_TASKS_FEEDBACK = "Next week's tasks shown in sideBar";
+static const std::string THIS_WEEK_TASKS_FEEDBACK = "This week's tasks shown in sideBar";
+
 //Input error messages here
 static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
 static const std::string TODO_DONE_INPUT_ERROR = "Invalid todo/done input: Please input either 'todo' or 'done'";
@@ -163,3 +174,4 @@ static const std::string INVALID_COMMAND = "This is not a valid command\n";
 static const std::string INVALID_MONTH_INPUT = "Invalid show month input";
 static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";
 static const std::string INVALID_DATE_INPUT = "Invalid date input. Proper format: 'dd/mm/yy' , 'today', 'yesterday' , 'tomorrow' , 'monday' , tuesday' etc.";
+static const std::string INVALID_NEXT_INPUT = "Please input in the format 'next month' or 'next week'";

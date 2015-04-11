@@ -193,6 +193,54 @@ std::string Show::execute(std::string argument) {
 
 				}
 
+			}//end of todo/done floating tasks
+
+			//method to show next week or next month todo&done tasks
+			if ((firstArg == DATE_NEXT || secArg == DATE_NEXT)) {
+				if (firstArg == DATE_MONTH || secArg == DATE_MONTH || secArg == DATE_WEEK || firstArg == DATE_WEEK) {
+
+					int day = timeDateInfo::setStructTm()->tm_mday;
+					int month = timeDateInfo::setStructTm()->tm_mon + 1;
+					int year = timeDateInfo::setStructTm()->tm_year + 1900;
+					int wday = timeDateInfo::setStructTm()->tm_wday;
+
+					if (secArg == DATE_NEXT) {
+						std::swap(secArg, firstArg);
+					}
+
+					//start of 'next month' method
+					if (secArg == DATE_MONTH) {
+						if (month == 12) {
+							month = 1;
+							year++;
+						}
+						else {
+							month++;
+						}
+
+						count = TextStorage::getInstance()->displayMonthTasks(year, month);
+						ComCalManager::getInstance()->setSideBarTitle(NEXT_MONTH_TITLE);
+						timeDateInfo::setStructTm(year, month-1);
+
+						return prepShowFeedback(NEXT_MONTH_TASKS_FEEDBACK, count);					
+					}//end of next month method
+
+					if (secArg == DATE_WEEK) {
+						Date * startOfNextWeek = getNextWeekDate(year, month, day, wday);
+						std::vector<Date> datesInWeek = getDatesInWeek(startOfNextWeek);
+
+						count = TextStorage::getInstance()->displayWeekTasks(datesInWeek);
+						ComCalManager::getInstance()->setSideBarTitle(NEXT_WEEK_TITLE);
+
+						return prepShowFeedback(NEXT_WEEK_TASKS_FEEDBACK, count);
+					}
+
+				}
+				else {
+					return INVALID_NEXT_INPUT;
+				} //end of next week or next month method
+
+
 			}
 
 		}
@@ -204,28 +252,31 @@ std::string Show::execute(std::string argument) {
 				return ALL_TODO_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
 			}
 
+			if (argument == ALL_TASKS) {
+				count = TextStorage::getInstance()->displayAllTasks();
+				ComCalManager::getInstance()->setSideBarTitle(ALL_TASKS_TITLE);
+
+				return prepShowFeedback(ALL_TASKS_FEEDBACK, count);
+			}
+
 			if (argument == INPUT_DONE) { // Display all tasks that are done
 				count = TextStorage::getInstance()->displayDoneTasks();
 				ComCalManager::getInstance()->setSideBarTitle(ALL_DONE_TITLE);
 				return ALL_DONE_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
 			}
 
-			if (argument == DEADLINED_TASK) {
+			if (argument == DEADLINED_TASK) { 
 				count = TextStorage::getInstance()->displayDeadlinedTasks();
 				ComCalManager::getInstance()->setSideBarTitle(ALL_TASKS_WITH_DEADLINE_TITLE);
-				return ALL_DEADLINED_FEEDBACK + " (count: " + typeConversions::intToString(count) + ")";
+
+				return prepShowFeedback(ALL_DEADLINED_FEEDBACK, count);
 			}
 
 			if (argument == FLOATING_TASKS) {
 				count = TextStorage::getInstance()->displayFloatingTasks();
 				ComCalManager::getInstance()->setSideBarTitle(ALL_FLOATING_TASKS_TITLE);
 
-				if (count == 0) {
-					return ZERO_SHOW_RESULTS;
-				}
-				else {
-					return ALL_FLOATING_TASKS_FEEDBACK + " (Show count: " + typeConversions::intToString(count) + ")";
-				}
+				return prepShowFeedback(ALL_FLOATING_TASKS_FEEDBACK, count);
 			}
 
 			// User specifies "show 'month'" 
@@ -246,12 +297,7 @@ std::string Show::execute(std::string argument) {
 				count = TextStorage::getInstance()->displayWeekTasks(weekDate);
 				ComCalManager::getInstance()->setSideBarTitle(THIS_WEEK_ALL_TASK);
 
-//				for (unsigned int j = 0; j < weekDate.size(); j++) {
-//					delete weekDate[j];
-//					weekDate[j] = nullptr;
-//				}
-
-				return "Current week shown (count: " + typeConversions::intToString(count) + ")";
+				return prepShowFeedback(THIS_WEEK_TASKS_FEEDBACK, count);
 			}
 
 			//user specifies a date through the formats, dd/mm/yy || tomorrow,today,yesterday
@@ -261,7 +307,7 @@ std::string Show::execute(std::string argument) {
 				std::string strDate = showDate->toGUIString();
 				ComCalManager::getInstance()->setSideBarTitle(showDate->toString());
 
-				return (strDate + " shown (count: " + typeConversions::intToString(count) + ")");
+				return prepShowFeedback(strDate, count);
 			}
 
 			delete showDate;
@@ -358,4 +404,33 @@ std::vector<Date> Show::getWeeklyDates(struct tm* timeDetails) {
 	}
 
 	return weekDate;
+}
+
+std::string Show::prepShowFeedback(std::string feedback, int count) {
+	if (count == 0) {
+		return ZERO_SHOW_RESULTS;
+	}
+	else {
+		return SHOW_COUNT_START + feedback + SHOW_COUNT_END;
+	}
+}
+
+Date* Show::getNextWeekDate(int year, int month, int mday, int wday) {
+	int numDaysMonth = timeDateInfo::getDaysInMonth(month - 1, year);
+
+	mday += DAYS_IN_WEEK - wday;
+	if (numDaysMonth < mday) {
+		mday %= numDaysMonth;
+		if (month == 12) {
+			month = 1;
+			year++;
+		}
+		else {
+			month++;
+		}
+	}
+
+	Date * startWeek = new Date(mday, month, year, 0000);
+
+	return startWeek;
 }
