@@ -9,9 +9,10 @@
 #include "keywords.h"
 #include "typeConversions.h"
 #include "Date.h"
-#include <algorithm>
 
+#include <algorithm>
 #include <ctype.h>
+#include <time.h>
 
 Show::Show() : Command() {
 }
@@ -93,27 +94,26 @@ std::string Show::execute(std::string argument) {
 				}
 			} //end of month and year condition
 
-			Date * tempDate = new Date();
 			//method to display all the tasks in a week with specific date in the week
-			if ((firstArg == WEEK) || (secArg == WEEK)) {
+			if (((firstArg == WEEK) || (secArg == WEEK))) {
+				if (firstArg != DATE_NEXT && secArg != DATE_NEXT) {
 
-				if (secArg == WEEK) {
-					std::swap(firstArg, secArg);
+					if (secArg == WEEK) {
+						std::swap(firstArg, secArg);
+					}
+
+					Date tempDate;
+					if (tempDate.setDate(secArg)) {
+						count = TextStorage::getInstance()->displayWeekTasks(getDatesInWeek(tempDate));
+						std::string sideBarTitle = tempDate.toGUIString() + " " + WEEK + " tasks";
+						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+						return (sideBarTitle + " shown (count: " + typeConversions::intToString(count) + ")");
+					}
+					else{
+						return INVALID_DATE_INPUT;
+					}
 				}
-
-				if (tempDate->setDate(secArg)) {
-					count = TextStorage::getInstance()->displayWeekTasks(getDatesInWeek(tempDate));
-					std::string sideBarTitle = tempDate->toGUIString() + " " + WEEK + " tasks";
-					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
-
-					return (sideBarTitle + " shown (count: " + typeConversions::intToString(count) + ")");
-				}
-				else{
-					return INVALID_DATE_INPUT;
-				}
-
-				delete tempDate;
-				tempDate = nullptr;
 			}
 
 			//method to show todo tasks of the user specified date
@@ -123,7 +123,8 @@ std::string Show::execute(std::string argument) {
 					std::swap(firstArg, secArg);
 				}
 
-				if (tempDate->setDate(secArg)) {
+				Date tempDate;
+				if (tempDate.setDate(secArg)) {
 
 				}
 				else {
@@ -137,13 +138,13 @@ std::string Show::execute(std::string argument) {
 				if (secArg == INPUT_DONE) {
 					std::swap(firstArg, secArg);
 				}
-
-				if (tempDate->setDate(secArg)) {
-					count = TextStorage::getInstance()->displayTodoTasks(*tempDate);
-					std::string sideBarTitle = tempDate->toGUIString() + " " + INPUT_DONE + " tasks\n";
+				Date tempDate;
+				if (tempDate.setDate(secArg)) {
+					count = TextStorage::getInstance()->displayTodoTasks(tempDate);
+					std::string sideBarTitle = tempDate.toGUIString() + " " + INPUT_DONE + " tasks\n";
 					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
-					return (sideBarTitle + " shown (count: " + typeConversions::intToString(count) + ")");
+					return prepShowFeedback(sideBarTitle, count);
 				}
 				else {
 					return INVALID_DATE_INPUT;
@@ -226,7 +227,7 @@ std::string Show::execute(std::string argument) {
 					}//end of next month method
 
 					if (secArg == DATE_WEEK) {
-						Date * startOfNextWeek = getNextWeekDate(year, month, day, wday);
+						Date startOfNextWeek = getNextWeekDate(year, month, day, wday);
 						std::vector<Date> datesInWeek = getDatesInWeek(startOfNextWeek);
 
 						count = TextStorage::getInstance()->displayWeekTasks(datesInWeek);
@@ -338,20 +339,70 @@ std::vector<Date> Show::getDatesInWeek() {
 	std::vector<Date> weekDate;
 
 	struct tm * timeDetails = timeDateInfo::setStructTm();
-	weekDate = getWeeklyDates(timeDetails);
+	weekDate = getWeeklyDates(timeDetails->tm_year, timeDetails->tm_mon, timeDetails->tm_mday, timeDetails->tm_wday);
+//	weekDate = getWeeklyDates(timeDetails);
 
 	return weekDate;
 }
 
 
-std::vector<Date> Show::getDatesInWeek(Date* specDate) {
+std::vector<Date> Show::getDatesInWeek(Date specDate) {
 	std::vector<Date> weekDate;
-	int year = specDate->getYear() + 1900;
-	int month = specDate->getMonth() - 1;
-	int day = specDate->getDay();
+	int year = specDate.getYear() + 1900;
+	int month = specDate.getMonth() - 1;
+	int mday = specDate.getDay();
 
-	struct tm* timeDetails = timeDateInfo::setStructTm(year, month, day); 
-	weekDate = getWeeklyDates(timeDetails);
+	tm * timeDetails = timeDateInfo::setStructTm(year, month, mday);
+	mktime(timeDetails);
+	int wday = timeDetails->tm_wday;
+	
+	weekDate = getWeeklyDates(year, month, mday, wday);
+
+	return weekDate;
+}
+
+std::vector<Date> Show::getWeeklyDates(int year, int month, int mday, int wday) {
+	std::vector<Date> weekDate;
+
+	if (wday != 0) {
+		if (wday >= mday) {
+
+			if (mday == 0) {
+				year--;
+				month = 11;
+			}
+			else {
+				month--;
+			}
+
+			wday -= mday;
+			mday = timeDateInfo::getDaysInMonth(month, year) - wday;
+		}
+		else {
+			mday -= wday;
+		}
+	}
+
+	for (int i = 0; i < DAYS_IN_WEEK; i++) {
+		//int shortYr = year % 100;
+		int tempMonth = month + 1;
+		weekDate.push_back(Date(mday, tempMonth, year, 0000));
+
+		if (mday == timeDateInfo::getDaysInMonth(month, year) && (month != 11)) {
+			month++;
+			mday = 1;
+		}
+		else {
+			if ((mday == timeDateInfo::getDaysInMonth(month, year)) && (month == 11)){
+				year++;
+				month = 0;
+				mday = 1;
+			}
+			else {
+				mday++;
+			}
+		}
+	}
 
 	return weekDate;
 }
@@ -383,7 +434,7 @@ std::vector<Date> Show::getWeeklyDates(struct tm* timeDetails) {
 	}
 
 	for (int i = 0; i < DAYS_IN_WEEK; i++) {
-//		int shortYr = year % 100;
+
 		int tempMonth = month + 1;
 		weekDate.push_back(Date(dayMonth, tempMonth, year, 0000));
 
@@ -411,11 +462,11 @@ std::string Show::prepShowFeedback(std::string feedback, int count) {
 		return ZERO_SHOW_RESULTS;
 	}
 	else {
-		return SHOW_COUNT_START + feedback + SHOW_COUNT_END;
+		return feedback + " " + SHOW_COUNT_START + typeConversions::intToString(count) + SHOW_COUNT_END;
 	}
 }
 
-Date* Show::getNextWeekDate(int year, int month, int mday, int wday) {
+Date Show::getNextWeekDate(int year, int month, int mday, int wday) {
 	int numDaysMonth = timeDateInfo::getDaysInMonth(month - 1, year);
 
 	mday += DAYS_IN_WEEK - wday;
@@ -430,7 +481,7 @@ Date* Show::getNextWeekDate(int year, int month, int mday, int wday) {
 		}
 	}
 
-	Date * startWeek = new Date(mday, month, year, 0000);
+	Date startWeek(mday, month, year, 0000);
 
 	return startWeek;
 }

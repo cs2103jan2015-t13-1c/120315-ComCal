@@ -192,6 +192,7 @@ int timeDateInfo::getDaysInMonth(int iter, int year) {
 struct tm* timeDateInfo::setStructTm(int year, int month, int day) {
 	struct tm* timeinfo = setStructTm(year, month);
 	timeinfo->tm_mday = day;
+	mktime(timeinfo);
 	return timeinfo;
 }
 
@@ -203,13 +204,14 @@ struct tm* timeDateInfo::setStructTm(int year, int month) {
 	else {
 		timeinfo->tm_year = year;
 	}
-	
+
 	return timeinfo;
 }
 
 struct tm* timeDateInfo::setStructTm(int month) {
 	struct tm* timeinfo = setStructTm();
 	timeinfo->tm_mon = month;
+
 	return timeinfo;
 }
 
@@ -217,11 +219,13 @@ struct tm* timeDateInfo::setStructTm() {
 	time_t rawtime;
 	time(&rawtime);
 	struct tm* timeinfo = localtime(&rawtime);
+
 	return timeinfo;
 }
 
 struct tm* timeDateInfo::setDayStructTm(int day) {
 	struct tm* timeinfo = setStructTm();
 	timeinfo->tm_wday = day;
+
 	return timeinfo;
 }
