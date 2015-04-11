@@ -34,6 +34,7 @@ private:
 	std::vector<Date> getWeeklyDates(int year, int month, int mday, int wday);
 
 	std::string prepShowFeedback(std::string feedback,int count);
+	int countWhiteSpace(std::string argument);
 	
 public:
 	Show();

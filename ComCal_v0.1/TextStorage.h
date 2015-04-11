@@ -55,9 +55,10 @@ public:
 	int displayDoneTasks(const Date &date);
 	int displayTimedTasks();
 	int displayTimedTasks(const Date &date);
+	int displayPartialTask();
+	int displayPartialTask(const Date &date);
 	int displayFloatingTasks();
 	int displayFloatingTasks(bool isDone);
-	int displayMonthTasks(int month); //1 = January, 2 = February, etc.
 	int displayMonthTasks(int year, int month);
 	int displayDatedTasks(const Date &date);
 	int displayWeekTasks(std::vector<Date>);

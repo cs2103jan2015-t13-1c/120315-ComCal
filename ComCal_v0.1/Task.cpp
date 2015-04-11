@@ -223,3 +223,9 @@ std::string Task::toGUIString() {
 
 	return returnString;
 }
+
+std::string Task::toCalString() {
+	std::string calString;
+
+	return calString;
+}

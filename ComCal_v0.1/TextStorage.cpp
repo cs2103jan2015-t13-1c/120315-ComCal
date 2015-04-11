@@ -60,6 +60,7 @@ bool TextStorage::deleteTask(int index) {
 	return true;
 }
 
+
 int TextStorage::displayAllTasks() {
 	unsigned int size = _todoTasks->size();
 	int count = 0;
@@ -237,6 +238,47 @@ int TextStorage::displayFloatingTasks(bool isDone) {
 
 	return count;
 }
+
+int TextStorage::displayPartialTask() {
+	int count = 0;
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+
+		if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) {
+			tempTask->display();
+			count++;
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+
+	return count;
+}
+
+int TextStorage::displayPartialTask(const Date &date) {
+	int count = 0;
+	unsigned int size = _todoTasks->size();
+	Task* tempTask;
+
+	for (unsigned int i = 0; i < size; i++) {
+		tempTask = _todoTasks->at(i);
+
+		if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date)){
+			tempTask->display();
+			count++;
+		}
+		else {
+			tempTask->hide();
+		}
+	}
+
+	return count;
+}
+
 int TextStorage::displayTimedTasks() {
 	int count = 0;
 	unsigned int size = _todoTasks->size();
@@ -275,39 +317,6 @@ int TextStorage::displayTimedTasks(const Date &date) {
 		
 	}
 
-	return count;
-}
-
-//1 = January, 2 = February, etc.
-int TextStorage::displayMonthTasks(int month) {
-	int count = 0;
-	unsigned int size = _todoTasks->size();
-	Task* tempTask;
-
-	for (unsigned int i = 0; i < size; i++) {
-		tempTask = _todoTasks->at(i);
-
-		if (tempTask->hasStartDate()) {
-			if (tempTask->getStartDate()->getMonth() == month) {
-				tempTask->display();
-				count++;
-			}
-			else {
-				tempTask->hide();
-			}
-		}
-		else {
-			if (tempTask->hasEndDate()) {
-				if (tempTask->getStartDate()->getMonth() == month) {
-					tempTask->display();
-				count++;
-				}
-				else {
-					tempTask->hide();
-				}
-			}
-		}
-	}
 	return count;
 }
 

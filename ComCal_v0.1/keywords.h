@@ -34,8 +34,10 @@ static const std::string WEEK = "week";
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
 static const std::string INPUT_DONE = "done";
+static const std::string INPUT_TIMED = "timed";
 static const std::string DEADLINED_TASK = "deadline";
 static const std::string FLOATING_TASKS = "floating";
+static const std::string INPUT_PARTIAL = "partial";
 static const std::string ALL_TASKS = "all";
 
 //Attribute keywords constant string and index int declarations:
@@ -138,7 +140,7 @@ static const std::string ALL_PARTIAL_TASKS_TITLE = "Partial-timed Tasks";
 static const std::string ALL_TODO_PARTIAL_TASKS_TITLE = "Todo Partial-timed Tasks";
 static const std::string ALL_DONE_PARTIAL_TASKS_TITLE = "Done Partial-timed Tasks";
 
-static const std::string ALL_TIMED_TASKS_TITLE = "Partial-timed Tasks";
+static const std::string ALL_TIMED_TASKS_TITLE = "Timed Tasks";
 static const std::string ALL_TODO_TIMED_TASKS_TITLE = "Todo Timed Tasks";
 static const std::string ALL_DONE_TIMED_TASKS_TITLE = "Done Timed Tasks";
 
@@ -146,12 +148,16 @@ static const std::string THIS_WEEK_ALL_TASK = "This Week's Task";
 static const std::string NEXT_WEEK_TITLE = "Next Week's Tasks";
 static const std::string NEXT_MONTH_TITLE = "Next Month's Tasks";
 
+static const std::string DATED_TODO_TASKS = " Todo Tasks";
+static const std::string DATED_DONE_TASKS = " Done Tasks";
+
 //Feedbacks
 static const std::string ALL_TASKS_FEEDBACK = "All tasks shown in sideBar";
 static const std::string ALL_TODO_FEEDBACK = "All todo tasks shown in sideBar";
 static const std::string ALL_DONE_FEEDBACK = "All done tasks shown in sideBar";
 static const std::string SHOW_TODAY_FEEDBACK = "All tasks today shown in sideBar";
-static const std::string ZERO_SHOW_RESULTS = "There are zero show reults";
+static const std::string ZERO_SHOW_RESULTS = "There are zero show results";
+static const std::string CURRENT_MONTH_TASKS = "All current month tasks in sideBar and calendar";
 
 static const std::string ALL_DEADLINED_FEEDBACK = "All tasks with deadlines in sideBar";
 static const std::string ALL_TODO_DEADLINED_FEEDBACK = "All todo tasks with deadlines in sideBar";

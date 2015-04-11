@@ -48,4 +48,5 @@ public:
 
 	std::string toString();
 	std::string toGUIString();
+	std::string toCalString();
 };
