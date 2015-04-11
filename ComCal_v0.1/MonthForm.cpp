@@ -223,14 +223,14 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
 					if ((System::Int32::Parse(dateList[i]->Text) == tempTask->getEndDate()->getDay()) && (monthRef == tempTask->getEndDate()->getMonth()) && (year == tempTask->getEndDate()->getYear())) {
-						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 				}
 
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) {
 					
 					if ((System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
-						taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+						taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 				}
 
@@ -238,7 +238,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 					Date * refDate = new Date(System::Int32::Parse(dateList[i]->Text), monthRef, year, 0000);
 
 					if (tempTask->isBetween(*refDate)) {
-						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->getDescription()), Environment::NewLine);
+						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 
 					delete refDate;
