@@ -76,7 +76,9 @@ std::string Show::execute(std::string argument) {
 
 		}//end show month year todo/done
 
+		if (isWeek(firstArg, secArg, thiArg)) {
 
+		}
 
 		//TODO: More show stuff
 		// Hamzah, help me ensure that the message that returns to feedback bar includes the number of tasks shown. Thanks!
@@ -178,7 +180,7 @@ std::string Show::execute(std::string argument) {
 					}
 				}
 
-			}//end of all tasks within specific date in week
+			}//end of all tasks within 1) specific date in week || 2)week todo/done
 
 			//method to show todo tasks of the user specified date
 			if ((firstArg == INPUT_TODO) || (secArg == INPUT_TODO)) {
