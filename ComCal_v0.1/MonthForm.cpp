@@ -11,6 +11,7 @@
 #include "ErrorLog.h"
 #include "Exceptions.h"
 #include "Date.h"
+#include "HelpForm.h"
 
 using namespace ComCal_v01;
 using namespace System::Windows::Forms;
@@ -86,22 +87,30 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		_ctrlHeld = false;
 	}
 	else if (e->KeyCode == Keys::Enter) {
-		if (userInputBox->Text == "exit" || userInputBox->Text == "close") {
-			Application::Exit();
-		}
-		else{
-			ComCalManager* managerInstance = ComCalManager::getInstance();
-			try {
-				feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));	
-			}
-			catch (std::exception& exception) {
-				feedBack = typeConversions::convertstrToStr(exception.what());
-			}
 
-			guiUpdate();
-			feedBackBox->Text = feedBack;
-			managerInstance->resetCommandIndex();
+		if (userInputBox->Text == "help" || userInputBox->Text == "Help") {
+			ComCal_v01::HelpForm^ helpForm = gcnew HelpForm();
+			helpForm->ShowDialog();
 			userInputBox->Text = nullptr;
+		}
+		else {
+			if (userInputBox->Text == "exit" || userInputBox->Text == "close") {
+				Application::Exit();
+			}
+			else{
+				ComCalManager* managerInstance = ComCalManager::getInstance();
+				try {
+					feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));
+				}
+				catch (std::exception& exception) {
+					feedBack = typeConversions::convertstrToStr(exception.what());
+				}
+
+				guiUpdate();
+				feedBackBox->Text = feedBack;
+				managerInstance->resetCommandIndex();
+				userInputBox->Text = nullptr;
+			}
 		}
 	}
 	else if (e->KeyCode == Keys::Up) {
