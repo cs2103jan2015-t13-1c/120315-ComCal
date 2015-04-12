@@ -3,6 +3,7 @@
 //@author A0119754X
 
 #include "Task.h"
+#include "typeConversions.h"
 
 Task::Task() {
 	_description = "";
@@ -227,28 +228,18 @@ std::string Task::toGUIString() {
 std::string Task::toCalString() {
 	std::string calString;
 	int  size = _description.size();
-	int addSpace = 0;
-
-	for (int i = 0; i < size; i++) {
-		if (_description[i] == ' ' || _description[i] == 'i' || _description[i] == 'I' || _description[i] == 'l'
-			|| _description[i] == '!' || _description[i] == '1' || _description[i] == '.' || _description[i] == ',' || _description[i] == ':'
-			|| _description[i] == ';' || _description[i] == '|') {
-
-			addSpace++;
-		}
-	}
+	
+	calString = typeConversions::trimExtraSpaces(_description);
 
 	if (_description.size() >= CAL_DESC_LIMIT) {
 
-		calString = _description.substr(0, CAL_DESC_LIMIT);
+		calString = calString.substr(0, CAL_DESC_LIMIT);
 		calString += CAL_WHITE_SPACE;
 	}
 	else {
-		calString += _description;
+		calString = _description;
 		calString.resize(size + 2*(CAL_DESC_LIMIT-size), ' ');
 	}
-
-	calString.resize(calString.size() + addSpace, ' ');
 
 	if (_taskTypeCode == TASKTYPECODE_DEADLINE) {
 		calString += _endDate->toTimeString();

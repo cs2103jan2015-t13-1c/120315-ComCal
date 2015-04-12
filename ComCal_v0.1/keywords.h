@@ -52,8 +52,8 @@ static const int INDEX_ENDDATETIME = 2;
 static const int INDEX_LOCATION = 3;
 
 //Attributes for toCalString
-static const int CAL_DESC_LIMIT = 12;
-static const int CAL_CHAR_LIMIT = 16;
+static const int CAL_DESC_LIMIT = 10;
+static const int CAL_CHAR_LIMIT = 14;
 static const std::string CAL_WHITE_SPACE = "  ";
 
 //Delete before certain date/time command keywords:
@@ -103,6 +103,7 @@ static const std::string TASKTYPE_TIMED = "TIMED";
 static const std::string TASKTYPE_EVENT = "EVENT";
 static const std::string TASKTYPE_DEADLINE = "DEADLINE";
 static const std::string TASKTYPE_TODO = "TO-DO";
+static const std::string TASKS = "Tasks";
 
 //Default file names constant string declarations:
 static const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
@@ -153,6 +154,9 @@ static const std::string ALL_TODO_TIMED_TASKS_TITLE = "Todo Timed Tasks";
 static const std::string ALL_DONE_TIMED_TASKS_TITLE = "Done Timed Tasks";
 
 static const std::string THIS_WEEK_ALL_TASK = "This Week's Task";
+static const std::string THIS_WEEK_TODO_TASK_TITLE = "This Week's Todo Task";
+static const std::string THIS_WEEK_DONE_TASK_TITLE = "This Week's Done Task";
+
 static const std::string NEXT_WEEK_TITLE = "Next Week's Tasks";
 static const std::string NEXT_MONTH_TITLE = "Next Month's Tasks";
 
@@ -186,6 +190,8 @@ static const std::string ALL_DONE_TIMED_TASKS_FEEDBACK = "All done timed tasks i
 static const std::string NEXT_MONTH_TASKS_FEEDBACK = "Next month's tasks shown in sideBar";
 static const std::string NEXT_WEEK_TASKS_FEEDBACK = "Next week's tasks shown in sideBar";
 static const std::string THIS_WEEK_TASKS_FEEDBACK = "This week's tasks shown in sideBar";
+static const std::string THIS_WEEK_TODO_TASKS_FEEDBACK = "This week's todo tasks shown in sideBar";
+static const std::string THIS_WEEK_DONE_TASKS_FEEDBACK = "This week's done tasks shown in sideBar";
 
 //Input error messages here
 static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
@@ -198,3 +204,4 @@ static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show 
 static const std::string INVALID_DATE_INPUT = "Invalid date input. Proper format: 'dd/mm/yy' , 'today', 'yesterday' , 'tomorrow' , 'monday' , tuesday' etc.";
 static const std::string INVALID_NEXT_INPUT = "Please input in the format 'next month' or 'next week'";
 static const std::string INVALID_YEAR_ERROR = "Please input a year above 1900";
+static const std::string INVALID_WEEK_INPUT = "Please input in the format: 'show week' or 'show week todo' or 'show week done' or 'show next week' or 'show week DD/MM/YYYY' or 'show week monday/tuesday/etc'";

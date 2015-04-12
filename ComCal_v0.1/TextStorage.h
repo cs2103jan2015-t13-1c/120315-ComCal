@@ -73,7 +73,7 @@ public:
 
 	int displayDatedTasks(int code, const Date &date);
 
-	int displayWeekTasks(std::vector<Date>);
+	int displayWeekTasks(int code, std::vector<Date>);
 
 	
 

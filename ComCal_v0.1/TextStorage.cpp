@@ -657,7 +657,7 @@ int TextStorage::displayDatedTasks(int code, const Date &date) {
 	return count;
 }
 
-int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
+int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 	int count = 0;
 	unsigned int todoSize = _todoTasks->size();
 	unsigned int weekSize = weekDate.size();
@@ -670,27 +670,81 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 		//loops through weekdate to see if the task at i corresponds to any of the dates in weekdate
 		for (int j = 0; j < weekSize; j++) {
 
-			if (_todoTasks->at(i)->hasStartDate()) {
-				if (_todoTasks->at(i)->getStartDate()->getDay() == weekDate[j].getDay() && _todoTasks->at(i)->getStartDate()->getMonth() == weekDate[j].getMonth() && _todoTasks->at(i)->getStartDate()->getYear() == weekDate[j].getYear()) {
-					_todoTasks->at(i)->display();
+			if (code == TODO_CODE) {
+				if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->isBetween(weekDate[j])) {
+					tempTask->display();
 					count++;
-					break;
+					break;				
 				}
 				else {
-					_todoTasks->at(i)->hide();
+					if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(weekDate[j])) {
+						tempTask->display();
+						count++;
+						break;
+					}
+					else {
+						if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(weekDate[j])) {						
+							tempTask->display();
+							count++;
+							break;
+						}
+						else {
+							tempTask->hide();
+						}
+					}
 				}
-			}
-			else if (_todoTasks->at(i)->hasEndDate()) {
-				if (_todoTasks->at(i)->getEndDate()->getDay() == weekDate[j].getDay() && _todoTasks->at(i)->getEndDate()->getMonth() == weekDate[j].getMonth() && _todoTasks->at(i)->getEndDate()->getYear() == weekDate[j].getYear()) {
-					_todoTasks->at(i)->display();
-					count++;
-					break;
-				}
-				else {
-					_todoTasks->at(i)->hide();
-				}
+			}//end of TODO_CODE
 
-			}
+			if (code == DONE_CODE) {
+				if (tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->isBetween(weekDate[j])) {
+					tempTask->display();
+					count++;
+					break;
+				}
+				else {
+					if (tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(weekDate[j])) {
+						tempTask->display();
+						count++;
+						break;
+					}
+					else {
+						if (tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(weekDate[j])) {
+							tempTask->display();
+							count++;
+							break;
+						}
+						else {
+							tempTask->hide();
+						}
+					}
+				}
+			}//end of DONE_CODE
+
+			if (code == ALL_CODE) {
+				if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->isBetween(weekDate[j])) {
+						tempTask->display();
+						count++;
+						break;
+				}
+				else {
+					if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(weekDate[j])) {
+						tempTask->display();
+						count++;
+						break;
+					}
+					else {
+						if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(weekDate[j])) {
+							tempTask->display();
+							count++;
+							break;
+						}
+						else {
+							tempTask->hide();
+						}
+					}
+				}
+			}//end of ALL_CODE
+			
 		}
 	}
 	return count;

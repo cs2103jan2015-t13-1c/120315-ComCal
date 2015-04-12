@@ -5,7 +5,7 @@
 
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
-
+;
 //@author A0085731A
 bool timeDateInfo::isMdayValid(std::string mdayInput, int month, int year) {
 	if (!typeConversions::isNumber(mdayInput)) {

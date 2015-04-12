@@ -24,6 +24,7 @@ std::string Show::execute(std::string argument) {
 	std::string feedBack;
 	std::string sideBarTitle;
 	int count;
+	int code = ALL_CODE;
 
 	if (argument.size() <= 0) { // Default current month
 		int year = timeDateInfo::setStructTm()->tm_year + 1900;
@@ -71,7 +72,7 @@ std::string Show::execute(std::string argument) {
 							std::swap(firstArg, secArg);
 						}
 
-						int code = ALL_CODE; // initialised to ALL_CODE in case of errors in the next few lines
+						code = ALL_CODE; // initialised to ALL_CODE in case of errors in the next few lines
 
 						if (secArg == INPUT_TODO) {
 							code = TODO_CODE;
@@ -131,8 +132,10 @@ std::string Show::execute(std::string argument) {
 				}//end of month and year || month todo/done condition
 
 
-			//method to display all the tasks in a week with specific date in the week
+			//1)Method to display all the tasks in a week with specific date in the week
+			//2)Method to display todo/done tasks in the current week
 			if (((firstArg == WEEK) || (secArg == WEEK))) {
+
 				if (firstArg != DATE_NEXT && secArg != DATE_NEXT) {
 
 					if (secArg == WEEK) {
@@ -140,17 +143,37 @@ std::string Show::execute(std::string argument) {
 					}
 
 					Date tempDate;
-					if (tempDate.setDate(secArg)) {
-						count = TextStorage::getInstance()->displayWeekTasks(getDatesInWeek(tempDate));
-						sideBarTitle = tempDate.toGUIString() + " " + WEEK + " tasks";
+					if (tempDate.setDate(secArg)) { //method for show week date
+						count = TextStorage::getInstance()->displayWeekTasks(ALL_CODE, getDatesInWeek(tempDate));
+						sideBarTitle = tempDate.toGUIString() + CAL_WHITE_SPACE + WEEK + TASKS;
 						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
 						return prepShowFeedback(sideBarTitle, count);
 					}
-					else{
-						return INVALID_DATE_INPUT;
+					else{ //method for show week todo/done
+						if (secArg == INPUT_TODO || secArg == INPUT_DONE) {
+							if (secArg == INPUT_TODO) {
+								code = TODO_CODE;
+								sideBarTitle = THIS_WEEK_TODO_TASK_TITLE;
+								feedBack = THIS_WEEK_TODO_TASKS_FEEDBACK;
+							}
+							else {
+								code = DONE_CODE;
+								sideBarTitle = THIS_WEEK_DONE_TASK_TITLE;
+								feedBack = THIS_WEEK_DONE_TASKS_FEEDBACK;
+							}
+
+							count = TextStorage::getInstance()->displayWeekTasks(code, getDatesInWeek());
+							ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+							return prepShowFeedback(feedBack, count);
+						}
+						else{
+							return INVALID_WEEK_INPUT;
+						}
 					}
 				}
+
 			}//end of all tasks within specific date in week
 
 			//method to show todo tasks of the user specified date
@@ -272,7 +295,7 @@ std::string Show::execute(std::string argument) {
 						Date startOfNextWeek = getNextWeekDate(year, month, day, wday);
 						std::vector<Date> datesInWeek = getDatesInWeek(startOfNextWeek);
 
-						count = TextStorage::getInstance()->displayWeekTasks(datesInWeek);
+						count = TextStorage::getInstance()->displayWeekTasks(ALL_CODE, datesInWeek);
 						ComCalManager::getInstance()->setSideBarTitle(NEXT_WEEK_TITLE);
 
 						return prepShowFeedback(NEXT_WEEK_TASKS_FEEDBACK, count);
@@ -410,13 +433,13 @@ std::string Show::execute(std::string argument) {
 			if (argument == WEEK) {
 				std::vector<Date> weekDate = getDatesInWeek();
 
-				count = TextStorage::getInstance()->displayWeekTasks(weekDate);
+				count = TextStorage::getInstance()->displayWeekTasks(ALL_CODE, weekDate);
 				ComCalManager::getInstance()->setSideBarTitle(THIS_WEEK_ALL_TASK);
 
 				return prepShowFeedback(THIS_WEEK_TASKS_FEEDBACK, count);
 			}
 
-			//user specifies a date through the formats, dd/mm/yy || tomorrow,today,yesterday
+			//user specifies a date through the formats, dd/mm/yyyy || tomorrow,today,yesterday
 			Date* showDate = new Date();
 			if (showDate->setDate(argument)) {
 				count = TextStorage::getInstance()->displayDatedTasks(ALL_CODE, *showDate);

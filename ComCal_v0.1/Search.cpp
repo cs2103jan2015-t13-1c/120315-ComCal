@@ -3,6 +3,8 @@
 //Implementation of functions in the Search class
 
 #include "Search.h"
+#include "ComCalManager.h"
+#include "keywords.h"
 
 static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED = "System error: Unrecognized search attribute code stored in _attributeToSearch private attribute of SearchCondition object. Search attribute code read = ";
 static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHCONDITIONPASSED = "System error: Unrecognized search condition code stored in SearchCondition object in _searchConditions private attribute of Search class. Search condition code read = ";
@@ -336,6 +338,7 @@ std::string Search::execute(std::string argument) {
 	}
 
 	std::string feedback = prepareFeedback();
+	ComCalManager::getInstance()->setSideBarTitle(SEARCH_RESULTS_TITLE);
 
 	return feedback;
 }
