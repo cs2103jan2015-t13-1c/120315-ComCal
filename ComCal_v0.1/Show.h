@@ -27,11 +27,13 @@ private:
 	//Returns:: Dates within the week that contains the argument
 	std::vector<Date> getDatesInWeek(Date specDate);
 
-	Date getNextWeekDate(int year, int month, int mday, int wday);
+	//Arguments: 1)time Details of the week
 	std::vector<Date> getWeeklyDates(struct tm*);
 
 	//Arguments: 1) int year - years after 1900, month, day of the month, day of the week
 	std::vector<Date> getWeeklyDates(int year, int month, int mday, int wday);
+
+	Date getNextWeekDate(int year, int month, int mday, int wday);
 
 	std::string prepShowFeedback(std::string feedback,int count);
 	int countWhiteSpace(std::string argument);

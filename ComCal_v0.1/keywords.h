@@ -33,12 +33,15 @@ static const std::string WEEK = "week";
 
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
+static const int TODO_CODE = 1;
 static const std::string INPUT_DONE = "done";
+static const int DONE_CODE = 2;
 static const std::string INPUT_TIMED = "timed";
 static const std::string DEADLINED_TASK = "deadline";
 static const std::string FLOATING_TASKS = "floating";
 static const std::string INPUT_PARTIAL = "partial";
 static const std::string ALL_TASKS = "all";
+static const int ALL_CODE = 3;
 
 //Attribute keywords constant string and index int declarations:
 static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;

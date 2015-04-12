@@ -240,9 +240,46 @@ std::string Show::execute(std::string argument) {
 				}
 				else {
 					return INVALID_NEXT_INPUT;
-				} //end of next week or next month method
+				} 
+			}//end of next week or next month method
 
+			//start of deadlined task with specified date (default show all)
+			if (firstArg == DEADLINED_TASK || secArg == DEADLINED_TASK) {
 
+				if (secArg == DEADLINED_TASK) {
+					std::swap(firstArg, secArg);
+				}
+
+				Date * tempDate = new Date();
+				if (tempDate->setDate(secArg)) {
+					count = TextStorage::getInstance()->displayDeadlinedTasks(ALL_CODE,*tempDate);
+					sideBarTitle = tempDate->toGUIString() + ALL_TASKS_WITH_DEADLINE_TITLE;
+					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+					return prepShowFeedback(sideBarTitle, count);
+				}
+				else {
+					return INVALID_DATE_INPUT;
+				}
+			}//end of deadlined task with specified date
+
+			//start of partial with specified date
+			if (firstArg == INPUT_PARTIAL || secArg == INPUT_PARTIAL) {
+				if (secArg == INPUT_PARTIAL) {
+					std::swap(firstArg, secArg);
+				}
+
+				Date * tempDate = new Date();
+				if (tempDate->setDate(secArg)) {
+					count = TextStorage::getInstance()->displayDeadlinedTasks(ALL_CODE, *tempDate);
+					sideBarTitle = tempDate->toGUIString() + " " + ALL_PARTIAL_TASKS_TITLE;
+					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+					return prepShowFeedback(sideBarTitle, count);
+				}
+				else {
+					return INVALID_DATE_INPUT;
+				}
 			}
 
 		}
@@ -321,7 +358,7 @@ std::string Show::execute(std::string argument) {
 			//user specifies a date through the formats, dd/mm/yy || tomorrow,today,yesterday
 			Date* showDate = new Date();
 			if (showDate->setDate(argument)) {
-				count = TextStorage::getInstance()->displayDatedTasks(*showDate);
+				count = TextStorage::getInstance()->displayDatedTasks(ALL_CODE, *showDate);
 				sideBarTitle = showDate->toGUIString();
 				ComCalManager::getInstance()->setSideBarTitle(showDate->toString() + " tasks");
 

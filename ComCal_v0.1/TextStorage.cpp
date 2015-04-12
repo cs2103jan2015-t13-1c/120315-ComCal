@@ -259,7 +259,7 @@ int TextStorage::displayPartialTask() {
 	return count;
 }
 
-int TextStorage::displayPartialTask(const Date &date) {
+int TextStorage::displayPartialTask(int code, const Date &date) {
 	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
@@ -267,12 +267,34 @@ int TextStorage::displayPartialTask(const Date &date) {
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 
-		if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date)){
-			tempTask->display();
-			count++;
+		if (code = TODO_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date) && !tempTask->getIsDone()){
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
 		}
-		else {
-			tempTask->hide();
+
+		if (code = DONE_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date) && tempTask->getIsDone()){
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+
+		if (code = ALL_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date)){
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
 		}
 	}
 
@@ -299,7 +321,7 @@ int TextStorage::displayTimedTasks() {
 	return count;
 }
 
-int TextStorage::displayTimedTasks(const Date &date) {
+int TextStorage::displayTimedTasks(int code, const Date &date) {
 	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
@@ -307,12 +329,34 @@ int TextStorage::displayTimedTasks(const Date &date) {
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 
-		if ((tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) && tempTask->isBetween(date)) {
-			count++;
-			tempTask->display();
-		}
-		else {
+		if (code = TODO_CODE) {
+			if ((tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) && tempTask->isBetween(date) && !tempTask->getIsDone()) {
+				count++;
+				tempTask->display();
+			}
+			else {
 				tempTask->hide();
+			}
+		}
+
+		if (code == DONE_CODE) {
+			if ((tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) && tempTask->isBetween(date) && tempTask->getIsDone()) {
+				count++;
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+
+		if (code == ALL_CODE) {
+			if ((tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) && tempTask->isBetween(date)) {
+				count++;
+				tempTask->display();
+			}
+			else {
+				tempTask->hide();
+			}
 		}
 		
 	}
@@ -393,7 +437,7 @@ int TextStorage::displayMonthTasks(int year, int month) {
 	return count;
 }
 
-int TextStorage::displayDatedTasks(const Date &date) {
+int TextStorage::displayDatedTasks(int code, const Date &date) {
 	int count = 0;
 	unsigned int size = _todoTasks->size();
 	Task* tempTask;
@@ -401,27 +445,83 @@ int TextStorage::displayDatedTasks(const Date &date) {
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 
-		if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED){
-			if (tempTask->isBetween(date)){
-				tempTask->display();
-				count++;
-			}
-			else {
-				tempTask->hide();
-			}
-		}
-		else {
-			if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
-				tempTask->display();
-				count++;
-			}
-			else {
-				if ((tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) && (tempTask->getEndDate()->operator==(date))) {
+		if (code == TODO_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && !tempTask->getIsDone()){
+				if (tempTask->isBetween(date)){
 					tempTask->display();
 					count++;
 				}
-				else{
+				else {
 					tempTask->hide();
+				}
+			}
+			else {
+				if ((tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) && (tempTask->getStartDate()->operator==(date)) && !tempTask->getIsDone()) {
+					tempTask->display();
+					count++;
+				}
+				else {
+					if ((tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) && (tempTask->getEndDate()->operator==(date)) && !tempTask->getIsDone()) {
+						tempTask->display();
+						count++;
+					}
+					else{
+						tempTask->hide();
+					}
+				}
+			}
+		}
+
+		if (code == DONE_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->getIsDone()){
+				if (tempTask->isBetween(date)){
+					tempTask->display();
+					count++;
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+			else {
+				if ((tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) && (tempTask->getStartDate()->operator==(date)) && tempTask->getIsDone()) {
+					tempTask->display();
+					count++;
+				}
+				else {
+					if ((tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) && (tempTask->getEndDate()->operator==(date)) && tempTask->getIsDone()) {
+						tempTask->display();
+						count++;
+					}
+					else{
+						tempTask->hide();
+					}
+				}
+			}
+		}
+
+		if (code == ALL_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED){
+				if (tempTask->isBetween(date)){
+					tempTask->display();
+					count++;
+				}
+				else {
+					tempTask->hide();
+				}
+			}
+			else {
+				if ((tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) && (tempTask->getStartDate()->operator==(date))) {
+					tempTask->display();
+					count++;
+				}
+				else {
+					if ((tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) && (tempTask->getEndDate()->operator==(date))) {
+						tempTask->display();
+						count++;
+					}
+					else{
+						tempTask->hide();
+					}
 				}
 			}
 		}
@@ -482,6 +582,47 @@ int TextStorage::displayDeadlinedTasks() {
 			tempTask->hide();
 		}
 	}
+	return count;
+}
+
+int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
+	int count = 0;
+	unsigned int todoSize = _todoTasks->size();
+
+	for (int i = 0; i < todoSize; i++) {
+		Task* tempTask = _todoTasks->at(i);
+
+		if (code == TODO_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && !tempTask->getIsDone()) {
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+
+		if (code == DONE_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getIsDone()) {
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+
+		if (code == ALL_CODE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
+				tempTask->display();
+				count++;
+			}
+			else {
+				tempTask->hide();
+			}
+		}
+	}
+
 	return count;
 }
 

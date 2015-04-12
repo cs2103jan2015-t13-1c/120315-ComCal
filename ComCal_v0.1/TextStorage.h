@@ -50,20 +50,32 @@ public:
 	bool deleteTask(int index);
 
 	int displayAllTasks();
+
 	int displayTodoTasks();
 	int displayTodoTasks(const Date &date);
+
 	int displayDoneTasks();
 	int displayDoneTasks(const Date &date);
+
 	int displayTimedTasks();
-	int displayTimedTasks(const Date &date);
+	int displayTimedTasks(int code, const Date &date);
+
 	int displayPartialTask();
-	int displayPartialTask(const Date &date);
+	int displayPartialTask(int code, const Date &date);
+
 	int displayFloatingTasks();
 	int displayFloatingTasks(bool isDone);
-	int displayMonthTasks(int year, int month);
-	int displayDatedTasks(const Date &date);
-	int displayWeekTasks(std::vector<Date>);
+
 	int displayDeadlinedTasks();
+	int displayDeadlinedTasks(int code,const Date &date);
+
+	int displayMonthTasks(int year, int month);
+
+	int displayDatedTasks(int code, const Date &date);
+
+	int displayWeekTasks(std::vector<Date>);
+
+	
 
 	bool saveTasks(std::string fileName);
 	bool loadTasks(std::string fileName);
