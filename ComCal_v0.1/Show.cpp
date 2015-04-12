@@ -51,6 +51,7 @@ std::string Show::execute(std::string argument) {
 		std::string thiArg = argument.substr(secSpace + 1, argument.size());
 
 		
+		//start of show month year todo/done
 		if (isTodoOrDone(firstArg, secArg, thiArg) && isArgYear(firstArg, secArg, thiArg) && isValidMonth(firstArg, secArg, thiArg)) {
 			if (getMonthInput(secArg) != -1) {
 				std::swap(firstArg, secArg);
@@ -76,9 +77,26 @@ std::string Show::execute(std::string argument) {
 
 		}//end show month year todo/done
 
-		if (isWeek(firstArg, secArg, thiArg)) {
+		//start of show week date todo/done
+		if (isWeek(firstArg, secArg, thiArg) && isTodoOrDone(firstArg,secArg,thiArg)) {
+			if (getMonthInput(secArg) != -1) {
+				std::swap(firstArg, secArg);
+			}
+			else {
+				if (getMonthInput(thiArg) != -1){
+					std::swap(firstArg, thiArg);
+				}
+			}
 
-		}
+			if (isTodoOrDone(secArg)) {
+				std::swap(secArg, thiArg);
+			}
+
+			Date date;
+			if (date.setDate(secArg)) {
+				return showWeekDate(getCode(thiArg), date);
+			}
+		} //end of show wek date todo/done
 
 		//TODO: More show stuff
 		// Hamzah, help me ensure that the message that returns to feedback bar includes the number of tasks shown. Thanks!
@@ -724,6 +742,35 @@ std::string Show::showMonthYear(int code, int month, std::string firstArg, std::
 
 std::string Show::prepSideBarTitleShowMonth(int code, int month, int year) {
 	std::string sideBarTitle = timeDateInfo::getMonthStr(month) + CAL_WHITE_SPACE + typeConversions::intToString(year);
+
+	if (code == TODO_CODE) {
+		sideBarTitle += CAL_WHITE_SPACE + DATED_TODO_TASKS;
+		return sideBarTitle;
+	}
+	else {
+		if (code == DONE_CODE) {
+			sideBarTitle += CAL_WHITE_SPACE + DATED_DONE_TASKS;
+			return sideBarTitle;
+		}
+		else {
+			sideBarTitle += CAL_WHITE_SPACE + TASKS;
+			return sideBarTitle;
+		}
+	}
+
+	return sideBarTitle;
+}
+
+std::string Show::showWeekDate(int code, Date date) {
+	int count = TextStorage::getInstance()->displayWeekTasks(code, getDatesInWeek(date));
+	std::string sideBarTitle  = prepSideBarTitleShowWeek(code, date);
+	ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+	return prepShowFeedback(sideBarTitle, count);
+}
+
+std::string Show::prepSideBarTitleShowWeek(int code, Date date) {
+	std::string sideBarTitle = date.toGUIString() + CAL_WHITE_SPACE + WEEK;
 
 	if (code == TODO_CODE) {
 		sideBarTitle += CAL_WHITE_SPACE + DATED_TODO_TASKS;

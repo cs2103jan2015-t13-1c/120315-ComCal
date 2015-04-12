@@ -37,15 +37,20 @@ private:
 
 	std::string prepShowFeedback(std::string feedback,int count);
 	std::string prepSideBarTitleShowMonth(int code, int month, int year);
-	int countWhiteSpace(std::string argument);
+	std::string prepSideBarTitleShowWeek(int code, Date date);
+
+	
 	bool isTodoOrDone(std::string arg);
 	bool isTodoOrDone(std::string firstArg, std::string secArg, std::string thiArg);
 	bool isWeek(std::string firstArg, std::string secArg, std::string thiArg);
 	bool isArgYear(std::string firstArg, std::string secArg, std::string thiArg);
 	bool isValidMonth(std::string firstArg, std::string secArg, std::string thiArg);
+
 	int getCode(std::string arg);
+	int countWhiteSpace(std::string argument);
 
 	std::string showMonthYear(int code, int month, std::string firstArg, std::string secArg);
+	std::string showWeekDate(int code, Date date);
 	
 public:
 	Show();
