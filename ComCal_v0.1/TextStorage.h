@@ -35,6 +35,7 @@ private:
 	// will affect these vectors. Right after add,delete,edit is executed, these vectors will pass its information 
 	// to TextStorage for storing
 	std::vector<Task*>* _todoTasks;
+
 public:
 	static TextStorage* getInstance();
 

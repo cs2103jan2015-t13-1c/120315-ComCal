@@ -10,7 +10,7 @@ Task::Task() {
 	_startDate = NULL;
 	_endDate = NULL;
 	_isDone = false;
-	_isHidden = false;
+	_isHidden = true; //changed this from false to true 12/04/2015 0900
 	_taskTypeCode = TASKTYPECODE_FLOATING;
 }
 
@@ -20,7 +20,7 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
-	_isHidden = false;
+	_isHidden = true; //changed this from false to true 12/04/2015 0900
 	if (_startDate != NULL&&_endDate != NULL) {
 		_taskTypeCode = TASKTYPECODE_TIMED;
 	}
@@ -41,7 +41,7 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_startDate = startDate;
 	_endDate = endDate;
 	_isDone = false;
-	_isHidden = false;
+	_isHidden = true; //changed this from false to true 12/04/2015 0900
 	if (_startDate != NULL&&_endDate != NULL) {
 		_taskTypeCode = TASKTYPECODE_TIMED;
 	}

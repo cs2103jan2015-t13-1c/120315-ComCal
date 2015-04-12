@@ -22,32 +22,9 @@ namespace ComCal_v01 {
 		void setCalendarDate_MonthForm(struct tm*);
 
 	private:
-
+		bool _ctrlHeld;
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> dateList;
 		System::Collections::Generic::List<System::Windows::Forms::TextBox^> taskList;
-	private: System::Windows::Forms::TableLayoutPanel^  table63;
-	private: System::Windows::Forms::TextBox^  taskBox63;
-	private: System::Windows::Forms::TextBox^  dateBox63;
-	private: System::Windows::Forms::TableLayoutPanel^  table62;
-	private: System::Windows::Forms::TextBox^  taskBox62;
-	private: System::Windows::Forms::TextBox^  dateBox62;
-	private: System::Windows::Forms::TableLayoutPanel^  table61;
-	private: System::Windows::Forms::TextBox^  taskBox61;
-	private: System::Windows::Forms::TextBox^  dateBox61;
-	private: System::Windows::Forms::TableLayoutPanel^  table64;
-	private: System::Windows::Forms::TextBox^  taskBox64;
-	private: System::Windows::Forms::TextBox^  dateBox64;
-	private: System::Windows::Forms::TableLayoutPanel^  table67;
-	private: System::Windows::Forms::TextBox^  taskBox67;
-	private: System::Windows::Forms::TextBox^  dateBox67;
-	private: System::Windows::Forms::TableLayoutPanel^  table66;
-	private: System::Windows::Forms::TextBox^  taskBox66;
-	private: System::Windows::Forms::TextBox^  dateBox66;
-	private: System::Windows::Forms::TableLayoutPanel^  table65;
-	private: System::Windows::Forms::TextBox^  taskBox65;
-	private: System::Windows::Forms::TextBox^  dateBox65;
-
-		bool _ctrlHeld;
 
 	private:
 		void storeDateTextBlockInList();
@@ -56,23 +33,63 @@ namespace ComCal_v01 {
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
 
-		//bool isShowSearchFlagged();
 		void updateSideBar();
 		void updateCalendar();
 		void guiUpdate();
 		void loadCalendarTodoTasks(struct tm*);
-
 		int searchTaskMonth(struct tm*);
 
+	private: System::Windows::Forms::TableLayoutPanel^  table63;
+
+	private: System::Windows::Forms::TextBox^  taskBox63;
+
+	private: System::Windows::Forms::TextBox^  dateBox63;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table62;
+
+	private: System::Windows::Forms::TextBox^  taskBox62;
+
+	private: System::Windows::Forms::TextBox^  dateBox62;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table61;
+
+	private: System::Windows::Forms::TextBox^  taskBox61;
+
+	private: System::Windows::Forms::TextBox^  dateBox61;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table64;
+
+	private: System::Windows::Forms::TextBox^  taskBox64;
+
+	private: System::Windows::Forms::TextBox^  dateBox64;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table67;
+
+	private: System::Windows::Forms::TextBox^  taskBox67;
+
+	private: System::Windows::Forms::TextBox^  dateBox67;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table66;
+
+	private: System::Windows::Forms::TextBox^  taskBox66;
+
+	private: System::Windows::Forms::TextBox^  dateBox66;
+
+	private: System::Windows::Forms::TableLayoutPanel^  table65;
+
+	private: System::Windows::Forms::TextBox^  taskBox65;
+
+	private: System::Windows::Forms::TextBox^  dateBox65;
+
 	private: System::Windows::Forms::Button^  resetButton;
+
 	private: System::Windows::Forms::TextBox^  dateBox11;
 
 	private: System::Windows::Forms::TextBox^  taskBox11;
+
 	private: System::Windows::Forms::TextBox^  sideBar;
+
 	private: System::Windows::Forms::TextBox^  sideBarTitle;
-
-
-
 
 	private: System::Windows::Forms::TableLayoutPanel^  table57;
 
@@ -150,7 +167,6 @@ namespace ComCal_v01 {
 	private: System::Windows::Forms::TableLayoutPanel^  tableLayoutPanel22;
 
 	private: System::Windows::Forms::TextBox^  taskBox41;
-
 
 	private: System::Windows::Forms::TextBox^  dateBox41;
 

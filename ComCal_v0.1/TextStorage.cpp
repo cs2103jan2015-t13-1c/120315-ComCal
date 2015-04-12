@@ -406,6 +406,9 @@ int TextStorage::displayDatedTasks(const Date &date) {
 				tempTask->display();
 				count++;
 			}
+			else {
+				tempTask->hide();
+			}
 		}
 		else {
 			if ((tempTask->hasStartDate()) && (tempTask->getStartDate()->operator==(date))) {
@@ -430,9 +433,12 @@ int TextStorage::displayWeekTasks(std::vector<Date> weekDate) {
 	int count = 0;
 	unsigned int todoSize = _todoTasks->size();
 	unsigned int weekSize = weekDate.size();
+	Task * tempTask;
 
 	//loops through todo task
 	for (int i = 0; i < todoSize; i++) {
+		
+		tempTask = _todoTasks->at(i);
 		//loops through weekdate to see if the task at i corresponds to any of the dates in weekdate
 		for (int j = 0; j < weekSize; j++) {
 
