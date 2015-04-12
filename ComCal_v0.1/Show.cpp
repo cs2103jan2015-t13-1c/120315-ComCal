@@ -45,10 +45,38 @@ std::string Show::execute(std::string argument) {
 
 	if (numOfWhiteSpace == 2) {
 		std::size_t firstSpace = argument.find_first_of(" ", 0);
-		std::size_t secSpace = argument.find_last_of(" ", 0);
+		std::size_t secSpace = argument.find_first_of(" ", firstSpace+1);
 		std::string firstArg = argument.substr(0, firstSpace);
-		std::string secArg = argument.substr(firstSpace + 1, secSpace);
+		std::string secArg = argument.substr(firstSpace + 1, secSpace-firstSpace-1);
 		std::string thiArg = argument.substr(secSpace + 1, argument.size());
+
+		
+		if (isTodoOrDone(firstArg, secArg, thiArg) && isArgYear(firstArg, secArg, thiArg) && isValidMonth(firstArg, secArg, thiArg)) {
+			if (getMonthInput(secArg) != -1) {
+				std::swap(firstArg, secArg);
+			}
+			else {
+				if (getMonthInput(thiArg) != -1){
+					std::swap(firstArg, thiArg);
+				}
+			}
+
+			if (isTodoOrDone(secArg)) {
+				std::swap(secArg, thiArg);
+			}
+
+			code = getCode(thiArg);
+			int month = getMonthInput(firstArg);
+
+			if (month == -1) {
+				return INVALID_MONTH_INPUT;
+			}
+
+			return showMonthYear(code, month, firstArg, secArg);
+
+		}//end show month year todo/done
+
+
 
 		//TODO: More show stuff
 		// Hamzah, help me ensure that the message that returns to feedback bar includes the number of tasks shown. Thanks!
@@ -74,14 +102,7 @@ std::string Show::execute(std::string argument) {
 
 						code = ALL_CODE; // initialised to ALL_CODE in case of errors in the next few lines
 
-						if (secArg == INPUT_TODO) {
-							code = TODO_CODE;
-						}
-						else {
-							if (secArg == INPUT_DONE) {
-								code = DONE_CODE;
-							}
-						}
+						code = getCode(secArg);
 
 						int month = getMonthInput(firstArg);
 						if (month == -1) {
@@ -109,24 +130,7 @@ std::string Show::execute(std::string argument) {
 							return INVALID_MONTH_INPUT;
 						}
 
-						if (timeDateInfo::isStringANum(secArg) && secArg.size() == 4) {
-							int year = typeConversions::stringToInt(secArg);
-
-							if (year < 1900){
-								return INVALID_YEAR_ERROR;
-							}
-							else {
-								count = TextStorage::getInstance()->displayMonthTasks(ALL_CODE,year, month + 1);
-								struct tm* date = timeDateInfo::setStructTm(year, month);
-								sideBarTitle = timeDateInfo::getMonthStr(month) + " " + secArg + " tasks\n";
-								ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
-
-								return prepShowFeedback(firstArg + " " + secArg, count);
-							}
-						}
-						else{
-							return "Please input a valid year in the format YYYY eg. 2016";
-						}
+						return showMonthYear(ALL_CODE, month, firstArg, secArg);
 					}//end of month and year method
 
 				}//end of month and year || month todo/done condition
@@ -632,4 +636,107 @@ int Show::countWhiteSpace(std::string argument) {
 	}
 
 	return numOfWhiteSpace;
+}
+
+bool Show::isTodoOrDone(std::string firstArg, std::string secArg, std::string thiArg) {
+	if (isTodoOrDone(firstArg) || isTodoOrDone(secArg) || isTodoOrDone(thiArg)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Show::isTodoOrDone(std::string arg) {
+	if (arg == INPUT_TODO || arg == INPUT_DONE) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Show::isArgYear(std::string firstArg, std::string secArg, std::string thiArg) {
+	if (timeDateInfo::isStringANum(firstArg) || timeDateInfo::isStringANum(secArg) || timeDateInfo::isStringANum(thiArg)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Show::isValidMonth(std::string firstArg, std::string secArg, std::string thiArg) {
+	if (getMonthInput(firstArg) != -1 || getMonthInput(secArg) != -1 || getMonthInput(thiArg) != -1) {
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool Show::isWeek(std::string firstArg, std::string secArg, std::string thiArg) {
+	if (firstArg == WEEK || secArg == WEEK || thiArg == WEEK) {
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+
+int Show::getCode(std::string arg) {
+	if (arg == INPUT_DONE) {
+		return DONE_CODE;
+	}
+	else {
+		if (arg == INPUT_TODO) {
+			return TODO_CODE;
+		}
+		else {
+			return ALL_CODE;
+		}
+	}
+}
+
+std::string Show::showMonthYear(int code, int month, std::string firstArg, std::string secArg) {
+
+	if (timeDateInfo::isStringANum(secArg) && secArg.size() == 4) {
+		int year = typeConversions::stringToInt(secArg);
+
+		if (year < 1900){
+			return INVALID_YEAR_ERROR;
+		}
+		else {
+			int count = TextStorage::getInstance()->displayMonthTasks(code, year, month + 1);
+			struct tm* date = timeDateInfo::setStructTm(year, month);
+			std::string sideBarTitle = prepSideBarTitleShowMonth(code, month, year);
+			ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+			return prepShowFeedback(firstArg + " " + secArg, count);
+		}
+	}
+	else{
+		return INVALID_YEAR_ERROR;
+	}
+}
+
+std::string Show::prepSideBarTitleShowMonth(int code, int month, int year) {
+	std::string sideBarTitle = timeDateInfo::getMonthStr(month) + CAL_WHITE_SPACE + typeConversions::intToString(year);
+
+	if (code == TODO_CODE) {
+		sideBarTitle += CAL_WHITE_SPACE + DATED_TODO_TASKS;
+		return sideBarTitle;
+	}
+	else {
+		if (code == DONE_CODE) {
+			sideBarTitle += CAL_WHITE_SPACE + DATED_DONE_TASKS;
+			return sideBarTitle;
+		}
+		else {
+			sideBarTitle += CAL_WHITE_SPACE + TASKS;
+			return sideBarTitle;
+		}
+	}
+
+	return sideBarTitle;
 }

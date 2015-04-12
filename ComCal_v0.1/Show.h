@@ -36,7 +36,16 @@ private:
 	Date getNextWeekDate(int year, int month, int mday, int wday);
 
 	std::string prepShowFeedback(std::string feedback,int count);
+	std::string prepSideBarTitleShowMonth(int code, int month, int year);
 	int countWhiteSpace(std::string argument);
+	bool isTodoOrDone(std::string arg);
+	bool isTodoOrDone(std::string firstArg, std::string secArg, std::string thiArg);
+	bool isWeek(std::string firstArg, std::string secArg, std::string thiArg);
+	bool isArgYear(std::string firstArg, std::string secArg, std::string thiArg);
+	bool isValidMonth(std::string firstArg, std::string secArg, std::string thiArg);
+	int getCode(std::string arg);
+
+	std::string showMonthYear(int code, int month, std::string firstArg, std::string secArg);
 	
 public:
 	Show();
