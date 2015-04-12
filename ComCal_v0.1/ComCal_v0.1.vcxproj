@@ -91,6 +91,7 @@
     <ClCompile Include="Done.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="ErrorLog.cpp" />
+    <ClCompile Include="HelpForm.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MonthForm.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Edit.h" />
     <ClInclude Include="ErrorLog.h" />
     <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="HelpForm.h" />
     <ClInclude Include="keywords.h" />
     <ClInclude Include="Load.h" />
     <ClInclude Include="rapidxml.hpp" />

@@ -133,7 +133,7 @@ std::string Show::execute(std::string argument) {
 						int year = date->tm_year + 1900;
 
 						count = TextStorage::getInstance()->displayMonthTasks(code, year, month + 1);
-						sideBarTitle = timeDateInfo::getMonthStr(month) + CAL_WHITE_SPACE + typeConversions::intToString(year) + CAL_WHITE_SPACE + secArg + " tasks\n";
+						sideBarTitle = timeDateInfo::getMonthStr(month) + " " + typeConversions::intToString(year) + " " + secArg + " tasks\n";
 						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
 						return prepShowFeedback(sideBarTitle, count);
@@ -169,7 +169,7 @@ std::string Show::execute(std::string argument) {
 					Date tempDate;
 					if (tempDate.setDate(secArg)) { //method for show week date
 						count = TextStorage::getInstance()->displayWeekTasks(ALL_CODE, getDatesInWeek(tempDate));
-						sideBarTitle = tempDate.toGUIString() + CAL_WHITE_SPACE + WEEK + TASKS;
+						sideBarTitle = tempDate.toGUIString() + " " + WEEK + TASKS;
 						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
 						return prepShowFeedback(sideBarTitle, count);
@@ -741,19 +741,19 @@ std::string Show::showMonthYear(int code, int month, std::string firstArg, std::
 }
 
 std::string Show::prepSideBarTitleShowMonth(int code, int month, int year) {
-	std::string sideBarTitle = timeDateInfo::getMonthStr(month) + CAL_WHITE_SPACE + typeConversions::intToString(year);
+	std::string sideBarTitle = timeDateInfo::getMonthStr(month) + " " + typeConversions::intToString(year);
 
 	if (code == TODO_CODE) {
-		sideBarTitle += CAL_WHITE_SPACE + DATED_TODO_TASKS;
+		sideBarTitle += " " + DATED_TODO_TASKS;
 		return sideBarTitle;
 	}
 	else {
 		if (code == DONE_CODE) {
-			sideBarTitle += CAL_WHITE_SPACE + DATED_DONE_TASKS;
+			sideBarTitle += " " + DATED_DONE_TASKS;
 			return sideBarTitle;
 		}
 		else {
-			sideBarTitle += CAL_WHITE_SPACE + TASKS;
+			sideBarTitle += " " + TASKS;
 			return sideBarTitle;
 		}
 	}
@@ -770,21 +770,19 @@ std::string Show::showWeekDate(int code, Date date) {
 }
 
 std::string Show::prepSideBarTitleShowWeek(int code, Date date) {
-	std::string sideBarTitle = date.toGUIString() + CAL_WHITE_SPACE + WEEK;
+	std::string sideBarTitle = date.toGUIString() + " " + WEEK;
 
 	if (code == TODO_CODE) {
-		sideBarTitle += CAL_WHITE_SPACE + DATED_TODO_TASKS;
+		sideBarTitle += " " + DATED_TODO_TASKS;
+		return sideBarTitle;
+	}
+	else if (code == DONE_CODE) {
+		sideBarTitle += " " + DATED_DONE_TASKS;
 		return sideBarTitle;
 	}
 	else {
-		if (code == DONE_CODE) {
-			sideBarTitle += CAL_WHITE_SPACE + DATED_DONE_TASKS;
-			return sideBarTitle;
-		}
-		else {
-			sideBarTitle += CAL_WHITE_SPACE + TASKS;
-			return sideBarTitle;
-		}
+		sideBarTitle += " " + TASKS;
+		return sideBarTitle;
 	}
 
 	return sideBarTitle;

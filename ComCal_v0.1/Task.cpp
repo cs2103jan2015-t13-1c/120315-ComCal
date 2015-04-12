@@ -11,7 +11,7 @@ Task::Task() {
 	_startDate = NULL;
 	_endDate = NULL;
 	_isDone = false;
-	_isHidden = true; //changed this from false to true 12/04/2015 0900
+	_isHidden = false;
 	_taskTypeCode = TASKTYPECODE_FLOATING;
 }
 
@@ -21,7 +21,7 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_startDate = new Date(startDay, startMonth, startYear, startTime);
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
-	_isHidden = true; //changed this from false to true 12/04/2015 0900
+	_isHidden = false;
 	if (_startDate != NULL&&_endDate != NULL) {
 		_taskTypeCode = TASKTYPECODE_TIMED;
 	}
@@ -42,7 +42,7 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_startDate = startDate;
 	_endDate = endDate;
 	_isDone = false;
-	_isHidden = true; //changed this from false to true 12/04/2015 0900
+	_isHidden = false;
 	if (_startDate != NULL&&_endDate != NULL) {
 		_taskTypeCode = TASKTYPECODE_TIMED;
 	}
@@ -206,7 +206,7 @@ std::string Task::toString() {
 	return returnString;
 }
 
-// Gets the string of this task to be rendered in GUI elements, ie. calendar, sidebar, etc.
+// Gets the string of this task to be rendered in GUI elements, ie. sidebar, etc.
 std::string Task::toGUIString() {
 	std::string returnString = " task - " + DESCRIPTION + ": \"" + _description + "\"";
 
@@ -225,28 +225,10 @@ std::string Task::toGUIString() {
 	return returnString;
 }
 
+// Gets the string of this task to be rendered in calendar
 std::string Task::toCalString() {
-	std::string calString;
-	int  size = _description.size();
-	
-	calString = typeConversions::trimExtraSpaces(_description);
-
-	if (_description.size() >= CAL_DESC_LIMIT) {
-
-		calString = calString.substr(0, CAL_DESC_LIMIT);
-		calString += CAL_WHITE_SPACE;
+	if (_description.size() <= 9) {
+		return _description;
 	}
-	else {
-		calString = _description;
-		calString.resize(size + 2*(CAL_DESC_LIMIT-size), ' ');
-	}
-
-	if (_taskTypeCode == TASKTYPECODE_DEADLINE) {
-		calString += _endDate->toTimeString();
-	}
-	if (_taskTypeCode == TASKTYPECODE_PARTIALTIMED || _taskTypeCode == TASKTYPECODE_TIMED) {
-		calString += _startDate->toTimeString();
-	}
-
-	return calString;
+	return (_description.substr(0, 8) + "...");
 }

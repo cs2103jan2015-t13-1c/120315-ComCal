@@ -51,11 +51,6 @@ static const int INDEX_STARTDATETIME = 1;
 static const int INDEX_ENDDATETIME = 2;
 static const int INDEX_LOCATION = 3;
 
-//Attributes for toCalString
-static const int CAL_DESC_LIMIT = 10;
-static const int CAL_CHAR_LIMIT = 14;
-static const std::string CAL_WHITE_SPACE = " ";
-
 //Delete before certain date/time command keywords:
 static const int BEFOREKEYWORDSARRAYSIZE = 2;
 static const std::string BEFOREKEYWORDSARRAY[BEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };

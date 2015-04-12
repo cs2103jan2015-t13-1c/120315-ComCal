@@ -117,6 +117,9 @@
     <ClCompile Include="Undone.cpp">
       <Filter>ComCalCommands\ComCalCommandsCPP</Filter>
     </ClCompile>
+    <ClCompile Include="HelpForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MonthForm.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Undone.h">
       <Filter>ComCalCommands\ComCalCommandsHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpForm.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

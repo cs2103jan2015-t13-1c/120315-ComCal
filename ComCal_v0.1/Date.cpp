@@ -375,7 +375,8 @@ bool Date::setDate(std::string date) {
 						_day = _day - numDaysInMonth;
 					}
 				}
-				else if (typeConversions::toLowerCase(date.substr(space1+1)) == DATE_WEEK&&date.substr(space1+1).find("/")!=std::string::npos) {
+				else if (typeConversions::toLowerCase(date.substr(space1+1)) == DATE_WEEK) {
+					int lol = date.substr(space1+1).find("/");
 					//For week specified with date: "DD/MM/YYYY week" will return the start date and time of the week containing the specified date
 					if (!setDate(date.substr(0, space1))) {
 						return false;
