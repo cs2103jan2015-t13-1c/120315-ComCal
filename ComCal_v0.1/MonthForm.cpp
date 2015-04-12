@@ -29,7 +29,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	}
 
 	ComCalManager::getInstance()->initialise(argc, charFileNames);
-	TextStorage::getInstance()->displayMonthTasks(ComCalManager::getInstance()->getTimeDetails()->tm_year+1900,ComCalManager::getInstance()->getTimeDetails()->tm_mon + 1);
+	TextStorage::getInstance()->displayMonthTasks(ALL_CODE,ComCalManager::getInstance()->getTimeDetails()->tm_year+1900,ComCalManager::getInstance()->getTimeDetails()->tm_mon + 1);
 	ComCalManager::getInstance()->setSideBarTitle(timeDateInfo::getMonthStr(ComCalManager::getInstance()->getTimeDetails()->tm_mon) + " " + typeConversions::intToString(ComCalManager::getInstance()->getTimeDetails()->tm_year + 1900));
 	_ctrlHeld = false;
 

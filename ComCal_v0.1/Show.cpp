@@ -29,7 +29,7 @@ std::string Show::execute(std::string argument) {
 		int year = timeDateInfo::setStructTm()->tm_year + 1900;
 		int month = timeDateInfo::setStructTm()->tm_mon + 1;
 
-		count = TextStorage::getInstance()->displayMonthTasks(year, month);
+		count = TextStorage::getInstance()->displayMonthTasks(ALL_CODE, year, month);
 		ComCalManager::getInstance()->setSideBarTitle(timeDateInfo::getMonthStr(month - 1) + " " + typeConversions::intToString(year));
 		return prepShowFeedback(CURRENT_MONTH_TASKS, count);
 	}
@@ -62,32 +62,73 @@ std::string Show::execute(std::string argument) {
 
 			//1) Method to display month with specified year eg. May 2016
 				//condition to check if user specified a month with a year
+			//2)method handles todo or done with months in the current year
 				if (getMonthInput(firstArg) != -1 || getMonthInput(secArg) != -1) {
 
-					if (timeDateInfo::isStringANum(firstArg)) {
-						std::swap(firstArg, secArg);
-					}
-					int i = getMonthInput(firstArg);
+					if (firstArg == INPUT_TODO || secArg == INPUT_TODO || firstArg == INPUT_DONE || secArg == INPUT_DONE) {
 
-					if (timeDateInfo::isStringANum(secArg) && secArg.size() == 4) {
-						int year = typeConversions::stringToInt(secArg);
+						if (firstArg == INPUT_TODO || firstArg == INPUT_DONE) {
+							std::swap(firstArg, secArg);
+						}
 
-						if (year < 1900){
-							return INVALID_YEAR_ERROR;
+						int code = ALL_CODE; // initialised to ALL_CODE in case of errors in the next few lines
+
+						if (secArg == INPUT_TODO) {
+							code = TODO_CODE;
 						}
 						else {
-							count = TextStorage::getInstance()->displayMonthTasks(year, i + 1);
-							struct tm* date = timeDateInfo::setStructTm(year, i);
-							sideBarTitle = timeDateInfo::getMonthStr(i) + " " + secArg + " tasks\n";
-							ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
-
-							return prepShowFeedback(firstArg+" "+secArg, count);
+							if (secArg == INPUT_DONE) {
+								code = DONE_CODE;
+							}
 						}
-					}
-					else{
-						return "Please input a valid year in the format YYYY eg. 2016";
-					}
-				}//end of month and year condition
+
+						int month = getMonthInput(firstArg);
+						if (month == -1) {
+							return INVALID_MONTH_INPUT;
+						}
+
+						struct tm* date = timeDateInfo::setStructTm(month);
+						int year = date->tm_year + 1900;
+
+						count = TextStorage::getInstance()->displayMonthTasks(code, year, month + 1);
+						sideBarTitle = timeDateInfo::getMonthStr(month) + CAL_WHITE_SPACE + typeConversions::intToString(year) + CAL_WHITE_SPACE + secArg + " tasks\n";
+						ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+						return prepShowFeedback(sideBarTitle, count);
+
+					}//end of todo/done month (current year)
+					else {//following method is for month year
+
+						if (timeDateInfo::isStringANum(firstArg)) {
+							std::swap(firstArg, secArg);
+						}
+						int month = getMonthInput(firstArg);
+
+						if (month == -1) {
+							return INVALID_MONTH_INPUT;
+						}
+
+						if (timeDateInfo::isStringANum(secArg) && secArg.size() == 4) {
+							int year = typeConversions::stringToInt(secArg);
+
+							if (year < 1900){
+								return INVALID_YEAR_ERROR;
+							}
+							else {
+								count = TextStorage::getInstance()->displayMonthTasks(ALL_CODE,year, month + 1);
+								struct tm* date = timeDateInfo::setStructTm(year, month);
+								sideBarTitle = timeDateInfo::getMonthStr(month) + " " + secArg + " tasks\n";
+								ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+								return prepShowFeedback(firstArg + " " + secArg, count);
+							}
+						}
+						else{
+							return "Please input a valid year in the format YYYY eg. 2016";
+						}
+					}//end of month and year method
+
+				}//end of month and year || month todo/done condition
 
 
 			//method to display all the tasks in a week with specific date in the week
@@ -218,7 +259,7 @@ std::string Show::execute(std::string argument) {
 							month++;
 						}
 
-						count = TextStorage::getInstance()->displayMonthTasks(year, month);
+						count = TextStorage::getInstance()->displayMonthTasks(ALL_CODE, year, month);
 						ComCalManager::getInstance()->setSideBarTitle(NEXT_MONTH_TITLE);
 						timeDateInfo::setStructTm(year, month-1);
 
@@ -280,7 +321,27 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
-			}
+			}//end of partial with specified date
+
+
+			//start of timed with specified date
+			if (firstArg == INPUT_TIMED || secArg == INPUT_TIMED) {
+				if (secArg == INPUT_TIMED) {
+					std::swap(firstArg, secArg);
+				}
+
+				Date * tempDate = new Date();
+				if (tempDate->setDate(secArg)) {
+					count = TextStorage::getInstance()->displayTimedTasks(ALL_CODE, *tempDate);
+					sideBarTitle = tempDate->toGUIString() + " " + ALL_TIMED_TASKS_TITLE;
+					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
+
+					return prepShowFeedback(sideBarTitle, count);
+				}
+				else {
+					return INVALID_DATE_INPUT;
+				}
+			}//end of timed with specified date
 
 		}
 		else { //argument now has only one word, numOfWhiteSpace == 0
@@ -340,7 +401,7 @@ std::string Show::execute(std::string argument) {
 				struct tm* date = timeDateInfo::setStructTm(month);
 				int year = date->tm_year + 1900;
 
-				count = TextStorage::getInstance()->displayMonthTasks(year, month + 1);
+				count = TextStorage::getInstance()->displayMonthTasks(ALL_CODE, year, month + 1);
 				ComCalManager::getInstance()->setSideBarTitle(argument + " tasks\n");
 
 				return prepShowFeedback(timeDateInfo::getMonthStr(getMonthInput(argument)), count);

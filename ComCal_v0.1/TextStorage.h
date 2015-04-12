@@ -69,7 +69,7 @@ public:
 	int displayDeadlinedTasks();
 	int displayDeadlinedTasks(int code,const Date &date);
 
-	int displayMonthTasks(int year, int month);
+	int displayMonthTasks(int code, int year, int month);
 
 	int displayDatedTasks(int code, const Date &date);
 
