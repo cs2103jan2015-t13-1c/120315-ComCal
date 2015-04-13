@@ -1,0 +1,2830 @@
+//@author: a0085731a
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Add.cpp
+	 */
+
+std::string Add::undo() {
+	std::string feedback;
+
+	TextStorage::getInstance()->deleteTask(_taskIndex);
+
+	feedback = "Undo add: Deleted Task (" + typeConversions::intToString(_taskIndex) + ").";
+
+	return feedback;
+}
+
+std::string Add::redo() {
+	if (_taskIndex >= TextStorage::getInstance()->getNumberOfTasks()) {
+		TextStorage::getInstance()->addTask(_addedTask);
+	}
+	else {
+		TextStorage::getInstance()->addTaskAtSpecificPosition(_addedTask, _taskIndex);
+	}
+
+	std::string feedback = "Redo add: Added " + _addedTask->toString();
+
+	return feedback;
+}
+	// End of segment: ComCal_v0.1\Add.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Date.cpp
+	 */
+
+bool Date::isDateDefined() {
+	if (_day == 0) {
+		return false;
+	}
+	if (_month == 0) {
+		return false;
+	}
+	if (_year == 0) {
+		return false;
+	}
+	return true;
+}
+
+	// End of segment: ComCal_v0.1\Date.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Date.cpp
+	 */
+
+bool Date::setTime(int time) {
+	if (time < 0 || time > 2359) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+void Date::setEndOfWeek() {
+	_day += 7;
+
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(_month - 1, _year);
+
+	if (_day > numDaysInMonth) {
+		_month++;
+		if (_month > 12) {
+			_month = 1;
+			_year++;
+		}
+
+		_day = _day - numDaysInMonth;
+	}
+}
+
+void Date::setEndOfDay() {
+	_time = 2359;
+}
+	// End of segment: ComCal_v0.1\Date.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Delete.cpp
+	 */
+
+// Delete.cpp
+// Implementation of functions in the Delete class
+
+
+#include "Delete.h"
+
+// TODO Implement input formats 3
+
+Delete::Delete() : Command() {
+	_deletedCount = 0;
+}
+
+Delete::~Delete() {
+}
+
+void Delete::process(std::string argument) {
+	if (support::isSpacesOnly(argument)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
+
+	bool isProcessed = false;
+	for (int i = 0; i < BEFOREKEYWORDSARRAYSIZE; i++) {
+		int beforeKeywordPos = argument.find(BEFOREKEYWORDSARRAY[i]);
+		if (beforeKeywordPos != std::string::npos) {
+			if (isProcessed) {
+				throw exceptionInputInvalidDelParams;
+			}
+			isProcessed = true;
+			if (argument.find(BEFOREKEYWORDSARRAY[i]) != 0) {
+				throw exceptionInputInvalidDelParams;
+			}
+			std::string dateString = argument.substr(BEFOREKEYWORDSARRAY[i].size());
+			if(support::isSpacesOnly(dateString)) {
+				throw exceptionInputInvalidSpacesOnly;
+			}
+			Date* date = new Date;
+			if (!date->setDate(dateString)) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			date->setTime(0);
+			for (int j = 0; j < numOfTasks; j++) {
+				Task* task = TextStorage::getInstance()->getTask(j);
+				if (task->hasStartDate() && task->hasEndDate() || task->hasEndDate()) {
+					if (support::checkDateBefore(task->getEndDate(), date)) {
+						_deletedTasksIndexes.push_back(j + 1);
+					}
+				}
+				else if (task->hasStartDate()) {
+					if (support::checkDateBefore(task->getStartDate(), date)) {
+						_deletedTasksIndexes.push_back(j + 1);
+					}
+				}
+			}
+		}
+	}
+
+	if (!isProcessed) {
+		if (argument.find(ALLKEYWORD) != std::string::npos) {
+			if (argument.find(ALLKEYWORD) > 0) {
+				throw exceptionInputInvalidDelParams;
+			}
+			for (int i = 0; i < numOfTasks; i++) {
+				_deletedTasksIndexes.push_back(i+1);
+			}
+		} 
+		else {
+			int nextSpacePos = argument.find(" ");
+			while (nextSpacePos != std::string::npos) {
+				std::string taskIndexString = argument.substr(0, nextSpacePos);
+				if (!typeConversions::isNumber(taskIndexString)) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				int taskIndex = typeConversions::stringToInt(taskIndexString);
+				if (taskIndex < 1 || taskIndex > numOfTasks) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				_deletedTasksIndexes.push_back(taskIndex);
+				argument = argument.substr(nextSpacePos + 1);
+				support::isSpacesOnly(argument);
+				nextSpacePos = argument.find(" ");
+			}
+
+			if (!typeConversions::isNumber(argument)) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			_deletedTasksIndexes.push_back(typeConversions::stringToInt(argument));
+		}
+	}
+
+	std::sort(_deletedTasksIndexes.begin(), _deletedTasksIndexes.end());
+	
+	return;
+}
+
+std::string Delete::execute(std::string argument) {
+	// Formats:
+	// 1. Delete single task
+	//    - delete 1
+	// 2. Delete multiple tasks
+	//    - delete 1 2 3
+	// 3. Delete all tasks before date
+	//    - delete before 22/12/14
+	//    - delete .b 22/12/14
+
+	std::string feedback = "Deleted task(s): ";
+
+	process(argument);
+
+	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
+		_deletedTasks.push_back(TextStorage::getInstance()->getTask(_deletedTasksIndexes[i] - _deletedCount-1));
+		if (TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount)) {
+			_deletedCount++;
+			feedback += "(" + typeConversions::intToString(_deletedTasksIndexes[i]) + ")";
+			if (i < _deletedTasksIndexes.size() - 1) {
+				feedback += ", ";
+			}
+			else {
+				feedback += ".";
+			}
+		}
+		else {
+			ErrorLog::inputErrorLog("Unsuccessful delete, please check delete class.");
+		}
+	}
+
+	return feedback;
+}
+
+std::string Delete::undo() {
+	_deletedCount = 0;
+
+	std::string feedback = "Undo delete: Added task(s): ";
+
+	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
+		if (_deletedTasksIndexes[i] >= TextStorage::getInstance()->getNumberOfTasks()) {
+			TextStorage::getInstance()->addTask(_deletedTasks[i]);
+		}
+		else{
+			TextStorage::getInstance()->addTaskAtSpecificPosition(_deletedTasks[i], _deletedTasksIndexes[i]);
+		}
+		feedback += "(" + typeConversions::intToString(_deletedTasksIndexes[i]) + ")";
+		if (i < _deletedTasks.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
+	}
+
+	return feedback;
+}
+
+std::string Delete::redo() {
+	std::string feedback = "Redo delete: Deleted task(s): ";
+	
+	for (unsigned int i = 0; i < _deletedTasksIndexes.size(); i++) {
+		if (TextStorage::getInstance()->deleteTask(_deletedTasksIndexes[i] - _deletedCount)) {
+			_deletedCount++;
+			feedback += "(" + typeConversions::intToString(_deletedTasksIndexes[i]) + ")";
+			if (i < _deletedTasksIndexes.size() - 1) {
+				feedback += ", ";
+			}
+			else {
+				feedback += ".";
+			}
+		}
+		else {
+			ErrorLog::inputErrorLog("Unsuccessful delete, please check delete class.");
+		}
+	}
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Delete.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Delete.h
+	 */
+
+// Delete.h
+// Subclass of Command; implements the delete function
+#pragma once
+
+#include "Command.h"
+#include "typeConversions.h"
+#include "TextStorage.h"
+#include "Exceptions.h"
+#include "support.h"
+
+#include <vector>
+#include <algorithm>
+
+class Delete : public Command {
+private:
+	std::vector<int> _deletedTasksIndexes;
+	std::vector<Task*> _deletedTasks;
+	int _deletedCount;
+
+	void process(std::string);
+
+public:
+	Delete();
+	~Delete();
+	std::string execute(std::string argument);
+	std::string undo();
+	std::string redo();
+};
+	// End of segment: ComCal_v0.1\Delete.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Done.cpp
+	 */
+
+// Done.cpp
+// Implementation of functions in the Delete class
+
+#include "Done.h"
+
+Done::Done() : Command() {
+}
+
+Done::~Done() {
+}
+
+void Done::process(std::string argument) {
+	if (support::isSpacesOnly(argument)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
+
+	bool isProcessed = false;
+	for (int i = 0; i < BEFOREKEYWORDSARRAYSIZE; i++) {
+		int beforeKeywordPos = argument.find(BEFOREKEYWORDSARRAY[i]);
+		if (beforeKeywordPos != std::string::npos) {
+			if (isProcessed) {
+				throw exceptionInputInvalidDoneParams;
+			}
+			isProcessed = true;
+			if (argument.find(BEFOREKEYWORDSARRAY[i]) != 0) {
+				throw exceptionInputInvalidDoneParams;
+			}
+			std::string dateString = argument.substr(BEFOREKEYWORDSARRAY[i].size());
+			if (support::isSpacesOnly(dateString)) {
+				throw exceptionInputInvalidSpacesOnly;
+			}
+			Date* date = new Date;
+			if (!date->setDate(dateString)) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			date->setTime(0);
+			for (int j = 0; j < numOfTasks; j++) {
+				Task* task = TextStorage::getInstance()->getTask(j);
+				if (task->hasStartDate() && task->hasEndDate() || task->hasEndDate()) {
+					if (support::checkDateBefore(task->getEndDate(), date)) {
+						_doneTasksIndexes.push_back(j + 1);
+					}
+				}
+				else if (task->hasStartDate()) {
+					if (support::checkDateBefore(task->getStartDate(), date)) {
+						_doneTasksIndexes.push_back(j + 1);
+					}
+				}
+			}
+		}
+	}
+
+	if (!isProcessed) {
+		if (argument.find(ALLKEYWORD) != std::string::npos) {
+			if (argument.find(ALLKEYWORD) > 0) {
+				throw exceptionInputInvalidDoneParams;
+			}
+			for (int i = 0; i < numOfTasks; i++) {
+				_doneTasksIndexes.push_back(i + 1);
+			}
+		}
+		else {
+			int nextSpacePos = argument.find(" ");
+			while (nextSpacePos != std::string::npos) {
+				std::string taskIndexString = argument.substr(0, nextSpacePos);
+				if (!typeConversions::isNumber(taskIndexString)) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				int taskIndex = typeConversions::stringToInt(taskIndexString);
+				if (taskIndex < 1 || taskIndex > numOfTasks) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				_doneTasksIndexes.push_back(taskIndex);
+				argument = argument.substr(nextSpacePos + 1);
+				support::isSpacesOnly(argument);
+				nextSpacePos = argument.find(" ");
+			}
+
+			if (!typeConversions::isNumber(argument)) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			_doneTasksIndexes.push_back(typeConversions::stringToInt(argument));
+		}
+	}
+
+	std::sort(_doneTasksIndexes.begin(), _doneTasksIndexes.end());
+
+	return;
+}
+
+std::string Done::execute(std::string argument) {
+	// Formats:
+	// 1. Done single task
+	//    - done 1
+	// 2. Done multiple tasks
+	//    - done 1 2 3
+	// 3. Done all tasks before date
+	//    - done before 22/12/14
+	//    - done .b 22/12/14
+
+	std::string feedback = "Marked completed task(s): ";
+
+	process(argument);
+
+	for (unsigned int i = 0; i < _doneTasksIndexes.size(); i++) {
+		if (TextStorage::getInstance()->getTask(_doneTasksIndexes[i] - 1) != NULL) {
+			_doneTasks.push_back(TextStorage::getInstance()->getTask(_doneTasksIndexes[i] - 1));
+			TextStorage::getInstance()->getTask(_doneTasksIndexes[i] - 1)->done();
+			feedback += "(" + typeConversions::intToString(_doneTasksIndexes[i]) + ")";
+			if (i < _doneTasksIndexes.size() - 1) {
+				feedback += ", ";
+			}
+			else {
+				feedback += ".";
+			}
+		}
+		else {
+			ErrorLog::inputErrorLog("Unsuccessful done, please check done class.");
+			assert(TextStorage::getInstance()->getTask(_doneTasksIndexes[i] - 1) != NULL);
+		}
+	}
+
+	return feedback;
+}
+
+std::string Done::undo() {
+	std::string feedback = "Undo done: Marked incomplete task(s): ";
+
+	for (unsigned int i = 0; i < _doneTasks.size(); i++) {
+		_doneTasks[i]->undone();
+		feedback += "(" + typeConversions::intToString(_doneTasksIndexes[i]) + ")";
+		if (i < _doneTasksIndexes.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
+	}
+
+	return feedback;
+}
+
+std::string Done::redo() {
+	std::string feedback = "Redo done: Marked complete task(s): ";
+
+	for (unsigned int i = 0; i < _doneTasks.size(); i++) {
+		_doneTasks[i]->done();
+		feedback += "(" + typeConversions::intToString(_doneTasksIndexes[i]) + ")";
+		if (i < _doneTasksIndexes.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
+	}
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Done.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Done.h
+	 */
+
+// Done.h
+// Subclass of Command; implements the done function
+
+#pragma once
+
+#include "Command.h"
+#include "typeConversions.h"
+#include "TextStorage.h"
+#include "Exceptions.h"
+#include "support.h"
+
+#include <vector>
+#include <algorithm>
+
+class Done : public Command {
+private:
+	std::vector<int> _doneTasksIndexes;
+	std::vector<Task*> _doneTasks;
+
+	void process(std::string);
+	bool checkDateBefore(Date*, Date*);
+
+public:
+	Done();
+	~Done();
+	std::string execute(std::string argument);
+	std::string undo();
+	std::string redo();
+};
+	// End of segment: ComCal_v0.1\Done.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Edit.cpp
+	 */
+
+// Edit.cpp
+// Implementation of functions in the Edit class
+
+#include "Edit.h"
+
+Edit::Edit() : Command() {
+	_attributeKeywords.assign(ATTRIBUTEKEYWORDSARRAY, ATTRIBUTEKEYWORDSARRAY + ATTRIBUTEKEYWORDSARRAYSIZE);
+}
+
+Edit::~Edit() {
+}
+
+std::string Edit::execute(std::string userInput) {
+	process(userInput);
+
+	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
+		if (_attributesToBeEdited[i] == DESCRIPTION) {
+			if (_attributesToBeEdited[i] == "") {
+				throw exceptionInputInvalidEditRemoveDescription;
+			}
+			if (_contentsToBeEdited[i] == "") {
+				throw exceptionInputInvalidCannotRemoveDescription;
+			}
+			_editedTask->setDescription(_contentsToBeEdited[i]);
+		}
+		else if (_attributesToBeEdited[i] == STARTDATETIME) {
+			Date* editTaskStartDateTime = new Date();
+			if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			if (_editedTask->getEndDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+					throw exceptionInputStartLaterThanEndTime;
+				}
+			}
+			_editedTask->setStartDate(editTaskStartDateTime);
+		}
+		else if (_attributesToBeEdited[i] == STARTDATE) {
+			if (_contentsToBeEdited[i] == "") {
+				_editedTask->setStartDate(NULL);
+			}
+			else {
+				Date* editTaskStartDateTime = new Date();
+				if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
+					throw exceptionInputInvalidDate;
+				}
+				if (_editedTask->getStartDate() != NULL) {
+					int existingTime = _editedTask->getStartDate()->getTime();
+					editTaskStartDateTime->setTime(existingTime);
+				}
+				if (editTaskStartDateTime->getTime() == NULL){
+					editTaskStartDateTime->setTime(0);
+				}
+				if (_editedTask->getEndDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setStartDate(editTaskStartDateTime);
+			}
+		}
+		else if (_attributesToBeEdited[i] == STARTTIME) {
+			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
+				Date* editTaskStartDateTime = new Date();
+				if (_editedTask->getStartDate() != NULL) {
+					*editTaskStartDateTime = *_editedTask->getStartDate();
+				}
+				else {
+					*editTaskStartDateTime = *_editedTask->getEndDate();
+				}
+				if (!editTaskStartDateTime->setTime(editTime)) {
+					throw exceptionInputInvalidTime;
+				}
+				if (_editedTask->getEndDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setStartDate(editTaskStartDateTime);
+			}
+			else {
+				throw exceptionInputNoExistingDate;
+			}
+		}
+		else if (_attributesToBeEdited[i] == ENDDATETIME) {
+			Date* editTaskEndDateTime = new Date();
+			if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			if (_editedTask->getStartDate() != NULL) {
+				if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+					throw exceptionInputStartLaterThanEndTime;
+				}
+			}
+			_editedTask->setEndDate(editTaskEndDateTime);
+		}
+		else if (_attributesToBeEdited[i] == ENDDATE) {
+			if (_contentsToBeEdited[i] == "") {
+				_editedTask->setEndDate(NULL);
+			}
+			else {
+				Date* editTaskEndDateTime = new Date();
+				if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
+					throw exceptionInputInvalidDate;
+				}
+				if (_editedTask->getEndDate() != NULL) {
+					int existingTime = _editedTask->getEndDate()->getTime();
+					editTaskEndDateTime->setTime(existingTime);
+				}
+				if (editTaskEndDateTime->getTime() == NULL){
+					editTaskEndDateTime->setTime(2359);
+				}
+				if (_editedTask->getStartDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setEndDate(editTaskEndDateTime);
+			}
+		}
+		else if (_attributesToBeEdited[i] == ENDTIME) {
+			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
+				Date* editTaskEndDateTime = new Date();
+				if (_editedTask->getEndDate() != NULL) {
+					*editTaskEndDateTime = *_editedTask->getEndDate();
+				}
+				else {
+					*editTaskEndDateTime = *_editedTask->getStartDate();
+				}
+				if (!editTaskEndDateTime->setTime(editTime)) {
+					throw exceptionInputInvalidTime;
+				}
+				if (_editedTask->getStartDate() != NULL) {
+					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
+						throw exceptionInputStartLaterThanEndTime;
+					}
+				}
+				_editedTask->setEndDate(editTaskEndDateTime);
+			}
+			else {
+				throw exceptionInputNoExistingDate;
+			}
+		}
+		else {
+			_editedTask->setLocation(_contentsToBeEdited[i]);
+		}
+	}
+
+	std::string feedback = prepareFeedback();
+
+	return feedback;
+}
+
+void Edit::process(std::string userInput) {
+	if (support::isSpacesOnly(userInput)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	furnishTaskToBeEdited(userInput);
+
+	furnishEditContents(userInput);
+}
+
+void Edit::furnishTaskToBeEdited(std::string &userInput) {
+	if (userInput == "") {
+		throw exceptionInputMissingEditTaskIndexAndParams;
+	}
+
+	_taskIndexToBeEdited = extractTaskIndex(userInput);
+
+	Task* originalTask = TextStorage::getInstance()->getTask(_taskIndexToBeEdited-1);
+
+	if(originalTask == NULL) {
+		throw exceptionInputInvalidTaskIndex;
+	}
+
+	_originalTask = new Task;
+	_originalTask->setDescription(originalTask->getDescription());
+	if (originalTask->getStartDate() != NULL) {
+		Date* originalStartDate = new Date(originalTask->getStartDate()->getDay(), originalTask->getStartDate()->getMonth(), originalTask->getStartDate()->getYear(), originalTask->getStartDate()->getTime());
+		_originalTask->setStartDate(originalStartDate);
+	}	
+	if (originalTask->getEndDate() != NULL) {
+		Date* originalEndDate = new Date(originalTask->getEndDate()->getDay(), originalTask->getEndDate()->getMonth(), originalTask->getEndDate()->getYear(), originalTask->getEndDate()->getTime());
+		_originalTask->setEndDate(originalEndDate);
+	}
+	_originalTask->setLocation(originalTask->getLocation());
+
+	_editedTask = originalTask;
+
+	return;
+}
+
+int Edit::extractTaskIndex(std::string &userInput){
+	int spacePosition = userInput.find(" ");
+
+	if (spacePosition == std::string::npos) {
+		throw exceptionInputMissingEditParams;
+	}
+
+	if (!typeConversions::isNumber(userInput.substr(0,spacePosition))) {
+		throw exceptionInputInvalidTaskIndex;
+	}
+
+	std::string taskIndexToBeEditedString = userInput.substr(0, spacePosition);
+
+	userInput = userInput.substr(spacePosition + 1);
+
+	int taskIndexToBeEdited = typeConversions::stringToInt(taskIndexToBeEditedString);
+
+	return taskIndexToBeEdited;
+}
+
+void Edit::furnishEditContents(std::string &userInput) {
+	if (userInput == "") {
+		throw exceptionInputMissingEditParams;
+	}
+
+	if (support::isSpacesOnly(userInput)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	userInput = " " + userInput;
+
+	std::vector<std::vector<std::string>> keywordsAndParams = support::extractParamsForKeywords(userInput, _attributeKeywords);
+
+	for (unsigned int i = 0; i < keywordsAndParams.size(); i++) {
+		if (!keywordsAndParams[i].empty()) {
+			if (keywordsAndParams[i].size() > 1) {
+				throw exceptionInputRepeatAttributeKeywords;
+			}
+
+			if (keywordsAndParams[i][0] == "") {
+				throw exceptionInputMissingAttributeParam;
+			}
+
+			switch (i) {
+			case INDEX_DESCRIPTION:
+				_attributesToBeEdited.push_back(DESCRIPTION);
+				break;
+			case INDEX_STARTDATETIME:
+				if (checkDateTimeInputIsTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(STARTTIME);
+				}
+				else if (checkDateTimeInputIsDateTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(STARTDATETIME);
+				}
+				else {
+					_attributesToBeEdited.push_back(STARTDATE);
+				}
+				break;
+			case INDEX_ENDDATETIME:
+				if (checkDateTimeInputIsTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(ENDTIME);
+				}
+				else if (checkDateTimeInputIsDateTime(keywordsAndParams[i][0])) {
+					_attributesToBeEdited.push_back(ENDDATETIME);
+				}
+				else {
+					_attributesToBeEdited.push_back(ENDDATE);
+				}
+				break;
+			case INDEX_LOCATION:
+				_attributesToBeEdited.push_back(LOCATION);
+				break;
+			}
+
+			if (keywordsAndParams[i][0] == "-") {
+				keywordsAndParams[i][0] = "";
+			}
+			_contentsToBeEdited.push_back(keywordsAndParams[i][0]);
+		}
+	}
+
+	if (_attributesToBeEdited.empty()) {
+		throw exceptionInputInvalidAttributeKeyword;
+	}
+
+	if (userInput != "") {
+		throw exceptionInputMissingAttributeKeyword;
+	}
+
+	return;
+}
+
+bool Edit::checkDateTimeInputIsTime(std::string input) {
+	if (input.size() == LENGTH_TIMEINPUT) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool Edit::checkDateTimeInputIsDateTime(std::string input) {
+	if (input.size()>LENGTH_TIMEINPUT && input.substr(input.size() - LENGTH_TIMEINPUT).find_first_not_of(INTS) == std::string::npos) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+std::string Edit::prepareFeedback(){
+	std::string feedback = "Edited ";
+	std::string taskDisplay;
+	
+	std::string originalType = support::getTaskType(_originalTask->getTaskTypeCode());
+
+	std::string editedType = support::getTaskType(_editedTask->getTaskTypeCode());
+
+	for (unsigned int i = 0; i < _attributesToBeEdited.size(); i++) {
+		if (editedType == TASKTYPE_DEADLINE) {
+			if (_attributesToBeEdited[i] == ENDDATE) {
+				_attributesToBeEdited[i] = DEADLINEDATE;
+			}
+			else if (_attributesToBeEdited[i] == ENDDATETIME) {
+				_attributesToBeEdited[i] = DEADLINE;
+			}
+			else if (_attributesToBeEdited[i] == ENDTIME) {
+				_attributesToBeEdited[i] = DEADLINETIME;
+			}
+		}
+
+		feedback += _attributesToBeEdited[i];
+
+		if (i == _attributesToBeEdited.size() - 2) {
+			feedback += " and ";
+		}
+		else if (i == _attributesToBeEdited.size() - 1) {
+			feedback += " ";
+		}
+		else {
+			feedback += ", ";
+		}
+	}
+
+	if (editedType == originalType) {
+		feedback += "of " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "):";
+	}
+	else {
+		feedback += "of " + originalType + " to " + editedType + " (" + std::to_string(_taskIndexToBeEdited) + "): ";
+	}
+
+	taskDisplay = support::prepareTaskDisplayAttributeBreakdown(_editedTask);
+
+	feedback += taskDisplay;
+
+	return feedback;
+}
+
+int Edit::getEditedTaskIndex() {
+	return _taskIndexToBeEdited;
+}
+
+std::string Edit::undo() {
+	std::string feedback;
+
+	Task* temp = new Task();
+	
+	*temp = *_editedTask;
+
+	*_editedTask = *_originalTask;
+
+	*_originalTask = *temp;
+
+	feedback = prepareFeedback();
+
+	return feedback;
+}
+
+std::string Edit::redo() {
+	std::string feedback;
+
+	Task* temp = new Task();
+
+	*temp = *_editedTask;
+
+	*_editedTask = *_originalTask;
+
+	*_originalTask = *temp;
+
+	feedback = prepareFeedback();
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Edit.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Edit.h
+	 */
+
+// Edit.h
+// Subclass of Command; implements the edit function
+
+
+/**********************************************************************************************************
+Name: Edit
+Type: Class
+Purpose: Child class of Command parent class.
+Responsible for executing editing of task in tasks database text file, when its execute API
+is called by ComCalManager class.
+**********************************************************************************************************/
+
+#pragma once
+
+#include "Command.h"
+#include "keywords.h"
+#include "timeDateInfo.h"
+#include "support.h"
+#include "TextStorage.h"
+#include "typeConversions.h"
+#include "Exceptions.h"
+
+class Edit : public Command {
+private:
+	/****************************************************************************************************
+	Name: _attributeKeywords
+	Type: Vector of strings attribute
+	Purpose: Holds recognised attribute keywords
+	****************************************************************************************************/
+	std::vector<std::string> _attributeKeywords;
+	
+	/****************************************************************************************************
+	Type: Private attributes
+	Purpose: Hold characteristics of edit object, including task index to be edited, attributes and contents to be edited,
+	the original task object and the task object after editing.
+	****************************************************************************************************/
+	int _taskIndexToBeEdited;
+	std::vector<std::string> _attributesToBeEdited;
+	std::vector<std::string> _contentsToBeEdited;
+	Task* _originalTask;
+	Task* _editedTask;
+
+	/****************************************************************************************************
+	Name: extractTaskIndex
+	Type: Method
+	Purpose: Extracts and returns task index to be edited from input reference string. Throws missing 
+	edit parameters exception if no space is read in input reference string. Removes task index read from
+	input reference string.
+	****************************************************************************************************/
+	int extractTaskIndex(std::string&);
+	
+	/****************************************************************************************************
+	Name: process
+	Type: Method
+	Purpose: Processes input string to obtain specified task index to be edited, attribute codes and 
+	new content for each attribute to be edited and furnishes the respect vector of string private
+	attributes.
+	****************************************************************************************************/
+	void process(std::string);
+
+	/****************************************************************************************************
+	Name: furnishTaskToBeEdited
+	Type: Method
+	Purpose: Furnishes _orignalTask and _editedTask private attributes with specified task index to be 
+	edited from input reference string, and removes the this task index from the input reference string.
+	****************************************************************************************************/
+	void furnishTaskToBeEdited(std::string&);
+	
+	/****************************************************************************************************
+	Name: furnishEditContents
+	Type: Method
+	Purpose: Furnishes remaining private attributes with specifications from input reference string, and
+	removes these from the input reference string.
+	****************************************************************************************************/
+	void furnishEditContents(std::string&);
+	
+	/****************************************************************************************************
+	Name: checkDateTimeInputIsTime
+	Type: Method
+	Purpose: Checks and returns true if input string is a time input of 4 integers, false otherwise.
+	****************************************************************************************************/
+	bool checkDateTimeInputIsTime(std::string);
+
+	/****************************************************************************************************
+	Name: checkDateTimeInputIsTime
+	Type: Method
+	Purpose: Checks and returns true if input string is a date time input with last 4 characters being
+	integers, false otherwise.
+	****************************************************************************************************/
+	bool checkDateTimeInputIsDateTime(std::string);
+
+	/****************************************************************************************************
+	Name: prepareFeedback
+	Type: Method
+	Purpose: Prepares and returns edit feedback string upon successful edit execution.
+	****************************************************************************************************/
+	std::string prepareFeedback();
+public:
+	Edit();
+	~Edit();
+
+	/****************************************************************************************************
+	Name: execute
+	Type: Method
+	Purpose: Public API for ComCalManager class to call to execute edit action.
+	****************************************************************************************************/
+	std::string execute(std::string argument);
+
+	/****************************************************************************************************
+	Name: undo
+	Type: Method
+	Purpose: Public API for ComCalManager class to call to undo edit action.
+	****************************************************************************************************/
+	std::string undo();
+
+	/****************************************************************************************************
+	Name: redo
+	Type: Method
+	Purpose: Public API for ComCalManager class to call to redo edit action.
+	****************************************************************************************************/
+	std::string redo();
+
+	/****************************************************************************************************
+	Name: getEditedTaskIndex
+	Type: Method
+	Purpose: (for unit tests to call) Returns edited task's index.
+	****************************************************************************************************/
+	int getEditedTaskIndex();
+};
+	// End of segment: ComCal_v0.1\Edit.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Exceptions.h
+	 */
+
+
+#pragma once
+
+#include <string>
+#include <exception>
+
+//Help message constant string declarations:
+const std::string LINESPACING_SINGLE = "";
+const std::string LINESPACING_DOUBLE = "";
+
+//Help sheets constant string declarations:
+const std::string INPUTHELP_COMMAND = "Commands: add; edit; del; done; undone; undo; redo; search. For input help on each command, pls enter \"help <command>\" - e.g. \"help add\"shows input help for add command.";
+const std::string INPUTHELP_TIME = "Time Input: \"HHMM\" E.g.: \"0830\" represents 8:30 AM; \"1600\" represents 4:00 PM";
+const std::string INPUTHELP_DATE = "Date Input: \"DD/MM/YYYY\" E.g.: \"31/04/14\" represents 31 April 2014; \"01/05/2014\" represents 1 May 2014";
+const std::string INPUTHELP_DATETIMEADDEDIT = "Date/Day Inputs: 1. \"DD/MM/YYYY\": Specific date e.g. \"31/04/2014\" represents 31 April 2014; 2. \"yesterday\": Yesterday; 3. \"today\": Today; 4. \"tomorrow\": Tomorrow; 5. \"this <day>\": This coming occurence of the specified day e.g. \"this Wednesday\" represents this coming Wednesday; 6. \"next <day>\": Next occurrence of the specified day e.g. \"next Friday\" represents the Friday after this coming Friday; 7. \"last <day>\": Previous occurrence of the specified day e.g. \"last Sunday\" represents the Sunday that just passed; Time Input: \"HHMM\" e.g.: \"0830\" represents 8:30 AM; \"1600\" represents 4:00 PM";
+const std::string INPUTHELP_DATETIMESHOWSEARCH = "Date/Day Inputs: 1. \"DD/MM/YYYY\": Specific date e.g. \"31/04/2014\" represents 31 April 2014; 2. \"yesterday\": Yesterday; 3. \"today\" : Today; 4. \"tomorrow\": Tomorrow; 5. \"this <day>\": This coming occurence of the specified day e.g. \"this Wednesday\" represents this coming Wednesday; 6. \"next <day>\": Next occurrence of the specified day e.g. \"next Friday\" represents the Friday after this coming Friday; 7. \"last <day>\": Previous occurrence of the specified day e.g. \"last Sunday\" represents the Sunday that just passed; 8. \"week DD/MM/YYYY\" OR \"DD/MM/YYYY week\": Week of Monday to Sunday containing thespecified date e.g. \"week 31/04/2014\" represents the week containing 31 April 2014; 9. \"this/next/last week\": This/Next/Last week of Monday to Sunday";
+const std::string INPUTHELP_EDIT = "edit: A. To edit all attributes of a task, enter \"edit <task index> .d <new description> .s <new start date-time> .e <new end date/time> .l <new location>\" e.g.: edit 1 .d NewDescription .s 01/01/2014 1000 .e 02/01/2014 1100 .l NewLocation; Note: You may edit a single or multiple attributes in any order and combination.; B. To edit date/day but not time of a task, enter \"edit <task index>.s <new date/day>\" e.g.: edit 1 .s Sunday; C. To edit time but not date/day of a task, enter \"edit <task index>.e <new time>\" e.g.: edit 1 .e 1230";
+const std::string INPUTHELP_ADD = "add: A. To add a timed task, enter either format I) or II): I) For tasks that start and end on the same date, enter a) or b): a) \"add .d <task description> .s <start date/day> <start time> .e <end time> .l <location>\" e.g.: add .d SampleTask .s today 1000 .e 1100 .l school; b) \"add <task description> on <start date/day> from <start time> to <end time> in <location>\" e.g.: add SampleTask on tomorrow from 1000 to 1100 in school; II) For tasks that start and end on different dates, enter a) or b): a) \"add .d <task description> .s <start date/day> <start time> .e <end date/day> <end time> .l <location>\" e.g.: add .d SampleTask .s Saturday 1000 .e Sunday 03/01/14 1000 .l school; b) \"add <task description> from <start date/Day> <start time> to <end date/day> <end time> in <location>\" e.g.: add SampleTask from next Friday 1000 to next Saturday 1000 in school; B. To add a partial timed task, enter a) or b): a) \"add .d <task description> .s <start date/day> <start time> .l <location>\" e.g.: add .d SampleTask .s 01/01/14 1000 .l school; (b) \"add <task description> on <start date/day> <start time> in <location>\" e.g.: add SampleTask on 02/01/14 1000 in school; C. To add a deadline task, enter a) or b): a) \"add .d <task description> .e <deadline date/day> <deadline time> .l <location>\" e.g.: add .d SampleTask .by 01/01/14 1000 .l school; b) \"add <task description> by <deadline date/Day> <deadline time> in <location>\" e.g.: add SampleTask by 01/01/14 1000 in school; D. To add a floating task, enter a) or b): a) \"add .d <task description> .l <location>\" e.g.: add .d SampleTask .l school; b) \"add <task description> in <location>\" e.g.: add SampleTask in schoolNote: Location attribute is optional for all task types.";
+const std::string INPUTHELP_SHOW = "show: A. To show current month, enter a) : a) \"show\"; B. To show calendar for a specific date/day, enter \"show <date/day>\" e.g.: show 01/01/2015 or show tomorrow or show Friday show Sunday; C. To show calendar for this week, enter a) : a) \"show week\"; D. To show calendar for a specific week, enter either a) or b): a) \"show week <date>\"; b) \"show <date> week\" e.g.: show week 01/01/14 show next week; E. To show to-do tasks, enter \"show todo\"; F. To show to-do on a specified date, enter either a) or b): a) \"show todo <date/day>\"; b) \"show <date/day> todo\"; eg. eg.  F. To show all done tasks, enter \"show done\"; G. To show done tasks on a specific date/day, enter \"show done <date/day>\" e.g.: show done 01/01/14 show done yesterday show done last Tuesday; H. To show done tasks this week, enter \"show done week\"; I. To show done tasks on a specific week, enter either a) or b): a) \"show done week <date>\"b) \"show done <date> week\" e.g.: show done week 01/01/14 show done last week";
+const std::string INPUTHELP_DEL = "delete: A. To delete a task, enter \"delete <task index>\" e.g.: delete 1; B. To delete multiple tasks, enter \"delete <taskindex1 taskindex2 ...>\" e.g.: delete 1 2; C. To delete all tasks before a certain date, enter \"delete .b <date/day (time)>\" e.g.: delete .b 27/04/2014";
+const std::string INPUTHELP_DONE = "done: A. To mark a single task done, enter \"done <task index>\" e.g.: done 1; B. To mark multiple tasks done, enter \"done <taskindex1 taskindex2 ...>\" e.g.: done 1 2; C. To mark done all tasks before a certain date, enter \"done .b <date/day (time)>\" e.g.: done .b 27/04/2014";
+const std::string INPUTHELP_UNDONE = "undone: A. To mark a single done task undone, enter \"undone <task index>\" e.g.: undone 1; B. To mark multiple done tasks undone, enter \"undone <taskindex1 taskindex2>\" e.g.: undone 1 2; C. To mark undone all done tasks before a certain date, enter \"undone .b <date/day (time)>\" e.g.: undone .b 27/04/2014";
+const std::string INPUTHELP_ATTRIBUTEKEYWORDS = "Attribute keywords: 1. \" .d \": Description; 2. \" .s \": Start date-time; 3. \" .e \": End date-time4. \" .l \": Location";
+const std::string INPUTHELP_NATURALKEYWORDS = "Natural keywords: A. To add a timed task, enter either format I) or II): I) For tasks that start and end on the same date, enter \"add <task description> on <start date/day> from <start time> to <end time> in <location>\" e.g.: add SampleTask on 02/01/14 from 1000 to 1100 in school; II) For tasks that start and end on different dates, enter \"add <task description> from <start date/Day> <start time> to <end date/day> <end time> in <location>\" e.g.: add SampleTask from 02/01/14 1000 to 03/01/14 1000 in school; B. To add a partial timed task, enter \"add <task description> on <start date/day> <start time> in <location>\" e.g.: add SampleTask on 02/01/14 1000 in schoolC. To add a deadline task, enter \"add <task description> by <deadline date/Day> <deadline time> in <location>\" e.g.: add SampleTask by 01/01/14 1000 in schoolD. To add a floating task, enter \"add <task description> in <location>\" e.g.: add SampleTask in schoolNote: Location attribute is optional for all task types.";
+
+//Input errors constant string declarations:
+const std::string INPUTERROR_NOCOMMAND = "INPUT ERROR: No command entered - pls enter one of the following valid commands: " + INPUTHELP_COMMAND;
+const std::string INPUTERROR_INVALIDCOMMAND = "INPUT ERROR: Invalid command - pls enter one of the following valid commands: " + INPUTHELP_COMMAND;
+const std::string INPUTERROR_INVALIDTIME = "INPUT ERROR: Invalid time format - pls enter the following valid time format: " + INPUTHELP_TIME;
+const std::string INPUTERROR_INVALIDDATE = "INPUT ERROR: Invalid date format - pls enter the following valid date format: " + INPUTHELP_DATE;
+const std::string INPUTERROR_INVALIDDATETIMEADDEDIT = "INPUT ERROR: Invalid date-time format - pls enter one of the following valid date-time formats: " + INPUTHELP_DATETIMEADDEDIT;
+const std::string INPUTERROR_INVALIDDATETIMESHOWSEARCH = "INPUT ERROR: Invalid date-time format - pls enter one of the following valid date-time formats: " + INPUTHELP_DATETIMESHOWSEARCH;
+const std::string INPUTERROR_MISSINGADDPARAMS = "INPUT ERROR: Missing parameters following add command - pls see below for input help: " + INPUTHELP_ADD;
+const std::string INPUTERROR_MISSINGEDITTASKINDEXANDPARAMS = "INPUT ERROR: Missing task index number, attribute keyword(s) and parameters - pls see below for input help: " + INPUTHELP_EDIT;
+const std::string INPUTERROR_MISSINGEDITPARAMS = "INPUT ERROR: Missing attribute keyword(s) and parameters(s) - pls see below for input help: " + INPUTHELP_EDIT;
+const std::string INPUTERROR_REPEATATTRIBUTEKEYWORDS = "INPUT ERROR: Repeat attribute keywords entered - pls enter each attribute keyword not more than once.";
+const std::string INPUTERROR_REPEATNATURALKEYWORDS = "INPUT ERROR: Repeat natural keywords entered - pls enter each natural keyword not more than once.";
+const std::string INPUTERROR_MISSINGATTRIBUTEPARAM = "INPUT ERROR: Missing parameter following attribute keyword - pls enter parameter after attribute keyword. " + INPUTHELP_ATTRIBUTEKEYWORDS;
+const std::string INPUTERROR_MISSINGNATURALPARAM = "INPUT ERROR: Missing parameter following natural keyword - pls enter parameter after natural keyword. " + INPUTHELP_NATURALKEYWORDS;
+const std::string INPUTERROR_MISSINGDESCRIPTION = "INPUT ERROR: Missing description - pls enter a description for the task.";
+const std::string INPUTERROR_MISSINGATTRIBUTEKEYWORD = "INPUT ERROR: Missing attribute keyword - pls see below for input help: " + INPUTHELP_ATTRIBUTEKEYWORDS;
+const std::string INPUTERROR_STARTLATERTHANENDTIME = "INPUT ERROR: Start time is later than end time - pls correct start time or end time such that end time is later than start time.";
+const std::string INPUTERROR_MISSINGTASKINDEX = "INPUT ERROR: Missing task index(es) - pls enter number index(es) of desired task(s) from above task display. If there are no tasks displayed above, pls display tasks by entering show command. " + INPUTHELP_SHOW;
+const std::string INPUTERROR_INVALIDTASKINDEX = "INPUT ERROR: Invalid task index format - pls enter number index of desired task.";
+const std::string INPUTERROR_INVALIDDELPARAMS = "INPUT ERROR: Invalid delete parameters - pls see below for valid parameter formats: " + INPUTHELP_DEL;
+const std::string INPUTERROR_INVALIDDONEPARAMS = "INPUT ERROR: Invalid done parameters - pls see below for valid parameter formats: " + INPUTHELP_DONE;
+const std::string INPUTERROR_INVALIDUNDONEPARAMS = "INPUT ERROR: Invalid undone parameters - pls see below for valid parameter formats: " + INPUTHELP_UNDONE;
+const std::string INPUTERROR_INVALIDATTRIBUTEKEYWORD = "INPUT ERROR: Invalid attribute keyword - pls see below for valid keywords: " + INPUTHELP_ATTRIBUTEKEYWORDS;
+const std::string INPUTERROR_INVALIDEDITREMOVEDESCRIPTION = "INPUT ERROR: Cannot remove description - every task requires a description.";
+const std::string INPUTERROR_NOEXISTINGDATE = "INPUT ERROR: No existing date - pls specify a date/day along with the time.";
+const std::string INPUTERROR_INVALIDDONE = "INPUT ERROR: Invalid done - can only done TO-DO or DEADLINE.";
+const std::string INPUTERROR_INVALIDUNDO = "INPUT ERROR: No further previous actions to undo.";
+const std::string INPUTERROR_INVALIDREDO = "INPUT ERROR: No further previous undo actions to redo.";
+const std::string INPUTERROR_INVALIDTIMERANGESTARTMISSING = "INPUT ERROR: Missing time range start keyword: \"from\"";
+const std::string INPUTERROR_INVALIDTIMERANGEENDMISSING = "INPUT ERROR: Missing time range end keyword: \"to\"";
+const std::string INPUTERROR_INVALIDSPACESONLY = "INPUT ERROR: A portion of the/Entire input contains spaces only, please revise.";
+const std::string INPUTERROR_INVALIDCANNOTREMOVEDESCRIPTION = "INPUT ERROR: Cannot remove description of task.";
+
+class ExceptionInputNoCommand : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_NOCOMMAND.c_str();
+	}
+} static exceptionInputNoCommand;
+
+class ExceptionInputInvalidCommand : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDCOMMAND.c_str();
+	}
+} static exceptionInputInvalidCommand;
+
+class ExceptionInputInvalidCannotRemoveDescription : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDCANNOTREMOVEDESCRIPTION.c_str();
+	}
+} static exceptionInputInvalidCannotRemoveDescription;
+
+class ExceptionInputInvalidSpacesOnly : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDSPACESONLY.c_str();
+	}
+} static exceptionInputInvalidSpacesOnly;
+
+class ExceptionInputInvalidTimeRangeStartMissing : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTIMERANGESTARTMISSING.c_str();
+	}
+} static exceptionInputInvalidTimeRangeStartMissing;
+
+class ExceptionInputInvalidTimeRangeEndMissing : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTIMERANGEENDMISSING.c_str();
+	}
+} static exceptionInputInvalidTimeRangeEndMissing;
+
+class ExceptionInputInvalidDelParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDELPARAMS.c_str();
+	}
+} static exceptionInputInvalidDelParams;
+
+class ExceptionInputInvalidDoneParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDONEPARAMS.c_str();
+	}
+} static exceptionInputInvalidDoneParams;
+
+class ExceptionInputInvalidUndoneParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDUNDONEPARAMS.c_str();
+	}
+} static exceptionInputInvalidUndoneParams;
+
+class ExceptionInputInvalidTime : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTIME.c_str();
+	}
+} static exceptionInputInvalidTime;
+
+class ExceptionInputInvalidDate : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDATE.c_str();
+	}
+} static exceptionInputInvalidDate;
+
+class ExceptionInputInvalidDateTimeAddEdit : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDATETIMEADDEDIT.c_str();
+	}
+} static exceptionInputInvalidDateTimeAddEdit;
+
+class ExceptionInputInvalidDateTimeShowSearch : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDATETIMESHOWSEARCH.c_str();
+	}
+} static exceptionInputInvalidDateTimeShowSearch;
+
+class ExceptionInputMissingAddParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGADDPARAMS.c_str();
+	}
+} static exceptionInputMissingAddParams;
+
+class ExceptionInputMissingEditTaskIndexAndParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGEDITTASKINDEXANDPARAMS.c_str();
+	}
+} static exceptionInputMissingEditTaskIndexAndParams;
+
+class ExceptionInputMissingEditParams : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGEDITPARAMS.c_str();
+	}
+} static exceptionInputMissingEditParams;
+
+class ExceptionInputRepeatAttributeKeywords : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_REPEATATTRIBUTEKEYWORDS.c_str();
+	}
+} static exceptionInputRepeatAttributeKeywords;
+
+class ExceptionInputRepeatNaturalKeywords : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_REPEATNATURALKEYWORDS.c_str();
+	}
+} static exceptionInputRepeatNaturalKeywords;
+
+class ExceptionInputMissingAttributeParam : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGATTRIBUTEPARAM.c_str();
+	}
+} static exceptionInputMissingAttributeParam;
+
+class ExceptionInputMissingNaturalParam : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGNATURALPARAM.c_str();
+	}
+} static exceptionInputMissingNaturalParam;
+
+class ExceptionInputMissingDescription : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGDESCRIPTION.c_str();
+	}
+} static exceptionInputMissingDescription;
+
+class ExceptionInputMissingAttributeKeyword : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGATTRIBUTEKEYWORD.c_str();
+	}
+} static exceptionInputMissingAttributeKeyword;
+
+class ExceptionInputStartLaterThanEndTime : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_STARTLATERTHANENDTIME.c_str();
+	}
+} static exceptionInputStartLaterThanEndTime;
+
+class ExceptionInputMissingTaskIndex : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_MISSINGTASKINDEX.c_str();
+	}
+} static exceptionInputMissingTaskIndex;
+
+class ExceptionInputInvalidTaskIndex : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDTASKINDEX.c_str();
+	}
+} static exceptionInputInvalidTaskIndex;
+
+class ExceptionInputInvalidAttributeKeyword : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDATTRIBUTEKEYWORD.c_str();
+	}
+} static exceptionInputInvalidAttributeKeyword;
+
+class ExceptionInputInvalidEditRemoveDescription : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDEDITREMOVEDESCRIPTION.c_str();
+	}
+} static exceptionInputInvalidEditRemoveDescription;
+
+class ExceptionInputNoExistingDate : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_NOEXISTINGDATE.c_str();
+	}
+} static exceptionInputNoExistingDate;
+
+class ExceptionInputInvalidDone : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDDONE.c_str();
+	}
+} static exceptionInputInvalidDone;
+
+class ExceptionInputInvalidUndo : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDUNDO.c_str();
+	}
+} static exceptionInputInvalidUndo;
+
+class ExceptionInputInvalidRedo : public std::exception {
+	const char* what() const throw()
+	{
+		return INPUTERROR_INVALIDREDO.c_str();
+	}
+} static exceptionInputInvalidRedo;
+	// End of segment: ComCal_v0.1\Exceptions.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\keywords.h
+	 */
+
+// Strings for possible user inputs
+static const std::string INPUT_TODO = "todo";
+static const int TODO_CODE = 1;
+static const std::string INPUT_DONE = "done";
+static const int DONE_CODE = 2;
+static const std::string INPUT_TIMED = "timed";
+static const std::string DEADLINED_TASK = "deadline";
+static const std::string FLOATING_TASKS = "floating";
+static const std::string INPUT_PARTIAL = "partial";
+static const std::string ALL_TASKS = "all";
+static const int ALL_CODE = 3;
+
+//Attribute keywords constant string and index int declarations:
+static const int ATTRIBUTEKEYWORDSARRAYSIZE = 4;
+static const std::string ATTRIBUTEKEYWORDSARRAY[ATTRIBUTEKEYWORDSARRAYSIZE] = { " .d ", " .s ", " .e ", " .l " };
+static const int INDEX_DESCRIPTION = 0;
+static const int INDEX_STARTDATETIME = 1;
+static const int INDEX_ENDDATETIME = 2;
+static const int INDEX_LOCATION = 3;
+
+//Delete before certain date/time command keywords:
+static const int BEFOREKEYWORDSARRAYSIZE = 2;
+static const std::string BEFOREKEYWORDSARRAY[BEFOREKEYWORDSARRAYSIZE] = { ".b ", "before " };
+static const std::string ALLKEYWORD = "all";
+
+//Integer string:
+static const std::string INTS = "0123456789";
+
+//Attribute constant string declarations:
+static const std::string DESCRIPTION = "[D]";
+static const std::string STARTDATETIME = "[S]";
+static const std::string STARTDATE = "[S-D]";
+static const std::string STARTTIME = "[S-T]";
+static const std::string ENDDATETIME = "[E]";
+static const std::string ENDDATE = "[E-D]";
+static const std::string ENDTIME = "[E-T]";
+static const std::string DEADLINE = "[DL]";
+static const std::string DEADLINEDATE = "[DL-D]";
+static const std::string DEADLINETIME = "[DL-T]";
+static const std::string LOCATION = "[L]";
+
+//Search-related constant declarations:
+static const int SEARCHCONDITIONKEYWORDSARRAYSIZE = 3;
+static const std::string SEARCHCONDITIONKEYWORDSARRAY[SEARCHCONDITIONKEYWORDSARRAYSIZE] = { " and ", " or ", " not " };
+static const int INDEX_AND = 0;
+static const int INDEX_OR = 1;
+static const int INDEX_NOT = 2;
+static const int INDEX_WILDCARD = -1;
+static const std::string SEARCHDATETIMERANGESTART = "from ";
+static const std::string SEARCHDATETIMERANGEEND = " to ";
+static const std::string AND = "AND";
+static const std::string OR = "OR";
+static const std::string NOT = "EXCLUDING";
+
+//Task type constant declarations:
+static const int TASKTYPECODE_FLOATING = 1;
+static const int TASKTYPECODE_DEADLINE = 2;
+static const int TASKTYPECODE_PARTIALTIMED = 3;
+static const int TASKTYPECODE_TIMED = 4;
+static const std::string TASKTYPE_FLOATING = "FLOATING";
+static const std::string TASKTYPE_PARTIALTIMED = "PARTIAL-TIMED";
+static const std::string TASKTYPE_TIMED = "TIMED";
+
+//Task type constant string declarations:
+static const std::string TASKTYPE_EVENT = "EVENT";
+static const std::string TASKTYPE_DEADLINE = "DEADLINE";
+static const std::string TASKTYPE_TODO = "TO-DO";
+static const std::string TASKS = "Tasks";
+
+	// End of segment: ComCal_v0.1\keywords.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\keywords.h
+	 */
+
+//Time and date info
+static const int MAX_ASCTIME_S = 26;
+static const int DAYS_IN_WEEK = 7;
+static const int MONTHS_IN_YEAR = 12;
+static const int MAX_DAYS_IN_MONTH = 31;
+static const int NUM_BLOCKS_IN_CALENDAR = 42;
+static const int SECONDS_IN_DAY = 24 * 60 * 60;
+static const int SECONDS_IN_WEEK = 7 * SECONDS_IN_DAY;
+
+	// End of segment: ComCal_v0.1\keywords.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\keywords.h
+	 */
+
+//Input error messages here
+static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
+static const std::string TODO_DONE_INPUT_ERROR = "Invalid todo/done input: Please input either 'todo' or 'done'";
+static const std::string GUI_UPDATE_ERROR = "isShowMonth and/or isShowDayTaskSearch was not flagged\n";
+static const std::string NO_TASKS_IN_VECTOR = "No tasks contained in _todoTask vector\n";
+static const std::string INVALID_COMMAND = "This is not a valid command\n";
+static const std::string INVALID_MONTH_INPUT = "Invalid month input";
+static const std::string INVALID_SHOW_INPUT = "Input arguments invalid for show command";
+static const std::string INVALID_DATE_INPUT = "Invalid date input. Proper format: 'dd/mm/yyyy' , 'today', 'yesterday' , 'tomorrow' , 'monday' , tuesday' etc.";
+static const std::string INVALID_NEXT_INPUT = "Please input in the format 'next month' or 'next week'";
+static const std::string INVALID_YEAR_ERROR = "Please input a year above 1900 in the format YYYY eg. 2016";
+static const std::string INVALID_WEEK_INPUT = "Please input in the format: 'show week' or 'show week todo' or 'show week done' or 'show next week' or 'show week DD/MM/YYYY' or 'show week monday/tuesday/etc'";
+
+
+	// End of segment: ComCal_v0.1\keywords.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Search.cpp
+	 */
+
+//Search.cpp
+//Implementation of functions in the Search class
+
+#include "Search.h"
+#include "ComCalManager.h"
+#include "keywords.h"
+
+static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED = "System error: Unrecognized search attribute code stored in _attributeToSearch private attribute of SearchCondition object. Search attribute code read = ";
+static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHCONDITIONPASSED = "System error: Unrecognized search condition code stored in SearchCondition object in _searchConditions private attribute of Search class. Search condition code read = ";
+
+Search::Search() : Command() {
+}
+
+Search::~Search() {
+}
+
+bool Search::isResultWildcardSearch(Task* taskUnderExam, std::string searchContents) {
+	searchContents = searchContents.substr(1);
+	if (taskUnderExam->getDescription().find(searchContents) == std::string::npos && taskUnderExam->getLocation().find(searchContents) == std::string::npos) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool Search::isResultDescriptionSearch(Task* taskUnderExam, std::string searchContents) {
+	if (taskUnderExam->getDescription().find(searchContents) == std::string::npos) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool Search::isResultLocationSearch(Task* taskUnderExam, std::string searchContents) {
+	if (taskUnderExam->getLocation().find(searchContents) == std::string::npos) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool Search::isResultDateSearch(Date* taskDate, std::string searchContents) {
+	Date* timeRangeStart = new Date();
+	Date* timeRangeEnd = new Date();
+	//Check for from and to specification
+	int timeRangeStartPos = searchContents.find(SEARCHDATETIMERANGESTART);
+	int timeRangeEndPos = searchContents.find(SEARCHDATETIMERANGEEND);
+	if (timeRangeStartPos > 0) {
+		throw exceptionInputInvalidDateTimeShowSearch;
+	}
+	else if (timeRangeStartPos != std::string::npos&&timeRangeEndPos == std::string::npos) {
+		throw exceptionInputInvalidTimeRangeEndMissing;
+	}
+	else if (timeRangeStartPos == std::string::npos&&timeRangeEndPos != std::string::npos) {
+		throw exceptionInputInvalidTimeRangeStartMissing;
+	}
+	else if (timeRangeStartPos != std::string::npos&&timeRangeEndPos != std::string::npos) {
+		std::string timeRangeStartString = searchContents.substr(SEARCHDATETIMERANGESTART.size(), timeRangeEndPos - SEARCHDATETIMERANGESTART.size());
+		if (!timeRangeStart->setDate(timeRangeStartString)) {
+			throw exceptionInputInvalidDateTimeShowSearch;
+		}
+		if (timeRangeStart->getTime() == NULL) {
+			timeRangeStart->setTime(0);
+		}
+		std::string timeRangeEndString = searchContents.substr(timeRangeEndPos + SEARCHDATETIMERANGEEND.size());
+		if (!timeRangeEnd->setDate(timeRangeEndString)) {
+			throw exceptionInputInvalidDateTimeShowSearch;
+		}
+		if (timeRangeEnd->getTime() == NULL) {
+			timeRangeEnd->setTime(2359);
+		}
+	}
+	else {
+		//No from and to specification
+		if (searchContents.find(DATE_WEEK) != std::string::npos) {
+			if (!timeRangeStart->setDate(searchContents)) {
+				throw exceptionInputInvalidDateTimeShowSearch;
+			}
+			timeRangeEnd->setDate(searchContents);
+			timeRangeEnd->setEndOfWeek();
+		}
+		else {
+			if (!timeRangeStart->setDate(searchContents)) {
+				throw exceptionInputInvalidDateTimeShowSearch;
+			}
+			timeRangeEnd->setDate(searchContents);
+			timeRangeEnd->setEndOfDay();
+		}
+	}
+	
+	bool isResult = support::isDateWithinTimeRange(taskDate, timeRangeStart, timeRangeEnd);
+
+	return isResult;
+}
+
+std::string Search::execute(std::string argument) {
+	process(argument);
+
+	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
+	for (unsigned int i = 0; i < _searchConditions.size(); i++) {
+		std::vector<int> attributesToSearch = _searchConditions[i].getAttributesToSearch();
+		std::vector<std::vector<std::string>> contentsToSearch = _searchConditions[i].getContentsToSearch();
+		switch (_searchConditions[i].getCondition()) {
+		case INDEX_AND:
+			if (!_searchResults.empty()) {
+				unsigned int j = 0;
+				while (j < _searchResults.size()) {
+					Task* taskUnderExam = _searchResults[j];
+					for (unsigned int k = 0; k < attributesToSearch.size(); k++) {
+						switch (attributesToSearch[k]) {
+						case INDEX_WILDCARD:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						case INDEX_DESCRIPTION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						case INDEX_STARTDATETIME:
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
+							}
+							else {
+								_searchResults.erase(_searchResults.begin() + j);
+							}
+							break;
+						case INDEX_ENDDATETIME:
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
+							}
+							else {
+								_searchResults.erase(_searchResults.begin() + j);
+							}
+							break;
+						case INDEX_LOCATION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						default:
+							ErrorLog::inputErrorLog(SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED + typeConversions::intToString(attributesToSearch[j]));
+						}
+					}
+				}
+			}
+			break;
+		case INDEX_OR:
+			for (int j = 0; j < numOfTasks; j++) {
+				bool isInResults = false;
+				if (!_searchResults.empty()) {
+					for (unsigned int k = 0; k < _searchResults.size(); k++) {
+						if (_searchResults[k] == TextStorage::getInstance()->getTask(j)) {
+							isInResults = true;
+						}
+					}
+				}
+				if (!isInResults) {
+					Task* taskUnderExam = TextStorage::getInstance()->getTask(j);
+					bool satisfySearch = true;
+					for (unsigned int k = 0; k < attributesToSearch.size() && satisfySearch; k++) {
+						switch (attributesToSearch[k]) {
+						case INDEX_WILDCARD:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
+							}
+							break;
+						case INDEX_DESCRIPTION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
+							}
+							break;
+						case INDEX_STARTDATETIME:
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										satisfySearch = false;
+									}
+								}
+							}
+							else {
+								satisfySearch = false;
+							}
+							break;
+						case INDEX_ENDDATETIME:
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (!isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										satisfySearch = false;
+									}
+								}
+							}
+							else {
+								satisfySearch = false;
+							}
+							break;
+						case INDEX_LOCATION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (!isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									satisfySearch = false;
+								}
+							}
+							break;
+						default:
+							ErrorLog::inputErrorLog(SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED + typeConversions::intToString(attributesToSearch[k]));
+						}
+					}
+
+					if (satisfySearch) {
+						_searchResults.push_back(taskUnderExam);
+					}
+				}
+			}
+			break;
+		case INDEX_NOT:
+			if (!_searchResults.empty()) {
+				unsigned int j = 0;
+				while (j < _searchResults.size()) {
+					Task* taskUnderExam = _searchResults[j];
+					for (unsigned int k = 0; k < attributesToSearch.size(); k++) {
+						switch (attributesToSearch[k]) {
+						case INDEX_WILDCARD:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultWildcardSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						case INDEX_DESCRIPTION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultDescriptionSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						case INDEX_STARTDATETIME:
+							if (taskUnderExam->hasStartDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (isResultDateSearch(taskUnderExam->getStartDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
+							}
+							else {
+								j++;
+							}
+							break;
+						case INDEX_ENDDATETIME:
+							if (taskUnderExam->hasEndDate()) {
+								for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+									if (isResultDateSearch(taskUnderExam->getEndDate(), contentsToSearch[k][l])) {
+										_searchResults.erase(_searchResults.begin() + j);
+									}
+									else {
+										j++;
+									}
+								}
+							}
+							else {
+								j++;
+							}
+							break;
+						case INDEX_LOCATION:
+							for (unsigned int l = 0; l < contentsToSearch[k].size(); l++) {
+								if (isResultLocationSearch(taskUnderExam, contentsToSearch[k][l])) {
+									_searchResults.erase(_searchResults.begin() + j);
+								}
+								else {
+									j++;
+								}
+							}
+							break;
+						default:
+							ErrorLog::inputErrorLog(SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED + typeConversions::intToString(attributesToSearch[j]));
+						}
+					}
+				}
+			}
+			break;
+		default:
+			ErrorLog::inputErrorLog(SYSTEMERROR_UNRECOGNIZEDSEARCHCONDITIONPASSED + typeConversions::intToString(_searchConditions[i].getCondition()));
+		}
+	}
+
+	for (int i = 0; i < numOfTasks; i++) {
+		TextStorage::getInstance()->getTask(i)->hide();
+	}
+
+	for (unsigned int i = 0; i < _searchResults.size(); i++) {
+		_searchResults[i]->display();
+	}
+
+	std::string feedback = prepareFeedback();
+	ComCalManager::getInstance()->setSideBarTitle(SEARCH_RESULTS_TITLE);
+
+	return feedback;
+}
+
+void Search::process(std::string argument) {
+	std::string previousContents;
+	int nextConditionCode;
+	int nextConditionPos = getNextConditionAndPosAndPreviousContents(argument, nextConditionCode, previousContents);
+	int conditionIndex = 1;
+	SearchCondition firstSearchCondition(INDEX_OR);
+	_searchConditions.push_back(firstSearchCondition);
+	while (nextConditionPos!=std::string::npos) {
+		SearchCondition nextSearchCondition(nextConditionCode);
+		_searchConditions.push_back(nextSearchCondition);
+		_searchConditions[conditionIndex-1].setContents(previousContents);
+		nextConditionPos = getNextConditionAndPosAndPreviousContents(argument, nextConditionCode, previousContents);
+		conditionIndex++;
+	}
+	_searchConditions[conditionIndex - 1].setContents(argument);
+
+	return;
+}
+
+int Search::getNextConditionAndPosAndPreviousContents(std::string& input, int& conditionCode, std::string& previousContents) {
+	std::vector<int> conditionPosVect;
+	std::vector<int> conditionCodeVect;
+	std::string inputLowerCase = typeConversions::toLowerCase(input);
+
+	for (int i = 0; i < SEARCHCONDITIONKEYWORDSARRAYSIZE; i++) {
+		int conditionPos = inputLowerCase.find(SEARCHCONDITIONKEYWORDSARRAY[i]);
+		if (conditionPos != std::string::npos) {
+			conditionPosVect.push_back(conditionPos);
+			conditionCodeVect.push_back(i);
+		}
+	}
+
+	if (conditionPosVect.empty()) {
+		return std::string::npos;
+	}
+
+	int conditionPos = conditionPosVect[0];
+	conditionCode = conditionCodeVect[0];
+	for (unsigned int i = 1; i < conditionPosVect.size(); i++) {
+		if (conditionPosVect[i] < conditionPos) {
+			conditionPos = conditionPosVect[i];
+			conditionCode = conditionCodeVect[i];
+		}
+	}
+
+	previousContents = input.substr(0,conditionPos);
+	if (support::isSpacesOnly(previousContents)){
+		throw exceptionInputInvalidSpacesOnly;
+	}
+	input = input.substr(conditionPos + SEARCHCONDITIONKEYWORDSARRAY[conditionCode].size());
+
+	return conditionPos;
+}
+
+std::string Search::prepareFeedback() {
+	std::string feedback = "Executed search of: ";
+
+	for (unsigned int i = 0; i < _searchConditions.size(); i++) {
+		if (i != 0) {
+			switch (_searchConditions[i].getCondition()) {
+			case INDEX_AND:
+				feedback += " " + AND + " (";
+				break;
+			case INDEX_OR:
+				feedback += " " + OR + " (";
+				break;
+			case INDEX_NOT:
+				feedback += " " + NOT + " (";
+			}
+		}
+		else {
+			feedback += "(";
+		}
+		for (unsigned int j = 0; j < _searchConditions[i].getAttributesToSearch().size(); j++) {
+			switch (_searchConditions[i].getAttributesToSearch()[j]) {
+			case INDEX_DESCRIPTION:
+				feedback += " " + DESCRIPTION + ": ";
+				break;
+			case INDEX_STARTDATETIME:
+				feedback += " " + STARTDATETIME + ": ";
+				break;
+			case INDEX_ENDDATETIME:
+				feedback += " " + ENDDATETIME + ": ";
+				break;
+			case INDEX_LOCATION:
+				feedback += " " + LOCATION + ": ";
+				break;
+			}
+			for (unsigned int k = 0; k < _searchConditions[i].getContentsToSearch()[j].size(); k++) {
+				switch (_searchConditions[i].getAttributesToSearch()[j]) {
+				case INDEX_DESCRIPTION:
+					feedback += "\"";
+					break;
+				case INDEX_LOCATION:
+					feedback += "\"";
+					break;
+				}
+				feedback += _searchConditions[i].getContentsToSearch()[j][k];
+				switch (_searchConditions[i].getAttributesToSearch()[j]) {
+				case INDEX_DESCRIPTION:
+					feedback += "\"";
+					break;
+				case INDEX_LOCATION:
+					feedback += "\"";
+					break;
+				}
+				if (k < _searchConditions[i].getContentsToSearch()[j].size() - 1) {
+					feedback += ", ";
+				}
+			}
+			if (j < _searchConditions[i].getAttributesToSearch().size() - 1) {
+				feedback += ";";
+			}
+		}
+		feedback += " )";
+	}
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Search.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Search.h
+	 */
+
+//Search.h
+//Subclass of Command; implements the search function
+
+#pragma once
+
+#include "Command.h"
+#include "SearchCondition.h"
+#include "TextStorage.h"
+#include "Task.h"
+#include "Date.h"
+#include "support.h"
+
+#include <algorithm>
+
+class Search : public Command {
+private:
+	/****************************************************************************************************
+	Name: _searchConditions
+	Type: Vector of SearchCondition objects attribute
+	Purpose: Holds search contents in the form of SearchCondition objects containing their associated
+	search condition int code, attributes and contents.
+	****************************************************************************************************/
+	std::vector<SearchCondition>_searchConditions;
+
+	/****************************************************************************************************
+	Name: _searchResults
+	Type: Vector of Task object pointers attribute
+	Purpose: Holds search results.
+	****************************************************************************************************/
+	std::vector<Task*>_searchResults;
+
+	/****************************************************************************************************
+	Name: process
+	Type: Method
+	Purpose: Processes input string to furnish _searchConditions private attribute.
+	****************************************************************************************************/
+	void process(std::string);
+
+	/****************************************************************************************************
+	Name: getNextConditionAndPos
+	Type: Method
+	Purpose: Processes first input reference string to obtain next condition's position and index code,
+	as well as previous condition's contents, returning the position as int, assigning the index code 
+	to second input reference int and previous condition's contents to third input reference string, and 
+	removing portion of the first input reference string from its start to the end of the condition read.
+	****************************************************************************************************/
+	int getNextConditionAndPosAndPreviousContents(std::string&, int&, std::string&);
+
+	/****************************************************************************************************
+	Name: prepareFeedback
+	Type: Method
+	Purpose: Prepares and returns feedback string for successful search execution.
+	****************************************************************************************************/
+	std::string prepareFeedback();
+
+	/****************************************************************************************************
+	Name: isResultDescriptionSearch
+	Type: Method
+	Purpose: Checks and returns true if Task pointer satisfies input string description search, false
+	otherwise.
+	****************************************************************************************************/
+	bool isResultDescriptionSearch(Task*, std::string);
+
+	/****************************************************************************************************
+	Name: isResultDateSearch
+	Type: Method
+	Purpose: Checks and returns true if Date pointer satisfies input string start date/time search, false
+	otherwise.
+	****************************************************************************************************/
+	bool isResultDateSearch(Date*, std::string);
+
+	/****************************************************************************************************
+	Name: isResultLocationSearch
+	Type: Method
+	Purpose: Checks and returns true if Task pointer satisfies input string location search, false
+	otherwise.
+	****************************************************************************************************/
+	bool isResultLocationSearch(Task*, std::string);
+
+	/****************************************************************************************************
+	Name: isResultWildcardSearch
+	Type: Method
+	Purpose: Checks and returns true if Task pointer satisfies input string wildcard (description and 
+	location) search, false otherwise.
+	****************************************************************************************************/
+	bool isResultWildcardSearch(Task*, std::string);
+
+public:
+	Search();
+	~Search();
+
+	/****************************************************************************************************
+	Name: execute
+	Type: Method
+	Purpose: Executes search command with input string and returns feedback string.
+	****************************************************************************************************/
+	std::string execute(std::string argument);
+};
+	// End of segment: ComCal_v0.1\Search.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\SearchCondition.cpp
+	 */
+
+// SearchCondition.cpp
+// Implementation of functions in SearchCondition class
+
+#include "SearchCondition.h"
+
+SearchCondition::SearchCondition(int condition) {
+	_attributeKeywords.assign(ATTRIBUTEKEYWORDSARRAY, ATTRIBUTEKEYWORDSARRAY + ATTRIBUTEKEYWORDSARRAYSIZE);
+
+	_condition = condition;
+}
+
+SearchCondition::~SearchCondition() {
+}
+
+void SearchCondition::setContents(std::string contents) {
+	contents = " " + contents;
+	std::vector<std::vector<std::string>> keywordsAndParams = support::extractParamsForKeywords(contents, _attributeKeywords);
+
+	if (contents != "") {
+		_attributesToSearch.push_back(INDEX_WILDCARD);
+		contents = contents.substr(1);
+		std::vector<std::string> contentsToSearch;
+		contentsToSearch.push_back(contents);
+		_contentsToSearch.push_back(contentsToSearch);
+	}
+	for (unsigned int i = 0; i < keywordsAndParams.size(); i++) {
+		if (!keywordsAndParams[i].empty()) {
+			switch (i) {
+			case INDEX_DESCRIPTION:
+				_attributesToSearch.push_back(INDEX_DESCRIPTION);
+				break;
+			case INDEX_STARTDATETIME:
+				_attributesToSearch.push_back(INDEX_STARTDATETIME);
+				break;
+			case INDEX_ENDDATETIME:
+				_attributesToSearch.push_back(INDEX_ENDDATETIME);
+				break;
+			case INDEX_LOCATION:
+				_attributesToSearch.push_back(INDEX_LOCATION);
+				break;
+			}
+
+			for (unsigned int j = 0; j < keywordsAndParams[i].size(); j++) {
+				if (keywordsAndParams[i][j] == "") {
+					throw exceptionInputMissingAttributeParam;
+				}
+			}
+			_contentsToSearch.push_back(keywordsAndParams[i]);
+		}
+	}
+}
+
+int SearchCondition::getCondition() {
+	return _condition;
+}
+
+std::vector<int> SearchCondition::getAttributesToSearch() {
+	return _attributesToSearch;
+}
+
+std::vector<std::vector<std::string>> SearchCondition::getContentsToSearch() {
+	return _contentsToSearch;
+}
+	// End of segment: ComCal_v0.1\SearchCondition.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\SearchCondition.h
+	 */
+
+// SearchCondition.h
+// Class to hold search condition information
+
+#pragma once
+
+#include "support.h"
+
+#include <vector>
+#include <string>
+
+class SearchCondition {
+private:
+	/****************************************************************************************************
+	Name: _condition
+	Type: int
+	Purpose: Holds condition int code of this object.
+	****************************************************************************************************/
+	int _condition;
+	
+	/****************************************************************************************************
+	Name: _attributeKeywords
+	Type: Vector of strings attribute
+	Purpose: Holds recognised attribute keywords.
+	****************************************************************************************************/
+	std::vector<std::string> _attributeKeywords;
+
+	/****************************************************************************************************
+	Name: _attributesToSearch
+	Type: Vector of strings attribute
+	Purpose: Holds attributes to search.
+	****************************************************************************************************/
+	std::vector<int> _attributesToSearch;
+
+	/****************************************************************************************************
+	Name: _contentsToSearch
+	Type: Vector of strings attribute
+	Purpose: Holds contents of each corresponding index attribute to search.
+	****************************************************************************************************/
+	std::vector<std::vector<std::string>> _contentsToSearch;
+
+public:
+	/****************************************************************************************************
+	Name: SearchCondition
+	Type: Constructor
+	Purpose: Constructs search condition object with associated condition int code.
+	****************************************************************************************************/
+	SearchCondition(int);
+	~SearchCondition();
+
+	/****************************************************************************************************
+	Name: setContents
+	Type: Method
+	Purpose: Furnish attributes and contents to search with input string.
+	****************************************************************************************************/
+	void setContents(std::string);
+
+	/****************************************************************************************************
+	Name: getCondition
+	Type: Method
+	Purpose: Returns condition int code.
+	****************************************************************************************************/
+	int getCondition();
+
+	/****************************************************************************************************
+	Name: getAttributesToSearch
+	Type: Method
+	Purpose: Returns vector of strings of attributes to search.
+	****************************************************************************************************/
+	std::vector<int> getAttributesToSearch();
+
+	/****************************************************************************************************
+	Name: getContentsToSearch
+	Type: Method
+	Purpose: Returns vector of strings of corresponding contents to search.
+	****************************************************************************************************/
+	std::vector<std::vector<std::string>> getContentsToSearch();
+};
+	// End of segment: ComCal_v0.1\SearchCondition.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\support.cpp
+	 */
+
+
+#include "support.h"
+
+//If keyword is not found, its associated vector element will be empty.
+//If keyword is found but there is no associated param, its associated vector element will have 1 element of empty string
+//Passed by reference input string will be modified to remaining string after extraction.
+std::vector<std::vector<std::string>> support::extractParamsForKeywords(std::string& input, std::vector<std::string> keywords) {
+	//Check for dangling keyword at end of string, if true, append ending space to string
+	bool isFound = false;
+	for (unsigned int i = 0; i < keywords.size() && !isFound; i++) {
+		std::string danglingKeyword;
+		danglingKeyword = keywords[i].substr(0, keywords[i].size() - 1);
+		if (input.find(danglingKeyword, input.size() - danglingKeyword.size()) != std::string::npos) {
+			isFound = true;
+			input += " ";
+		}
+	}
+
+	std::vector<std::vector<std::string>> keywordsAndParams;
+	std::vector<std::vector<int>> keywordsStartPos;
+	std::vector<int> allStartPos;
+
+	//Get start position of each occurrence of each keyword
+	for (unsigned int i = 0; i < keywords.size(); i++) {
+		int startSearchPos = 0;
+		std::vector<int> startPos;
+		int pos;
+
+		pos = input.find(keywords[i].c_str(), startSearchPos, keywords[i].size());
+		startPos.push_back(pos);
+		startSearchPos = pos + 1;
+		if (pos != std::string::npos) {
+			allStartPos.push_back(pos);
+		}
+
+		while ((pos != std::string::npos) && ((unsigned int)startSearchPos < input.size())) {
+			pos = input.find(keywords[i].c_str(), startSearchPos, keywords[i].size());
+			if (pos != std::string::npos) {
+				startPos.push_back(pos);
+				allStartPos.push_back(pos);
+				startSearchPos = pos + 1;
+			}
+		}
+
+		keywordsStartPos.push_back(startPos);
+	}
+
+	//Extract param for each keyword by substr from start position of keyword + size of keyword +1 to start position of next keyword
+	for (unsigned int i = 0; i < keywordsStartPos.size(); i++) {
+		std::vector<std::string> params;
+		for (unsigned int j = 0; j < keywordsStartPos[i].size(); j++) {
+			if (keywordsStartPos[i][j] != std::string::npos) {
+				int nextKeywordPos = input.size();
+				for (unsigned int k = 0; k < allStartPos.size(); k++) {
+					if (allStartPos[k] > keywordsStartPos[i][j] && allStartPos[k] < nextKeywordPos) {
+						nextKeywordPos = allStartPos[k];
+					}
+				}
+
+				std::string param;
+				int paramLength;
+				paramLength = nextKeywordPos - (keywordsStartPos[i][j] + keywords[i].size());
+				if (paramLength > 0) {
+					param = input.substr(keywordsStartPos[i][j] + keywords[i].size(), paramLength);
+					if (support::isSpacesOnly(param)) {
+						throw exceptionInputInvalidSpacesOnly;
+					}
+					params.push_back(param);
+				}
+				else {
+					params.push_back("");
+				}
+			}
+		}
+
+		keywordsAndParams.push_back(params);
+	}
+
+	//Modify input string to remaining string after extraction
+	if (!allStartPos.empty()) {
+		std::sort(allStartPos.begin(), allStartPos.end());
+		input = input.substr(0, allStartPos[0]);
+	}
+
+	return keywordsAndParams;
+}
+
+std::string support::getTaskType(int taskTypeCode) {
+	if (taskTypeCode == TASKTYPECODE_TIMED || taskTypeCode == TASKTYPECODE_PARTIALTIMED) {
+		return TASKTYPE_EVENT;
+	}
+	else if (taskTypeCode == TASKTYPECODE_DEADLINE) {
+		return TASKTYPE_DEADLINE;
+	}
+	else {
+		return TASKTYPE_TODO;
+	}
+}
+
+bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
+	if (startDate->getTimeT() > endDate->getTimeT()) {
+		return false;
+	}
+	else {
+		return true;
+	}
+	
+	/*
+	bool startEndTimeValidity = true;
+
+	if (startDate->getYear() > endDate->getYear()) {
+		startEndTimeValidity = false;
+	} else if (startDate->getMonth() > endDate->getMonth()) {
+		startEndTimeValidity = false;
+	} else if (startDate->getDay() > endDate->getYear()) {
+		startEndTimeValidity = false;
+	} else if (startDate->getTime() > endDate->getTime()) {
+		startEndTimeValidity = false;
+	}
+
+	return startEndTimeValidity;
+	*/
+}
+
+std::string support::prepareTaskDisplayAttributeBreakdown(Task* task) {
+	std::string taskDisplay = "";
+
+	taskDisplay += DESCRIPTION + ": \"" + task->getDescription() + "\"";
+
+	if (task->getStartDate() != NULL) {
+		taskDisplay += "; " + STARTDATETIME + ": " + task->getStartDate()->toString();
+	}
+
+	if (task->getEndDate() != NULL) {
+		if (task->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
+			taskDisplay += "; " + DEADLINE + ": ";
+		}
+		else {
+			taskDisplay += "; " + ENDDATETIME + ": ";
+		}	
+		taskDisplay += task->getEndDate()->toString();
+	}
+
+	if (task->getLocation() != "") {
+		taskDisplay += "; " + LOCATION + ": \"" + task->getLocation() + "\"";
+	}
+
+	return taskDisplay;
+}
+
+bool support::isDateWithinTimeRange(Date* dateUnderExam, Date* timeRangeStart, Date* timeRangeEnd) {
+	if (dateUnderExam->getTimeT() < timeRangeStart->getTimeT() || dateUnderExam->getTimeT() > timeRangeEnd->getTimeT()) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool support::isSpacesOnly(std::string& input) {
+	while (input.substr(0,1)==" ") {
+		if (input.size() <= 1) {
+			return true;
+		}
+		input = input.substr(1);	
+	}
+
+	while (input.substr(input.size() - 1) == " ") {
+		input = input.substr(0, input.size() - 1);
+	}
+
+	return false;
+}
+
+bool support::checkDateBefore(Date* dateToBeChecked, Date* dateToCheckWith) {
+	if (dateToBeChecked->getTimeT() < dateToCheckWith->getTimeT()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+	// End of segment: ComCal_v0.1\support.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\support.h
+	 */
+
+
+#pragma once
+
+#include "Date.h"
+#include "keywords.h"
+#include "Task.h"
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+namespace support {
+	/*************************************************************************************************************
+	Name: extractParamsForKeywords
+	Type: support namespace method
+	Purpose: Processes input string with given vector of keywords and extracts parameters for each keyword,
+	Returns the parameters extracted as a vector of vector of strings, with the parameters extracted for each 
+	keyword as a vector of strings assigned to its corresponding index element.
+	**************************************************************************************************************/
+	std::vector<std::vector<std::string>> extractParamsForKeywords(std::string&, std::vector<std::string>);
+	
+	/*************************************************************************************************************
+	Name: prepareTaskDisplayAttributeBreakdown
+	Type: support namespace method
+	Purpose: Returns task type string according to:
+	"TO-DO": Floating task type code - 1
+	"DEADLINE": Deadline task type code - 2
+	"EVENT": Partial-timed and Timed task type code - 3,4
+	**************************************************************************************************************/
+	std::string getTaskType(int taskTypeCode);
+	
+	/*************************************************************************************************************
+	Name: checkStartEndTimeValidity
+	Type: support namespace method
+	Purpose: Checks and returns true of 2nd Date object time is bigger than 1st Date object time, false otherwise.
+	**************************************************************************************************************/
+	bool checkStartEndTimeValidity(Date*, Date*);
+	
+	/*************************************************************************************************************
+	Name: prepareTaskDisplayAttributeBreakdown
+	Type: support namespace method
+	Purpose: Processes input task into task display string of the following format:
+	Description: ...
+	Start date/time: ...
+	End date/time OR Deadline: ...
+	Location: ...
+	**************************************************************************************************************/
+	std::string prepareTaskDisplayAttributeBreakdown(Task*);
+
+	/*************************************************************************************************************
+	Name: isTaskWithinTimeRange
+	Type: support namespace method
+	Purpose: Checks and returns true if input Task pointer is within specified start and end Date objects time 
+	range, returns false otherwise.
+	**************************************************************************************************************/
+	bool isDateWithinTimeRange(Date*, Date*, Date*);
+	
+	/*************************************************************************************************************
+	Name: isSpacesOnly
+	Type: support namespace method
+	Purpose: Checks and returns true if input reference string contains only spaces, returns false otherwise. Also
+	trims any leading and ending spaces of input reference string. 
+	**************************************************************************************************************/
+	bool isSpacesOnly(std::string&);
+
+	/*************************************************************************************************************
+	Name: checkDateBefore
+	Type: support namespace method
+	Purpose: Checks and returns true if first input date is before second input date, returns false otherwise.
+	**************************************************************************************************************/
+	bool checkDateBefore(Date*, Date*);
+}
+	// End of segment: ComCal_v0.1\support.h
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Task.cpp
+	 */
+
+int Task::getTaskTypeCode() {
+	if ((_startDate == NULL) && (_endDate == NULL)) {
+		return TASKTYPECODE_FLOATING;
+	}
+	if (_startDate == NULL) {
+		return TASKTYPECODE_DEADLINE;
+	}
+	if (_endDate == NULL) {
+		return TASKTYPECODE_PARTIALTIMED;
+	}
+	return TASKTYPECODE_TIMED;
+}
+
+// Gets the string of this task to be shown in the feedback box
+std::string Task::toString() {
+	std::string returnString = "";
+	switch (getTaskTypeCode()) {
+	case TASKTYPECODE_FLOATING:
+		returnString += TASKTYPECODE_FLOATING;
+		break;
+	case TASKTYPECODE_DEADLINE:
+		returnString += TASKTYPE_DEADLINE;
+		break;
+	case TASKTYPECODE_PARTIALTIMED:
+		returnString += TASKTYPE_PARTIALTIMED;
+		break;
+	case TASKTYPECODE_TIMED:
+		returnString += TASKTYPE_TIMED;
+		break;
+	} 
+		
+	returnString += " task - " + DESCRIPTION + ": \"" + _description + "\"";
+
+	if (hasStartDate()) {
+		returnString += "; " + STARTDATETIME + ": " + _startDate->toString();
+	}
+
+	if (hasEndDate()) {
+		returnString += "; " + ENDDATETIME + ": " + _endDate->toString();
+	}
+	
+	if (_location != "") {
+		returnString += "; " + LOCATION + ": \"" + _location + "\"";
+	}
+
+	return returnString;
+}
+
+	// End of segment: ComCal_v0.1\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\TextStorage.cpp
+	 */
+
+void TextStorage::addTaskAtSpecificPosition(Task* newTask, int position) {
+	_todoTasks->insert(_todoTasks->begin() + position - 1, newTask);
+}
+
+	// End of segment: ComCal_v0.1\TextStorage.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\timeDateInfo.cpp
+	 */
+
+bool timeDateInfo::isMdayValid(std::string mdayInput, int month, int year) {
+	if (!typeConversions::isNumber(mdayInput)) {
+		return false;
+	}
+
+	int numDaysInMonth = timeDateInfo::getDaysInMonth(month - 1, year - 1900);
+
+	if (typeConversions::stringToInt(mdayInput) < 1 || typeConversions::stringToInt(mdayInput) > numDaysInMonth) {
+		return false;
+	}
+
+	return true;
+}
+
+	// End of segment: ComCal_v0.1\timeDateInfo.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\timeDateInfo.cpp
+	 */
+
+bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
+	bool isFound = false;
+
+	for (int i = 0; i < 14; i++) {
+		if (dayInput == DAYSINPUT[i]) {
+			index = i;
+			isFound = true;
+		}
+	}
+
+	return isFound;
+}
+
+	// End of segment: ComCal_v0.1\timeDateInfo.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Undone.cpp
+	 */
+
+// Undone.cpp
+// Implementation of functions in the Undone class
+
+#include "Undone.h"
+
+Undone::Undone() : Command() {
+}
+
+Undone::~Undone() {
+}
+
+void Undone::process(std::string argument) {
+	if (support::isSpacesOnly(argument)) {
+		throw exceptionInputInvalidSpacesOnly;
+	}
+
+	int numOfTasks = TextStorage::getInstance()->getNumberOfTasks();
+
+	bool isProcessed = false;
+	for (int i = 0; i < BEFOREKEYWORDSARRAYSIZE; i++) {
+		int beforeKeywordPos = argument.find(BEFOREKEYWORDSARRAY[i]);
+		if (beforeKeywordPos != std::string::npos) {
+			if (isProcessed) {
+				throw exceptionInputInvalidUndoneParams;
+			}
+			isProcessed = true;
+			if (argument.find(BEFOREKEYWORDSARRAY[i]) != 0) {
+				throw exceptionInputInvalidUndoneParams;
+			}
+			std::string dateString = argument.substr(BEFOREKEYWORDSARRAY[i].size());
+			if (support::isSpacesOnly(dateString)) {
+				throw exceptionInputInvalidSpacesOnly;
+			}
+			Date* date = new Date;
+			if (!date->setDate(dateString)) {
+				throw exceptionInputInvalidDateTimeAddEdit;
+			}
+			date->setTime(0);
+			for (int j = 0; j < numOfTasks; j++) {
+				Task* task = TextStorage::getInstance()->getTask(j);
+				if (task->hasStartDate() && task->hasEndDate() || task->hasEndDate()) {
+					if (support::checkDateBefore(task->getEndDate(), date)) {
+						_undoneTasksIndexes.push_back(j + 1);
+					}
+				}
+				else if (task->hasStartDate()) {
+					if (support::checkDateBefore(task->getStartDate(), date)) {
+						_undoneTasksIndexes.push_back(j + 1);
+					}
+				}
+			}
+		}
+	}
+
+	if (!isProcessed) {
+		if (argument.find(ALLKEYWORD) != std::string::npos) {
+			if (argument.find(ALLKEYWORD) > 0) {
+				throw exceptionInputInvalidUndoneParams;
+			}
+			for (int i = 0; i < numOfTasks; i++) {
+				_undoneTasksIndexes.push_back(i + 1);
+			}
+		}
+		else {
+			int nextSpacePos = argument.find(" ");
+			while (nextSpacePos != std::string::npos) {
+				std::string taskIndexString = argument.substr(0, nextSpacePos);
+				if (!typeConversions::isNumber(taskIndexString)) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				int taskIndex = typeConversions::stringToInt(taskIndexString);
+				if (taskIndex < 1 || taskIndex > numOfTasks) {
+					throw exceptionInputInvalidTaskIndex;
+				}
+				_undoneTasksIndexes.push_back(taskIndex);
+				argument = argument.substr(nextSpacePos + 1);
+				support::isSpacesOnly(argument);
+				nextSpacePos = argument.find(" ");
+			}
+
+			if (!typeConversions::isNumber(argument)) {
+				throw exceptionInputInvalidTaskIndex;
+			}
+			_undoneTasksIndexes.push_back(typeConversions::stringToInt(argument));
+		}
+	}
+
+	std::sort(_undoneTasksIndexes.begin(), _undoneTasksIndexes.end());
+
+	return;
+}
+
+std::string Undone::execute(std::string argument) {
+	// Formats:
+	// 1. Undone single task
+	//    - undone 1
+	// 2. Undone multiple tasks
+	//    - undone 1 2 3
+	// 3. Undone all tasks before date
+	//    - undone before 22/12/14
+	//    - undone .b 22/12/14
+
+	std::string feedback = "Marked incomplete task(s): ";
+
+	process(argument);
+
+	for (unsigned int i = 0; i < _undoneTasksIndexes.size(); i++) {
+		if (TextStorage::getInstance()->getTask(_undoneTasksIndexes[i] - 1) != NULL) {
+			_undoneTasks.push_back(TextStorage::getInstance()->getTask(_undoneTasksIndexes[i] - 1));
+			TextStorage::getInstance()->getTask(_undoneTasksIndexes[i] - 1)->undone();
+			feedback += "(" + typeConversions::intToString(_undoneTasksIndexes[i]) + ")";
+			if (i < _undoneTasksIndexes.size() - 1) {
+				feedback += ", ";
+			}
+			else {
+				feedback += ".";
+			}
+		}
+		else {
+			ErrorLog::inputErrorLog("Unsuccessful undone, please check undone class.");
+			assert(TextStorage::getInstance()->getTask(_undoneTasksIndexes[i] - 1) != NULL);
+		}
+	}
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Undone.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Undone.cpp
+	 */
+
+std::string Undone::undo() {
+	std::string feedback = "Undo undone: Marked complete task(s): ";
+
+	for (unsigned int i = 0; i < _undoneTasks.size(); i++) {
+		_undoneTasks[i]->done();
+		feedback += "(" + typeConversions::intToString(_undoneTasksIndexes[i]) + ")";
+		if (i < _undoneTasksIndexes.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
+	}
+
+	return feedback;
+}
+
+std::string Undone::redo() {
+	std::string feedback = "Redo undone: Marked incomplete task(s): ";
+
+	for (unsigned int i = 0; i < _undoneTasks.size(); i++) {
+		_undoneTasks[i]->undone();
+		feedback += "(" + typeConversions::intToString(_undoneTasksIndexes[i]) + ")";
+		if (i < _undoneTasksIndexes.size() - 1) {
+			feedback += ", ";
+		}
+		else {
+			feedback += ".";
+		}
+	}
+
+	return feedback;
+}
+
+	// End of segment: ComCal_v0.1\Undone.cpp
+
+
+
+
+
+	/**
+	 * origin: ComCal_v0.1\Undone.h
+	 */
+
+// Undone.h
+// Subclass of Command; implements the undone function
+
+#pragma once
+
+#include "Command.h"
+#include "typeConversions.h"
+#include "TextStorage.h"
+#include "Exceptions.h"
+#include "support.h"
+
+#include <vector>
+#include <algorithm>
+
+class Undone : public Command {
+private:
+	std::vector<int> _undoneTasksIndexes;
+	std::vector<Task*> _undoneTasks;
+
+	void process(std::string);
+	bool checkDateBefore(Date*, Date*);
+
+public:
+	Undone();
+	~Undone();
+	std::string execute(std::string argument);
+	std::string undo();
+	std::string redo();
+};
+	// End of segment: ComCal_v0.1\Undone.h
+
+
+
+
+

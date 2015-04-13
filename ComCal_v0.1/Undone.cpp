@@ -2,10 +2,7 @@
 // Undone.cpp
 // Implementation of functions in the Undone class
 
-
 #include "Undone.h"
-
-// TODO Implement input formats 3
 
 Undone::Undone() : Command() {
 }

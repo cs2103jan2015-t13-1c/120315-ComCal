@@ -1,3 +1,4 @@
+//@author A0110783L
 #include <gtest\gtest.h>
 #include "ComCalManager.h"
 #include <queue>

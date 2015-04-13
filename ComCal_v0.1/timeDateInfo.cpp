@@ -153,7 +153,6 @@ std::string timeDateInfo::getShortLowerDayStr(int iter) {
 	return DAYS[iter];
 }
 
-//Hamzah
 //returns the month in string form
 //Argument: an int corresponding to the month, eg. 0=January, 1=February,..,11=December
 std::string timeDateInfo::getMonthStr(int iter) {

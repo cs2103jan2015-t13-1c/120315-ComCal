@@ -2,7 +2,6 @@
 // Edit.cpp
 // Implementation of functions in the Edit class
 
-
 #include "Edit.h"
 
 Edit::Edit() : Command() {

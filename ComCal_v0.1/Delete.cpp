@@ -129,7 +129,6 @@ std::string Delete::execute(std::string argument) {
 	return feedback;
 }
 
-//@author A0085731A
 std::string Delete::undo() {
 	_deletedCount = 0;
 

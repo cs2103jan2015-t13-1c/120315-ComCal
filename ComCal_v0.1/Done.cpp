@@ -2,10 +2,7 @@
 // Done.cpp
 // Implementation of functions in the Delete class
 
-
 #include "Done.h"
-
-// TODO Implement input formats 3
 
 Done::Done() : Command() {
 }
@@ -129,7 +126,6 @@ std::string Done::execute(std::string argument) {
 	return feedback;
 }
 
-//@author A0085731A
 std::string Done::undo() {
 	std::string feedback = "Undo done: Marked incomplete task(s): ";
 

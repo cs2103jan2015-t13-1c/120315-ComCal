@@ -1,7 +1,6 @@
-//@author A011954X
+//@author A0119754X
 // Command.h
 // Abstract class; used for Command subclasses to inherit
-
 
 #pragma once
 

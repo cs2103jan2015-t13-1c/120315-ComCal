@@ -121,6 +121,7 @@ bool Date::operator>(const Date &date) {
 	return false;
 }
 
+//@author A0110783L
 bool Date::operator<=(const Date &date) {
 
 	if (date._year > _year) {
@@ -160,6 +161,7 @@ bool Date::operator>=(const Date &date) {
 	}
 }
 
+//@author A0085731A
 bool Date::isDateDefined() {
 	if (_day == 0) {
 		return false;
@@ -173,6 +175,7 @@ bool Date::isDateDefined() {
 	return true;
 }
 
+//@author A0119754X
 bool Date::setDate(std::string date) {
 	// Possible inputs for dates:
 	// 1. DD/MM/YYYY
@@ -236,7 +239,6 @@ bool Date::setDate(std::string date) {
 				}
 			}
 			else if (date.compare(DATE_WEEK) == 0) {
-				//@author A0085731A
 				//For week: "week" will return the start date and time of the week
 				struct tm* currentTime = timeDateInfo::setStructTm();
 				int daysDifference = currentTime->tm_wday - 0;
@@ -261,7 +263,6 @@ bool Date::setDate(std::string date) {
 				_time = 0000;
 			}
 			else {
-				//@author A0085731A
 				//For day: e.g. "Monday", "Wednesday"
 				int dayIndex;
 
@@ -342,7 +343,6 @@ bool Date::setDate(std::string date) {
 				_time = typeConversions::stringToInt(time);
 			}
 			else { // Either 3 or 4 with no time
-				//@author A0085731A
 				if (!setDate(date.substr(space1 + 1))) {
 					return false;
 				}
@@ -423,7 +423,6 @@ bool Date::setDate(std::string date) {
 	return true;
 }
 
-//@author A0119754X
 // If the date string has no date, then set it to be the same as the date in start date
 bool Date::setDate(std::string date, Date* startDate) {
 	if (startDate != NULL) {
