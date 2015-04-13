@@ -1,6 +1,6 @@
+//@author A0119754X
 // Task.h
 // Contains the class that stores information about tasks
-//@author A0119754X
 
 #pragma once
 
@@ -16,7 +16,6 @@ private:
 	Date* _endDate;				// Could be null, as some tasks do not have a end date and time
 	bool _isDone;
 	bool _isHidden;				// If true, won't display in sidebar. To be manipulated with Show and Search
-	int _taskTypeCode;
 
 public:
 	Task();

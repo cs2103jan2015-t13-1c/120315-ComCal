@@ -1,6 +1,6 @@
+//@author A0110783L
 // Show.h
 // Subclass of Command; implements the show function
-//@author A011954X
 
 #pragma once
 

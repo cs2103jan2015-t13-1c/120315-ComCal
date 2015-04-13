@@ -1,6 +1,7 @@
+//@author A0085731A
 // Undone.cpp
 // Implementation of functions in the Undone class
-//@author A0085731A
+
 
 #include "Undone.h"
 

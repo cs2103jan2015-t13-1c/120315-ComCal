@@ -1,8 +1,12 @@
+//@author A0119754X
 #include "TextStorage.h"
+#include "keywords.h"
+#include "typeConversions.h"
+#include <fstream>
 
 using namespace rapidxml;
 
-template<class Ch> 
+template<class Ch>
 inline std::basic_ostream<Ch> &print(std::basic_ostream<Ch> &out, const xml_node<Ch> &node, int flags = 0);
 
 // Global static pointer used to ensure a single instance of the class
@@ -51,6 +55,7 @@ void TextStorage::addTaskAtSpecificPosition(Task* newTask, int position) {
 	_todoTasks->insert(_todoTasks->begin() + position - 1, newTask);
 }
 
+//@author A0119754X
 bool TextStorage::deleteTask(int index) {
 	if (index > _todoTasks->size())
 		return false;
@@ -72,6 +77,7 @@ int TextStorage::displayAllTasks() {
 	return count;
 }
 
+//@author A0110783L
 int TextStorage::displayTodoTasks() {
 	int count = 0;
 	unsigned int size = _todoTasks->size();
@@ -81,7 +87,7 @@ int TextStorage::displayTodoTasks() {
 		tempTask = _todoTasks->at(i);
 		if (!tempTask->getIsDone()) {
 			tempTask->display();
-			count ++;
+			count++;
 		}
 		else {
 			tempTask->hide();
@@ -267,7 +273,7 @@ int TextStorage::displayPartialTask(int code, const Date &date) {
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 
-		if (code = TODO_CODE) {
+		if (code == TODO_CODE) {
 			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date) && !tempTask->getIsDone()){
 				tempTask->display();
 				count++;
@@ -277,7 +283,7 @@ int TextStorage::displayPartialTask(int code, const Date &date) {
 			}
 		}
 
-		if (code = DONE_CODE) {
+		if (code == DONE_CODE) {
 			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date) && tempTask->getIsDone()){
 				tempTask->display();
 				count++;
@@ -287,7 +293,7 @@ int TextStorage::displayPartialTask(int code, const Date &date) {
 			}
 		}
 
-		if (code = ALL_CODE) {
+		if (code == ALL_CODE) {
 			if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(date)){
 				tempTask->display();
 				count++;
@@ -329,7 +335,7 @@ int TextStorage::displayTimedTasks(int code, const Date &date) {
 	for (unsigned int i = 0; i < size; i++) {
 		tempTask = _todoTasks->at(i);
 
-		if (code = TODO_CODE) {
+		if (code == TODO_CODE) {
 			if ((tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED) && tempTask->isBetween(date) && !tempTask->getIsDone()) {
 				count++;
 				tempTask->display();
@@ -358,7 +364,7 @@ int TextStorage::displayTimedTasks(int code, const Date &date) {
 				tempTask->hide();
 			}
 		}
-		
+
 	}
 
 	return count;
@@ -393,7 +399,7 @@ int TextStorage::displayMonthTasks(int code, int year, int month) {
 								count++;
 							}
 							else {
-								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth()) {
+								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear()) {
 									tempTask->display();
 									count++;
 								}
@@ -456,7 +462,7 @@ int TextStorage::displayMonthTasks(int code, int year, int month) {
 								count++;
 							}
 							else {
-								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth()) {
+								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear()) {
 									tempTask->display();
 									count++;
 								}
@@ -504,7 +510,7 @@ int TextStorage::displayMonthTasks(int code, int year, int month) {
 
 				if ((tempTask->getStartDate()->getYear() <= year) && (tempTask->getEndDate()->getYear() >= year)) {
 
-					if ((tempTask->getStartDate()->getYear() == year) && (tempTask->getStartDate()->getYear() == tempTask->getEndDate()->getYear()) && (tempTask->getStartDate()->getMonth() <= month) && (tempTask->getEndDate()->getMonth() >= month)) {
+					if (tempTask->getStartDate()->getYear() == year && tempTask->getStartDate()->getYear() == tempTask->getEndDate()->getYear() && tempTask->getStartDate()->getMonth() <= month && tempTask->getEndDate()->getMonth() >= month) {
 						tempTask->display();
 						count++;
 					}
@@ -519,7 +525,7 @@ int TextStorage::displayMonthTasks(int code, int year, int month) {
 								count++;
 							}
 							else {
-								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth()) {
+								if (tempTask->getEndDate()->getYear() == year && month <= tempTask->getEndDate()->getMonth() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear() && tempTask->getStartDate()->getYear() != tempTask->getEndDate()->getYear()) {
 									tempTask->display();
 									count++;
 								}
@@ -665,7 +671,7 @@ int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 
 	//loops through todo task
 	for (int i = 0; i < todoSize; i++) {
-		
+
 		tempTask = _todoTasks->at(i);
 		//loops through weekdate to see if the task at i corresponds to any of the dates in weekdate
 		for (int j = 0; j < weekSize; j++) {
@@ -674,7 +680,7 @@ int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 				if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->isBetween(weekDate[j])) {
 					tempTask->display();
 					count++;
-					break;				
+					break;
 				}
 				else {
 					if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(weekDate[j])) {
@@ -683,7 +689,7 @@ int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 						break;
 					}
 					else {
-						if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(weekDate[j])) {						
+						if (!tempTask->getIsDone() && tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(weekDate[j])) {
 							tempTask->display();
 							count++;
 							break;
@@ -722,9 +728,9 @@ int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 
 			if (code == ALL_CODE) {
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_TIMED && tempTask->isBetween(weekDate[j])) {
-						tempTask->display();
-						count++;
-						break;
+					tempTask->display();
+					count++;
+					break;
 				}
 				else {
 					if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED && tempTask->getStartDate()->operator==(weekDate[j])) {
@@ -744,7 +750,7 @@ int TextStorage::displayWeekTasks(int code, std::vector<Date> weekDate) {
 					}
 				}
 			}//end of ALL_CODE
-			
+
 		}
 	}
 	return count;
@@ -756,7 +762,7 @@ int TextStorage::displayDeadlinedTasks() {
 
 	for (int i = 0; i < todoSize; i++) {
 		Task* tempTask = _todoTasks->at(i);
-		if (tempTask->hasEndDate()) {
+		if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
 			tempTask->display();
 			count++;
 		}
@@ -775,7 +781,7 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 		Task* tempTask = _todoTasks->at(i);
 
 		if (code == TODO_CODE) {
-			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && !tempTask->getIsDone()) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && !tempTask->getIsDone() && tempTask->getEndDate()->operator==(date)) {
 				tempTask->display();
 				count++;
 			}
@@ -785,7 +791,7 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 		}
 
 		if (code == DONE_CODE) {
-			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getIsDone()) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getIsDone() && tempTask->getEndDate()->operator==(date)) {
 				tempTask->display();
 				count++;
 			}
@@ -795,7 +801,7 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 		}
 
 		if (code == ALL_CODE) {
-			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
+			if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE && tempTask->getEndDate()->operator==(date)) {
 				tempTask->display();
 				count++;
 			}
@@ -808,6 +814,7 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 	return count;
 }
 
+//@author A0116683B
 bool TextStorage::saveTasks(std::string fileName)
 {
 	xml_document<> xmlDocument;

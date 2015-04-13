@@ -1,3 +1,4 @@
+//@author A0110783L
 #pragma once
 #include <string>
 
@@ -31,6 +32,7 @@ static const std::string DATE_LAST = "last";
 static const std::string DATE_NEXT = "next";
 static const std::string WEEK = "week";
 
+//@author A0085731A
 // Strings for possible user inputs
 static const std::string INPUT_TODO = "todo";
 static const int TODO_CODE = 1;
@@ -100,6 +102,7 @@ static const std::string TASKTYPE_DEADLINE = "DEADLINE";
 static const std::string TASKTYPE_TODO = "TO-DO";
 static const std::string TASKS = "Tasks";
 
+//@author A0110783L
 //Default file names constant string declarations:
 static const std::string FILENAME_TODODEFAULT = "ComCal_todo.xml";
 
@@ -110,6 +113,7 @@ static const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";
 static const int NOFILENAMEENTERED = 0;
 static const int TODOFILENAMEENTERED = 1;
 
+//@author A0085731A
 //Time and date info
 static const int MAX_ASCTIME_S = 26;
 static const int DAYS_IN_WEEK = 7;
@@ -119,6 +123,7 @@ static const int NUM_BLOCKS_IN_CALENDAR = 42;
 static const int SECONDS_IN_DAY = 24 * 60 * 60;
 static const int SECONDS_IN_WEEK = 7 * SECONDS_IN_DAY;
 
+//@author A0110783L
 //keyboard shortcuts
 static const std::string NEWLINE = " \n";
 static const std::string INDEX_DESCRIPTION_SEPARATOR = ") ";
@@ -188,6 +193,7 @@ static const std::string THIS_WEEK_TASKS_FEEDBACK = "This week's tasks shown in 
 static const std::string THIS_WEEK_TODO_TASKS_FEEDBACK = "This week's todo tasks shown in sideBar";
 static const std::string THIS_WEEK_DONE_TASKS_FEEDBACK = "This week's done tasks shown in sideBar";
 
+//@author A0085731A
 //Input error messages here
 static const std::string GET_MONTH_STR_ERROR = "Integer passed outside the boundaries of 0 and 11\n";
 static const std::string TODO_DONE_INPUT_ERROR = "Invalid todo/done input: Please input either 'todo' or 'done'";

@@ -1,7 +1,6 @@
+//@author A0085731A
 // Delete.h
 // Subclass of Command; implements the delete function
-//@author A0085731A
-
 #pragma once
 
 #include "Command.h"

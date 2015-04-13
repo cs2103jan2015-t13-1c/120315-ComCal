@@ -1,5 +1,5 @@
+//@author A0110783L
 #include "ErrorLog.h"
-
 #include <fstream>
 
 void ErrorLog::inputErrorLog(const std::string error) {

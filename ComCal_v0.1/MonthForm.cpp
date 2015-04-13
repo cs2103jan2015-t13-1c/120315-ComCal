@@ -1,3 +1,4 @@
+//@author A0110783L
 #include <wchar.h>
 #include <time.h>
 #include <fstream>
@@ -26,7 +27,7 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	const char** charFileNames = new const char*[argc];
 
 	if (argc > 0) {
-		typeConversions::convertArrStrToConststrArr(argv, charFileNames, argc);
+		MonthForm::convertArrStrToConststrArr(argv, charFileNames, argc);
 	}
 
 	ComCalManager::getInstance()->initialise(argc, charFileNames);
@@ -35,6 +36,35 @@ MonthForm::MonthForm(int argc, array<String^>^ argv)
 	_ctrlHeld = false;
 
 	defaultView(nullptr, nullptr);
+}
+
+std::string MonthForm::convertStrTostr(System::String^ userInput) {
+	std::string strInput;
+
+	strInput = msclr::interop::marshal_as<std::string>(userInput);
+
+	return strInput;
+}
+
+// Converts std::string into System::String^
+System::String^ MonthForm::convertstrToStr(std::string userInput) {
+	System::String^ strInput;
+
+	strInput = msclr::interop::marshal_as<System::String^>(userInput);
+
+	return strInput;
+}
+
+void MonthForm::convertArrStrToConststrArr(array<System::String^>^ fileNames, const char** strFilesNames, int numOfSpecifiedFiles) {
+
+	msclr::interop::marshal_context^ context = gcnew msclr::interop::marshal_context();
+	strFilesNames = new const char*[numOfSpecifiedFiles];
+	for (int i = 0; i < numOfSpecifiedFiles; i++) {
+		strFilesNames[i] = context->marshal_as<const char*>(fileNames[i]);
+
+		context = nullptr;
+	}
+
 }
 
 MonthForm::~MonthForm()
@@ -56,6 +86,7 @@ void MonthForm::guiUpdate() {
 	updateCalendar();
 }
 
+//@author A0119754X
 System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	String^ feedBack;
 
@@ -63,13 +94,13 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		if (e->KeyCode == Keys::D) {
 			setCalendarDate_MonthForm(timeDateInfo::setStructTm());
 			guiUpdate();
-			feedBackBox->Text = typeConversions::convertstrToStr("show reset");
+			feedBackBox->Text = MonthForm::convertstrToStr("show reset");
 			userInputBox->Text = nullptr;
 		}
 		else if (e->KeyCode == Keys::Z) {
 			// Undo
 			ComCalManager* managerInstance = ComCalManager::getInstance();
-			feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand("undo"));
+			feedBack = MonthForm::convertstrToStr(managerInstance->deduceCommand("undo"));
 			guiUpdate();
 			feedBackBox->Text = feedBack;
 			managerInstance->resetCommandIndex();
@@ -78,7 +109,7 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		else if (e->KeyCode == Keys::Y) {
 			// Redo
 			ComCalManager* managerInstance = ComCalManager::getInstance();
-			feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand("redo"));
+			feedBack = MonthForm::convertstrToStr(managerInstance->deduceCommand("redo"));
 			guiUpdate();
 			feedBackBox->Text = feedBack;
 			managerInstance->resetCommandIndex();
@@ -99,10 +130,10 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 		else{
 			ComCalManager* managerInstance = ComCalManager::getInstance();
 			try {
-				feedBack = typeConversions::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(typeConversions::convertStrTostr(userInputBox->Text))));
+				feedBack = MonthForm::convertstrToStr(managerInstance->deduceCommand(typeConversions::trimExtraSpaces(MonthForm::convertStrTostr(userInputBox->Text))));
 			}
 			catch (std::exception& exception) {
-				feedBack = typeConversions::convertstrToStr(exception.what());
+				feedBack = MonthForm::convertstrToStr(exception.what());
 			}
 
 			guiUpdate();
@@ -113,14 +144,15 @@ System::Void MonthForm::userEnter(System::Object^ sender, System::Windows::Forms
 	}
 	else if (e->KeyCode == Keys::Up) {
 		std::string str = ComCalManager::getInstance()->moveCommandIndexUp();
-		userInputBox->Text = ((str.size() <= 0) ? nullptr : typeConversions::convertstrToStr(str));
+		userInputBox->Text = ((str.size() <= 0) ? nullptr : MonthForm::convertstrToStr(str));
 	}
 	else if (e->KeyCode == Keys::Down) {
 		std::string str = ComCalManager::getInstance()->moveCommandIndexDown();
-		userInputBox->Text = ((str.size() <= 0) ? nullptr : typeConversions::convertstrToStr(str));
+		userInputBox->Text = ((str.size() <= 0) ? nullptr : MonthForm::convertstrToStr(str));
 	}
 }
 
+//@author A0110783L
 System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 	if (e->KeyCode == Keys::ControlKey) {
 		_ctrlHeld = true;
@@ -153,7 +185,7 @@ void ComCal_v01::MonthForm::setCalendarDate_MonthForm(struct tm* newtime) {
 }
 
 String^ MonthForm::incrementStringDate(String^ dateNum, int incrementSize) {
-	std::string dateNumStr = typeConversions::convertStrTostr(dateNum);
+	std::string dateNumStr = MonthForm::convertStrTostr(dateNum);
 	std::stringstream convert;
 	int dateNumInt;
 
@@ -230,14 +262,14 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_DEADLINE) {
 					if ((System::Int32::Parse(dateList[i]->Text) == tempTask->getEndDate()->getDay()) && (monthRef == tempTask->getEndDate()->getMonth()) && (year == tempTask->getEndDate()->getYear())) {
-						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
+						taskStrList[i] = String::Concat(taskStrList[i], MonthForm::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 				}
 
 				if (tempTask->getTaskTypeCode() == TASKTYPECODE_PARTIALTIMED) {
 					
 					if ((System::Int32::Parse(dateList[i]->Text) == tempTask->getStartDate()->getDay()) && (monthRef == tempTask->getStartDate()->getMonth()) && (year == tempTask->getStartDate()->getYear())) {
-						taskStrList[i]= String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
+						taskStrList[i]= String::Concat(taskStrList[i], MonthForm::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 				}
 
@@ -245,7 +277,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 					Date * refDate = new Date(System::Int32::Parse(dateList[i]->Text), monthRef, year, 0000);
 
 					if (tempTask->isBetween(*refDate)) {
-						taskStrList[i] = String::Concat(taskStrList[i], typeConversions::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
+						taskStrList[i] = String::Concat(taskStrList[i], MonthForm::convertstrToStr(typeConversions::intToString(j + 1) + INDEX_DESCRIPTION_SEPARATOR + tempTask->toCalString()), Environment::NewLine);
 					}
 
 					delete refDate;
@@ -269,7 +301,7 @@ void ComCal_v01::MonthForm::loadCalendarTodoTasks(struct tm* newtime) {
 
 void ComCal_v01::MonthForm::updateSideBar() {
 	sideBarTitle->Text = nullptr;
-	sideBarTitle->Text = typeConversions::convertstrToStr(ComCalManager::getInstance()->getSideBarTitle());
+	sideBarTitle->Text = MonthForm::convertstrToStr(ComCalManager::getInstance()->getSideBarTitle());
 
 	int numOfLines = ComCalManager::getInstance()->getSideVec()->size();
 	std::string sideBarStr;
@@ -277,7 +309,7 @@ void ComCal_v01::MonthForm::updateSideBar() {
 	sideBar->Text = nullptr;
 
 	for (int i = 0; i < numOfLines; i++) {
-		sideBar->Text = String::Concat(sideBar->Text, typeConversions::convertstrToStr(sideVec->at(i)), Environment::NewLine);
+		sideBar->Text = String::Concat(sideBar->Text, MonthForm::convertstrToStr(sideVec->at(i)), Environment::NewLine);
 	}
 }
 

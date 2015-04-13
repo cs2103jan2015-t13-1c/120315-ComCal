@@ -1,3 +1,4 @@
+//@author A0110783L
 #include "comAndTask.h"
 
 comAndTask::comAndTask(std::string command, Task task) {

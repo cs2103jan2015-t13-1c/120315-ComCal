@@ -1,3 +1,4 @@
+//@author A0110783L
 #include "MonthForm.h"
 
 using namespace ComCal_v01;
@@ -10,7 +11,7 @@ int main (array<String^>^ fileNames) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	MonthForm form(numOfSpecifiedFiles, fileNames);
+	MonthForm form(0, fileNames);
 	Application::Run(%form);
 
 	return 0;

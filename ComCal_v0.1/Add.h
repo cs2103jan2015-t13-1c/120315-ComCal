@@ -1,6 +1,6 @@
+//@author A0119754X
 // Add.h
 // Subclass of Command; implements the add function
-//@author A011954X
 
 #pragma once
 

@@ -1,6 +1,6 @@
+//@author A0085731A
 // SearchCondition.h
 // Class to hold search condition information
-//@author A0085731A
 
 #pragma once
 

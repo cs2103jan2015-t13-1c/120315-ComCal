@@ -1,6 +1,6 @@
+//@author A0085731A
 // Done.h
 // Subclass of Command; implements the done function
-//@author A0085731A
 
 #pragma once
 

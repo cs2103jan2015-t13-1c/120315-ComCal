@@ -1,3 +1,4 @@
+//@author A0110783L
 #pragma once
 
 #include <string>
@@ -32,6 +33,9 @@ namespace ComCal_v01 {
 
 		System::String^ incrementStringDate(System::String^, int);
 		System::String^ setMonthPageTitle(struct tm*);
+		std::string convertStrTostr(System::String^); // Converts System::String^ into std::string
+		System::String^ convertstrToStr(std::string); // Converts std::string into System::String^
+		void convertArrStrToConststrArr(array<System::String^>^, const char**, int);
 
 		void updateSideBar();
 		void updateCalendar();

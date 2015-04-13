@@ -1,6 +1,6 @@
+//@author A0085731A
 // SearchCondition.cpp
 // Implementation of functions in SearchCondition class
-//@author A0085731A
 
 #include "SearchCondition.h"
 

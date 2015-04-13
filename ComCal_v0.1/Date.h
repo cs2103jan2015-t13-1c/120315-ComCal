@@ -1,6 +1,6 @@
+//@author A0119754X
 // Date.h
 // Contains the class that stores information about dates and times used in Task
-//@author A0119754X
 
 #pragma once
 

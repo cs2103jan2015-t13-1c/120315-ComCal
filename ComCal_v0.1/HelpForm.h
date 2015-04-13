@@ -1,5 +1,7 @@
+//@author A0110783L
 #pragma once
-#include "typeConversions.h"
+#include <msclr\marshal_cppstd.h>
+#include <msclr\marshal.h>
 
 namespace ComCal_v01 {
 
@@ -20,39 +22,47 @@ namespace ComCal_v01 {
 		{
 			InitializeComponent();
 			
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("User commands: add; edit; delete; done; undone; undo; redo; search"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Time Input: \"HHMM\" E.g.: \"0830\" represents 8:30 AM; \"1600\" represents 4:00 PM"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Date Input: \"DD/MM/YYYY\" E.g.: \"31/04/2015\" represents 31 April 2015; \"01/05/2015\" represents 1 May 2015"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Acceptable Day Input: monday, tuesday, wednesday, thursday, friday, saturday, sunday, today, tomorrow, yesterday"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("last <day>, next <day>: last monday, last wednesday, next tuesday, next friday, etc."), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("User commands: add; edit; delete; done; undone; undo; redo; search"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Time Input: \"HHMM\" E.g.: \"0830\" represents 8:30 AM; \"1600\" represents 4:00 PM"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Date Input: \"DD/MM/YYYY\" E.g.: \"31/04/2015\" represents 31 April 2015; \"01/05/2015\" represents 1 May 2015"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Acceptable Day Input: monday, tuesday, wednesday, thursday, friday, saturday, sunday, today, tomorrow, yesterday"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("last <day>, next <day>: last monday, last wednesday, next tuesday, next friday, etc."), Environment::NewLine);
 			helpBox->Text = String::Concat(helpBox->Text, Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Add Command Format: The only necessary attribute is <description>, the rest are optional"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("\"add .d <task description> .s <start date/day> <start time> .e <end date/day> <end time> .l <location>\""), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("e.g.: add .d SampleTask .s 14/04/2015 1000 .e 29/06/2016 1100 .l school"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Token format:"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("- Description: .d, (can be omitted)"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("- Start date and time: .s, from, on"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("- End date and time: .e, to, by"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("- Location: .l, in, at"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Add Command Format: The only necessary attribute is <description>, the rest are optional"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("\"add .d <task description> .s <start date/day> <start time> .e <end date/day> <end time> .l <location>\""), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("e.g.: add .d SampleTask .s 14/04/2015 1000 .e 29/06/2016 1100 .l school"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Token format:"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("- Description: .d, (can be omitted)"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("- Start date and time: .s, from, on"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("- End date and time: .e, to, by"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("- Location: .l, in, at"), Environment::NewLine);
 			helpBox->Text = String::Concat(helpBox->Text, Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Edit Command Format: Only the token(s) you would like to change need to be specified"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("To edit, simply specify the index of the task, type a token, followed by the content you would like to change it to"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("edit <index> .d <new description> .s <new start date and/or time> .e <new end date and/or time> .l <new location>"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("eg. edit 26 .d Going to school .s 13/04/2015 1600 .e 3/04/2015 1800"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Token format: .d - <Descripton> , .s - <start date & time> , .e - <end date & time> , .l - <location>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Edit Command Format: Only the token(s) you would like to change need to be specified"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("To edit, simply specify the index of the task, type a token, followed by the content you would like to change it to"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("edit <index> .d <new description> .s <new start date and/or time> .e <new end date and/or time> .l <new location>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("eg. edit 26 .d Going to school .s 13/04/2015 1600 .e 3/04/2015 1800"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Token format: .d - <Descripton> , .s - <start date & time> , .e - <end date & time> , .l - <location>"), Environment::NewLine);
 			helpBox->Text = String::Concat(helpBox->Text, Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Show Command Format:"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("show <date/day> , show <date/day> <todo/done> , show <date/day> <floating/timed/partial/deadline> , show <floating/timed/partial/deadline>"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("show <week> , show <week> <specified date in week> , show <week> <todo/done> , show <week> <date/day> <todo/done>"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("show <month> , show <month> <year> , show <month> <year> <todo/done> , show <next> <week/month> , show <todo/done>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Show Command Format:"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("show <date/day> , show <date/day> <todo/done> , show <date/day> <floating/timed/partial/deadline> , show <floating/timed/partial/deadline>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("show <week> , show <week> <specified date in week> , show <week> <todo/done> , show <week> <date/day> <todo/done>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("show <month> , show <month> <year> , show <month> <year> <todo/done> , show <next> <week/month> , show <todo/done>"), Environment::NewLine);
 			helpBox->Text = String::Concat(helpBox->Text, Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Delete/Done/Undon Command Format: Delete/Done/Undone using index seen on the left on the task"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("delete <index> eg. delete 4 , delete <multiple> eg. delete 1 4 2 8 , delete <all>"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("done/undone <index> eg. done/undone 2 , done/undone <multiple> eg. done/undone 2 3 5 1 , done <all> eg. done/undone all"), Environment::NewLine);
-			helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr("Search <word>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Delete/Done/Undon Command Format: Delete/Done/Undone using index seen on the left on the task"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("delete <index> eg. delete 4 , delete <multiple> eg. delete 1 4 2 8 , delete <all>"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("done/undone <index> eg. done/undone 2 , done/undone <multiple> eg. done/undone 2 3 5 1 , done <all> eg. done/undone all"), Environment::NewLine);
+			helpBox->Text = String::Concat(helpBox->Text, convertstrToStr("Search <word>"), Environment::NewLine);
 
 			// For adding of new lines:
 			//helpBox->Text = String::Concat(helpBox->Text, typeConversions::convertstrToStr(""), Environment::NewLine);
+		}
+
+		System::String^ convertstrToStr(std::string userInput) {
+			System::String^ strInput;
+
+			strInput = msclr::interop::marshal_as<System::String^>(userInput);
+
+			return strInput;
 		}
 
 	protected:

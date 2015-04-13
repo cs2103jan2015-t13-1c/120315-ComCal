@@ -1,6 +1,6 @@
+//@author A0116683B
 // Load.cpp
 // Implementation of functions in the Load class
-//@author A0119754X
 
 #include "Load.h"
 

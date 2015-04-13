@@ -1,6 +1,7 @@
+//@author A0085731A
 // Done.cpp
 // Implementation of functions in the Delete class
-//@author A0085731A
+
 
 #include "Done.h"
 

@@ -1,6 +1,7 @@
+//@author A0085731A
 // Edit.cpp
 // Implementation of functions in the Edit class
-//@author A0085731A
+
 
 #include "Edit.h"
 

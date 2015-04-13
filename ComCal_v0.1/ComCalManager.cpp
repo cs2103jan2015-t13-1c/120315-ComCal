@@ -1,7 +1,22 @@
-#include <fstream>
-#include <msclr\marshal_cppstd.h>
-#include <msclr\marshal.h>
+//@author A0110783L
+
 #include "ComCalManager.h"
+#include "Add.h"
+#include "Delete.h"
+#include "Edit.h"
+#include "Load.h"
+#include "Save.h"
+#include "Search.h"
+#include "Show.h"
+#include "timeDateInfo.h"
+#include "keywords.h"
+#include "TextStorage.h"
+#include "Done.h"
+#include "Undone.h"
+
+#include <string>
+#include <vector>
+
 
 // Global static pointer used to ensure a single instance of the class
 ComCalManager* ComCalManager::_instance = NULL;
@@ -33,6 +48,7 @@ ComCalManager::~ComCalManager() {
 	delete _sideBarView;
 }
 
+//@author A0119754X
 std::string ComCalManager::deduceCommand(std::string userInput) {
 	_commands.push_back(userInput);
 	resetCommandIndex();
@@ -141,8 +157,8 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 	return feedBackMessage;
 }
 
+//@author A0110783L
 //Getter methods
-
 ComCalManager* ComCalManager::getInstance() {
 	if (_instance == NULL)
 		_instance = new ComCalManager();
@@ -171,7 +187,7 @@ void ComCalManager::populateSideBar() {
 	for (int i = 0; i < todoSize; i++) {
 		tempTask = TextStorage::getInstance()->getTask(i);
 		if (!tempTask->isHidden()) {
-			_sideBarView->push_back(typeConversions::intToString(i + 1) + INDEX_DESCRIPTION_SEPARATOR + "Desc: " + tempTask->getDescription() + " [" + (tempTask->getIsDone() ? "done" : "todo") + "]");
+			_sideBarView->push_back(std::to_string(i+1) + INDEX_DESCRIPTION_SEPARATOR + "Desc: " + tempTask->getDescription() + " [" + (tempTask->getIsDone() ? "done" : "todo") + "]");
 
 			if (tempTask->hasStartDate()) {
 				startDate = tempTask->getStartDate();

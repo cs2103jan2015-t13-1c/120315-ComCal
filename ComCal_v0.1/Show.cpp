@@ -1,6 +1,6 @@
+//@author A0110783L
 // Show.cpp
 // Implementation of functions in the Show class
-//@author A0119754X
 
 #include "Show.h"
 #include "TextStorage.h"
@@ -79,11 +79,11 @@ std::string Show::execute(std::string argument) {
 
 		//start of show week date todo/done
 		if (isWeek(firstArg, secArg, thiArg) && isTodoOrDone(firstArg,secArg,thiArg)) {
-			if (getMonthInput(secArg) != -1) {
+			if (secArg == WEEK) {
 				std::swap(firstArg, secArg);
 			}
 			else {
-				if (getMonthInput(thiArg) != -1){
+				if (thiArg == WEEK){
 					std::swap(firstArg, thiArg);
 				}
 			}
@@ -208,10 +208,12 @@ std::string Show::execute(std::string argument) {
 				}
 
 				Date * tempDate = new Date();
-				if (tempDate->setDate(secArg)) {
+				if (tempDate->setDate(firstArg)) {
 					count = TextStorage::getInstance()->displayTodoTasks(*tempDate);
-					sideBarTitle = tempDate->toGUIString() + DATED_DONE_TASKS;
+					sideBarTitle = tempDate->toGUIString() + DATED_TODO_TASKS;
+					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
+					return prepShowFeedback(sideBarTitle, count);
 				}
 				else {
 					return INVALID_DATE_INPUT;
@@ -227,8 +229,8 @@ std::string Show::execute(std::string argument) {
 					std::swap(firstArg, secArg);
 				}
 				Date tempDate;
-				if (tempDate.setDate(secArg)) {
-					count = TextStorage::getInstance()->displayTodoTasks(tempDate);
+				if (tempDate.setDate(firstArg)) {
+					count = TextStorage::getInstance()->displayDoneTasks(tempDate);
 					sideBarTitle = tempDate.toGUIString() + " " + INPUT_DONE + " tasks\n";
 					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
@@ -349,6 +351,7 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
+				delete tempDate;
 			}//end of deadlined task with specified date
 
 			//start of partial with specified date
@@ -359,7 +362,7 @@ std::string Show::execute(std::string argument) {
 
 				Date * tempDate = new Date();
 				if (tempDate->setDate(secArg)) {
-					count = TextStorage::getInstance()->displayDeadlinedTasks(ALL_CODE, *tempDate);
+					count = TextStorage::getInstance()->displayPartialTask(ALL_CODE, *tempDate);
 					sideBarTitle = tempDate->toGUIString() + " " + ALL_PARTIAL_TASKS_TITLE;
 					ComCalManager::getInstance()->setSideBarTitle(sideBarTitle);
 
@@ -368,6 +371,8 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
+
+				delete tempDate;
 			}//end of partial with specified date
 
 
@@ -388,6 +393,8 @@ std::string Show::execute(std::string argument) {
 				else {
 					return INVALID_DATE_INPUT;
 				}
+
+				delete tempDate;
 			}//end of timed with specified date
 
 		}

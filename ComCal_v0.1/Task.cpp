@@ -1,6 +1,6 @@
+//@author A0119754X
 // Task.cpp
 // Implementation of functions in the Task class
-//@author A0119754X
 
 #include "Task.h"
 #include "typeConversions.h"
@@ -12,7 +12,6 @@ Task::Task() {
 	_endDate = NULL;
 	_isDone = false;
 	_isHidden = false;
-	_taskTypeCode = TASKTYPECODE_FLOATING;
 }
 
 Task::Task(std::string description, std::string location, int startDay, int startMonth, int startYear, int startTime, int endDay, int endMonth, int endYear, int endTime) {
@@ -22,18 +21,6 @@ Task::Task(std::string description, std::string location, int startDay, int star
 	_endDate = new Date(endDay, endMonth, endYear, endTime);
 	_isDone = false;
 	_isHidden = false;
-	if (_startDate != NULL&&_endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_TIMED;
-	}
-	else if (_startDate != NULL && _endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
-	}
-	else {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
 }
 
 Task::Task(std::string description, std::string location, Date* startDate, Date* endDate) {
@@ -43,18 +30,6 @@ Task::Task(std::string description, std::string location, Date* startDate, Date*
 	_endDate = endDate;
 	_isDone = false;
 	_isHidden = false;
-	if (_startDate != NULL&&_endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_TIMED;
-	}
-	else if (_startDate != NULL && _endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
-	}
-	else {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
 }
 
 Task::~Task() {
@@ -107,6 +82,7 @@ bool Task::isHidden() {
 	return _isHidden;
 }
 
+//@author A0110783L
 bool Task::isBetween(const Date &date) {
 	bool isBetween = false;
 
@@ -117,6 +93,7 @@ bool Task::isBetween(const Date &date) {
 	return isBetween;
 }
 
+//@author A0119754X
 void Task::setDescription(std::string description) {
 	_description = description;
 }
@@ -127,36 +104,11 @@ void Task::setLocation(std::string location) {
 
 void Task::setStartDate(Date* startDate) {
 	_startDate = startDate;
-
-	if (_startDate != NULL&&_endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_TIMED;
-	}
-	else if (_startDate != NULL && _endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
-	}
-	else {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
 }
 
 void Task::setEndDate(Date* endDate) {
 	_endDate = endDate;
 
-	if (_startDate != NULL&&_endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_TIMED;
-	}
-	else if (_startDate != NULL && _endDate == NULL) {
-		_taskTypeCode = TASKTYPECODE_PARTIALTIMED;
-	}
-	else if (_startDate == NULL && _endDate != NULL) {
-		_taskTypeCode = TASKTYPECODE_DEADLINE;
-	}
-	else {
-		_taskTypeCode = TASKTYPECODE_FLOATING;
-	}
 }
 
 void Task::hide() {
@@ -167,14 +119,24 @@ void Task::display() {
 	_isHidden = false;
 }
 
+//@author A0085731A
 int Task::getTaskTypeCode() {
-	return _taskTypeCode;
+	if ((_startDate == NULL) && (_endDate == NULL)) {
+		return TASKTYPECODE_FLOATING;
+	}
+	if (_startDate == NULL) {
+		return TASKTYPECODE_DEADLINE;
+	}
+	if (_endDate == NULL) {
+		return TASKTYPECODE_PARTIALTIMED;
+	}
+	return TASKTYPECODE_TIMED;
 }
 
 // Gets the string of this task to be shown in the feedback box
 std::string Task::toString() {
 	std::string returnString = "";
-	switch (_taskTypeCode) {
+	switch (getTaskTypeCode()) {
 	case TASKTYPECODE_FLOATING:
 		returnString += TASKTYPECODE_FLOATING;
 		break;
@@ -206,6 +168,7 @@ std::string Task::toString() {
 	return returnString;
 }
 
+//@author A0110783L
 // Gets the string of this task to be rendered in GUI elements, ie. sidebar, etc.
 std::string Task::toGUIString() {
 	std::string returnString = " task - " + DESCRIPTION + ": \"" + _description + "\"";
@@ -225,6 +188,7 @@ std::string Task::toGUIString() {
 	return returnString;
 }
 
+//@author A0119754X
 // Gets the string of this task to be rendered in calendar
 std::string Task::toCalString() {
 	if (_description.size() <= 9) {

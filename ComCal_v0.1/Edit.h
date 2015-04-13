@@ -1,6 +1,7 @@
+//@author: A0085731A
 // Edit.h
 // Subclass of Command; implements the edit function
-//@author: A0085731A
+
 
 /**********************************************************************************************************
 Name: Edit

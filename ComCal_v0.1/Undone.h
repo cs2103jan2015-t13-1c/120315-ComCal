@@ -1,6 +1,6 @@
+//@author A0085731A
 // Undone.h
 // Subclass of Command; implements the undone function
-//@author A0085731A
 
 #pragma once
 

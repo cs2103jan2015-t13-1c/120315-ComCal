@@ -1,4 +1,4 @@
-//Prasoon handles this whole part of the code
+//@author A0119754X
 
 #pragma once
 
@@ -11,13 +11,6 @@
 #include <vector>
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
-
-using namespace System;
-using namespace System::ComponentModel;
-using namespace System::Collections;
-using namespace System::Windows::Forms;
-using namespace System::Data;
-using namespace System::Drawing;
 
 //store, sort and updates the textfile
 class TextStorage {

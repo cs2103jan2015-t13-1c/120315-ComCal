@@ -1,6 +1,7 @@
+//@author A0119754X
 // Add.cpp
 // Implementation of functions in the Add class
-//@author A0119754X
+
 
 #include "Add.h"
 
