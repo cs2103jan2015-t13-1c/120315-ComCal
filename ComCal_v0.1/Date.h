@@ -9,6 +9,7 @@
 #include "typeConversions.h"
 #include "keywords.h"
 #include "timeDateInfo.h"
+#include "typeConversions.h"
 
 #include <string>
 
@@ -44,7 +45,7 @@ public:
 	// Setter methods
 	bool setDate(std::string date);
 	bool setDate(std::string date, Date* startDate);
-	bool setTime(int);
+	void setTime(int);
 	void setEndOfWeek();
 	void setEndOfDay();
 };

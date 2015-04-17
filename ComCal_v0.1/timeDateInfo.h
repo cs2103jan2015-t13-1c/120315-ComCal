@@ -13,6 +13,7 @@ const int LENGTH_YEARINPUT = 2;
 const int LENGTH_TIMEINPUT = 4;
 const int LENGTH_HOURINPUT = 2;
 const int LENGTH_MININPUT = 2;
+const int LENGTH_MINDATEINPUT = 8;
 
 // Leading 0 for date/time formatting constant string declaration:
 const std::string leadingZero = "0";

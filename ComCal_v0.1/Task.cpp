@@ -138,7 +138,7 @@ std::string Task::toString() {
 	std::string returnString = "";
 	switch (getTaskTypeCode()) {
 	case TASKTYPECODE_FLOATING:
-		returnString += TASKTYPECODE_FLOATING;
+		returnString += TASKTYPE_FLOATING;
 		break;
 	case TASKTYPECODE_DEADLINE:
 		returnString += TASKTYPE_DEADLINE;

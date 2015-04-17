@@ -29,11 +29,6 @@ std::string Edit::execute(std::string userInput) {
 			if (!editTaskStartDateTime->setDate(_contentsToBeEdited[i])) {
 				throw exceptionInputInvalidDateTimeAddEdit;
 			}
-			if (_editedTask->getEndDate() != NULL) {
-				if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
-					throw exceptionInputStartLaterThanEndTime;
-				}
-			}
 			_editedTask->setStartDate(editTaskStartDateTime);
 		}
 		else if (_attributesToBeEdited[i] == STARTDATE) {
@@ -52,17 +47,14 @@ std::string Edit::execute(std::string userInput) {
 				if (editTaskStartDateTime->getTime() == NULL){
 					editTaskStartDateTime->setTime(0);
 				}
-				if (_editedTask->getEndDate() != NULL) {
-					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
-						throw exceptionInputStartLaterThanEndTime;
-					}
-				}
 				_editedTask->setStartDate(editTaskStartDateTime);
 			}
 		}
 		else if (_attributesToBeEdited[i] == STARTTIME) {
-			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
-				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
+			if (_editedTask->getStartDate() == NULL && _editedTask->getEndDate() == NULL) {
+				throw exceptionInputNoExistingDate;
+			}
+			else {
 				Date* editTaskStartDateTime = new Date();
 				if (_editedTask->getStartDate() != NULL) {
 					*editTaskStartDateTime = *_editedTask->getStartDate();
@@ -70,29 +62,17 @@ std::string Edit::execute(std::string userInput) {
 				else {
 					*editTaskStartDateTime = *_editedTask->getEndDate();
 				}
-				if (!editTaskStartDateTime->setTime(editTime)) {
+				if (!timeDateInfo::isTimeValid(_contentsToBeEdited[i])) {
 					throw exceptionInputInvalidTime;
 				}
-				if (_editedTask->getEndDate() != NULL) {
-					if (!support::checkStartEndTimeValidity(editTaskStartDateTime, _editedTask->getEndDate())) {
-						throw exceptionInputStartLaterThanEndTime;
-					}
-				}
+				editTaskStartDateTime->setTime(typeConversions::stringToInt(_contentsToBeEdited[i]));
 				_editedTask->setStartDate(editTaskStartDateTime);
-			}
-			else {
-				throw exceptionInputNoExistingDate;
 			}
 		}
 		else if (_attributesToBeEdited[i] == ENDDATETIME) {
 			Date* editTaskEndDateTime = new Date();
 			if (!editTaskEndDateTime->setDate(_contentsToBeEdited[i])) {
 				throw exceptionInputInvalidDateTimeAddEdit;
-			}
-			if (_editedTask->getStartDate() != NULL) {
-				if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
-					throw exceptionInputStartLaterThanEndTime;
-				}
 			}
 			_editedTask->setEndDate(editTaskEndDateTime);
 		}
@@ -112,16 +92,14 @@ std::string Edit::execute(std::string userInput) {
 				if (editTaskEndDateTime->getTime() == NULL){
 					editTaskEndDateTime->setTime(2359);
 				}
-				if (_editedTask->getStartDate() != NULL) {
-					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
-						throw exceptionInputStartLaterThanEndTime;
-					}
-				}
 				_editedTask->setEndDate(editTaskEndDateTime);
 			}
 		}
 		else if (_attributesToBeEdited[i] == ENDTIME) {
-			if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+			if (_editedTask->getStartDate() == NULL && _editedTask->getEndDate() == NULL) {
+				throw exceptionInputNoExistingDate;
+			}
+			else {
 				int editTime = typeConversions::stringToInt(_contentsToBeEdited[i]);
 				Date* editTaskEndDateTime = new Date();
 				if (_editedTask->getEndDate() != NULL) {
@@ -130,22 +108,22 @@ std::string Edit::execute(std::string userInput) {
 				else {
 					*editTaskEndDateTime = *_editedTask->getStartDate();
 				}
-				if (!editTaskEndDateTime->setTime(editTime)) {
+				if (!timeDateInfo::isTimeValid(_contentsToBeEdited[i])) {
 					throw exceptionInputInvalidTime;
 				}
-				if (_editedTask->getStartDate() != NULL) {
-					if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), editTaskEndDateTime)) {
-						throw exceptionInputStartLaterThanEndTime;
-					}
-				}
+				editTaskEndDateTime->setTime(typeConversions::stringToInt(_contentsToBeEdited[i]));
 				_editedTask->setEndDate(editTaskEndDateTime);
-			}
-			else {
-				throw exceptionInputNoExistingDate;
 			}
 		}
 		else {
 			_editedTask->setLocation(_contentsToBeEdited[i]);
+		}
+	}
+
+	if (_editedTask->getStartDate() != NULL && _editedTask->getEndDate() != NULL) {
+		if (!support::checkStartEndTimeValidity(_editedTask->getStartDate(), _editedTask->getEndDate())) {
+			*(_editedTask) = *(_originalTask);
+			throw exceptionInputStartLaterThanEndTime;
 		}
 	}
 
@@ -296,7 +274,7 @@ bool Edit::checkDateTimeInputIsTime(std::string input) {
 }
 
 bool Edit::checkDateTimeInputIsDateTime(std::string input) {
-	if (input.size()>LENGTH_TIMEINPUT && input.substr(input.size() - LENGTH_TIMEINPUT).find_first_not_of(INTS) == std::string::npos) {
+	if (input.size()>(LENGTH_MINDATEINPUT + LENGTH_TIMEINPUT) && input.substr(input.size() - LENGTH_TIMEINPUT).find_first_not_of(INTS) == std::string::npos) {
 		return true;
 	}
 	else {

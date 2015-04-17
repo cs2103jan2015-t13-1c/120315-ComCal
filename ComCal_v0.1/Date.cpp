@@ -78,6 +78,8 @@ time_t Date::getTimeT() {
 	dateTimeInfo->tm_mday=_day;
 	dateTimeInfo->tm_mon = _month-1;
 	dateTimeInfo->tm_year = _year;
+	dateTimeInfo->tm_hour = _time / 100;
+	dateTimeInfo->tm_min = _time % 100;
 
 	return mktime(dateTimeInfo);
 }
@@ -437,13 +439,8 @@ bool Date::setDate(std::string date, Date* startDate) {
 }
 
 //@author A0085731A
-bool Date::setTime(int time) {
-	if (time < 0 || time > 2359) {
-		return false;
-	}
-	else {
-		return true;
-	}
+void Date::setTime(int time) {
+	_time = time;
 }
 
 void Date::setEndOfWeek() {
