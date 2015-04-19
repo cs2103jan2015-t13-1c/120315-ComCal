@@ -10,8 +10,6 @@
 #include "Task.h"
 #include "Date.h"
 #include "support.h"
-#include "ComCalManager.h"
-#include "keywords.h"
 
 #include <algorithm>
 
@@ -87,6 +85,7 @@ private:
 	location) search, false otherwise.
 	****************************************************************************************************/
 	bool isResultWildcardSearch(Task*, std::string);
+
 public:
 	Search();
 	~Search();

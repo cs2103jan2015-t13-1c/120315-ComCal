@@ -144,13 +144,11 @@ std::string ComCalManager::deduceCommand(std::string userInput) {
 		command = new Done();
 		feedBackMessage = command->execute(argument);
 		populateSideBar();
-		_commandHistory.push(command);
 	}
 	else if (function.compare(COMMAND_UNDONE) == 0) {
 		command = new Undone();
 		feedBackMessage = command->execute(argument);
 		populateSideBar();
-		_commandHistory.push(command);
 	}
 	else {
 		feedBackMessage = INVALID_COMMAND;

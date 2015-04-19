@@ -3,6 +3,8 @@
 //Implementation of functions in the Search class
 
 #include "Search.h"
+#include "ComCalManager.h"
+#include "keywords.h"
 
 static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHATTRIBUTEPASSED = "System error: Unrecognized search attribute code stored in _attributeToSearch private attribute of SearchCondition object. Search attribute code read = ";
 static const std::string SYSTEMERROR_UNRECOGNIZEDSEARCHCONDITIONPASSED = "System error: Unrecognized search condition code stored in SearchCondition object in _searchConditions private attribute of Search class. Search condition code read = ";
@@ -14,8 +16,8 @@ Search::~Search() {
 }
 
 bool Search::isResultWildcardSearch(Task* taskUnderExam, std::string searchContents) {
-	searchContents = typeConversions::toLowerCase(searchContents);
-	if (typeConversions::toLowerCase(taskUnderExam->getDescription()).find(searchContents) == std::string::npos && typeConversions::toLowerCase(taskUnderExam->getLocation()).find(searchContents) == std::string::npos) {
+	searchContents = searchContents.substr(1);
+	if (taskUnderExam->getDescription().find(searchContents) == std::string::npos && taskUnderExam->getLocation().find(searchContents) == std::string::npos) {
 		return false;
 	}
 	else {
@@ -24,8 +26,7 @@ bool Search::isResultWildcardSearch(Task* taskUnderExam, std::string searchConte
 }
 
 bool Search::isResultDescriptionSearch(Task* taskUnderExam, std::string searchContents) {
-	searchContents = typeConversions::toLowerCase(searchContents);
-	if (typeConversions::toLowerCase(taskUnderExam->getDescription()).find(searchContents) == std::string::npos) {
+	if (taskUnderExam->getDescription().find(searchContents) == std::string::npos) {
 		return false;
 	}
 	else {
@@ -34,8 +35,7 @@ bool Search::isResultDescriptionSearch(Task* taskUnderExam, std::string searchCo
 }
 
 bool Search::isResultLocationSearch(Task* taskUnderExam, std::string searchContents) {
-	searchContents = typeConversions::toLowerCase(searchContents);
-	if (typeConversions::toLowerCase(taskUnderExam->getLocation()).find(searchContents) == std::string::npos) {
+	if (taskUnderExam->getLocation().find(searchContents) == std::string::npos) {
 		return false;
 	}
 	else {
@@ -430,8 +430,6 @@ std::string Search::prepareFeedback() {
 			case INDEX_LOCATION:
 				feedback += " " + LOCATION + ": ";
 				break;
-			default:
-				feedback += " ";
 			}
 			for (unsigned int k = 0; k < _searchConditions[i].getContentsToSearch()[j].size(); k++) {
 				switch (_searchConditions[i].getAttributesToSearch()[j]) {
@@ -441,8 +439,6 @@ std::string Search::prepareFeedback() {
 				case INDEX_LOCATION:
 					feedback += "\"";
 					break;
-				case INDEX_WILDCARD:
-					feedback += "\"";
 				}
 				feedback += _searchConditions[i].getContentsToSearch()[j][k];
 				switch (_searchConditions[i].getAttributesToSearch()[j]) {
@@ -452,8 +448,6 @@ std::string Search::prepareFeedback() {
 				case INDEX_LOCATION:
 					feedback += "\"";
 					break;
-				case INDEX_WILDCARD:	
-					feedback += "\"";
 				}
 				if (k < _searchConditions[i].getContentsToSearch()[j].size() - 1) {
 					feedback += ", ";
