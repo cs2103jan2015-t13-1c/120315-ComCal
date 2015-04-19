@@ -3,7 +3,7 @@
 
 
 	/**
-	 * origin: ComCal_v0.1\Load.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Load.cpp
 	 */
 
 // Load.cpp
@@ -26,14 +26,14 @@ std::string Load::execute(std::string argument) {
 	}
 	return ("Loading failed. File " + argument + " does not exist.");
 }
-	// End of segment: ComCal_v0.1\Load.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Load.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Load.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Load.h
 	 */
 
 // Load.h
@@ -50,14 +50,14 @@ public:
 	~Load();
 	std::string execute(std::string argument);
 };
-	// End of segment: ComCal_v0.1\Load.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Load.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Save.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Save.cpp
 	 */
 
 // Save.cpp
@@ -80,14 +80,14 @@ std::string Save::execute(std::string argument) {
 	}
 	return ("Failed to save to " + argument);
 }
-	// End of segment: ComCal_v0.1\Save.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Save.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Save.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Save.h
 	 */
 
 // Save.h
@@ -104,14 +104,14 @@ public:
 	~Save();
 	std::string execute(std::string argument);
 };
-	// End of segment: ComCal_v0.1\Save.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Save.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\TextStorage.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\TextStorage.cpp
 	 */
 
 bool TextStorage::saveTasks(std::string fileName)
@@ -253,7 +253,7 @@ bool TextStorage::loadTasks(std::string fileName)
 
 	return true;
 }
-	// End of segment: ComCal_v0.1\TextStorage.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\TextStorage.cpp
 
 
 

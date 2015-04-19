@@ -3,7 +3,7 @@
 
 
 	/**
-	 * origin: ComCal_v0.1\comAndTask.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\comAndTask.cpp
 	 */
 
 #include "comAndTask.h"
@@ -26,14 +26,14 @@ Task comAndTask::getTask() {
 }
 
 
-	// End of segment: ComCal_v0.1\comAndTask.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\comAndTask.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\comAndTask.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\comAndTask.h
 	 */
 
 #pragma once
@@ -59,14 +59,14 @@ private:
 };
 
 
-	// End of segment: ComCal_v0.1\comAndTask.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\comAndTask.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\ComCalManager.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.cpp
 	 */
 
 
@@ -118,14 +118,14 @@ ComCalManager::~ComCalManager() {
 	delete _sideBarView;
 }
 
-	// End of segment: ComCal_v0.1\ComCalManager.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\ComCalManager.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.cpp
 	 */
 
 //Getter methods
@@ -212,14 +212,14 @@ std::string ComCalManager::moveCommandIndexDown() {
 	}
 	return _commands[_commandIndex];
 }
-	// End of segment: ComCal_v0.1\ComCalManager.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\ComCalManager.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.h
 	 */
 
 #pragma once
@@ -272,14 +272,14 @@ public:
 	std::string moveCommandIndexDown();
 };
 
-	// End of segment: ComCal_v0.1\ComCalManager.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ComCalManager.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Date.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Date.cpp
 	 */
 
 bool Date::operator<=(const Date &date) {
@@ -321,14 +321,14 @@ bool Date::operator>=(const Date &date) {
 	}
 }
 
-	// End of segment: ComCal_v0.1\Date.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Date.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\ErrorLog.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ErrorLog.cpp
 	 */
 
 #include "ErrorLog.h"
@@ -348,14 +348,14 @@ void ErrorLog::inputErrorLog(const std::string error) {
 
 }
 
-	// End of segment: ComCal_v0.1\ErrorLog.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ErrorLog.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\ErrorLog.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ErrorLog.h
 	 */
 
 #pragma once
@@ -371,27 +371,27 @@ namespace ErrorLog {
 };
 
 
-	// End of segment: ComCal_v0.1\ErrorLog.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\ErrorLog.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\HelpForm.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\HelpForm.cpp
 	 */
 
 #include "HelpForm.h"
 
 
-	// End of segment: ComCal_v0.1\HelpForm.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\HelpForm.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\HelpForm.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\HelpForm.h
 	 */
 
 #pragma once
@@ -534,14 +534,14 @@ namespace ComCal_v01 {
 	};
 }
 
-	// End of segment: ComCal_v0.1\HelpForm.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\HelpForm.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\keywords.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 	 */
 
 #pragma once
@@ -577,14 +577,14 @@ static const std::string DATE_LAST = "last";
 static const std::string DATE_NEXT = "next";
 static const std::string WEEK = "week";
 
-	// End of segment: ComCal_v0.1\keywords.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\keywords.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 	 */
 
 //Default file names constant string declarations:
@@ -597,14 +597,14 @@ static const std::string FILENAME_LOGDEFAULT = "ErrorLog.txt";
 static const int NOFILENAMEENTERED = 0;
 static const int TODOFILENAMEENTERED = 1;
 
-	// End of segment: ComCal_v0.1\keywords.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\keywords.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 	 */
 
 //keyboard shortcuts
@@ -676,14 +676,14 @@ static const std::string THIS_WEEK_TASKS_FEEDBACK = "This week's tasks shown in 
 static const std::string THIS_WEEK_TODO_TASKS_FEEDBACK = "This week's todo tasks shown in sideBar";
 static const std::string THIS_WEEK_DONE_TASKS_FEEDBACK = "This week's done tasks shown in sideBar";
 
-	// End of segment: ComCal_v0.1\keywords.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\keywords.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Main.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Main.cpp
 	 */
 
 #include "MonthForm.h"
@@ -703,14 +703,14 @@ int main (array<String^>^ fileNames) {
 
 	return 0;
 }
-	// End of segment: ComCal_v0.1\Main.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Main.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\MonthForm.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.cpp
 	 */
 
 #include <wchar.h>
@@ -800,14 +800,14 @@ void MonthForm::guiUpdate() {
 	updateCalendar();
 }
 
-	// End of segment: ComCal_v0.1\MonthForm.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\MonthForm.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.cpp
 	 */
 
 System::Void MonthForm::ctrlHold(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
@@ -1073,14 +1073,14 @@ void ComCal_v01::MonthForm::storeTasksTextBlockInList() {
 	taskList.Insert(++i, taskBox66);
 	taskList.Insert(++i, taskBox67);
 }
-	// End of segment: ComCal_v0.1\MonthForm.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\MonthForm.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.h
 	 */
 
 #pragma once
@@ -3924,14 +3924,14 @@ private: System::Windows::Forms::TextBox^  monthFormTitle;
 
 }; //end MonthForm class
 } //end of ComCal_v01 namespace
-	// End of segment: ComCal_v0.1\MonthForm.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\MonthForm.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Show.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Show.cpp
 	 */
 
 // Show.cpp
@@ -4729,14 +4729,14 @@ std::string Show::prepSideBarTitleShowWeek(int code, Date date) {
 
 	return sideBarTitle;
 }
-	// End of segment: ComCal_v0.1\Show.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Show.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Show.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Show.h
 	 */
 
 // Show.h
@@ -4797,14 +4797,14 @@ public:
 	~Show();
 	std::string execute(std::string argument);
 };
-	// End of segment: ComCal_v0.1\Show.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Show.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Task.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Task.cpp
 	 */
 
 bool Task::isBetween(const Date &date) {
@@ -4817,14 +4817,14 @@ bool Task::isBetween(const Date &date) {
 	return isBetween;
 }
 
-	// End of segment: ComCal_v0.1\Task.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Task.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\Task.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Task.cpp
 	 */
 
 // Gets the string of this task to be rendered in GUI elements, ie. sidebar, etc.
@@ -4846,14 +4846,14 @@ std::string Task::toGUIString() {
 	return returnString;
 }
 
-	// End of segment: ComCal_v0.1\Task.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\Task.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\TextStorage.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\TextStorage.cpp
 	 */
 
 int TextStorage::displayTodoTasks() {
@@ -5592,14 +5592,14 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 	return count;
 }
 
-	// End of segment: ComCal_v0.1\TextStorage.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\TextStorage.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\timeDateInfo.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 	 */
 
 #include "timeDateInfo.h"
@@ -5610,14 +5610,14 @@ int TextStorage::displayDeadlinedTasks(int code, const Date &date) {
 //To do some logging just type your code then if there is an error just type ErrorLog::inputErrorLog(errorMessage)
 //key in all error messages inside keywords.h as const std::strings
 ;
-	// End of segment: ComCal_v0.1\timeDateInfo.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\timeDateInfo.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 	 */
 
 bool timeDateInfo::isMonthValid(std::string monthInput) {
@@ -5646,14 +5646,14 @@ bool timeDateInfo::isYearValid(std::string yearInput) {
 	return true;
 }
 
-	// End of segment: ComCal_v0.1\timeDateInfo.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\timeDateInfo.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 	 */
 
 bool timeDateInfo::isLeapYear(int year) {
@@ -5801,14 +5801,14 @@ struct tm* timeDateInfo::setDayStructTm(int day) {
 
 	return timeinfo;
 }
-	// End of segment: ComCal_v0.1\timeDateInfo.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\timeDateInfo.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.h
 	 */
 
 #pragma once
@@ -5876,28 +5876,28 @@ namespace timeDateInfo {
 	struct tm* setDayStructTm(int);
 };
 
-	// End of segment: ComCal_v0.1\timeDateInfo.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\timeDateInfo.h
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\typeConversions.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\typeConversions.cpp
 	 */
 
 
 #include "typeConversions.h"
 #include <algorithm>
 
-	// End of segment: ComCal_v0.1\typeConversions.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\typeConversions.cpp
 
 
 
 
 
 	/**
-	 * origin: ComCal_v0.1\typeConversions.h
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\typeConversions.h
 	 */
 
 #pragma once
@@ -5922,14 +5922,130 @@ namespace typeConversions{
 //	void convertArrStrToConststrArr(array<System::String^>^, const char**, int);
 }
 
-	// End of segment: ComCal_v0.1\typeConversions.h
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\ComCal_v0.1\typeConversions.h
 
 
 
 
 
 	/**
-	 * origin: systemTest_ComCal\systemTest_ComCal.cpp
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\systemTestOutput_ComCal\systemTestOutput_ComCal.cpp
+	 */
+
+#include <gtest\gtest.h>
+#include "ComCalManager.h"
+#include <queue>
+#include <string>
+
+class ComCalManagerTest : public ::testing::Test {
+protected:
+	//this is the setup method
+	virtual void SetUp() {
+		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015"));
+		expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 0000; ");
+
+		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015 1500"));
+		expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 1500; ");
+
+		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 21/04/2015 .e 22/04/2015 .l loc"));
+		expected.push("Added: TIMED task - [D]: testTask; [S]: 21/4/15 0000; [E]: 22/4/15 0000; [L]: loc");
+
+		actual.push(ComCalManager::getInstance()->deduceCommand("show may 2015"));
+		expected.push("may 2015 shown");
+	}
+
+	//this functions acts like a dsetructor
+	virtual void TearDown() {
+
+	}
+
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+};
+
+TEST_F(ComCalManagerTest, feedBackTest){
+	int actualStage = 0;
+	int expectedStage = expected.size();
+
+	while (!expected.empty() && !actual.empty()) {
+
+		if (expected.front() == actual.front()) {
+			actualStage++;
+		}
+		actual.pop();
+		expected.pop();
+	}
+
+	ASSERT_EQ(expectedStage, actualStage);
+}
+
+TEST(addTest, test1) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015"));
+	expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 0000; ");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+
+TEST(addTest, test2) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015 1500"));
+	expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 1500; ");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+
+TEST(addTest, test3) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 21/04/2015 .e 22/04/2015 .l loc"));
+	expected.push("Added: TIMED task - [D]: testTask; [S]: 21/4/15 0000; [E]: 22/4/15 0000; [L]: loc");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+
+TEST(showTest, test4) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("show may 2015"));
+	expected.push("may 2015 shown");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+
+TEST(showTest, test5) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("show week"));
+	expected.push("Current week shown");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+
+TEST(showTest, test6) {
+	std::queue<std::string> expected;
+	std::queue<std::string> actual;
+
+	actual.push(ComCalManager::getInstance()->deduceCommand("show week 22/04/2015"));
+	expected.push("22/4/15 week tasks shown");
+
+	ASSERT_EQ(expected.front(), actual.front());
+}
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\systemTestOutput_ComCal\systemTestOutput_ComCal.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\RachH\Desktop\120315-ComCal\systemTest_ComCal\systemTest_ComCal.cpp
 	 */
 
 #include <gtest\gtest.h>
@@ -6206,123 +6322,7 @@ TEST(addTest, test4) {
 	ASSERT_EQ(expected.front(), actual.front());
 }
 
-	// End of segment: systemTest_ComCal\systemTest_ComCal.cpp
-
-
-
-
-
-	/**
-	 * origin: systemTestOutput_ComCal\systemTestOutput_ComCal.cpp
-	 */
-
-#include <gtest\gtest.h>
-#include "ComCalManager.h"
-#include <queue>
-#include <string>
-
-class ComCalManagerTest : public ::testing::Test {
-protected:
-	//this is the setup method
-	virtual void SetUp() {
-		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015"));
-		expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 0000; ");
-
-		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015 1500"));
-		expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 1500; ");
-
-		actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 21/04/2015 .e 22/04/2015 .l loc"));
-		expected.push("Added: TIMED task - [D]: testTask; [S]: 21/4/15 0000; [E]: 22/4/15 0000; [L]: loc");
-
-		actual.push(ComCalManager::getInstance()->deduceCommand("show may 2015"));
-		expected.push("may 2015 shown");
-	}
-
-	//this functions acts like a dsetructor
-	virtual void TearDown() {
-
-	}
-
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-};
-
-TEST_F(ComCalManagerTest, feedBackTest){
-	int actualStage = 0;
-	int expectedStage = expected.size();
-
-	while (!expected.empty() && !actual.empty()) {
-
-		if (expected.front() == actual.front()) {
-			actualStage++;
-		}
-		actual.pop();
-		expected.pop();
-	}
-
-	ASSERT_EQ(expectedStage, actualStage);
-}
-
-TEST(addTest, test1) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015"));
-	expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 0000; ");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-
-TEST(addTest, test2) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 10/04/2015 1500"));
-	expected.push("Added: PARTIAL-TIMED task - [D]: testTask; [S]: 10/4/15 1500; ");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-
-TEST(addTest, test3) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("add testTask .s 21/04/2015 .e 22/04/2015 .l loc"));
-	expected.push("Added: TIMED task - [D]: testTask; [S]: 21/4/15 0000; [E]: 22/4/15 0000; [L]: loc");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-
-TEST(showTest, test4) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("show may 2015"));
-	expected.push("may 2015 shown");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-
-TEST(showTest, test5) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("show week"));
-	expected.push("Current week shown");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-
-TEST(showTest, test6) {
-	std::queue<std::string> expected;
-	std::queue<std::string> actual;
-
-	actual.push(ComCalManager::getInstance()->deduceCommand("show week 22/04/2015"));
-	expected.push("22/4/15 week tasks shown");
-
-	ASSERT_EQ(expected.front(), actual.front());
-}
-	// End of segment: systemTestOutput_ComCal\systemTestOutput_ComCal.cpp
+	// End of segment: C:\Users\RachH\Desktop\120315-ComCal\systemTest_ComCal\systemTest_ComCal.cpp
 
 
 
