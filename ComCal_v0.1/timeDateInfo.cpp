@@ -49,7 +49,7 @@ bool timeDateInfo::isYearValid(std::string yearInput) {
 	return true;
 }
 
-//@author A0119754X
+//@author A0119754X  
 bool timeDateInfo::isTimeValid(std::string timeInput) {
 	if (timeInput.size() != 4) {
 		return false;
@@ -74,7 +74,7 @@ bool timeDateInfo::isTimeValid(std::string timeInput) {
 	return true;
 }
 
-//@author A0085731A
+//@author A0085731A 
 bool timeDateInfo::isDayValid(std::string dayInput, int& index) {
 	bool isFound = false;
 

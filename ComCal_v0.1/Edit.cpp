@@ -1,4 +1,5 @@
-//@author A0085731A
+//@author A0085731A-reused
+//and modified
 // Edit.cpp
 // Implementation of functions in the Edit class
 
@@ -154,6 +155,7 @@ std::string Edit::execute(std::string userInput) {
 	return feedback;
 }
 
+//@author A0085731A
 void Edit::process(std::string userInput) {
 	if (support::isSpacesOnly(userInput)) {
 		throw exceptionInputInvalidSpacesOnly;
@@ -214,6 +216,8 @@ int Edit::extractTaskIndex(std::string &userInput){
 	return taskIndexToBeEdited;
 }
 
+//@author A0085731A-reused
+//and modified
 void Edit::furnishEditContents(std::string &userInput) {
 	if (userInput == "") {
 		throw exceptionInputMissingEditParams;
@@ -286,6 +290,7 @@ void Edit::furnishEditContents(std::string &userInput) {
 	return;
 }
 
+//@author A0085731A
 bool Edit::checkDateTimeInputIsTime(std::string input) {
 	if (input.size() == LENGTH_TIMEINPUT) {
 		return true;
@@ -304,6 +309,8 @@ bool Edit::checkDateTimeInputIsDateTime(std::string input) {
 	}
 }
 
+//@author A0085731A-reused
+//and modified
 std::string Edit::prepareFeedback(){
 	std::string feedback = "Edited ";
 	std::string taskDisplay;
@@ -351,7 +358,7 @@ std::string Edit::prepareFeedback(){
 
 	return feedback;
 }
-
+//@author A0085731A
 int Edit::getEditedTaskIndex() {
 	return _taskIndexToBeEdited;
 }

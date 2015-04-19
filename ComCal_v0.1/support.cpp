@@ -1,4 +1,4 @@
-//@author A0085731A
+//@author A0085731A-reused
 
 #include "support.h"
 
@@ -86,6 +86,7 @@ std::vector<std::vector<std::string>> support::extractParamsForKeywords(std::str
 	return keywordsAndParams;
 }
 
+//@author A0085731A-reused
 std::string support::getTaskType(int taskTypeCode) {
 	if (taskTypeCode == TASKTYPECODE_TIMED || taskTypeCode == TASKTYPECODE_PARTIALTIMED) {
 		return TASKTYPE_EVENT;
@@ -98,6 +99,7 @@ std::string support::getTaskType(int taskTypeCode) {
 	}
 }
 
+//@author A0085731A
 bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
 	if (startDate->getTimeT() > endDate->getTimeT()) {
 		return false;
@@ -123,6 +125,7 @@ bool support::checkStartEndTimeValidity(Date* startDate, Date* endDate) {
 	*/
 }
 
+//@author A0085731A-reused
 std::string support::prepareTaskDisplayAttributeBreakdown(Task* task) {
 	std::string taskDisplay = "";
 
@@ -149,6 +152,7 @@ std::string support::prepareTaskDisplayAttributeBreakdown(Task* task) {
 	return taskDisplay;
 }
 
+//@author A0085731A
 bool support::isDateWithinTimeRange(Date* dateUnderExam, Date* timeRangeStart, Date* timeRangeEnd) {
 	if (dateUnderExam->getTimeT() < timeRangeStart->getTimeT() || dateUnderExam->getTimeT() > timeRangeEnd->getTimeT()) {
 		return false;
